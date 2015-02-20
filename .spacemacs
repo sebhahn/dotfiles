@@ -12,9 +12,8 @@
  ;; List of configuration layers to load.
  dotspacemacs-configuration-layers '(python
                                      git
-                                     research-config
-                                     custom_org_config
                                      my_python
+                                     research-config
                                      auctex
                                      company-mode
                                      themes-megapack)
@@ -110,8 +109,9 @@ preview-scale-function 1.6
   (add-to-list 'load-path "~/.spacemacs-config/org-mode/contrib/lisp" t)
   (add-to-list 'load-path "~/.spacemacs-config" t)
   (add-to-list 'load-path "~/.spacemacs-config/org-reveal" t)
+  (add-to-list 'load-path "~/.spacemacs-config/helm-bibtex" t)
+  (add-to-list 'load-path "~/.spacemacs-config/org-ref" t)
   (require 'init-packages)
-  ;;(require 'org_config)
   (defun set-exec-path-from-shell-PATH ()
   (let ((path-from-shell (replace-regexp-in-string
                           "[ \t\n]*$"
