@@ -1,9 +1,9 @@
-* approx. Installation (not tested)
+* Installation
 clone spacemacs into .emacs.d
 #+BEGIN_SRC shell
 $ cd ~
 $ git init
-$ git remote add origin https://github.com/cpaulik/emacsconfig
+$ git remote add origin https://github.com/s-hahn/spacemacs
 $ git pull -u origin master
 $ git submodule init
 $ git submodule update
