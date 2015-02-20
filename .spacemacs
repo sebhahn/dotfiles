@@ -12,7 +12,7 @@
  ;; List of configuration layers to load.
  dotspacemacs-configuration-layers '(python
                                      git
-                                     my_python
+                                     python-config
                                      research-config
                                      auctex
                                      company-mode

@@ -1,4 +1,4 @@
-;;; packages.el --- my_python Layer packages File for Spacemacs
+;;; packages.el --- python-config Layer packages File for Spacemacs
 ;;
 ;; Copyright (c) 2012-2014 Sylvain Benner
 ;; Copyright (c) 2014-2015 Sylvain Benner & Contributors
@@ -10,28 +10,28 @@
 ;;
 ;;; License: GPLv3
 
-(defvar my_python-packages
+(defvar python-config-packages
   '(
-    ;; package my_pythons go here
+    ;; package python-configs go here
     py-autopep8
     flycheck-pyflakes
     )
   "List of all packages to install and/or initialize. Built-in packages
 which require an initialization must be listed explicitly in the list.")
 
-(defvar my_python-excluded-packages '()
+(defvar python-config-excluded-packages '()
   "List of packages to exclude.")
 
-;; For each package, define a function my_python/init-<package-my_python>
+;; For each package, define a function python-config/init-<package-python-config>
 ;;
-(defun my_python/init-py-autopep8()
+(defun python-config/init-py-autopep8()
   (add-hook 'before-save-hook 'py-autopep8-before-save)
   )
 
-(defun my_python/init-flycheck-pyflakes()
+(defun python-config/init-flycheck-pyflakes()
   (use-package flycheck-pyflakes)
   )
-;; (defun my_python/init-my-package ()
+;; (defun python-config/init-my-package ()
 ;;   "Initialize my package"
 ;;   )
 ;;

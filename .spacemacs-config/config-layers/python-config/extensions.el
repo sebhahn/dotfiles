@@ -1,4 +1,4 @@
-;;; extensions.el --- my_python Layer extensions File for Spacemacs
+;;; extensions.el --- python-config Layer extensions File for Spacemacs
 ;;
 ;; Copyright (c) 2012-2014 Sylvain Benner
 ;; Copyright (c) 2014-2015 Sylvain Benner & Contributors
@@ -10,21 +10,21 @@
 ;;
 ;;; License: GPLv3
 
-(defvar my_python-pre-extensions
+(defvar python-config-pre-extensions
   '(
-    ;; pre extension my_pythons go here
+    ;; pre extension python-configs go here
     )
   "List of all extensions to load before the packages.")
 
-(defvar my_python-post-extensions
+(defvar python-config-post-extensions
   '(
-    ;; post extension my_pythons go here
+    ;; post extension python-configs go here
     )
   "List of all extensions to load after the packages.")
 
-;; For each extension, define a function my_python/init-<extension-my_python>
+;; For each extension, define a function python-config/init-<extension-python-config>
 ;;
-;; (defun my_python/init-my-extension ()
+;; (defun python-config/init-my-extension ()
 ;;   "Initialize my extension"
 ;;   )
 ;;
