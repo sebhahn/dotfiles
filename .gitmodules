@@ -4,10 +4,10 @@
 [submodule ".spacemacs-config/org-reveal"]
 	path = .spacemacs-config/org-reveal
 	url = https://github.com/yjwen/org-reveal.git
-[submodule ".spacemacs-config//helm-bibtex"]
+[submodule ".spacemacs-config/helm-bibtex"]
         path = .spacemacs-config/helm-bibtex
 	url = http://github.com/tmalsburg/helm-bibtex
-[submodule ".spacemacs-config//org-ref"]
+[submodule ".spacemacs-config/org-ref"]
 	path = .spacemacs-config/org-ref
 	url = https://github.com/jkitchin/org-ref
 [submodule ".oh-my-zsh"]
