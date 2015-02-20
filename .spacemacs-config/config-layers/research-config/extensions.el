@@ -12,13 +12,13 @@
 
 (defvar research-config-pre-extensions
   '(
-    ;; pre extension research-configs go here
+    ;; pre extension research-config go here
     )
   "List of all extensions to load before the packages.")
 
 (defvar research-config-post-extensions
   '(
-    ;; post extension research-configs go here
+    ;; post extension research-config go here
     )
   "List of all extensions to load after the packages.")
 

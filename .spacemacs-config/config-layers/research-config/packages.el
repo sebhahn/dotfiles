@@ -26,13 +26,13 @@ which require an initialization must be listed explicitly in the list.")
 ;;
 (defun research-config/init-helm-bibtex()
    "Initialize my package"
-   (setq helm-bibtex-bibliography "~/Dropbox/Arbeit/Papers/bibliography.bib")
-   (setq helm-bibtex-library-path "~/Dropbox/Arbeit/Papers/pdf")
-   (setq helm-bibtex-notes-path "~/Dropbox/Arbeit/Papers/notes")
+   (setq helm-bibtex-bibliography "~/Dropbox/shahn/research-config/latex/zotero.bib")
+   (setq helm-bibtex-library-path "~/Dropbox/shahn/research-config/publications")
+   (setq helm-bibtex-notes-path "~/Dropbox/shahn/research-config/notes")
    (setq helm-bibtex-notes-extension ".org")
    (setq helm-bibtex-pdf-open-function
      (lambda (fpath)
-       (start-process "evince" "*evince*" "evince" fpath)))
+       (start-process "okular" "*okular*" "okular" fpath)))
    (setq helm-bibtex-format-citation-functions
       (quote
        ((org-mode . helm-bibtex-format-citation-cite)

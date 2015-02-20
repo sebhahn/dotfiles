@@ -1,4 +1,4 @@
-;;; packages.el --- custom_org_config Layer packages File for Spacemacs
+;;; packages.el --- custom-org-config Layer packages File for Spacemacs
 ;;
 ;; Copyright (c) 2012-2014 Sylvain Benner
 ;; Copyright (c) 2014-2015 Sylvain Benner & Contributors
@@ -10,22 +10,22 @@
 ;;
 ;;; License: GPLv3
 
-(defvar custom_org_config-packages
+(defvar custom-org-config-packages
   '(
     org
     org-ac
-    ;; package custom_org_configs go here
+    ;; package custom-org-configs go here
     )
   "List of all packages to install and/or initialize. Built-in packages
 which require an initialization must be listed explicitly in the list.")
 
-(defvar custom_org_config-excluded-packages '()
+(defvar custom-org-config-excluded-packages '()
   "List of packages to exclude.")
 
-;; For each package, define a function custom_org_config/init-<package-custom_org_config>
+;; For each package, define a function custom-org-config/init-<package-custom-org-config>
 ;;
 
-(defun custom_org_config/init-org-ac()
+(defun custom-org-config/init-org-ac()
  
 (org-ac/config-default)
 
@@ -33,7 +33,7 @@ which require an initialization must be listed explicitly in the list.")
 
 
 
-(defun custom_org_config/init-org ()
+(defun custom-org-config/init-org ()
 ;;   "Initialize my package"
 ;;load exporters for odt and texinfo - new in org 8
 (require 'org)
@@ -41,12 +41,15 @@ which require an initialization must be listed explicitly in the list.")
 (setq org-agenda-span 'day)
 (setq org-default-notes-file "~/Dropbox/org/refile.org")
 
+(require 'org-ref)
+(require 'jmax-bibtex)
+(setq org-ref-bibliography-notes "~/Dropbox/shahn/org/paper_notes.org")
+(setq org-ref-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/library"))
 
 (setq org-directory "~/Dropbox/org")
-(setq org-agenda-files (quote ("~/Dropbox/org"
-                               "~/Dropbox/Arbeit/organisation"
-                               "~/Dropbox/Arbeit/organisation/projects")))
-
+(setq org-default-notes-file "~/Dropbox/shahn/org/refile.org")
+(setq org-agenda-files (quote ("~/Dropbox/shahn/org")))
+(setq org-agenda-diary-file "~/Dropbox/shahn/org/diary.org")
 
 (evil-leader/set-key-for-mode 'org-mode
         "mL" 'org-insert-link)
@@ -66,8 +69,6 @@ which require an initialization must be listed explicitly in the list.")
 
 ;; Do a pull every 5 minutes to circumvent problems with timestamping
 ;; (ie. dropbox bugs)
-
-
 
 
 (setq org-agenda-persistent-filter t)
@@ -139,15 +140,14 @@ which require an initialization must be listed explicitly in the list.")
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 (global-set-key (kbd "C-c c") 'org-capture)
-(global-set-key (kbd "<f12>") 'org-agenda)
-(global-set-key (kbd "<f11>") 'org-clock-goto)
-(global-set-key (kbd "C-<f11>") 'org-clock-in)
-(global-set-key (kbd "<f9> g") 'mu4e)
+(global-set-key (kbd "<f9>") 'org-agenda)
+(global-set-key (kbd "<f8>") 'org-clock-goto)
+(global-set-key (kbd "C-<f8>") 'org-clock-in)
 (global-set-key (kbd "<f5>") 'bh/org-todo)
 (global-set-key (kbd "<S-f5>") 'bh/widen)
-(global-set-key (kbd "<f9> I") 'bh/punch-in)
-(global-set-key (kbd "<f9> O") 'bh/punch-out)
-(global-set-key (kbd "<f9> SPC") 'bh/clock-in-last-task)
+(global-set-key (kbd "<f7> I") 'bh/punch-in)
+(global-set-key (kbd "<f7> O") 'bh/punch-out)
+(global-set-key (kbd "<f7> SPC") 'bh/clock-in-last-task)
 
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
@@ -168,9 +168,6 @@ which require an initialization must be listed explicitly in the list.")
 ;; if state is changed using shift then no dates or notes are recorded
 (setq org-treat-S-cursor-todo-selection-as-state-change nil)
 ;; set tags according to state of the task
-
-(setq org-agenda-diary-file "~/Dropbox/org/diary.org")
-
 
 ;; Diary
 (require 'holidays)

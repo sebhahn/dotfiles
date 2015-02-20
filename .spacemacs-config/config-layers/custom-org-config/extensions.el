@@ -1,4 +1,4 @@
-;;; extensions.el --- custom_org_config Layer extensions File for Spacemacs
+;;; extensions.el --- custom-org-config Layer extensions File for Spacemacs
 ;;
 ;; Copyright (c) 2012-2014 Sylvain Benner
 ;; Copyright (c) 2014-2015 Sylvain Benner & Contributors
@@ -10,21 +10,21 @@
 ;;
 ;;; License: GPLv3
 
-(defvar custom_org_config-pre-extensions
+(defvar custom-org-config-pre-extensions
   '(
-    ;; pre extension custom_org_configs go here
+    ;; pre extension custom-org-configs go here
     )
   "List of all extensions to load before the packages.")
 
-(defvar custom_org_config-post-extensions
+(defvar custom-org-config-post-extensions
   '(
-    ;; post extension custom_org_configs go here
+    ;; post extension custom-org-configs go here
     )
   "List of all extensions to load after the packages.")
 
-;; For each extension, define a function custom_org_config/init-<extension-custom_org_config>
+;; For each extension, define a function custom-org-config/init-<extension-custom-org-config>
 ;;
-;; (defun custom_org_config/init-my-extension ()
+;; (defun custom-org-config/init-my-extension ()
 ;;   "Initialize my extension"
 ;;   )
 ;;
