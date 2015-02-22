@@ -32,6 +32,11 @@ which require an initialization must be listed explicitly in the list.")
 
 (defun custom-org-config/init-org ()
   
+  (require 'org-ref)
+  (require 'jmax-bibtex)
+  (setq org-ref-bibliography-notes "~/Dropbox/shahn/org/paper_notes.org")
+  (setq org-ref-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/library"))
+
   (setq org-src-fontify-natively 1)
   (setq org-agenda-span 'day)
 
@@ -107,9 +112,7 @@ which require an initialization must be listed explicitly in the list.")
 
 (add-to-list 'org-latex-classes
           '("koma-article"
-             "\\documentclass{scrartcl}
-	      \\usepackage{lmodern}
-	      \\usepackage{mathpazo}"
+             "\\documentclass{scrartcl}"
              ("\\section{%s}" . "\\section*{%s}")
              ("\\subsection{%s}" . "\\subsection*{%s}")
              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
