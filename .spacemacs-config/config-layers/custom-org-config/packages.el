@@ -14,6 +14,7 @@
   '(
     org
     org-ac
+    ox-rst
     ;; package custom-org-configs go here
     )
   "List of all packages to install and/or initialize. Built-in packages
@@ -25,111 +26,110 @@ which require an initialization must be listed explicitly in the list.")
 ;; For each package, define a function custom-org-config/init-<package-custom-org-config>
 ;;
 
-(defun custom-org-config/init-org-ac()
- 
-(org-ac/config-default)
-
+(defun custom-org-config/init-org-ac ()
+  (org-ac/config-default)
   )
 
-
-
 (defun custom-org-config/init-org ()
-;;   "Initialize my package"
-;;load exporters for odt and texinfo - new in org 8
-(require 'org)
-(setq org-src-fontify-natively 1)
-(setq org-agenda-span 'day)
-(setq org-default-notes-file "~/Dropbox/org/refile.org")
+  
+  (setq org-src-fontify-natively 1)
+  (setq org-agenda-span 'day)
 
-(require 'org-ref)
-(require 'jmax-bibtex)
-(setq org-ref-bibliography-notes "~/Dropbox/shahn/org/paper_notes.org")
-(setq org-ref-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/library"))
+  (setq org-directory "~/Dropbox/shahn/org")
+  (setq org-default-notes-file "~/Dropbox/shahn/org/refile.org")
+  (setq org-agenda-files (quote ("~/Dropbox/shahn/org")))
+  (setq org-agenda-diary-file "~/Dropbox/shahn/org/diary.org")
+  (setq org-agenda-persistent-filter t)
 
-(setq org-directory "~/Dropbox/org")
-(setq org-default-notes-file "~/Dropbox/shahn/org/refile.org")
-(setq org-agenda-files (quote ("~/Dropbox/shahn/org")))
-(setq org-agenda-diary-file "~/Dropbox/shahn/org/diary.org")
+  (evil-leader/set-key-for-mode 'org-mode "mL" 'org-insert-link)
+  (evil-leader/set-key-for-mode 'org-mode "m'" 'org-edit-special)
+  (evil-leader/set-key "m'" 'org-edit-src-exit)
 
-(evil-leader/set-key-for-mode 'org-mode
-        "mL" 'org-insert-link)
-(evil-leader/set-key-for-mode 'org-mode
-        "m'" 'org-edit-special)
-(evil-leader/set-key "m'" 'org-edit-src-exit)
+  ;; set org agenda global
+  (evil-leader/set-key "oo" 'org-agenda)
+  (evil-leader/set-key "oc" 'org-capture)
+  (evil-leader/set-key "or" 'org-refile)
 
-;; set org agenda global
-(evil-leader/set-key "oo" 'org-agenda)
-(evil-leader/set-key "oc" 'org-capture)
+  ;; set punch in and out keys
+  (evil-leader/set-key "oI" 'bh/punch-in)
+  (evil-leader/set-key "oO" 'bh/punch-out)
 
-;; set punch in and out keys
+  (require 'ox-odt)
+  (require 'ox-texinfo)
+  (require 'ox-beamer)
+  (require 'ox-html)
+  (require 'ox-md)
+  (require 'ox-reveal)
 
-(evil-leader/set-key "oI" 'bh/punch-in)
-(evil-leader/set-key "oO" 'bh/punch-out)
-
-
-;; Do a pull every 5 minutes to circumvent problems with timestamping
-;; (ie. dropbox bugs)
-
-
-(setq org-agenda-persistent-filter t)
-(require 'ox-odt)
-(require 'ox-texinfo)
-(require 'ox-beamer)
-(require 'ox-html)
-(require 'ox-md)
-(require 'ox-reveal)
-
-;; any headline with level <= 2 is a target
-(setq org-refile-targets '((nil :maxlevel . 2)
+  ;; any headline with level <= 2 is a target
+  (setq org-refile-targets '((nil :maxlevel . 2)
                                 ; all top-level headlines in the
                                 ; current buffer are used (first) as a
                                 ; refile target
                            (org-agenda-files :maxlevel . 2)))
 
-;; provide refile targets as paths, including the file name
-;; (without directory) as level 1 of the path
-(setq org-refile-use-outline-path 'file)
+  ;; provide refile targets as paths, including the file name
+  ;; (without directory) as level 1 of the path
+  (setq org-refile-use-outline-path 'file)
 
-;; allow to create new nodes (must be confirmed by the user) as
-;; refile targets
-(setq org-refile-allow-creating-parent-nodes 'confirm)
+  ;; allow to create new nodes (must be confirmed by the user) as
+  ;; refile targets
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
 
-;; refile only within the current buffer
-(defun my/org-refile-within-current-buffer ()
-  "Move the entry at point to another heading in the current buffer."
-  (interactive)
-  (let ((org-refile-targets '((nil :maxlevel . 5))))
-    (org-refile)))
-;; enable helm org refile into subsection of agenda file
-(setq org-outline-path-complete-in-steps nil)
+  ;; refile only within the current buffer
+  (defun my/org-refile-within-current-buffer ()
+    "Move the entry at point to another heading in the current buffer."
+    (interactive)
+    (let ((org-refile-targets '((nil :maxlevel . 5))))
+      (org-refile)))
 
-;;(add-hook 'org-mode-hook 'turn-on-org-cdlatex)
-(add-hook 'org-mode-hook 'org-indent-mode)
-(add-hook 'org-mode-hook 'auto-fill-mode)
+  ;; enable helm org refile into subsection of agenda file
+  (setq org-outline-path-complete-in-steps nil)
+
+  ;;(add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+  (add-hook 'org-mode-hook 'org-indent-mode)
+  (add-hook 'org-mode-hook 'auto-fill-mode)
+
 (require 'ox-latex)
 '(org-latex-listings (quote minted))
-'(org-latex-pdf-process
-   (quote
-    ("pdflatex -interaction nonstopmode -shell-escape -output-directory %o %f" "pdflatex -interaction nonstopmode -shell-escape -output-directory %o %f" "pdflatex -interaction nonstopmode -shell-escape -output-directory %o %f")))
+
 (setq org-latex-table-caption-above nil)
 (setq org-html-table-caption-above nil)
+
+(unless (boundp 'org-latex-classes)
+  (setq org-latex-classes nil))
+
+(setq org-latex-pdf-process
+      '("pdflatex -interaction nonstopmode -output-directory %o %f"
+        "biber %b"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"))
+
 (add-to-list 'org-latex-classes
-             '("article"
-               "\\documentclass{article}
-\\usepackage{geometry}
-\\geometry{a4paper, textwidth=6.5in, textheight=10in,
-            marginparsep=7pt, marginparwidth=.6in}
-\\usepackage{tabulary}"
-     ("\\section{%s}" . "\\section*{%s}")
-     ("\\subsection{%s}" . "\\subsection*{%s}")
-     ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-     ("\\paragraph{%s}" . "\\paragraph*{%s}")
-     ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+          '("koma-article"
+             "\\documentclass{scrartcl}
+	      \\usepackage{lmodern}
+	      \\usepackage{mathpazo}"
+             ("\\section{%s}" . "\\section*{%s}")
+             ("\\subsection{%s}" . "\\subsection*{%s}")
+             ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+             ("\\paragraph{%s}" . "\\paragraph*{%s}")
+             ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+(require 'ox-beamer)
+
+(setq org-ditaa-jar-path "/usr/bin/ditaa")
+(setq org-plantuml-jar-path "~/Dropbox/shahn/org/plantuml.jar")
+
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((python . t)
    (ditaa . t)
-   (R . t))
+   (plantuml . t)
+   (dot . t)
+   (R . t)
+   (gnuplot . t)
+   (latex . t))
  )
 
 (setq org-confirm-babel-evaluate nil)
@@ -197,21 +197,21 @@ which require an initialization must be listed explicitly in the list.")
               ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
-      (quote (("t" "todo" entry (file "~/Dropbox/org/refile.org")
+      (quote (("t" "todo" entry (file "~/Dropbox/shahn/org/refile.org")
                "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-              ("r" "respond" entry (file "~/Dropbox/org/refile.org")
+              ("r" "respond" entry (file "~/Dropbox/shahn/org/refile.org")
                "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
-              ("n" "note" entry (file "~/Dropbox/org/refile.org")
+              ("n" "note" entry (file "~/Dropbox/shahn/org/refile.org")
                "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
-              ("j" "Journal" entry (file+datetree "~/Dropbox/org/diary.org")
+              ("j" "Journal" entry (file+datetree "~/Dropbox/shahn/org/diary.org")
                "* %?\n%U\n" :clock-in t :clock-resume t)
-              ("w" "org-protocol" entry (file "~/Dropbox/org/refile.org")
+              ("w" "org-protocol" entry (file "~/Dropbox/shahn/org/refile.org")
                "* TODO Review %c\n%U\n" :immediate-finish t)
-              ("m" "Meeting" entry (file "~/Dropbox/org/refile.org")
+              ("m" "Meeting" entry (file "~/Dropbox/shahn/org/refile.org")
                "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
-              ("p" "Phone call" entry (file "~/Dropbox/org/refile.org")
+              ("p" "Phone call" entry (file "~/Dropbox/shahn/org/refile.org")
                "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
-              ("h" "Habit" entry (file "~/Dropbox/org/refile.org")
+              ("h" "Habit" entry (file "~/Dropbox/shahn/org/refile.org")
                "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %a .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
 (defun org-mu4e-store-link ()
 "Store a link to a mu4e query or message."
@@ -253,7 +253,7 @@ link))
   (interactive)
   (save-excursion
     (beginning-of-line 0)
-    (org-remove-empty-drawer-at (point))))
+    (org-remove-empty-drawer-at "LOGBOOK" (point))))
 
 (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
 
@@ -1072,7 +1072,7 @@ as the default task."
           (when bh/keep-clock-running
             (bh/clock-in-default-task)))))))
 
-(defvar bh/organization-task-id "eb155a82-92b2-4f25-a3c6-0304591af2f9")
+(defvar bh/organization-task-id "48d643ae-d0a2-453a-bfa5-90cf1bb5a455")
 
 (defun bh/clock-in-organization-task-as-default ()
   (interactive)
@@ -1126,7 +1126,10 @@ A prefix arg forces clock in of the default task."
 ;; Agenda clock report parameters
 (setq org-agenda-clockreport-parameter-plist
       (quote (:link t :maxlevel 5 :fileskip0 t :compact t :narrow 80)))
-)
+
+
+  )
+
 ;;
 ;; Often the body of an initialize function uses `use-package'
 ;; For more info on `use-package', see readme:

@@ -26,9 +26,9 @@ which require an initialization must be listed explicitly in the list.")
 ;;
 (defun research-config/init-helm-bibtex()
    "Initialize my package"
-   (setq helm-bibtex-bibliography "~/Dropbox/shahn/research-config/latex/zotero.bib")
-   (setq helm-bibtex-library-path "~/Dropbox/shahn/research-config/publications")
-   (setq helm-bibtex-notes-path "~/Dropbox/shahn/research-config/notes")
+   (setq helm-bibtex-bibliography "~/Dropbox/shahn/research/latex/zotero.bib")
+   (setq helm-bibtex-library-path "~/Dropbox/shahn/research/publications")
+   (setq helm-bibtex-notes-path "~/Dropbox/shahn/research/notes")
    (setq helm-bibtex-notes-extension ".org")
    (setq helm-bibtex-pdf-open-function
      (lambda (fpath)
@@ -41,7 +41,7 @@ which require an initialization must be listed explicitly in the list.")
         (default . helm-bibtex-format-citation-default))))
    
    (setq helm-bibtex-additional-search-fields '(keywords journal))
-   (evil-leader/set-key "or" 'helm-bibtex)
+   (evil-leader/set-key "ob" 'helm-bibtex)
    )
 ;;
 ;; Often the body of an initialize function uses `use-package'

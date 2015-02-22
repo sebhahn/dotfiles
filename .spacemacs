@@ -13,6 +13,7 @@
  dotspacemacs-configuration-layers '(python
                                      git
                                      python-config
+                                     custom-org-config
                                      research-config
                                      auctex
                                      company-mode
