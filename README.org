@@ -1,16 +1,21 @@
 * Installation
-clone spacemacs into .emacs.d
 #+BEGIN_SRC shell
-$ cd ~
-$ git init
-$ git remote add origin https://github.com/s-hahn/spacemacs
-$ git pull -u origin master
+$ cd
+$ git clone https://github.com/syl20bnr/spacemacs .emacs.d
+$ mkdir -p ~/.emacs.d/private/snippets
+$ git clone https://github.com/s-hahn/dotfiles
+$ cd dotfiles
 $ git submodule init
 $ git submodule update
-$ ln -s ~/.spacemacs-config/config-layers/* ~/.emacs.d/private
-$ ln -s ~/.spacemacs-config/snippets/* ~/.emacs.d/private/snippets
-$ cd .spacemacs-config/org-mode
+$ ln -s ~/dotfiles/.spacemacs ~/.spacemacs
+$ ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
+$ ln -s ~/dotfiles/.spacemacs-config ~/.spacemacs-config
+$ ln -s ~/dotfiles/.spacemacs-config/config-layers/* ~/.emacs.d/private
+$ ln -s ~/dotfiles/.spacemacs-config/snippets/* ~/.emacs.d/private/snippets
+$ cd ~/dotfiles/.spacemacs-config/org-mode
 $ make autoloads
-$ cd ~/.oh-my-zsh/custom/plugins
+$ ln -s ~/dotfiles/.zshrc ~/.zshrc
+$ ln -s ~/dotfiles/.oh-my-zsh ~/.oh-my-zsh
+$ cd ~/dotfiles/.oh-my-zsh/custom/plugins
 $ git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
 #+END_SRC
