@@ -82,22 +82,14 @@
 preview-scale-function 1.6
  )
 ;; set the default font
-(when (string= system-name "pydev")
+;;(when (string= system-name "shahn")
   ;; work virtual machine
-(setq dotspacemacs-default-font '("Source Code Pro"
-                                  :size 14
-                                          :weight normal
-                                          :width normal
-                                          :powerline-scale 1.3))
-  )
-(when (string= system-name "cp-Lenovo-Yoga-2-Pro")
-  ;; home laptop with hdpi screen
-(setq dotspacemacs-default-font '("Source Code Pro"
-                                  :size 22
-                                          :weight normal
-                                          :width normal
-                                          :powerline-scale 1.3))
-  )
+  (setq dotspacemacs-default-font '("Source Code Pro"
+                                    :size 14
+                                    :weight normal
+                                    :width normal
+                                    :powerline-scale 1.3))
+;;  )
 
 
 ;; Initialization Hooks
@@ -137,6 +129,9 @@ This function is called at the very end of Spacemacs initialization."
 (define-key helm-grep-mode-map (kbd "<return>")  'helm-grep-mode-jump-other-window)
 (define-key helm-grep-mode-map (kbd "n")  'helm-grep-mode-jump-other-window-forward)
 (define-key helm-grep-mode-map (kbd "p")  'helm-grep-mode-jump-other-window-backward)
+
+(evil-leader/set-key "ho" 'helm-occur)
+
 (setq company-idle-delay 0.5)
 (setq flycheck-check-syntax-automatically '(save mode-enabled idle-change))
 (setq flycheck-idle-change-delay 5)
@@ -152,7 +147,6 @@ This function is called at the very end of Spacemacs initialization."
 ;;                 select-window-4
 ;;                 select-window-5)))
 )
-
 
 ;; Custom variables
 ;; ----------------
