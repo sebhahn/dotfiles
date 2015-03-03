@@ -34,7 +34,7 @@ which require an initialization must be listed explicitly in the list.")
   
   (require 'org-ref)
   (require 'jmax-bibtex)
-  (setq org-ref-bibliography-notes "~/Dropbox/shahn/org/paper_notes.org")
+  (setq org-ref-bibliography-notes "~/Dropbox/shahn/org/research/notes/notes.org")
   (setq org-ref-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/library"))
 
   (setq org-src-fontify-natively 1)
