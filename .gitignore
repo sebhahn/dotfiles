@@ -1,7 +1,8 @@
 /*
 *~
 !.spacemacs-config/
-!.zshrc
+!.zshrc.symlink
 !.oh-my-zsh/
-!.tmux.conf
-!latex_gitconfig
+!.tmux.conf.symlink
+!latex_gitconfig.symlink
+!.spacemacs.symlink
