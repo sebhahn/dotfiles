@@ -1,21 +1,2 @@
-* Installation
-#+BEGIN_SRC shell
-$ cd
-$ git clone https://github.com/syl20bnr/spacemacs .emacs.d
-$ mkdir -p ~/.emacs.d/private/snippets
-$ git clone https://github.com/s-hahn/dotfiles
-$ cd dotfiles
-$ git submodule init
-$ git submodule update
-$ ln -s ~/dotfiles/.spacemacs ~/.spacemacs
-$ ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
-$ ln -s ~/dotfiles/.spacemacs-config ~/.spacemacs-config
-$ ln -s ~/dotfiles/.spacemacs-config/config-layers/* ~/.emacs.d/private
-$ ln -s ~/dotfiles/.spacemacs-config/snippets/* ~/.emacs.d/private/snippets
-$ cd ~/dotfiles/.spacemacs-config/org-mode
-$ make autoloads
-$ ln -s ~/dotfiles/.zshrc ~/.zshrc
-$ ln -s ~/dotfiles/.oh-my-zsh ~/.oh-my-zsh
-$ cd ~/dotfiles/.oh-my-zsh/custom/plugins
-$ git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
-#+END_SRC
+* Installation of spacemacs and oh-my-zsh
+clone repository and call INSTALL script

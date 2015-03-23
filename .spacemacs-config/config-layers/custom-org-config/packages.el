@@ -12,9 +12,11 @@
 
 (defvar custom-org-config-packages
   '(
-    org
+    org 
     org-ac
     ox-rst
+    hydra
+    key-chord
     ;; package custom-org-configs go here
     )
   "List of all packages to install and/or initialize. Built-in packages
