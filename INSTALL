@@ -24,7 +24,6 @@ git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 # setup custom configuration layers
 ln -sf $DOTFILES_ROOT/.spacemacs-config/config-layers/* ~/.emacs.d/private
 ln -sf $DOTFILES_ROOT/.spacemacs-config/snippets/* ~/.emacs.d/private/snippets
-ln -sf $DOTFILES_ROOT/.spacemacs-config ~/.spacemacs-config
 
 #setup submodules of this repository
 git submodule init
