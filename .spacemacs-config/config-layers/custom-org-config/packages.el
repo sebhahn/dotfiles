@@ -15,8 +15,6 @@
     org 
     org-ac
     ox-rst
-    hydra
-    key-chord
     ;; package custom-org-configs go here
     )
   "List of all packages to install and/or initialize. Built-in packages
@@ -34,11 +32,6 @@ which require an initialization must be listed explicitly in the list.")
 
 (defun custom-org-config/init-org ()
   
-  (require 'org-ref)
-  (require 'jmax-bibtex)
-  (setq org-ref-bibliography-notes "~/Dropbox/shahn/org/research/notes/notes.org")
-  (setq org-ref-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/library"))
-
   (setq org-src-fontify-natively 1)
   (setq org-agenda-span 'day)
 
