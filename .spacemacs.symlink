@@ -13,10 +13,11 @@
  dotspacemacs-configuration-layers '(python
                                      git
                                      python-config
+                                     org
                                      custom-org-config
                                      research-config
                                      auctex
-                                     company-mode
+                                     auto-completion
                                      markdown
                                      themes-megapack)
  ;; A list of packages and/or extensions that will not be install and loaded.

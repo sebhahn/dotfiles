@@ -13,6 +13,7 @@
 (defvar research-config-packages
   '(
     ;; package research-configs go here
+    hydra
     parsebib
     helm-bibtex
     )
@@ -26,6 +27,12 @@ which require an initialization must be listed explicitly in the list.")
 ;;
 (defun research-config/init-helm-bibtex()
    "Initialize my package"
+    
+   (require 'org-ref)
+   ;; (require 'jmax-bibtex)
+   (setq org-ref-bibliography-notes "~/Dropbox/shahn/org/research/notes/notes.org")
+   (setq org-ref-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/library"))
+
    (setq helm-bibtex-bibliography "~/Dropbox/shahn/research/latex/zotero.bib")
    (setq helm-bibtex-library-path "~/Dropbox/shahn/research/publications")
    (setq helm-bibtex-notes-path "~/Dropbox/shahn/research/notes")
