@@ -12,6 +12,7 @@
  ;; List of configuration layers to load.
  dotspacemacs-configuration-layers '(python
                                      git
+                                     syntax-checking
                                      python-config
                                      org
                                      custom-org-config
