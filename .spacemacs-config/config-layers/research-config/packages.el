@@ -13,9 +13,11 @@
 (defvar research-config-packages
   '(
     ;; package research-configs go here
-    hydra
     parsebib
     helm-bibtex
+    reftex
+    ;;hydra
+    key-chord
     )
   "List of all packages to install and/or initialize. Built-in packages
 which require an initialization must be listed explicitly in the list.")
@@ -27,11 +29,16 @@ which require an initialization must be listed explicitly in the list.")
 ;;
 (defun research-config/init-helm-bibtex()
    "Initialize my package"
-    
-   (require 'org-ref)
-   ;; (require 'jmax-bibtex)
-   (setq org-ref-bibliography-notes "~/Dropbox/shahn/org/research/notes/notes.org")
-   (setq org-ref-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/library"))
+
+   (use-package helm-bibtex
+     :defer t
+     :commands helm-bibtex
+     :init
+     (progn
+       (evil-leader/set-key "or" 'helm-bibtex)
+       )
+     :config
+     (progn
 
    (setq helm-bibtex-bibliography "~/Dropbox/shahn/research/latex/zotero.bib")
    (setq helm-bibtex-library-path "~/Dropbox/shahn/research/publications")
@@ -44,11 +51,21 @@ which require an initialization must be listed explicitly in the list.")
       (quote
        ((org-mode . helm-bibtex-format-citation-cite)
         (latex-mode . helm-bibtex-format-citation-cite)
+        (tex-mode . helm-bibtex-format-citation-cite)
         (markdown-mode . helm-bibtex-format-citation-pandoc-citeproc)
         (default . helm-bibtex-format-citation-default))))
-   
+
    (setq helm-bibtex-additional-search-fields '(keywords journal))
-   (evil-leader/set-key "ob" 'helm-bibtex)
+
+   (require 'org-ref)
+   ;;(require 'jmax-bibtex)
+   (setq org-ref-bibliography-notes "~/Dropbox/shahn/org/research/notes/notes.org")
+   (setq org-ref-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/library"))
+
+   (setq org-ref-pdf-directory "~/Dropbox/shahn/research/publications/")
+   (setq reftex-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/library"))
+       )
+     )
    )
 ;;
 ;; Often the body of an initialize function uses `use-package'

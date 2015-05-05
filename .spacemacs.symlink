@@ -10,34 +10,46 @@
  ;; Paths must have a trailing slash (ie. `~/.mycontribs/')
  dotspacemacs-configuration-layer-path '()
  ;; List of configuration layers to load.
- dotspacemacs-configuration-layers '(python
-                                     git
-                                     syntax-checking
-                                     python-config
-                                     org
+ dotspacemacs-configuration-layers '(auctex
+                                     (auto-completion
+                                      :variables
+                                      auto-completion-enable-company-help-tooltip t)
+                                     colors
                                      custom-org-config
-                                     research-config
-                                     auctex
-                                     auto-completion
+                                     (git
+                                      :variables
+                                      git-enable-github-support t)
                                      markdown
+                                     org
+                                     pandoc
+                                     python
+                                     python-config
+                                     research-config
+                                     semantic
+                                     syntax-checking                               
                                      themes-megapack)
  ;; A list of packages and/or extensions that will not be install and loaded.
  dotspacemacs-excluded-packages '()
-)
+
+ ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
+ ;; are declared in a layer which is not a member of
+ ;; the list `dotspacemacs-configuration-layers'
+ dotspacemacs-delete-orphan-packages t)
 
 ;; Settings
 ;; --------
 
 (setq-default
+use-package-verbose t
  ;; Specify the startup banner. If the value is an integer then the
  ;; banner with the corresponding index is used, if the value is `random'
  ;; then the banner is chosen randomly among the available banners, if
  ;; the value is nil then no banner is displayed.
- dotspacemacs-startup-banner 'random
+ dotspacemacs-startup-banner 'official
  ;; List of themes, the first of the list is loaded when spacemacs starts.
  ;; Press <SPC> T n to cycle to the next theme in the list (works great
  ;; with 2 themes variants, one dark and one light)
- dotspacemacs-themes '(zenburn solarized-light monokai adwaita)
+ dotspacemacs-themes '(zenburn adwaita)
  ;; The leader key
  dotspacemacs-leader-key "SPC"
  ;; Major mode leader key is a shortcut key which is the equivalent of
@@ -105,9 +117,10 @@ preview-scale-function 1.6
   (add-to-list 'load-path "~/dotfiles/.spacemacs-config/org-mode/contrib/lisp" t)
   (add-to-list 'load-path "~/dotfiles/.spacemacs-config" t)
   (add-to-list 'load-path "~/dotfiles/.spacemacs-config/org-reveal" t)
-  (add-to-list 'load-path "~/dotfiles/.spacemacs-config/helm-bibtex" t)
   (add-to-list 'load-path "~/dotfiles/.spacemacs-config/org-ref" t)
+  (add-to-list 'load-path "~/dotfiles/.spacemacs-config/helm-bibtex" t)
   (require 'init-packages)
+
   (defun set-exec-path-from-shell-PATH ()
   (let ((path-from-shell (replace-regexp-in-string
                           "[ \t\n]*$"
@@ -122,34 +135,50 @@ preview-scale-function 1.6
 
 (defun dotspacemacs/config ()
   "This is were you can ultimately override default Spacemacs configuration.
-This function is called at the very end of Spacemacs initialization."
-(require 'helm)
-(require 'helm-config)
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebihnd tab to do persistent action
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+   This function is called at the very end of Spacemacs initialization."
+  (use-package helm
+    :defer 5
+    :commands (helm-execute-persistent-action
+               helm-select-action
+               helm-grep-mode-jump-other-window
+               helm-grep-mode-jump-other-window-forward
+               helm-grep-mode-jump-other-window-backward)
+    :config
+    (progn
+        (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebihnd tab to do persistent action
+        (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+        (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+        (define-key helm-map (kbd "C-S-j")  'helm-scroll-other-window)
+        (define-key helm-map (kbd "C-S-k")  'helm-scroll-other-window-down)
+        (define-key helm-grep-mode-map (kbd "<return>")  'helm-grep-mode-jump-other-window)
+        (define-key helm-grep-mode-map (kbd "n")  'helm-grep-mode-jump-other-window-forward)
+        (define-key helm-grep-mode-map (kbd "p")  'helm-grep-mode-jump-other-window-backward)
+        (setq helm-split-window-in-side-p t)
+      )
+    )
+    ;; set terminal command
+    (defun start-term () (interactive) (term "/bin/zsh"))
+    (evil-leader/set-key "at" 'start-term)
 
-(define-key helm-grep-mode-map (kbd "<return>")  'helm-grep-mode-jump-other-window)
-(define-key helm-grep-mode-map (kbd "n")  'helm-grep-mode-jump-other-window-forward)
-(define-key helm-grep-mode-map (kbd "p")  'helm-grep-mode-jump-other-window-backward)
+    (setq flycheck-check-syntax-automatically '(save mode-enabled idle-change))
+    (setq flycheck-idle-change-delay 5)
 
-(evil-leader/set-key "ho" 'helm-occur)
-
-(setq company-idle-delay 0.5)
-(setq flycheck-check-syntax-automatically '(save mode-enabled idle-change))
-(setq flycheck-idle-change-delay 5)
-;; (setq golden-ratio-extra-commands
-;;       (append golden-ratio-extra-commands
-;;               '(evil-window-left
-;;                 evil-window-right
-;;                 evil-window-up
-;;                 evil-window-down
-;;                 select-window-1
-;;                 select-window-2
-;;                 select-window-3
-;;                 select-window-4
-;;                 select-window-5)))
+    (global-set-key (kbd "<C-mouse-4>") 'zoom-frm-in)
+    (global-set-key (kbd "<C-mouse-5>") 'zoom-frm-out)
+    (global-set-key (kbd "C-+") 'zoom-frm-in)
+    (global-set-key (kbd "C--") 'zoom-frm-out)
+    (setq dired-listing-switches "-alhk")
+    (setq dired-listings-switches "-alhk")
+    (setq compilation-finish-function nil)
+    (use-package pytest)
+    ;; Make evil-mode up/down operate in screen lines instead of logical lines
+    (define-key evil-normal-state-map "j" 'evil-next-visual-line)
+    (define-key evil-normal-state-map "k" 'evil-previous-visual-line)
+    ;; Also in visual mode
+    (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+    (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
 )
+
 
 ;; Custom variables
 ;; ----------------
