@@ -53,7 +53,8 @@ which require an initialization must be listed explicitly in the list.")
                mu4e
                bh/org-todo
                bh/widen
-               bh/clock-in-last-task)
+               bh/clock-in-last-task
+               bh/clock-out-maybe)
     :init
     (progn
       (evil-leader/set-key "m'" 'org-edit-src-exit)
@@ -102,11 +103,11 @@ which require an initialization must be listed explicitly in the list.")
       (require 'ox-reveal)
 
       ;; any headline with level <= 2 is a target
-      (setq org-refile-targets '((nil :maxlevel . 2)
+      (setq org-refile-targets '((nil :maxlevel . 5)
                                       ; all top-level headlines in the
                                       ; current buffer are used (first) as a
                                       ; refile target
-                                 (org-agenda-files :maxlevel . 2)))
+                                 (org-agenda-files :maxlevel . 5)))
 
       ;; provide refile targets as paths, including the file name
       ;; (without directory) as level 1 of the path
@@ -224,6 +225,7 @@ which require an initialization must be listed explicitly in the list.")
                     ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
                     ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
                     ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
+
       ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
       (setq org-capture-templates
             (quote (("t" "todo" entry (file "~/Dropbox/shahn/org/refile.org")
