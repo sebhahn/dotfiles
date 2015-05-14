@@ -10,7 +10,7 @@ install_dotfiles () {
   for src in $(find "$DOTFILES_ROOT/" -maxdepth 2 -name '*.symlink')
   do
     dst="$HOME/$(basename "${src%.*}")"
-    ln -s "$src" "$dst"
+    ln -sf "$src" "$dst"
   done
 }
 
@@ -30,3 +30,6 @@ git submodule init
 git submodule update
 cd $DOTFILES_ROOT/.spacemacs-config/org-mode
 make autoloads
+
+# symlink config folder
+# ln -sf $DOTFILES_ROOT/.config/* ~/.config
