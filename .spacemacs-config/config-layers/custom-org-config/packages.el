@@ -170,8 +170,7 @@ which require an initialization must be listed explicitly in the list.")
          (dot . t)
          (R . t)
          (gnuplot . t)
-         (latex . t)
-         (shell . t))
+         (latex . t))
        )
 
       (setq org-confirm-babel-evaluate nil)
@@ -285,7 +284,7 @@ which require an initialization must be listed explicitly in the list.")
         (interactive)
         (save-excursion
           (beginning-of-line 0)
-          (org-remove-empty-drawer-at (point))))
+          (org-remove-empty-drawer-at "LOGBOOK" (point))))
 
       (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
 
