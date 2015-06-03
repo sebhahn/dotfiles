@@ -10,24 +10,40 @@
  ;; Paths must have a trailing slash (ie. `~/.mycontribs/')
  dotspacemacs-configuration-layer-path '()
  ;; List of configuration layers to load.
- dotspacemacs-configuration-layers '(auctex
+ dotspacemacs-configuration-layers '(ansible
+                                     auctex
                                      (auto-completion
                                       :variables
-                                      auto-completion-enable-company-help-tooltip t)
+                                      auto-completion-enable-help-tooltip t)
+                                     chrome
+                                     clojure
                                      colors
                                      custom-org-config
+                                     emacs-lisp
+                                     erc
+                                     eyebrowse
+                                     games
                                      (git
                                       :variables
                                       git-enable-github-support t)
+                                     gnus
+                                     html
+                                     lua
                                      markdown
                                      org
                                      pandoc
                                      python
                                      python-config
+                                     racket
                                      research-config
                                      semantic
+                                     (shell
+                                      :variables
+                                      shell-default-shell 'term
+                                      shell-default-term-shell "/bin/zsh")
                                      syntax-checking
-                                     themes-megapack)
+                                     themes-megapack
+                                     tmux)
  ;; A list of packages and/or extensions that will not be install and loaded.
  dotspacemacs-excluded-packages '()
 
@@ -177,6 +193,7 @@ preview-scale-function 1.6
     ;; Also in visual mode
     (define-key evil-visual-state-map "j" 'evil-next-visual-line)
     (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+    (setq doc-view-resolution 300)
 )
 
 
