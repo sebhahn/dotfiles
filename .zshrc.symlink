@@ -50,7 +50,8 @@ plugins=(git command-not-found debian dirhistory pip python wd zsh-syntax-highli
 # User configuration
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-# export MANPATH="/usr/local/man:$MANPATH"
+export PATH=$HOME/.cabal/bin:$PATH
+ #export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
