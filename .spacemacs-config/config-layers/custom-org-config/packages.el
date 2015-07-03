@@ -146,6 +146,10 @@ which require an initialization must be listed explicitly in the list.")
            "biber %b"
            "pdflatex -interaction nonstopmode -shell-escape -output-directory %o %f"
            "pdflatex -interaction nonstopmode -shell-escape -output-directory %o %f")))
+      ;; (quote
+      ;;  ("xelatex %o %f"
+      ;;   "biber %b"
+      ;;   "xelatex %o %f")))
 
       (setq org-latex-table-caption-above nil)
       (setq org-html-table-caption-above nil)
