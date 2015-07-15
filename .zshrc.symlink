@@ -51,7 +51,7 @@ plugins=(git command-not-found debian dirhistory pip python wd zsh-syntax-highli
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$HOME/.cabal/bin:$PATH
- #export MANPATH="/usr/local/man:$MANPATH"
+# export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -60,6 +60,8 @@ export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_HOOK_DIR=$HOME/dotfiles/python/venvwrapperhooks
 export PROJECT_HOME=$HOME/workspace
 source /usr/local/bin/virtualenvwrapper.sh
+
+export no_proxy=dvlp1.ipf.tuwien.ac.at,$no_proxy
 
 # set full color terminal
 export TERM=xterm-256color
