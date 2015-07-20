@@ -11,7 +11,6 @@
  dotspacemacs-configuration-layer-path '()
  ;; List of configuration layers to load.
  dotspacemacs-configuration-layers '(ansible
-                                     auctex
                                      (auto-completion
                                       :variables
                                       auto-completion-enable-help-tooltip t)
@@ -23,11 +22,11 @@
                                      erc
                                      eyebrowse
                                      games
-                                     (git
-                                      :variables
-                                      git-enable-github-support t)
+                                     git
+                                     github
                                      gnus
                                      html
+                                     latex
                                      lua
                                      markdown
                                      org
