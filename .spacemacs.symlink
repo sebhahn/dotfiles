@@ -19,7 +19,9 @@
                                      colors
                                      custom-org-config
                                      emacs-lisp
+                                     elixir
                                      erc
+                                     erlang
                                      eyebrowse
                                      games
                                      git
@@ -42,7 +44,8 @@
                                       shell-default-term-shell "/bin/zsh")
                                      syntax-checking
                                      themes-megapack
-                                     tmux)
+                                     tmux
+                                     version-control)
  ;; A list of packages and/or extensions that will not be install and loaded.
  dotspacemacs-excluded-packages '()
 
