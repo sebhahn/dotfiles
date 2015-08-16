@@ -36,7 +36,7 @@ ZSH_THEME="af-magic"
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -45,15 +45,12 @@ ZSH_THEME="af-magic"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git command-not-found debian dirhistory pip python wd zsh-syntax-highlighting virtualenv)
+plugins=(atom git github cabal command-not-found cp debian dirhistory emacs extract pip python rsync wakeonlan wd zsh-syntax-highlighting virtualenv virtualenvwrapper ubuntu z)
 
 # User configuration
-
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$HOME/.cabal/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
-
-source $ZSH/oh-my-zsh.sh
 
 # environment variables for virtualenvwrapper
 export WORKON_HOME=$HOME/.virtualenvs
@@ -96,3 +93,12 @@ export EDITOR=vim
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ec="emacsclient $1"
 alias eserv="emacs --daemon"
+
+alias db="cd ~/Dropbox/shahn/"
+alias zs="source ~/.zshrc"
+alias gum="git pull upstream master"
+alias gom="git push origin master"
+
+. ~/z.sh
+
+source $ZSH/oh-my-zsh.sh
