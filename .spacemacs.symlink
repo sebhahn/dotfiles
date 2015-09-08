@@ -48,7 +48,7 @@
                                      tmux
                                      version-control)
  ;; A list of packages and/or extensions that will not be install and loaded.
- dotspacemacs-excluded-packages '()
+ dotspacemacs-excluded-packages '(evil-terminal-cursor-changer)
 
  ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
  ;; are declared in a layer which is not a member of
@@ -113,7 +113,7 @@ use-package-verbose t
  ;; Not used for now.
  dotspacemacs-default-package-repository nil
  ;; set preview in latex files bigger
-preview-scale-function 1.6
+ preview-scale-function 1.6
  )
 ;; set the default font
 ;;(when (string= system-name "shahn")
