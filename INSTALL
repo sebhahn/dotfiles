@@ -28,9 +28,10 @@ ln -sf $DOTFILES_ROOT/.spacemacs-config/snippets/* ~/.emacs.d/private/snippets
 #setup submodules of this repository
 cd ~/.emacs.d
 git submodule init
+git submodule sync
 git submodule update
 cd $DOTFILES_ROOT/.spacemacs-config/org-mode
-make autoloads
+make all
 
 cd $DOTFILES_ROOT
 git clone https://github.com/rupa/z

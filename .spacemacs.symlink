@@ -199,6 +199,7 @@ preview-scale-function 1.6
     (setq doc-view-resolution 300)
 )
 
+(setq dotspacemacs-additional-packages '(org-plus-contrib))
 
 ;; Custom variables
 ;; ----------------
