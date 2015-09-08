@@ -18,7 +18,7 @@ install_dotfiles
 #setup oh-my-zsh
 git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh
 cd ~/.oh-my-zsh/custom/plugins
-git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
+git clone https://github.com/zsh-users/zsh-syntax-highlighting
 #setup spacemacs
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 # setup custom configuration layers
