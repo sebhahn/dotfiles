@@ -58,7 +58,7 @@ export VIRTUALENVWRAPPER_HOOK_DIR=$HOME/dotfiles/python/venvwrapperhooks
 export PROJECT_HOME=$HOME/workspace
 source /usr/local/bin/virtualenvwrapper.sh
 
-# export no_proxy=dvlp1.ipf.tuwien.ac.at,$no_proxy
+export no_proxy=dvlp1.ipf.tuwien.ac.at,$NO_PROXY
 
 # set full color terminal
 export TERM=xterm-256color
