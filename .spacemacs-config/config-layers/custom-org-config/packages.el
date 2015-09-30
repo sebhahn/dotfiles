@@ -1,5 +1,3 @@
-;;; packages.el --- custom-org-config Layer packages File for Spacemacs
-;;
 ;; Copyright (c) 2012-2014 Sylvain Benner
 ;; Copyright (c) 2014-2015 Sylvain Benner & Contributors
 ;;
@@ -254,7 +252,7 @@ which require an initialization must be listed explicitly in the list.")
         (interactive)
         (save-excursion
           (beginning-of-line 0)
-          (org-remove-empty-drawer-at "LOGBOOK" (point))))
+          (org-remove-empty-drawer-at (point))))
 
       (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
 
