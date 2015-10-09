@@ -14,7 +14,8 @@
  dotspacemacs-configuration-layers '(ansible
                                      (auto-completion
                                       :variables
-                                      auto-completion-enable-help-tooltip t)
+                                      auto-completion-enable-snippets-in-popup t
+                                      auto-completion-enable-help-tooltip nil)
                                      chrome
                                      clojure
                                      colors
@@ -38,11 +39,13 @@
                                      python
                                      python-config
                                      research-config
+                                     search-engine
                                      semantic
                                      (shell
                                       :variables
                                       shell-default-shell 'term
                                       shell-default-term-shell "/bin/zsh")
+                                     spell-checking
                                      syntax-checking
                                      themes-megapack
                                      tmux
