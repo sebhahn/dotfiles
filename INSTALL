@@ -15,24 +15,27 @@ install_dotfiles () {
 }
 
 install_dotfiles
+
+#setup submodules of dotfiles
+cd $DOTFILES_ROOT
+git submodule init
+git submodule sync
+git submodule update
+
 #setup oh-my-zsh
-git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh
+ln -sf $DOTFILES_ROOT/z/z.sh ~/z.sh
+ln -sf $DOTFILES_ROOT/.oh-my-zsh ~/.oh-my-zsh
 cd ~/.oh-my-zsh/custom/plugins
 git clone https://github.com/zsh-users/zsh-syntax-highlighting
+
 #setup spacemacs
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 ln -sf $DOTFILES_ROOT/.spacemacs-config/snippets/* ~/.emacs.d/private/snippets
 
-#setup submodules of this repository
+#setup submodules of spacemacs
 cd ~/.emacs.d
 git submodule init
+git submodule sync
 git submodule update
 cd $DOTFILES_ROOT/.spacemacs-config/org-mode
-make all
-
-cd $DOTFILES_ROOT
-git clone https://github.com/rupa/z
-ln -sf $DOTFILES_ROOT/z/z.sh ~/z.sh
-
-# symlink config folder
-# ln -sf $DOTFILES_ROOT/.config/* ~/.config
+make autoloads
