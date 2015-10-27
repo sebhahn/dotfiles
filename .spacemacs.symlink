@@ -126,11 +126,21 @@
 
     (if window-system (setq dotspacemacs-mode-line-unicode-symbols t))
 
-   (setq dotspacemacs-default-font '("Hack"
-                                    :size 15
-                                    :weight normal
-                                    :width normal
-                                    :powerline-scale 1.4))
+    (when (string= system-name "shahn-T450s")
+      (setq dotspacemacs-default-font '("Hack"
+                                        :size 19
+                                        :weight normal
+                                        :width normal
+                                        :powerline-scale 1.4))
+      )
+
+    (when (string= system-name "shahn")
+      (setq dotspacemacs-default-font '("Hack"
+                                        :size 16
+                                        :weight normal
+                                        :width normal
+                                        :powerline-scale 1.4))
+      )
 
   (add-to-list 'load-path "~/dotfiles/.spacemacs-config/org-mode/lisp")
   (add-to-list 'load-path "~/dotfiles/.spacemacs-config/org-mode/contrib/lisp" t)
