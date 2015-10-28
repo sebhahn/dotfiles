@@ -16,8 +16,9 @@
     parsebib
     helm-bibtex
     reftex
-    ;;hydra
+    hydra
     key-chord
+    interleave
     )
   "List of all packages to install and/or initialize. Built-in packages
 which require an initialization must be listed explicitly in the list.")
@@ -29,7 +30,6 @@ which require an initialization must be listed explicitly in the list.")
 ;;
 (defun research-config/init-helm-bibtex()
    "Initialize my package"
-
    (use-package helm-bibtex
      :defer t
      :commands helm-bibtex
@@ -46,7 +46,7 @@ which require an initialization must be listed explicitly in the list.")
    (setq helm-bibtex-notes-extension ".org")
    (setq helm-bibtex-pdf-open-function
      (lambda (fpath)
-       (start-process "okular" "*okular*" "okular" fpath)))
+       (start-process "evince" "*evince*" "evince" fpath)))
    (setq helm-bibtex-format-citation-functions
       (quote
        ((org-mode . helm-bibtex-format-citation-cite)
@@ -57,16 +57,41 @@ which require an initialization must be listed explicitly in the list.")
 
    (setq helm-bibtex-additional-search-fields '(keywords journal))
 
-   (require 'org-ref)
-   ;;(require 'jmax-bibtex)
-   (setq org-ref-bibliography-notes "~/Dropbox/shahn/org/research/notes/notes.org")
-   (setq org-ref-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/library"))
+   ;; setup org-ref
 
-   (setq org-ref-pdf-directory "~/Dropbox/shahn/research/publications/")
-   (setq reftex-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/library"))
+   (require 'org-ref)
+   (require 'jmax-bibtex)
+   (setq org-ref-bibliography-notes "/home/shahn/Dropbox/shahn/research/notes/notes.org")
+   (setq org-ref-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/zotero"))
+   (setq org-ref-pdf-directory "/home/shahn/Dropbox/shahn/research/publications")
+   (setq reftex-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/zotero"))
+
+   (defun helm-bibtex-interleave-edit-notes (key)
+     "Open the notes associated with the entry using `find-file'."
+     (let ((path (f-join helm-bibtex-notes-path (s-concat key helm-bibtex-notes-extension))))
+       (find-file path)
+       (unless  (file-exists-p path)
+         (insert (concat "#+INTERLEAVE_PDF: " (f-join helm-bibtex-library-path (s-concat key ".pdf")))))))
+   (helm-delete-action-from-source "Edit notes" helm-source-bibtex)
+   (helm-add-action-to-source "Edit notes" 'helm-bibtex-interleave-edit-notes helm-source-bibtex 7)
        )
      )
    )
+
+
+(defun research-config/init-hydra ()
+  (use-package hydra
+    :defer t))
+
+(defun research-config/init-key-chord ()
+  (use-package key-chord
+    :defer t))
+
+(defun research-config/init-interleave ()
+  (use-package key-chord
+    :commands interleave
+    :defer t
+    ))
 ;;
 ;; Often the body of an initialize function uses `use-package'
 ;; For more info on `use-package', see readme:

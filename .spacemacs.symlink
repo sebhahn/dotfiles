@@ -36,7 +36,10 @@
                                      markdown
                                      org
                                      pandoc
-                                     python
+                                     (python
+                                      :variables
+                                      python-enable-yapf-format-on-save nil
+                                      python-test-runner 'pytest)
                                      python-config
                                      research-config
                                      search-engine
@@ -51,7 +54,8 @@
                                      tmux
                                      version-control)
  ;; A list of packages and/or extensions that will not be install and loaded.
- dotspacemacs-excluded-packages '(evil-terminal-cursor-changer)
+ dotspacemacs-excluded-packages '(evil-terminal-cursor-changer
+                                  org-plus-contrib)
 
  ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
  ;; are declared in a layer which is not a member of
@@ -148,7 +152,6 @@
   (add-to-list 'load-path "~/dotfiles/.spacemacs-config/org-reveal" t)
   (add-to-list 'load-path "~/dotfiles/.spacemacs-config/org-ref" t)
   (add-to-list 'load-path "~/dotfiles/.spacemacs-config/helm-bibtex" t)
-  (require 'init-packages)
 
   (defun set-exec-path-from-shell-PATH ()
   (let ((path-from-shell (replace-regexp-in-string

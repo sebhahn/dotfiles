@@ -140,12 +140,12 @@ which require an initialization must be listed explicitly in the list.")
                    ("linenos" "")))
 
       ;; setup of latex processing
+
       (setq org-latex-pdf-process
-         (quote
-          ("pdflatex -interaction nonstopmode -shell-escape -output-directory %o %f"
-           "biber %b"
-           "pdflatex -interaction nonstopmode -shell-escape -output-directory %o %f"
-           "pdflatex -interaction nonstopmode -shell-escape -output-directory %o %f")))
+            '("pdflatex -interaction nonstopmode -output-directory %o %f"
+              "bibtex %b"
+              "pdflatex -interaction nonstopmode -output-directory %o %f"
+              "pdflatex -interaction nonstopmode -output-directory %o %f"))
       ;; (quote
       ;;  ("xelatex %o %f"
       ;;   "biber %b"
