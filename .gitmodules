@@ -12,7 +12,7 @@
 	url = https://github.com/jkitchin/org-ref
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
-	url = https://github.com/robbyrussell/oh-my-zsh.git
+	url = git@github.com:sebhahn/oh-my-zsh.git
 [submodule "z"]
 	path = z
 	url = https://github.com/rupa/z
