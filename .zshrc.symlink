@@ -99,6 +99,11 @@ alias zs="source ~/.zshrc"
 alias gum="git pull upstream master"
 alias gom="git push origin master"
 
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 . ~/z.sh
 
 source $ZSH/oh-my-zsh.sh
+
