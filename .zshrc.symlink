@@ -102,3 +102,11 @@ alias gom="git push origin master"
 . ~/z.sh
 
 source $ZSH/oh-my-zsh.sh
+
+if [[ -e $HOME/.mntrc ]]; then
+  source $HOME/.mntrc
+fi
+ 
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
