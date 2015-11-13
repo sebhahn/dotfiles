@@ -16,3 +16,6 @@
 [submodule "z"]
 	path = z
 	url = https://github.com/rupa/z
+[submodule ".spacemacs-config/atom-one-dark-theme"]
+	path = .spacemacs-config/atom-one-dark-theme
+	url = https://github.com/jonathanchu/atom-one-dark-theme
