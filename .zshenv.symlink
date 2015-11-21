@@ -1,0 +1,23 @@
+# User configuration
+
+export ZSH=$HOME/.oh-my-zsh
+# export MANPATH="/usr/local/man:$MANPATH"
+
+export TERM=xterm-256color
+export EDITOR=vim
+
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# cabal
+export PATH=$HOME/.cabal/bin:$PATH
+
+# pyenv
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# environment variables for virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_HOOK_DIR=$HOME/dotfiles/python/venvwrapperhooks
+export PROJECT_HOME=$HOME/workspace
+source /usr/local/bin/virtualenvwrapper.sh

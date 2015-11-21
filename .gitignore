@@ -4,6 +4,7 @@
 !python/
 !.spacemacs-config/
 !.zshrc.symlink
+!.zshenv.symlink
 !.oh-my-zsh/
 !.tmux.conf.symlink
 !latex_gitconfig.symlink
