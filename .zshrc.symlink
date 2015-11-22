@@ -1,4 +1,4 @@
-source .zshenv
+source $HOME/.zshenv
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -92,3 +92,9 @@ source $ZSH/oh-my-zsh.sh
 if [[ -e $HOME/.mntrc ]]; then
   source $HOME/.mntrc
 fi
+
+# environment variables for virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_HOOK_DIR=$HOME/dotfiles/python/venvwrapperhooks
+export PROJECT_HOME=$HOME/workspace
+source /usr/local/bin/virtualenvwrapper.sh
