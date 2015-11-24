@@ -2,6 +2,7 @@
 *~
 !gitproxy
 !python/
+!pandoc/
 !.spacemacs-config/
 !.zshrc.symlink
 !.zshenv.symlink
