@@ -4,7 +4,7 @@ source $HOME/.zshenv
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="af-magic"
+ZSH_THEME="pure"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -44,7 +44,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(atom git github cabal command-not-found cp debian dirhistory extract pip python rsync wakeonlan wd zsh-syntax-highlighting virtualenv virtualenvwrapper ubuntu z)
+plugins=(atom git github cabal command-not-found cp debian dirhistory extract pip pyenv python rsync wakeonlan wd zsh-syntax-highlighting ubuntu z)
 
 # set full color terminal
 # export TERM=xterm-256color
@@ -94,7 +94,7 @@ if [[ -e $HOME/.mntrc ]]; then
 fi
 
 # environment variables for virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVWRAPPER_HOOK_DIR=$HOME/dotfiles/python/venvwrapperhooks
-export PROJECT_HOME=$HOME/workspace
-source /usr/local/bin/virtualenvwrapper.sh
+# export WORKON_HOME=$HOME/.virtualenvs
+# export VIRTUALENVWRAPPER_HOOK_DIR=$HOME/dotfiles/python/venvwrapperhooks
+# export PROJECT_HOME=$HOME/workspace
+# source /usr/local/bin/virtualenvwrapper.sh
