@@ -33,7 +33,6 @@ cd ~/.oh-my-zsh/custom/
 git clone https://github.com/sindresorhus/pure
 mv pure/pure.zsh pure.zsh-theme
 mv pure/async.zsh async.zsh
-rm ~/.oh-my-zsh/themes/pure.zsh-theme
 
 #setup spacemacs
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
