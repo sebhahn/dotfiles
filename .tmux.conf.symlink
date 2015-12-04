@@ -1,8 +1,6 @@
 set-option -g default-shell /bin/zsh
 # set terminal to 256 colors
 #set -g default-terminal "screen-256color"
-# load powerline
-source ~/vimide/powerline/powerline/bindings/tmux/powerline.conf
 #
 set -sg escape-time 0
 #
@@ -89,8 +87,6 @@ bind ^L refresh-client
 # More straight forward key bindings for splitting
 unbind %
 bind | split-window -h
-bind v split-window -h
-unbind '"'
 bind - split-window -v
 bind / command-prompt "split-window 'exec %%'"
 bind S command-prompt "new-window -n %1 'ssh %1'"
@@ -103,18 +99,21 @@ set -g set-titles on
 set -g set-titles-string '#S:#I.#P #W'
 
 # powerline setup
-#set-option -g status-bg colour235
-#set-option -g status on
-#set-option -g status-interval 2
-#set-option -g status-utf8 on
-#set-option -g status-justify "centre"
-#set-option -g status-left-length 80
-#set-option -g status-right-length 50
-#set-option -g status-left "#(~/vimide/tmux-powerline/powerline.sh left)"
-#set-option -g status-right "#(~/vimide/tmux-powerline/powerline.sh right)"
+set-option -g status-bg colour235
+set-option -g status-fg colour24
+set -g status-attr bright
+set-option -g status on
+set-option -g status-interval 2
+set-option -g status-utf8 on
+set-option -g status-justify "centre"
+set-option -g status-left-length 80
+set-option -g status-right-length 50
 
-#set-window-option -g window-status-current-format "#[fg=colour24, bg=colour235]⮂#[fg=colour255, bg=colour24] #I | #W #[fg=colour24, bg=colour235]⮀"
-#set-window-option -g window-status-format "#[fg=colour250, bg=colour235] #I|#W "
+set -g status-left '#[fg=colour255, bg=colour24] #(date +"%H:%M") #[fg=colour24, bg=colour32]#[fg=colour255, bg=colour32] [#S] #[fg=colour32, bg=colour235]'
+set -g status-right '#[fg=colour32, bg=colour235]#[fg=colour255, bg=colour32] #H #[fg=colour24, bg=colour32]#[fg=colour255, bg=colour24] #(date +"%F") '
+
+set-window-option -g window-status-current-format "#[fg=colour24, bg=colour235]#[fg=colour255, bg=colour24] #I | #W #[fg=colour24, bg=colour235]"
+set-window-option -g window-status-format "#[fg=colour250, bg=colour24] #I|#W "
 
 # Notifying if other windows has activities
 setw -g monitor-activity on
@@ -132,8 +131,7 @@ set -g mouse-select-window on
 setw -g mode-mouse on
 
 # " windowlist -b
-unbind '"'
-bind '"' choose-window
+bind a choose-window
 
 # act like vim
 setw -g mode-keys vi
@@ -147,8 +145,38 @@ bind -t vi-copy v begin-selection
 bind -t vi-copy y copy-selection
 bind -t vi-copy Escape cancel
 
+# to paste
+bind-key C-v run "xsel -o | tmux load-buffer - ; tmux paste-buffer"
+
 setw -g display-panes-time 2000
 bind ^s display-panes \; command-prompt "swap-pane -s %1"
+# panes start at 1
+set -g base-index 1
+set -g pane-base-index 1
+
+bind c new-window -c '#{pane_current_path}'
+bind C-p last-window
+
+set-option -g mouse-select-pane on
+set-option -g mouse-resize-pane on
+set-option -g mouse-select-window on
+
+# smart pane switching with awareness of emacs splits
+bind -n C-h run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim(diff)?$|emacs.*$' && tmux send-keys C-h) || tmux select-pane -L"
+bind -n C-j run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim(diff)?$|emacs.*$' && tmux send-keys C-j) || tmux select-pane -D"
+bind -n C-k run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim(diff)?$|emacs.*$' && tmux send-keys C-k) || tmux select-pane -U"
+bind -n C-l run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim(diff)?$|emacs.*$' && tmux send-keys C-l) || tmux select-pane -R"
+
+bind-key v split-window -h -c "#{pane_current_path}"
+bind-key s split-window -v -c "#{pane_current_path}"
+bind - resize-pane -U 2
+bind _ resize-pane -U 16
+bind = resize-pane -D 2
+bind + resize-pane -D 16
+bind 9 resize-pane -L 6
+bind ( resize-pane -L 24
+bind 0 resize-pane -R 6
+bind ) resize-pane -R 24
 
 set -g detach-on-destroy off
 setw -g alternate-screen off
