@@ -22,11 +22,13 @@ git submodule init
 git submodule sync
 git submodule update
 
+#setup pyenv
+ln -sf $DOTFILES_ROOT/.pyenv ~/.pyenv
+
 #setup oh-my-zsh
 ln -sf $DOTFILES_ROOT/z/z.sh ~/z.sh
 ln -sf $DOTFILES_ROOT/.oh-my-zsh ~/.oh-my-zsh
 cd ~/.oh-my-zsh/custom/plugins
-git clone https://github.com/zsh-users/zsh-syntax-highlighting
 
 #setup pure theme for zsh
 cd ~/.oh-my-zsh/custom/
@@ -37,6 +39,10 @@ mv pure/async.zsh async.zsh
 #setup spacemacs
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 ln -sf $DOTFILES_ROOT/.spacemacs-config/snippets/* ~/.emacs.d/private/snippets
+
+#setup terminal theme
+cd $DOTFILES_ROOT
+bash terminal-theme.sh
 
 #setup submodules of spacemacs
 cd ~/.emacs.d

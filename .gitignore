@@ -12,3 +12,7 @@
 !.spacemacs.symlink
 !INSTALL
 !z
+!.pyenv
+!.Xdefaults.symlink
+!terminal-theme.sh
+!.local
