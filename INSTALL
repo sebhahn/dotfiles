@@ -22,13 +22,21 @@ git submodule init
 git submodule sync
 git submodule update
 
-#setup pyenv
+#setup pyenv and submodules
 ln -sf $DOTFILES_ROOT/.pyenv ~/.pyenv
+cd $DOTFILES_ROOT/.pyenv
+git submodule init
+git submodule sync
+git submodule update
 
-#setup oh-my-zsh
+#setup oh-my-zsh and submodules
+cd $DOTFILES_ROOT
 ln -sf $DOTFILES_ROOT/z/z.sh ~/z.sh
 ln -sf $DOTFILES_ROOT/.oh-my-zsh ~/.oh-my-zsh
-cd ~/.oh-my-zsh/custom/plugins
+cd $DOTFILES_ROOT/.oh-my-zsh
+git submodule init
+git submodule sync
+git submodule update
 
 #setup pure theme for zsh
 cd ~/.oh-my-zsh/custom/
@@ -36,18 +44,16 @@ git clone https://github.com/sindresorhus/pure
 mv pure/pure.zsh pure.zsh-theme
 mv pure/async.zsh async.zsh
 
-#setup spacemacs
+#setup spacemacs and submodules
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 ln -sf $DOTFILES_ROOT/.spacemacs-config/snippets/* ~/.emacs.d/private/snippets
-
-#setup terminal theme
-cd $DOTFILES_ROOT
-bash terminal-theme.sh
-
-#setup submodules of spacemacs
 cd ~/.emacs.d
 git submodule init
 git submodule sync
 git submodule update
 cd $DOTFILES_ROOT/.spacemacs-config/org-mode
 make autoloads
+
+#setup terminal theme
+cd $DOTFILES_ROOT
+bash terminal-theme.sh
