@@ -132,10 +132,10 @@
 
     (when (string= system-name "shahn-T450s")
       (setq dotspacemacs-default-font '("Hack"
-                                        :size 17
+                                        :size 16
                                         :weight normal
                                         :width normal
-                                        :powerline-scale 1.4))
+                                        :powerline-scale 1.35))
       )
 
     (when (string= system-name "shahn.ipf.tuwien.ac.at")
