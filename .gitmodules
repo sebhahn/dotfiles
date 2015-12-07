@@ -19,3 +19,6 @@
 [submodule ".spacemacs-config/atom-one-dark-theme"]
 	path = .spacemacs-config/atom-one-dark-theme
 	url = https://github.com/jonathanchu/atom-one-dark-theme
+[submodule ".pyenv"]
+	path = .pyenv
+	url = git@github.com:sebhahn/pyenv.git
