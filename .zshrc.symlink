@@ -93,6 +93,20 @@ if [[ -e $HOME/.mntrc ]]; then
   source $HOME/.mntrc
 fi
 
+
+# bind C-j and C-k to up-down in history
+bindkey '^k' up-history
+bindkey '^j' down-history
+
+# Show human friendly numbers and colors
+alias df='df -h'
+alias du='du -h -d 2'
+
+# search for files in current folder
+alias lsg='ls | grep'
+alias llg='ll | grep'
+alias lag='la | grep'
+
 # environment variables for virtualenvwrapper
 # export WORKON_HOME=$HOME/.virtualenvs
 # export VIRTUALENVWRAPPER_HOOK_DIR=$HOME/dotfiles/python/venvwrapperhooks
