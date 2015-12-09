@@ -140,10 +140,10 @@
 
     (when (string= system-name "shahn.ipf.tuwien.ac.at")
       (setq dotspacemacs-default-font '("Hack"
-                                        :size 17
+                                        :size 14
                                         :weight normal
                                         :width normal
-                                        :powerline-scale 1.35))
+                                        :powerline-scale 1.25))
       )
 
   (add-to-list 'load-path "~/dotfiles/.spacemacs-config/org-mode/lisp")
