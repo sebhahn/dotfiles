@@ -21,6 +21,7 @@
                                      colors
                                      custom-org-config
                                      emacs-lisp
+                                     email
                                      elixir
                                      erc
                                      erlang
@@ -34,6 +35,9 @@
                                      latex
                                      lua
                                      markdown
+                                     (mu4e
+                                      :variables
+                                      mu4e-installation-path "/usr/local/share/emacs/site-lisp")
                                      org
                                      pandoc
                                      (python
@@ -54,8 +58,7 @@
                                      tmux
                                      version-control)
  ;; A list of packages and/or extensions that will not be install and loaded.
- dotspacemacs-excluded-packages '(evil-terminal-cursor-changer
-                                  org-plus-contrib)
+ dotspacemacs-excluded-packages '(evil-terminal-cursor-changer)
 
  ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
  ;; are declared in a layer which is not a member of
@@ -80,7 +83,7 @@
     ;; List of themes, the first of the list is loaded when spacemacs starts.
     ;; Press <SPC> T n to cycle to the next theme in the list (works great
     ;; with 2 themes variants, one dark and one light)
-    dotspacemacs-themes '(atom-one-dark zenburn)
+    dotspacemacs-themes '(zenburn atom-one-dark)
     ;; The leader key
     dotspacemacs-leader-key "SPC"
     ;; Major mode leader key is a shortcut key which is the equivalent of
@@ -220,6 +223,50 @@
     (define-key evil-visual-state-map "j" 'evil-next-visual-line)
     (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
     (setq doc-view-resolution 300)
+
+    (setq mu4e-account-alist
+          '(("gmail"
+             ;; Under each account, set the account-specific variables you want.
+             (mu4e-sent-messages-behavior delete)
+             (mu4e-sent-folder "/gmail/[Gmail]/.Sent Mail")
+             (mu4e-drafts-folder "/gmail/[Gmail]/.Drafts")
+             (user-mail-address "sebastian.hahn@gmail.com")
+             (user-full-name "Sebastian Hahn"))
+            ("geo"
+             (mu4e-sent-messages-behavior sent)
+             (mu4e-sent-folder "/geo/Sent Items")
+             (mu4e-drafts-folder "/geo/Drafts")
+             (user-mail-address "sebastian.hahn@geo.tuwien.ac.at")
+             (user-full-name "Sebastian Hahn"))))
+    (mu4e/mail-account-reset)
+
+    ;;; Set up some common mu4e variables
+    (setq mu4e-maildir "~/.mail"
+          mu4e-trash-folder "/Trash"
+          mu4e-refile-folder "/Archive"
+          mu4e-get-mail-command "mbsync -a"
+          mu4e-update-interval nil
+          mu4e-compose-signature-auto-include nil
+          mu4e-view-show-images t
+          mu4e-view-show-addresses t)
+
+    ;;; Mail directory shortcuts
+    (setq mu4e-maildir-shortcuts
+          '(("/gmail/INBOX" . ?g)
+            ("/geo/INBOX" . ?c)))
+
+    ;;; Bookmarks
+    (setq mu4e-bookmarks
+          `(("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
+            ("date:today..now" "Today's messages" ?t)
+            ("date:7d..now" "Last 7 days" ?w)
+            ("mime:image/*" "Messages with images" ?p)
+            (,(mapconcat 'identity
+                         (mapcar
+                          (lambda (maildir)
+                            (concat "maildir:" (car maildir)))
+                          mu4e-maildir-shortcuts) " OR ")
+             "All inboxes" ?i)))
 )
 
 
