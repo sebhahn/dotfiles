@@ -55,6 +55,7 @@
                                      spell-checking
                                      syntax-checking
                                      themes-megapack
+                                     theming
                                      tmux
                                      version-control)
  ;; A list of packages and/or extensions that will not be install and loaded.
@@ -83,7 +84,7 @@
     ;; List of themes, the first of the list is loaded when spacemacs starts.
     ;; Press <SPC> T n to cycle to the next theme in the list (works great
     ;; with 2 themes variants, one dark and one light)
-    dotspacemacs-themes '(zenburn atom-one-dark)
+    dotspacemacs-themes '(base16-tomorrow-dark zenburn)
     ;; The leader key
     dotspacemacs-leader-key "SPC"
     ;; Major mode leader key is a shortcut key which is the equivalent of
@@ -129,7 +130,15 @@
     ;; set preview in latex files bigger
     preview-scale-function 1.6
 
-    dotspacemacs-mode-line-unicode-symbols nil)
+    dotspacemacs-mode-line-unicode-symbols nil
+
+    theming-modifications
+    '((sanityinc-tomorrow-eighties
+       ;; Font locking
+       (font-lock-string-face :foreground "#99cc99")
+       (font-lock-type-face :foreground "#cc99cc")
+       (font-lock-function-name-face :foreground "#6699cc")))
+    )
 
     (if window-system (setq dotspacemacs-mode-line-unicode-symbols t))
 
@@ -225,17 +234,10 @@
     (setq doc-view-resolution 300)
 
     (setq mu4e-account-alist
-          '(("gmail"
-             ;; Under each account, set the account-specific variables you want.
-             (mu4e-sent-messages-behavior delete)
-             (mu4e-sent-folder "/gmail/[Gmail].Sent Mail")
-             (mu4e-drafts-folder "/gmail/[Gmail].Drafts")
-             (user-mail-address "sebastian.hahn@gmail.com")
-             (user-full-name "Sebastian Hahn"))
-            ("geo"
+          '(("TU"
              (mu4e-sent-messages-behavior sent)
-             (mu4e-sent-folder "/geo/Sent Items")
-             (mu4e-drafts-folder "/geo/Drafts")
+             (mu4e-sent-folder "/TU/Sent Items")
+             (mu4e-drafts-folder "/TU/Drafts")
              (user-mail-address "sebastian.hahn@geo.tuwien.ac.at")
              (user-full-name "Sebastian Hahn"))))
     (mu4e/mail-account-reset)
@@ -252,8 +254,7 @@
 
     ;;; Mail directory shortcuts
     (setq mu4e-maildir-shortcuts
-          '(("/gmail/INBOX" . ?g)
-            ("/geo/INBOX" . ?c)))
+          '(("/TU/INBOX" . ?c)))
 
     ;;; Bookmarks
     (setq mu4e-bookmarks
