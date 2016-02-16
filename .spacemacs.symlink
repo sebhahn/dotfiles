@@ -140,7 +140,7 @@
     ;;    (font-lock-function-name-face :foreground "#6699cc"))
     ;;   (base16-tomorrow-dark
     ;;    (default :background "#2d2d2d")))
-    ;; )
+)
 
     (if window-system (setq dotspacemacs-mode-line-unicode-symbols t))
 
