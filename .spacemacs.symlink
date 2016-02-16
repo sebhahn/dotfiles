@@ -152,7 +152,7 @@
                                         :powerline-scale 1.25))
       )
 
-    (when (string= system-name "shahn.ipf.tuwien.ac.at")
+    (when (string= system-name "shahn")
       (setq dotspacemacs-default-font '("Hack"
                                         :size 14
                                         :weight normal
