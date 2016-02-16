@@ -132,15 +132,15 @@
 
     dotspacemacs-mode-line-unicode-symbols nil
 
-    theming-modifications
-    '((sanityinc-tomorrow-eighties
-       ;; Font locking
-       (font-lock-string-face :foreground "#99cc99")
-       (font-lock-type-face :foreground "#cc99cc")
-       (font-lock-function-name-face :foreground "#6699cc"))
-      (base16-tomorrow-dark
-       (default :background "#2d2d2d")))
-    )
+    ;; theming-modifications
+    ;; '((sanityinc-tomorrow-eighties
+    ;;    ;; Font locking
+    ;;    (font-lock-string-face :foreground "#99cc99")
+    ;;    (font-lock-type-face :foreground "#cc99cc")
+    ;;    (font-lock-function-name-face :foreground "#6699cc"))
+    ;;   (base16-tomorrow-dark
+    ;;    (default :background "#2d2d2d")))
+    ;; )
 
     (if window-system (setq dotspacemacs-mode-line-unicode-symbols t))
 
