@@ -19,6 +19,7 @@
     hydra
     key-chord
     interleave
+    org-ref
     )
   "List of all packages to install and/or initialize. Built-in packages
 which require an initialization must be listed explicitly in the list.")
@@ -57,15 +58,6 @@ which require an initialization must be listed explicitly in the list.")
 
    (setq helm-bibtex-additional-search-fields '(keywords journal))
 
-   ;; setup org-ref
-
-   (require 'org-ref)
-   (require 'jmax-bibtex)
-   (setq org-ref-bibliography-notes "/home/shahn/Dropbox/shahn/research/notes/notes.org")
-   (setq org-ref-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/zotero"))
-   (setq org-ref-pdf-directory "/home/shahn/Dropbox/shahn/research/publications")
-   (setq reftex-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/zotero"))
-
    (defun helm-bibtex-interleave-edit-notes (key)
      "Open the notes associated with the entry using `find-file'."
      (let ((path (f-join helm-bibtex-notes-path (s-concat key helm-bibtex-notes-extension))))
@@ -78,6 +70,18 @@ which require an initialization must be listed explicitly in the list.")
      )
    )
 
+(defun research-config/init-org-ref()
+  "Init org ref package"
+  (use-package org-ref
+    :defer t
+    :config
+
+    (require 'org-ref-bibtex)
+    (setq org-ref-bibliography-notes "/home/shahn/Dropbox/shahn/research/notes/notes.org")
+    (setq org-ref-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/zotero"))
+    (setq org-ref-pdf-directory "/home/shahn/Dropbox/shahn/research/publications")
+    (setq reftex-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/zotero"))
+    ))
 
 (defun research-config/init-hydra ()
   (use-package hydra
