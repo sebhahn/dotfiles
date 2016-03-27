@@ -130,35 +130,23 @@
     ;; set preview in latex files bigger
     preview-scale-function 1.6
 
-    dotspacemacs-mode-line-unicode-symbols nil
-
-    ;; theming-modifications
-    ;; '((sanityinc-tomorrow-eighties
-    ;;    ;; Font locking
-    ;;    (font-lock-string-face :foreground "#99cc99")
-    ;;    (font-lock-type-face :foreground "#cc99cc")
-    ;;    (font-lock-function-name-face :foreground "#6699cc"))
-    ;;   (base16-tomorrow-dark
-    ;;    (default :background "#2d2d2d")))
-)
+    dotspacemacs-mode-line-unicode-symbols nil)
 
     (if window-system (setq dotspacemacs-mode-line-unicode-symbols t))
 
     (when (string= system-name "shahn-T450s")
       (setq dotspacemacs-default-font '("Hack"
-                                        :size 14
+                                        :size 18
                                         :weight normal
                                         :width normal
-                                        :powerline-scale 1.25))
-      )
+                                        :powerline-scale 1.15)))
 
     (when (string= system-name "shahn")
       (setq dotspacemacs-default-font '("Hack"
                                         :size 14
                                         :weight normal
                                         :width normal
-                                        :powerline-scale 1.25))
-      )
+                                        :powerline-scale 1.25)))
 
   (add-to-list 'load-path "~/dotfiles/.spacemacs-config/org-mode/lisp")
   (add-to-list 'load-path "~/dotfiles/.spacemacs-config/org-mode/contrib/lisp" t)
@@ -178,15 +166,6 @@
     (setq exec-path (split-string path-from-shell path-separator))))
 
     (when window-system (set-exec-path-from-shell-PATH))
-
-    (setq gnus-secondary-select-methods
-          '(
-            (nntp "gmane"
-                  (nntp-address "news.gmane.org"))
-            (nntp "news.eternal-september.org")
-            (nntp "nntp.aioe.org")
-            (nntp "news.gwene.org")
-            ))
 )
 
 (defun dotspacemacs/user-config ()
@@ -235,43 +214,7 @@
     (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
     (setq doc-view-resolution 300)
 
-    (setq mu4e-account-alist
-          '(("TU"
-             (mu4e-sent-messages-behavior sent)
-             (mu4e-sent-folder "/TU/Sent Items")
-             (mu4e-drafts-folder "/TU/Drafts")
-             (user-mail-address "sebastian.hahn@geo.tuwien.ac.at")
-             (user-full-name "Sebastian Hahn"))))
-    (mu4e/mail-account-reset)
-
-    ;;; Set up some common mu4e variables
-    (setq mu4e-maildir "~/.mail"
-          mu4e-trash-folder "/Trash"
-          mu4e-refile-folder "/Archive"
-          mu4e-get-mail-command "mbsync -a"
-          mu4e-update-interval nil
-          mu4e-compose-signature-auto-include nil
-          mu4e-view-show-images t
-          mu4e-view-show-addresses t)
-
-    ;;; Mail directory shortcuts
-    (setq mu4e-maildir-shortcuts
-          '(("/TU/INBOX" . ?c)))
-
-    ;;; Bookmarks
-    (setq mu4e-bookmarks
-          `(("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
-            ("date:today..now" "Today's messages" ?t)
-            ("date:7d..now" "Last 7 days" ?w)
-            ("mime:image/*" "Messages with images" ?p)
-            (,(mapconcat 'identity
-                         (mapcar
-                          (lambda (maildir)
-                            (concat "maildir:" (car maildir)))
-                          mu4e-maildir-shortcuts) " OR ")
-             "All inboxes" ?i)))
 )
-
 
 
 ;; Custom variables
