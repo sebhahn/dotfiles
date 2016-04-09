@@ -136,10 +136,10 @@
 
     (when (string= system-name "shahn-T450s")
       (setq dotspacemacs-default-font '("Hack"
-                                        :size 18
+                                        :size 13
                                         :weight normal
                                         :width normal
-                                        :powerline-scale 1.15)))
+                                        :powerline-scale 1)))
 
     (when (string= system-name "shahn")
       (setq dotspacemacs-default-font '("Hack"
