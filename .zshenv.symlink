@@ -9,6 +9,7 @@ export EDITOR=vim
 
 # path
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
+export PATH=/usr/local/texlive/2015/bin/x86_64-linux:$PATH
 
 # cabal
 # export PATH=$HOME/.cabal/bin:$PATH
