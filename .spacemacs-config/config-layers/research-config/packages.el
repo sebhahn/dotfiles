@@ -47,7 +47,7 @@ which require an initialization must be listed explicitly in the list.")
    (setq helm-bibtex-notes-extension ".org")
    (setq helm-bibtex-pdf-open-function
      (lambda (fpath)
-       (start-process "evince" "*evince*" "evince" fpath)))
+       (start-process "okular" "*okular*" "okular" fpath)))
    (setq helm-bibtex-format-citation-functions
       (quote
        ((org-mode . helm-bibtex-format-citation-cite)
