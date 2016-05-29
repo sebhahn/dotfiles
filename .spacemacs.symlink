@@ -135,7 +135,7 @@
     (if window-system (setq dotspacemacs-mode-line-unicode-symbols t))
 
     (when (string= system-name "shahn-T450s")
-      (setq dotspacemacs-default-font '("Hack"
+      (setq dotspacemacs-default-font '("Ubuntu Mono"
                                         :size 13
                                         :weight normal
                                         :width normal
