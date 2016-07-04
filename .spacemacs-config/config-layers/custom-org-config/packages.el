@@ -60,6 +60,7 @@ which require an initialization must be listed explicitly in the list.")
       (evil-leader/set-key "oo" 'org-agenda)
       (evil-leader/set-key "oc" 'org-capture)
       (evil-leader/set-key "or" 'org-refile)
+      (evil-leader/set-key "oa" 'org-toggle-archive-tag)
 
       ;; set punch in and out keys
       (evil-leader/set-key "oI" 'bh/punch-in)
