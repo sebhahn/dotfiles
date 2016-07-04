@@ -16,6 +16,7 @@
                                       :variables
                                       auto-completion-enable-snippets-in-popup t
                                       auto-completion-enable-help-tooltip nil)
+                                     bibtex
                                      chrome
                                      clojure
                                      colors
