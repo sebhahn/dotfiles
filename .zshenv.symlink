@@ -3,6 +3,7 @@ export EDITOR=vim
 
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
 export PATH=/usr/local/texlive/2015/bin/x86_64-linux:$PATH
+export PATH=$HOME/.cabal/bin:$PATH
 
 export no_proxy=dvlp1.ipf.tuwien.ac.at,$no_proxy
 
