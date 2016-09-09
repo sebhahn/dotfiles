@@ -141,7 +141,9 @@ which require an initialization must be listed explicitly in the list.")
                    ("linenos" "")))
 
       ;; setup of latex processing
+      (setq org-latex-pdf-process '("latexmk %f"))
 
+      ;; setup of latex processing
       ;; (setq org-latex-pdf-process
       ;;       '("pdflatex -interaction nonstopmode -output-directory %o %f"
       ;;         "bibtex %b"
@@ -152,15 +154,32 @@ which require an initialization must be listed explicitly in the list.")
       ;;   "biber %b"
       ;;   "xelatex %o %f")))
 
-      ;; setup of latex processing
-      (setq org-latex-pdf-process '("latexmk %f"))
+      ;; setup org-cdlatex minor mode
+      ;; (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
       (setq org-latex-table-caption-above nil)
       (setq org-html-table-caption-above nil)
 
+      ;; remove "inputenc" from default packages as it clashes with xelatex
+      (setf org-latex-default-packages-alist
+            (remove '("AUTO" "inputenc" t) org-latex-default-packages-alist))
+
+      ;; Set a nicer default style for the hyperref package
+      (setf org-latex-default-packages-alist
+            (remove '("" "hyperref" nil) org-latex-default-packages-alist))
+
+      (add-to-list 'org-latex-default-packages-alist
+                   `("colorlinks=true, linkcolor=teal, urlcolor=teal, citecolor=darkgray, anchorcolor=teal", "hyperref" nil))
+
+      ;; add fontspec package for utf8 characters with xelatex
+      (add-to-list 'org-latex-default-packages-alist
+                   `("", "fontspec" nil) t)
+
       (add-to-list 'org-latex-classes
             '("koma-article"
             "\\documentclass{scrartcl}"
+            "\\usepackage{tabulary}"
+            "\\usepackage{minted}"
             ("\\section{%s}" . "\\section*{%s}")
             ("\\subsection{%s}" . "\\subsection*{%s}")
             ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
@@ -168,6 +187,7 @@ which require an initialization must be listed explicitly in the list.")
             ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
       (setq org-ditaa-jar-path "/usr/bin/ditaa")
+
       (setq org-plantuml-jar-path "~/Dropbox/shahn/org/plantuml.jar")
 
       (org-babel-do-load-languages
