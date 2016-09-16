@@ -48,12 +48,13 @@ HIST_STAMPS="yyyy-mm-dd"
 plugins=(atom git github cabal command-not-found cp debian dirhistory extract pip python rsync wakeonlan wd zsh-syntax-highlighting ubuntu z)
 
 # set full color terminal
-# export TERM=xterm-256color
-# set default editor
-# export EDITOR=vim
+export TERM=xterm-256color
 
-# set path for miniconda
-# # export PATH="$HOME/miniconda/bin:$PATH"
+# set default editor
+export EDITOR="et"
+export VISUAL="ec"
+export ALTERNATE_EDITOR=""
+
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
@@ -70,6 +71,10 @@ plugins=(atom git github cabal command-not-found cp debian dirhistory extract pi
 # ssh
 #export SSH_KEY_PATH="~/.ssh/dsa_id"
 
+# set no proxy for internal pip server at work
+NO_PROXY=${no_proxy-localhost}
+export no_proxy=dvlp1.ipf.tuwien.ac.at,$NO_PROXY
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -78,8 +83,16 @@ plugins=(atom git github cabal command-not-found cp debian dirhistory extract pi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias ec="emacsclient $1"
-alias eserv="emacs --daemon"
+
+# smart history search after typing and pressing up-down keys
+autoload -Uz up-line-or-beginning-search
+autoload -Uz down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '\eOA' up-line-or-beginning-search
+bindkey '\e[A' up-line-or-beginning-search
+bindkey '\eOB' down-line-or-beginning-search
+bindkey '\e[B' down-line-or-beginning-search
 
 alias db="cd ~/Dropbox/shahn/"
 alias zs="source ~/.zshrc"
@@ -94,12 +107,14 @@ if [[ -e $HOME/.mntrc ]]; then
   source $HOME/.mntrc
 fi
 
+# emacs
+alias magit='ec -e "(magit-status \"$(pwd)\")"'
 
 # bind C-j and C-k to up-down in history
 bindkey '^k' up-history
 bindkey '^j' down-history
 
-# Show human friendly numbers and colors
+# show human friendly numbers and colors
 alias df='df -h'
 alias du='du -h -d 2'
 
@@ -108,8 +123,5 @@ alias lsg='ls | grep'
 alias llg='ll | grep'
 alias lag='la | grep'
 
-# environment variables for virtualenvwrapper
-# export WORKON_HOME=$HOME/.virtualenvs
-# export VIRTUALENVWRAPPER_HOOK_DIR=$HOME/dotfiles/python/venvwrapperhooks
-# export PROJECT_HOME=$HOME/workspace
-# source /usr/local/bin/virtualenvwrapper.sh
+# python aliases
+alias ptest='python setup.py test'
