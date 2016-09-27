@@ -51,9 +51,9 @@ plugins=(atom git github cabal command-not-found cp debian dirhistory extract pi
 export TERM=xterm-256color
 
 # set default editor
-export EDITOR="et"
-export VISUAL="ec"
-export ALTERNATE_EDITOR=""
+export EDITOR="vim"
+# export VISUAL="emacsclient"
+# export ALTERNATE_EDITOR=""
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -125,3 +125,6 @@ alias lag='la | grep'
 
 # python aliases
 alias ptest='python setup.py test'
+
+# does that ring a bell?
+alias bell="echo -n $'\x7'"
