@@ -125,3 +125,6 @@ alias lag='la | grep'
 
 # python aliases
 alias ptest='python setup.py test'
+
+# does that ring a bell?
+alias bell="echo -n $'\x7'"

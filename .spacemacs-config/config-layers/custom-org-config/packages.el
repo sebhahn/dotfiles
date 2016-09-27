@@ -172,8 +172,8 @@ which require an initialization must be listed explicitly in the list.")
                    `("colorlinks=true, linkcolor=teal, urlcolor=teal, citecolor=darkgray, anchorcolor=teal", "hyperref" nil))
 
       ;; add fontspec package for utf8 characters with xelatex
-      (add-to-list 'org-latex-default-packages-alist
-                   `("", "fontspec" nil) t)
+      ;; (add-to-list 'org-latex-default-packages-alist
+      ;;              `("", "fontspec" nil) t)
 
       (add-to-list 'org-latex-classes
             '("koma-article"
