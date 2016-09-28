@@ -2,7 +2,7 @@
 
 DOTFILES_ROOT=$(pwd)
 
-#symlink dotfiles into home directory
+# symlink dotfiles into home directory
 install_dotfiles () {
 
   local overwrite_all=false backup_all=false skip_all=false
@@ -16,20 +16,20 @@ install_dotfiles () {
 
 install_dotfiles
 
-#setup submodules of dotfiles
+# setup submodules of dotfiles
 cd $DOTFILES_ROOT
 git submodule init
 git submodule sync
 git submodule update
 
-#setup pyenv and submodules
+# setup pyenv and submodules
 ln -sf $DOTFILES_ROOT/.pyenv ~/.pyenv
 cd $DOTFILES_ROOT/.pyenv
 git submodule init
 git submodule sync
 git submodule update
 
-#setup oh-my-zsh and submodules
+# setup oh-my-zsh and submodules
 cd $DOTFILES_ROOT
 ln -sf $DOTFILES_ROOT/z/z.sh ~/z.sh
 ln -sf $DOTFILES_ROOT/.oh-my-zsh ~/.oh-my-zsh
@@ -38,13 +38,13 @@ git submodule init
 git submodule sync
 git submodule update
 
-#setup pure theme for zsh
+# setup pure theme for zsh
 cd ~/.oh-my-zsh/custom/
 git clone https://github.com/sindresorhus/pure
 mv pure/pure.zsh pure.zsh-theme
 mv pure/async.zsh async.zsh
 
-#setup spacemacs and submodules
+# setup spacemacs and submodules
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 ln -sf $DOTFILES_ROOT/.spacemacs-config/snippets/* ~/.emacs.d/private/snippets
 cd ~/.emacs.d
@@ -54,6 +54,13 @@ git submodule update
 cd $DOTFILES_ROOT/.spacemacs-config/org-mode
 make autoloads
 
-#setup terminal theme
+# setup terminal theme
 cd $DOTFILES_ROOT
 bash terminal-theme.sh
+
+# symlink config folder
+ln -s $DOTFILES_ROOT/.config/* ~/.config
+
+# symlink bin folder
+mkdir ~/bin
+ln -s $DOTFILES_ROOT/bin/* ~/bin
