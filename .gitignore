@@ -8,6 +8,7 @@
 !.zshenv.symlink
 !.oh-my-zsh/
 !.tmux.conf.symlink
+!dev-tmux
 !latex_gitconfig.symlink
 !.spacemacs.symlink
 !INSTALL

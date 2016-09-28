@@ -3,6 +3,7 @@ set-option -g default-shell /bin/zsh
 #set -g default-terminal "screen-256color"
 #
 set -sg escape-time 0
+
 #
 # enable utf 8
 set -g status on
@@ -15,14 +16,14 @@ bind a send-prefix
 
 # Bind appropriate commands similar to screen.
 # lockscreen ^X x
-unbind ^X
-bind ^X lock-server
-unbind x
-bind x lock-server
+# unbind ^X
+# bind ^X lock-server
+# unbind x
+# bind x lock-server
 
-set -g lock-command vlock
-set -g lock-after-time 1800
-set -g lock-server on
+# set -g lock-command vlock
+# set -g lock-after-time 1800
+# set -g lock-server on
 
 # screen ^C c
 unbind ^C
@@ -43,8 +44,6 @@ unbind ^@
 bind ^@ next-window
 unbind ^N
 bind ^N next-window
-unbind " "
-bind " " next-window
 unbind n
 bind n next-window
 
@@ -55,6 +54,9 @@ bind A command-prompt "rename-window %%"
 # other ^A
 unbind ^A
 bind ^A last-window
+
+unbind " "
+bind " " next-layout
 
 # prev ^H ^P p ^?
 unbind ^H
@@ -123,12 +125,12 @@ set -g visual-activity off
 setw -g clock-mode-style 24
 
 # Panes
-set -g mouse-resize-pane on
-set -g mouse-select-pane on
+# set -g mouse-resize-pane on
+# set -g mouse-select-pane on
 
 # Windows
-set -g mouse-select-window on
-setw -g mode-mouse on
+# set -g mouse-select-window on
+# setw -g mode-mouse on
 
 # " windowlist -b
 bind a choose-window
@@ -150,6 +152,7 @@ bind-key C-v run "xsel -o | tmux load-buffer - ; tmux paste-buffer"
 
 setw -g display-panes-time 2000
 bind ^s display-panes \; command-prompt "swap-pane -s %1"
+
 # panes start at 1
 set -g base-index 1
 set -g pane-base-index 1
@@ -157,9 +160,9 @@ set -g pane-base-index 1
 bind c new-window -c '#{pane_current_path}'
 bind C-p last-window
 
-set-option -g mouse-select-pane on
-set-option -g mouse-resize-pane on
-set-option -g mouse-select-window on
+# set-option -g mouse-select-pane on
+# set-option -g mouse-resize-pane on
+# set-option -g mouse-select-window on
 
 # smart pane switching with awareness of emacs splits
 bind -n C-h run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim(diff)?$|emacs.*$' && tmux send-keys C-h) || tmux select-pane -L"
@@ -181,5 +184,14 @@ bind ) resize-pane -R 24
 set -g detach-on-destroy off
 setw -g alternate-screen off
 
-bind M-l next-layout
 set -g terminal-overrides 'xterm:colors=256'
+
+# force a reload of the config file
+unbind r
+bind r source-file ~/.tmux.conf
+
+# quick pane cycling
+# unbind ^T
+# bind ^T: select-pane -t :.+
+
+bind s source-file ~/.tmux/session1 
