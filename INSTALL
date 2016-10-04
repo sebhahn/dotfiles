@@ -64,3 +64,6 @@ ln -s $DOTFILES_ROOT/.config/* ~/.config
 # symlink bin folder
 mkdir ~/bin
 ln -s $DOTFILES_ROOT/bin/* ~/bin
+
+# symlink ranger
+ln -s $DOTFILES_ROOT/ranger/ranger.py ~/bin/ranger
