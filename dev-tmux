@@ -17,7 +17,7 @@ tmux new-window -t $SESSION:1 -n 'emacs'
 tmux new-window -t $SESSION:2 -n 'cmd'
 tmux split-window -h
 
-tmux new-window -t $SESSION:3 -n 'vifm' 'vifm'
+tmux new-window -t $SESSION:3 -n 'ranger' 'ranger'
 
 # Set default window
 tmux select-window -t $SESSION:1
