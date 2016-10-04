@@ -22,3 +22,6 @@
 [submodule ".pyenv"]
 	path = .pyenv
 	url = git@github.com:sebhahn/pyenv.git
+[submodule "ranger"]
+	path = ranger
+	url = git@github.com:ranger/ranger.git
