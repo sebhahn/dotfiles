@@ -76,9 +76,9 @@ which require an initialization must be listed explicitly in the list.")
     (setq reftex-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/zotero"))
     ))
 
-(defun research-config/init-hydra ()
-  (use-package hydra
-    :defer t))
+;;(defun research-config/init-hydra ()
+;;  (use-package hydra
+;;    :defer t))
 
 (defun research-config/init-key-chord ()
   (use-package key-chord
@@ -89,7 +89,7 @@ which require an initialization must be listed explicitly in the list.")
     :commands interleave
     :defer t
     ))
-;;
+
 ;; Often the body of an initialize function uses `use-package'
 ;; For more info on `use-package', see readme:
 ;; https://github.com/jwiegley/use-package
