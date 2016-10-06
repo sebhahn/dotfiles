@@ -76,9 +76,7 @@ which require an initialization must be listed explicitly in the list.")
     (setq reftex-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/zotero"))
     ))
 
-;;(defun research-config/init-hydra ()
-;;  (use-package hydra
-;;    :defer t))
+(defun research-config/post-init-hydra ())
 
 (defun research-config/init-key-chord ()
   (use-package key-chord

@@ -75,6 +75,7 @@ values."
                                       python-auto-set-local-pyenv-version 'on-project-switch
                                       python-test-runner 'pytest)
                                      python-config
+                                     ranger
                                      research-config
                                      search-engine
                                      semantic
