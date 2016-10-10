@@ -407,11 +407,14 @@ you should place your code here."
   ;; disable all the space-doc stuff
   (setq spacemacs-space-doc-modificators nil)
 
+  (global-visual-line-mode t)
+
   ;; fancy git icon
   (defadvice vc-mode-line (after strip-backend () activate)
     (when (stringp vc-mode)
       (let ((gitlogo (replace-regexp-in-string "^ Git." " Ⱶ " vc-mode)))
         (setq vc-mode gitlogo))))
+
     (setq dired-listing-switches "-alhk")
     (setq dired-listings-switches "-alhk")
     (setq delete-by-moving-to-trash nil)
