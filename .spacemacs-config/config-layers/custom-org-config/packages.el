@@ -161,15 +161,15 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-html-table-caption-above nil)
 
       ;; remove "inputenc" from default packages as it clashes with xelatex
-      (setf org-latex-default-packages-alist
-            (remove '("AUTO" "inputenc" t) org-latex-default-packages-alist))
+      ;; (setf org-latex-default-packages-alist
+      ;;       (remove '("AUTO" "inputenc" t) org-latex-default-packages-alist))
 
       ;; Set a nicer default style for the hyperref package
-      (setf org-latex-default-packages-alist
-            (remove '("" "hyperref" nil) org-latex-default-packages-alist))
+      ;; (setf org-latex-default-packages-alist
+      ;;       (remove '("" "hyperref" nil) org-latex-default-packages-alist))
 
-      (add-to-list 'org-latex-default-packages-alist
-                   `("colorlinks=true, linkcolor=teal, urlcolor=teal, citecolor=darkgray, anchorcolor=teal", "hyperref" nil))
+      ;; (add-to-list 'org-latex-default-packages-alist
+      ;;              `("colorlinks=true, linkcolor=teal, urlcolor=teal, citecolor=darkgray, anchorcolor=teal", "hyperref" nil))
 
       ;; add fontspec package for utf8 characters with xelatex
       ;; (add-to-list 'org-latex-default-packages-alist
