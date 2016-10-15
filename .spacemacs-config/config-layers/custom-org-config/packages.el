@@ -178,8 +178,6 @@ which require an initialization must be listed explicitly in the list.")
       (add-to-list 'org-latex-classes
             '("koma-article"
             "\\documentclass{scrartcl}"
-            "\\usepackage{tabulary}"
-            "\\usepackage{minted}"
             ("\\section{%s}" . "\\section*{%s}")
             ("\\subsection{%s}" . "\\subsection*{%s}")
             ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
@@ -302,7 +300,6 @@ which require an initialization must be listed explicitly in the list.")
                                 org-gnus
                                 org-id
                                 org-info
-                                org-jsinfo
                                 org-habit
                                 org-inlinetask
                                 org-irc
