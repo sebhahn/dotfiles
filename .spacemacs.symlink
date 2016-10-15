@@ -44,12 +44,10 @@ values."
                                      colors
                                      custom-org-config
                                      emacs-lisp
-                                     email
                                      elixir
                                      erc
                                      erlang
                                      ess
-                                     eyebrowse
                                      games
                                      git
                                      github
@@ -64,8 +62,6 @@ values."
                                       :variables
                                       mu4e-installation-path "/usr/local/share/emacs/site-lisp")
                                      org
-                                     org-ipython
-                                     org-page
                                      pandoc
                                      pdf-tools
                                      plantuml
@@ -329,9 +325,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
                                     :powerline-scale 1.3)
 
           browse-url-generic-program "google-chrome"
-          org-odt-data-dir "/usr/share/emacs/24.5/etc/org")
           exec-path-from-shell-arguments (list "-i" "-l")
-    )
+    ))
+
     (when (string= system-name "shahn-T450s")
     ;; notebook
     (setq dotspacemacs-default-font '("Hack"
@@ -340,8 +336,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
                                       :width normal
                                       :powerline-scale 1.3)
           browse-url-generic-program "google-chrome"
-          exec-path-from-shell-arguments (list "-i")
-          org-odt-data-dir "/usr/share/emacs/24.5/etc/org"))
+          exec-path-from-shell-arguments (list "-i")))
 
 
     (add-to-list 'load-path "~/dotfiles/.spacemacs-config/org-mode/lisp")
