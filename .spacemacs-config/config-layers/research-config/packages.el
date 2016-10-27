@@ -11,18 +11,17 @@
 ;;; License: GPLv3
 
 (defvar research-config-packages
-  '(
-    ;; package research-configs go here
-    parsebib
-    helm-bibtex
-    reftex
-    hydra
-    key-chord
-    interleave
-    org-ref
-    )
-  "List of all packages to install and/or initialize. Built-in packages
-which require an initialization must be listed explicitly in the list.")
+   '(
+     ;; package research-configs go here
+     parsebib
+     helm-bibtex
+     reftex
+     hydra
+     key-chord
+     interleave
+     org-ref
+     )
+  "List of all packages to install and/or initialize. Built-in packages which require an initialization must be listed explicitly in the list.")
 
 (defvar research-config-excluded-packages '()
   "List of packages to exclude.")
@@ -74,7 +73,35 @@ which require an initialization must be listed explicitly in the list.")
     (setq org-ref-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/zotero"))
     (setq org-ref-pdf-directory "/home/shahn/Dropbox/shahn/research/publications")
     (setq reftex-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/zotero"))
-    ))
+
+    (defun org-ref-include-default-bibliography (backend)
+      "Add bibliographystyle and bibliography links on export if they are needed."
+      (cond
+      ((eq backend 'latex)
+        (let* ((links (org-element-map (org-element-parse-buffer) 'link #'identity))
+        (cites (-filter (lambda (link)
+              (member (org-element-property :type link) org-ref-cite-types))
+            links))
+        (style (-filter (lambda (link)
+              (string= (org-element-property :type link) "bibliographystyle"))
+            links))
+        (bibliography (-filter (lambda (link)
+                (string= (org-element-property :type link) "bibliography"))
+              links)))
+          (when cites
+      (unless style
+        (goto-char (point-max))
+        (insert "\nbibliographystyle:unsrt"))
+      (unless bibliography
+        (goto-char (point-max))
+        (insert (format
+          "\nbibliography:%s"
+          (mapconcat (lambda (x)
+            (file-relative-name x (file-name-directory (buffer-file-name))))
+                org-ref-default-bibliography ",")))))))))
+
+
+    (add-hook 'org-export-before-processing-hook #'org-ref-include-default-bibliography)))
 
 (defun research-config/post-init-hydra ())
 

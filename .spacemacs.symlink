@@ -79,6 +79,7 @@ values."
                                       :variables
                                       shell-default-shell 'term
                                       shell-default-term-shell "/bin/zsh")
+                                     speed-reading
                                      spell-checking
                                      syntax-checking
                                      tmux
