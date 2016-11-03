@@ -13,9 +13,9 @@
 (defvar research-config-packages
    '(
      ;; package research-configs go here
-     parsebib
+     ;; parsebib
      helm-bibtex
-     reftex
+     ;; reftex
      hydra
      key-chord
      interleave
@@ -28,7 +28,7 @@
 
 ;; For each package, define a function research-config/init-<package-research-config>
 ;;
-(defun research-config/init-helm-bibtex()
+(defun research-config/post-init-helm-bibtex()
    "Initialize my package"
    (use-package helm-bibtex
      :defer t
@@ -62,7 +62,7 @@
      )
    )
 
-(defun research-config/init-org-ref()
+(defun research-config/post-init-org-ref()
   "Init org ref package"
   (use-package org-ref
     :defer t
