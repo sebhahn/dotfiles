@@ -30,15 +30,17 @@ values."
    ;; If non-nil layers with lazy install support are lazy installed.
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
-   dotspacemacs-configuration-layer-path '("~/dotfiles/.spacemacs-config/config-layers/")
+   dotspacemacs-configuration-layer-path '("~/.spacemacs.d/config-layers/")
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
  dotspacemacs-configuration-layers '(ansible
                                      (auto-completion
                                       :variables
                                       auto-completion-enable-snippets-in-popup t
+                                      auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/"
                                       auto-completion-enable-help-tooltip nil)
                                      bibtex
+                                     c-c++
                                      chrome
                                      clojure
                                      colors
@@ -48,8 +50,9 @@ values."
                                      erc
                                      erlang
                                      ess
-                                     games
-                                     git
+                                     (git
+                                      :variables
+                                      git-gutter-use-fringe t)
                                      github
                                      gnus
                                      graphviz
@@ -58,9 +61,6 @@ values."
                                      latex
                                      lua
                                      markdown
-                                     (mu4e
-                                      :variables
-                                      mu4e-installation-path "/usr/local/share/emacs/site-lisp")
                                      org
                                      pandoc
                                      pdf-tools
@@ -83,7 +83,8 @@ values."
                                      spell-checking
                                      syntax-checking
                                      tmux
-                                     version-control
+                                     (version-control
+                                      :variables version-control-diff-tool 'diff-hl)
                                      yaml)
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -340,14 +341,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
           exec-path-from-shell-arguments (list "-i")))
 
 
-    (add-to-list 'load-path "~/dotfiles/.spacemacs-config/org-mode/lisp")
-    (add-to-list 'load-path "~/dotfiles/.spacemacs-config/org-mode/contrib/lisp" t)
-    (add-to-list 'load-path "~/dotfiles/.spacemacs-config" t)
-    (add-to-list 'load-path "~/dotfiles/.spacemacs-config/org-reveal" t)
-    (add-to-list 'load-path "~/dotfiles/.spacemacs-config/org-ref" t)
-    (add-to-list 'load-path "~/dotfiles/.spacemacs-config/helm-bibtex" t)
-    (add-to-list 'load-path "~/dotfiles/.spacemacs-config/atom-one-dark-theme" t)
-
+    (add-to-list 'load-path "~/.spacemacs.d" t)
+    (add-to-list 'load-path "~/.spacemacs.d/org-reveal" t)
   )
 
 (defun dotspacemacs/user-config ()
@@ -371,18 +366,6 @@ you should place your code here."
           user-mail-address "sebastian.hahn@gmail.com")
 
     (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
-
-  (use-package erc
-    :defer t
-    :commands connect-erc
-    :init (spacemacs/set-leader-keys "oe" 'connect-erc)
-    :config
-    (progn
-      (setq erc-autojoin-channels-alist
-            '(("0.0" "#syl20bnr/spacemacs")))
-      (defun connect-erc ()
-        (interactive)
-        (erc-tls :server "irc.gitter.im" :nick "sebhahn" :password nil))))
 
   (defun endless/fill-or-unfill ()
     "Like `fill-paragraph', but unfill if used twice."
