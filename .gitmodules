@@ -1,24 +1,9 @@
-[submodule ".spacemacs-config/org-mode"]
-	path = .spacemacs-config/org-mode
-	url = git://orgmode.org/org-mode.git
-[submodule ".spacemacs-config/org-reveal"]
-	path = .spacemacs-config/org-reveal
-	url = https://github.com/yjwen/org-reveal.git
-[submodule ".spacemacs-config/helm-bibtex"]
-        path = .spacemacs-config/helm-bibtex
-	url = http://github.com/tmalsburg/helm-bibtex
-[submodule ".spacemacs-config/org-ref"]
-	path = .spacemacs-config/org-ref
-	url = https://github.com/jkitchin/org-ref
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
 	url = git@github.com:sebhahn/oh-my-zsh.git
 [submodule "z"]
 	path = z
 	url = https://github.com/rupa/z
-[submodule ".spacemacs-config/atom-one-dark-theme"]
-	path = .spacemacs-config/atom-one-dark-theme
-	url = https://github.com/jonathanchu/atom-one-dark-theme
 [submodule ".pyenv"]
 	path = .pyenv
 	url = git@github.com:sebhahn/pyenv.git
