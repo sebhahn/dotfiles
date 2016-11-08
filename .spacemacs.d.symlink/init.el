@@ -45,6 +45,7 @@ values."
                                      chrome
                                      clojure
                                      colors
+                                     csv
                                      custom-org-config
                                      docker
                                      emacs-lisp
@@ -348,8 +349,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (add-to-list 'load-path "~/.spacemacs.d/org-reveal" t)
 
     ;; make sure customize stuff is written into different file
-    ;; (setq custom-file "~/.spacemacs.d/custom.el")
-    ;; (load custom-file)
+    (setq custom-file "~/.spacemacs.d/custom.el")
+    (load custom-file)
   )
 
 (defun dotspacemacs/user-config ()
@@ -434,21 +435,3 @@ you should place your code here."
     (setq company-backends-python-mode '((company-anaconda :with company-dabbrev-code :with company-yasnippet)))
     (setq company-transformers '(spacemacs//company-transformer-cancel
                                  company-sort-by-backend-importance)))
-
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
-;; Contact GitHub API Training Shop Blog About
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (typit mmt pacmacs dash-functional dockerfile-mode docker json-mode docker-tramp json-snatcher json-reformat 2048-game yapfify yaml-mode xterm-color ws-butler window-numbering which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit stickyfunc-enhance srefactor spray spacemacs-theme spaceline smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs ranger rainbow-mode rainbow-identifiers rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort py-autopep8 pug-mode popwin plantuml-mode pip-requirements persp-mode pdf-tools pcre2el paradox pandoc-mode ox-pandoc orgit org-ref org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets org-ac open-junk-file ob-elixir neotree multi-term move-text mmm-mode material-theme markdown-toc magit-gitflow magit-gh-pulls macrostep lua-mode lorem-ipsum live-py-mode linum-relative link-hint less-css-mode jinja2-mode interleave info+ indent-guide ido-vertical-mode hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag graphviz-dot-mode google-translate golden-ratio gnuplot gmail-message-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md flyspell-correct-helm flycheck-pyflakes flycheck-pos-tip flycheck-mix flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-ediff evil-args evil-anzu ess-smart-equals ess-R-object-popup ess-R-data-view eshell-z eshell-prompt-extras esh-help erlang erc-yt erc-view-log erc-social-graph erc-image erc-hl-nicks engine-mode emmet-mode elisp-slime-nav ein edit-server dumb-jump disaster diff-hl define-word cython-mode company-web company-statistics company-c-headers company-auctex company-anaconda column-enforce-mode color-identifiers-mode cmake-mode clojure-snippets clj-refactor clean-aindent-mode clang-format cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile auctex-latexmk ansible-doc ansible alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
