@@ -15,6 +15,7 @@ install_dotfiles () {
 }
 
 install_dotfiles
+touch $DOTFILES_ROOT/.spacemacs.d.symlink/custom.el
 
 # setup submodules of dotfiles
 cd $DOTFILES_ROOT
