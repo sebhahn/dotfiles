@@ -65,7 +65,8 @@ values."
                                      latex
                                      lua
                                      markdown
-                                     org
+                                     (org
+                                      :variables org-enable-reveal-js-support t)
                                      pandoc
                                      pdf-tools
                                      plantuml
@@ -346,7 +347,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 
     (add-to-list 'load-path "~/.spacemacs.d" t)
-    (add-to-list 'load-path "~/.spacemacs.d/org-reveal" t)
 
     ;; make sure customize stuff is written into different file
     (setq custom-file "~/.spacemacs.d/custom.el")

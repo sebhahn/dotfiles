@@ -101,7 +101,6 @@ which require an initialization must be listed explicitly in the list.")
       (require 'ox-beamer)
       (require 'ox-html)
       (require 'ox-md)
-      (require 'ox-reveal)
 
       ;; any headline with level <= 2 is a target
       (setq org-refile-targets '((nil :maxlevel . 5)
