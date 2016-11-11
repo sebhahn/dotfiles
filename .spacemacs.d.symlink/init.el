@@ -42,7 +42,6 @@ values."
                                       auto-completion-enable-help-tooltip nil)
                                      bibtex
                                      c-c++
-                                     chrome
                                      clojure
                                      colors
                                      csv
