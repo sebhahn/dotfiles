@@ -320,7 +320,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
                                       :size 13
                                       :weight normal
                                       :width normal
-                                      :powerline-scale 1))
+                                      :powerline-scale 1)
+
+          browse-url-generic-program "google-chrome")
 
     (when (string= system-name "shahn")
     ;; work machine
@@ -334,7 +336,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
           exec-path-from-shell-arguments (list "-i" "-l")
     ))
 
-    (when (string= system-name "shahn-T450s")
+    (when (string= system-name "shahnT450s")
     ;; notebook
     (setq dotspacemacs-default-font '("Hack"
                                       :size 12
