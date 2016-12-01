@@ -339,7 +339,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (when (string= system-name "shahnT450s")
     ;; notebook
     (setq dotspacemacs-default-font '("Hack"
-                                      :size 12
+                                      :size 13
                                       :weight normal
                                       :width normal
                                       :powerline-scale 1.3)
@@ -436,3 +436,9 @@ you should place your code here."
     (setq company-backends-python-mode '((company-anaconda :with company-dabbrev-code :with company-yasnippet)))
     (setq company-transformers '(spacemacs//company-transformer-cancel
                                  company-sort-by-backend-importance)))
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+)
