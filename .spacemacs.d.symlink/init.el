@@ -362,32 +362,6 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  (when (string= system-name "shahn")
-    ;; work machine
-    (setq user-full-name "Sebastian Hahn"
-          user-mail-address "sebastian.hahn@geo.tuwien.ac.at")
-    (setenv "NO_PROXY" "dvlp1.ipf.tuwien.ac.at,localhost,127.0.0.1")
-    (setenv "no_proxy" "dvlp1.ipf.tuwien.ac.at,localhost,127.0.0.1")
-    )
-  (when (string= system-name "shahn-T450s")
-    ;; home laptop
-    (setq user-full-name "Sebastian Hahnk"
-          user-mail-address "sebastian.hahn@gmail.com")
-
-    (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
-
-  (use-package erc
-    :defer t
-    :commands connect-erc
-    :init (spacemacs/set-leader-keys "oe" 'connect-erc)
-    :config
-    (progn
-      (setq erc-autojoin-channels-alist
-            '(("0.0" "#syl20bnr/spacemacs")))
-      (defun connect-erc ()
-        (interactive)
-        (erc-tls :server "irc.gitter.im" :nick "sebhahn" :password nil))))
-
   (defun endless/fill-or-unfill ()
     "Like `fill-paragraph', but unfill if used twice."
     (interactive)
