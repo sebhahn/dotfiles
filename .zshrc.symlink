@@ -51,8 +51,8 @@ plugins=(atom git github cabal command-not-found cp debian dirhistory extract pi
 export TERM=xterm-256color
 
 # set default editor
-export EDITOR="et"
-export VISUAL="ec"
+export EDITOR=vim
+export VISUAL=vim
 export ALTERNATE_EDITOR=""
 
 # You may need to manually set your language environment
