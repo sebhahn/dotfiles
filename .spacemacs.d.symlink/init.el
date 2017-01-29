@@ -34,61 +34,62 @@ values."
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers '(
-                                     ansible
-                                     (auto-completion
-                                      :variables
-                                      auto-completion-enable-snippets-in-popup t
-                                      auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/"
-                                      auto-completion-enable-help-tooltip nil)
-                                     bibtex
-                                     c-c++
-                                     clojure
-                                     colors
-                                     csv
-                                     custom-org-config
-                                     docker
-                                     emacs-lisp
-                                     elixir
-                                     erc
-                                     erlang
-                                     ess
-                                     games
-                                     (git
-                                      :variables
-                                      git-gutter-use-fringe t)
-                                     github
-                                     gnus
-                                     graphviz
-                                     html
-                                     ipython-notebook
-                                     latex
-                                     lua
-                                     markdown
-                                     (org
-                                      :variables org-enable-reveal-js-support t)
-                                     pandoc
-                                     pdf-tools
-                                     plantuml
-                                     (python
-                                      :variables
-                                      python-enable-yapf-format-on-save nil
-                                      python-auto-set-local-pyenv-version 'on-project-switch
-                                      python-test-runner 'pytest)
-                                     python-config
-                                     ranger
-                                     research-config
-                                     search-engine
-                                     semantic
-                                     (shell
-                                      :variables
-                                      shell-default-shell 'term
-                                      shell-default-term-shell "/bin/zsh")
-                                     speed-reading
-                                     spell-checking
-                                     syntax-checking
-                                     tmux
-                                     version-control
-                                     yaml)
+                                       ansible
+                                       (auto-completion
+                                        :variables
+                                        auto-completion-enable-snippets-in-popup t
+                                        auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/"
+                                        auto-completion-enable-help-tooltip nil)
+                                      bibtex
+                                      c-c++
+                                      clojure
+                                      colors
+                                      csv
+                                      custom-org-config
+                                      docker
+                                      emacs-lisp
+                                      elixir
+                                      erc
+                                      erlang
+                                      ess
+                                      games
+                                      (git
+                                       :variables
+                                       git-gutter-use-fringe t)
+                                      github
+                                      gnus
+                                      graphviz
+                                      html
+                                      ipython-notebook
+                                      latex
+                                      lua
+                                      markdown
+                                      (org
+                                       :variables org-enable-reveal-js-support t)
+                                      pandoc
+                                      pdf-tools
+                                      plantuml
+                                      (python
+                                       :variables
+                                       python-enable-yapf-format-on-save nil
+                                       python-auto-set-local-pyenv-version 'on-project-switch
+                                       python-test-runner 'pytest)
+                                      python-config
+                                      ranger
+                                      research-config
+                                      ruby
+                                      search-engine
+                                      semantic
+                                      (shell
+                                       :variables
+                                       shell-default-shell 'term
+                                       shell-default-term-shell "/bin/zsh")
+                                      speed-reading
+                                      spell-checking
+                                      syntax-checking
+                                      tmux
+                                      version-control
+                                      yaml)
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
