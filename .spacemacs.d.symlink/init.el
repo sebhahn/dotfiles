@@ -31,7 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-        ansible
+      ansible
         (auto-completion
         :variables
         auto-completion-enable-snippets-in-popup t
@@ -40,6 +40,7 @@ values."
       bibtex
       c-c++
       colors
+      csv
       custom-org-config
       emacs-lisp
       elixir
