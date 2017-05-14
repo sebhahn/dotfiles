@@ -374,13 +374,13 @@ before packages are loaded. If you are unsure, you should try in setting them in
           exec-path-from-shell-arguments (list "-i" "-l")
     ))
 
-    (when (string= system-name "shahnT450s")
+    (when (string= system-name "shahn-T450s")
     ;; notebook
     (setq dotspacemacs-default-font '("Hack"
-                                      :size 13
+                                      :size 16
                                       :weight normal
                                       :width normal
-                                      :powerline-scale 1.3)
+                                      :powerline-scale 1.4)
 
           browse-url-generic-program "google-chrome"
           exec-path-from-shell-arguments (list "-i")))
