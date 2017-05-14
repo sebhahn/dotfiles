@@ -377,10 +377,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (when (string= system-name "shahn-T450s")
     ;; notebook
     (setq dotspacemacs-default-font '("Hack"
-                                      :size 16
+                                      :size 14
                                       :weight normal
                                       :width normal
-                                      :powerline-scale 1.4)
+                                      :powerline-scale 1.3)
 
           browse-url-generic-program "google-chrome"
           exec-path-from-shell-arguments (list "-i")))
