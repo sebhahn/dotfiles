@@ -2,19 +2,17 @@
 
 DOTFILES_ROOT=$(pwd)
 
-# symlink dotfiles into home directory
-install_dotfiles () {
+ln -sf $DOTFILES_ROOT/.spacemacs.d.symlink $HOME/.spacemacs.d
+ln -sf $DOTFILES_ROOT/.zshenv.symlink $HOME/.zshenv
+ln -sf $DOTFILES_ROOT/.zshrc.symlink $HOME/.zshrc
+ln -sf $DOTFILES_ROOT/.tmux.conf.symlink $HOME/.tmux.conf
+ln -sf $DOTFILES_ROOT/.Xdefaults.symlink $HOME/.Xdefaults
+ln -sf $DOTFILES_ROOT/.latexmkrc.symlink $HOME/.latexmkrc
+ln -sf $DOTFILES_ROOT/.latex_gitconfig.symlink $HOME/.latex_gitconfig
+ln -sf $DOTFILES_ROOT/.config/* $HOME/.config
+ln -sf $DOTFILES_ROOT/bin/* ~/bin
+ln -sf $DOTFILES_ROOT/ranger/ranger.py ~/bin/ranger
 
-  local overwrite_all=false backup_all=false skip_all=false
-
-  for src in $(find "$DOTFILES_ROOT/" -maxdepth 0 -name '*.symlink')
-  do
-    dst="$HOME/$(basename "${src%.*}")"
-    ln -sf "$src" "$dst"
-  done
-}
-
-install_dotfiles
 touch $DOTFILES_ROOT/.spacemacs.d.symlink/custom.el
 
 # setup submodules of dotfiles
@@ -56,13 +54,3 @@ git submodule update
 # setup terminal theme
 cd $DOTFILES_ROOT
 bash terminal-theme.sh
-
-# symlink config folder
-ln -s $DOTFILES_ROOT/.config/* ~/.config
-
-# symlink bin folder
-mkdir ~/bin
-ln -s $DOTFILES_ROOT/bin/* ~/bin
-
-# symlink ranger
-ln -s $DOTFILES_ROOT/ranger/ranger.py ~/bin/ranger

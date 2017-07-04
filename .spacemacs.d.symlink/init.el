@@ -365,7 +365,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (when (string= system-name "shahn")
     ;; work machine
     (setq dotspacemacs-default-font '("Hack"
-                                    :size 13
+                                    :size 14
                                     :weight normal
                                     :width normal
                                     :powerline-scale 1.3)
