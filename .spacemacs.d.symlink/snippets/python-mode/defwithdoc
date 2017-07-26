@@ -4,7 +4,8 @@
 #contributor : MATSUBARA Naoya
 # --
 def ${1:function}(${2:args}):
-    """${3:short description}
+    """
+    ${3:short description}
 
     $0
 
