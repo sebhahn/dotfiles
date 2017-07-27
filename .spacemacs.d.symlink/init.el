@@ -58,6 +58,7 @@ values."
       latex
       lua
       markdown
+      mu4e-config
       (org
         :variables org-enable-reveal-js-support t)
       pandoc
@@ -352,6 +353,11 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
+    (defun dotfiles/machine-location ()
+      "Get the machine location. Either returns home or work at the moment"
+    (let ((machines '(("shahn" . work) ("shahn-T450s" . home))))
+      (cdr (assoc system-name machines))))
+
     (setq exec-path-from-shell-arguments (list "-i" "-l"))
 
     (setq dotspacemacs-default-font '("Hack"
@@ -362,7 +368,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
           browse-url-generic-program "google-chrome")
 
-    (when (string= system-name "shahn")
+    (when (eq (dotfiles/machine-location) 'work)
     ;; work machine
     (setq dotspacemacs-default-font '("Hack"
                                     :size 14
@@ -374,7 +380,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
           exec-path-from-shell-arguments (list "-i" "-l")
     ))
 
-    (when (string= system-name "shahn-T450s")
+    (when (eq (dotfiles/machine-location) 'home)
     ;; notebook
     (setq dotspacemacs-default-font '("Hack"
                                       :size 14
@@ -400,6 +406,30 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  (when (eq (dotfiles/machine-location) 'work)
+    ;; work machine
+    (setq user-full-name "Sebastian Hahn"
+          user-mail-address "sebastian.hahn@geo.tuwien.ac.at")
+    (setenv "NO_PROXY" "dvlp1.ipf.tuwien.ac.at,localhost,127.0.0.1")
+    (setenv "no_proxy" "dvlp1.ipf.tuwien.ac.at,localhost,127.0.0.1")
+    )
+
+  (when (eq (dotfiles/machine-location) 'home)
+    ;; home laptop
+    (setq user-full-name "Sebastian Hahn"
+          user-mail-address "sebastian.hahn@gmail.com"))
+
+    ;; (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
+
+  (spacemacs|define-custom-layout "@Start"
+    :binding "s"
+    :body
+    (progn
+      (org-agenda nil "A")
+      (delete-other-windows)))
+      ;; (split-window-right)
+      ;; (mu4e)))
+
   (defun endless/fill-or-unfill ()
     "Like `fill-paragraph', but unfill if used twice."
     (interactive)
@@ -413,11 +443,19 @@ you should place your code here."
   (global-set-key [remap fill-paragraph]
                   #'endless/fill-or-unfill)
 
-  (setq sp-highlight-pair-overlay nil)
+  (setq sp-highlight-pair-overlay nil
+        sp-escape-quotes-after-insert nil
+        sp-escape-wrapped-region nil)
+
   (setq powerline-default-separator 'arrow)
 
   ;; disable all the space-doc stuff
   (setq spacemacs-space-doc-modificators nil)
+
+  ;; enable fundamental-mode snippets for all modes
+  (add-hook 'yas-minor-mode-hook
+            (lambda ()
+              (yas-activate-extra-mode 'fundamental-mode)))
 
   (global-visual-line-mode t)
 

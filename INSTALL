@@ -6,6 +6,7 @@ ln -sf $DOTFILES_ROOT/.spacemacs.d.symlink $HOME/.spacemacs.d
 ln -sf $DOTFILES_ROOT/.zshenv.symlink $HOME/.zshenv
 ln -sf $DOTFILES_ROOT/.zshrc.symlink $HOME/.zshrc
 ln -sf $DOTFILES_ROOT/.tmux.conf.symlink $HOME/.tmux.conf
+ln -sf $DOTFILES_ROOT/.mbsyncrc.symlink $HOME/.mbsyncrc
 ln -sf $DOTFILES_ROOT/.Xdefaults.symlink $HOME/.Xdefaults
 ln -sf $DOTFILES_ROOT/.latexmkrc.symlink $HOME/.latexmkrc
 ln -sf $DOTFILES_ROOT/.latex_gitconfig.symlink $HOME/.latex_gitconfig
