@@ -392,6 +392,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
           exec-path-from-shell-arguments (list "-i")))
 
     (add-to-list 'load-path "~/.spacemacs.d" t)
+    (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
 
     ;; make sure customize stuff is written into different file
     (setq custom-file "~/.spacemacs.d/custom.el")
@@ -417,18 +418,18 @@ you should place your code here."
   (when (eq (dotfiles/machine-location) 'home)
     ;; home laptop
     (setq user-full-name "Sebastian Hahn"
-          user-mail-address "sebastian.hahn@gmail.com"))
+          user-mail-address "sebastian.hahn@gmail.com")
 
-    ;; (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
+    (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
 
   (spacemacs|define-custom-layout "@Start"
     :binding "s"
     :body
     (progn
       (org-agenda nil "A")
-      (delete-other-windows)))
-      ;; (split-window-right)
-      ;; (mu4e)))
+      (delete-other-windows)
+      (split-window-right)
+      (mu4e)))
 
   (defun endless/fill-or-unfill ()
     "Like `fill-paragraph', but unfill if used twice."
