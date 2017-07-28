@@ -175,16 +175,12 @@ Email: sebastian.hahn@geo.tuwien.ac.at")
         ;; then, when you want archive some messages, move them to
         ;; the 'All Mail' folder by pressing ``ma''.
 
-        ;; (setq mu4e-maildir-shortcuts
-        ;;     '( ("/Personal/INBOX"               . ?i)
-        ;;     ("/Personal/Github"    . ?g)
-        ;;     ("/TU/INBOX"       . ?w)
-        ;;     ("/TU/CGLS"       . ?C)
-        ;;     ("/TU/CCI"       . ?c)
-        ;;     ("/TU/C3S"       . ?3)
-        ;;     ("/TU/Programming"       . ?p)
-        ;;     ("/TU/ISMN"       . ?I)
-        ;;     ))
+        (setq mu4e-maildir-shortcuts
+            '( 
+            ("/TU/INBOX"       . ?w)
+            ("/TU/cgls"       . ?C)
+            ("/TU/cci"       . ?c)
+            ))
 
         ;; something about ourselves
         (setq mu4e-compose-signature ""
