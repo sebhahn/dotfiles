@@ -43,15 +43,16 @@
   (use-package mml2015
     :defer t
     :config
-    (setq mml2015-signers '("5186A0AC")
+    (setq mml2015-signers '("0E8EDF3B")
           mml2015-encrypt-to-self t)))
 
-(defvar work-sig "
--------------------------------------------------------
-Sebastian Hahn
-TU Wien
+(defvar work-sig "Dipl.-Ing. Sebastian Hahn
+Technische Universität Wien (TU Wien)
+Department of Geodesy and Geoinformation (GEO)
+Research Area Remote Sensing
 Phone: +43 1 58801 12240
-Email: sebastian.hahn@geo.tuwien.ac.at")
+E-mail: sebastian.hahn@geo.tuwien.ac.at
+Web: http://rs.geo.tuwien.ac.at")
 
 
 ;; For each package, define a function mu4e-config/init-<package-name>
@@ -146,15 +147,14 @@ Email: sebastian.hahn@geo.tuwien.ac.at")
         (setq mu4e-refile-folder
               (lambda (msg)
                 (cond
-                 ((string-match "TU" (mu4e-message-field msg :maildir)) "/TU/Archive")
+                 ((string-match "TU" (mu4e-message-field msg :maildir)) "/TU/Archives")
                  ;; ((string-match "TU-Git" (mu4e-message-field msg :maildir)) "/TU-Git/INBOX/.erledigt")
                  ;; ((string-match "Personal" (mu4e-message-field msg :maildir)) "/Personal/[Gmail].All Mail")
                   ;; messages to the mu mailing list go to the /mu folder
                   ;; ((mu4e-message-contact-field-matches msg :to "cpaulik@gmail.com") "/Personal/Archive")
                  ;; messages sent directly to me go to /archive
                  ;; also `mu4e-user-mail-address-p' can be used
-                 ((mu4e-message-contact-field-matches msg :to "sebastian.hahn@geo.tuwien.ac.at") "/TU/Archive")
-                 ;; ((mu4e-message-contact-field-matches msg :to "christoph.Paulik@tuwien.ac.at") "/TU/Archive")
+                 ((mu4e-message-contact-field-matches msg :to "sebastian.hahn@geo.tuwien.ac.at") "/TU/Archives")
                  ;; everything else goes to /archive
                  ;; important to have a catch-all at the end!
                  (t  "/archive"))))
@@ -176,10 +176,13 @@ Email: sebastian.hahn@geo.tuwien.ac.at")
         ;; the 'All Mail' folder by pressing ``ma''.
 
         (setq mu4e-maildir-shortcuts
-            '( 
-            ("/TU/INBOX"       . ?w)
-            ("/TU/cgls"       . ?C)
-            ("/TU/cci"       . ?c)
+            '(("/TU/INBOX"  . ?i)
+              ("/TU/geo"  . ?g)
+              ("/TU/hsaf"  . ?h)
+              ("/TU/meetings"  . ?m)
+              ("/TU/conference"  . ?c)
+              ("/TU/research"  . ?r)
+              ("/TU/tuw"  . ?t)
             ))
 
         ;; something about ourselves

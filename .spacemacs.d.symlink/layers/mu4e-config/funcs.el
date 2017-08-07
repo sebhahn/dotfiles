@@ -40,7 +40,8 @@
     email-name))
 
 (defun mu4e-config/get-sync-channels (location)
-  (let ((sync-channels '((work . "tu"))))
+  (let ((sync-channels '((home . "tu")
+                         (work . "tu"))))
     (cdr (assoc location sync-channels))))
 
 (defun mu4e-config/refresh-work-only ()
