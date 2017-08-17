@@ -10,8 +10,10 @@
 
 (defvar custom-org-config-packages
   '(
-    org
-    org-ac
+    org-plus-contrib
+    (org :location built-in)
+    (org-ac :location built-in)
+    cdlatex
     ;; package custom-org-configs go here
     )
   "List of all packages to install and/or initialize. Built-in packages
@@ -22,25 +24,27 @@ which require an initialization must be listed explicitly in the list.")
 
 ;; For each package, define a function custom-org-config/init-<package-custom-org-config>
 ;;
+
+(defun custom-org-config/post-init-org-plus-contrib ())
+
+(defun custom-org-config/init-cdlatex())
+
 (defun custom-org-config/init-org-ac()
   (use-package org-ac
     :defer t
     :config
     (progn
-      (org-ac/config-default)
-      )
-    )
-  )
+      (org-ac/config-default))))
 
-(defun custom-org-config/post-init-org ()
+(defun custom-org-config/pre-init-org ()
 ;;   "Initialize my package"
-;;load exporters for odt and texinfo - new in org 8
   (use-package org
     :defer t
     :commands (org-mode
                org-edit-src-exit
                org-agenda
                org-capture
+               org-toggle-latex-fragment
                bh/punch-in
                bh/punch-out
                org-store-link
@@ -51,20 +55,24 @@ which require an initialization must be listed explicitly in the list.")
                bh/org-todo
                bh/widen
                bh/clock-in-last-task
-               bh/clock-out-maybe)
-    :init
+               bh/clock-out-maybe))
+
+  (spacemacs|use-package-add-hook org
+
+    :post-init
     (progn
-      (evil-leader/set-key "m'" 'org-edit-src-exit)
+      (spacemacs/set-leader-keys "m'" 'org-edit-src-exit)
 
       ;; set org agenda global
-      (evil-leader/set-key "oo" 'org-agenda)
-      (evil-leader/set-key "oc" 'org-capture)
-      (evil-leader/set-key "or" 'org-refile)
-      (evil-leader/set-key "oa" 'org-toggle-archive-tag)
+      (spacemacs/set-leader-keys "oo" 'org-agenda)
+      (spacemacs/set-leader-keys "oc" 'org-capture)
+      (spacemacs/set-leader-keys "or" 'org-refile)
+      (spacemacs/set-leader-keys "oa" 'org-toggle-archive-tag)
 
       ;; set punch in and out keys
-      (evil-leader/set-key "oI" 'bh/punch-in)
-      (evil-leader/set-key "oO" 'bh/punch-out)
+
+      (spacemacs/set-leader-keys "oI" 'bh/punch-in)
+      (spacemacs/set-leader-keys "oO" 'bh/punch-out)
 
       ;; Custom Key Bindings
       (global-set-key "\C-cl" 'org-store-link)
@@ -79,14 +87,17 @@ which require an initialization must be listed explicitly in the list.")
       (global-set-key (kbd "<f7> I") 'bh/punch-in)
       (global-set-key (kbd "<f7> O") 'bh/punch-out)
       (global-set-key (kbd "<f7> SPC") 'bh/clock-in-last-task)
-      )
-    :config
+
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "C-l" 'org-toggle-latex-fragment))
+
+    :post-config
     (progn
       ;; set org specific keybindings
-      ;; (add-hook 'org-agenda-mode-hook
-      ;;           '(lambda () (org-defkey org-agenda-mode-map "R" 'org-agenda-refile))
-      ;;           'append)
-      ;; (require 'org-pelican)
+
+      (add-hook 'org-agenda-mode-hook
+                '(lambda () (org-defkey org-agenda-mode-map "R" 'org-agenda-refile))
+                'append)
+
       (setq org-src-fontify-natively 1)
       (setq org-agenda-span 'day)
       (setq org-default-notes-file "~/Dropbox/shahn/org/refile.org")
@@ -101,6 +112,9 @@ which require an initialization must be listed explicitly in the list.")
       (require 'ox-beamer)
       (require 'ox-html)
       (require 'ox-md)
+
+      ;; log into the LOGBOOK drawer. Also stores notes there.
+      (setq org-log-into-drawer t)
 
       ;; any headline with level <= 2 is a target
       (setq org-refile-targets '((nil :maxlevel . 5)
@@ -138,6 +152,9 @@ which require an initialization must be listed explicitly in the list.")
                  '(("frame" "lines")
                    ("fontsize" "\\scriptsize")
                    ("linenos" "")))
+
+      ;; setup org-cdlatex minor mode
+      (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
       ;; setup of latex processing
       (setq org-latex-pdf-process '("latexmk %f"))
