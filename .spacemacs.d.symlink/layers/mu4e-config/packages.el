@@ -340,6 +340,9 @@ Web: http://rs.geo.tuwien.ac.at")
         (defun helm-mu4e-attach (_file)
           (gnus-dired-attach (helm-marked-candidates)))
 
+        ;; store all attachments of an email into the same folder
+        (setq mu4e-save-multiple-attachments-without-asking t)
+
         ;; set mu4e as default
         (setq mail-user-agent 'mu4e-user-agent)
 
