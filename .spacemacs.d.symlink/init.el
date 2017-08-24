@@ -98,6 +98,7 @@ values."
                                     evil-escape
                                     evil-terminal-cursor-changer
                                     sublime-themes
+                                    magithub
                                     )
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
