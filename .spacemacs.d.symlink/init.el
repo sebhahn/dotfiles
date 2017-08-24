@@ -411,8 +411,8 @@ you should place your code here."
     ;; work machine
     (setq user-full-name "Sebastian Hahn"
           user-mail-address "sebastian.hahn@geo.tuwien.ac.at")
-    (setenv "NO_PROXY" "dvlp1.ipf.tuwien.ac.at,localhost,127.0.0.1")
-    (setenv "no_proxy" "dvlp1.ipf.tuwien.ac.at,localhost,127.0.0.1")
+    (setenv "NO_PROXY" "dvlp1.geo.tuwien.ac.at,localhost,127.0.0.1")
+    (setenv "no_proxy" "dvlp1.geo.tuwien.ac.at,localhost,127.0.0.1")
     )
 
   (when (eq (dotfiles/machine-location) 'home)
