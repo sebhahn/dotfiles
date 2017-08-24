@@ -358,8 +358,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (let ((machines '(("shahn" . work) ("shahn-T450s" . home))))
       (cdr (assoc system-name machines))))
 
-    (setq exec-path-from-shell-arguments (list "-i" "-l"))
-
     (setq dotspacemacs-default-font '("Hack"
                                       :size 13
                                       :weight normal
@@ -370,15 +368,16 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
     (when (eq (dotfiles/machine-location) 'work)
     ;; work machine
-    (setq dotspacemacs-default-font '("Hack"
-                                    :size 14
-                                    :weight normal
-                                    :width normal
-                                    :powerline-scale 1.3)
+      (setq shell-file-name "/usr/local/bin/zsh")
+      (setenv "SHELL" "/usr/local/bin/zsh")
+      (setq dotspacemacs-default-font '("Hack"
+                                        :size 14
+                                        :weight normal
+                                        :width normal
+                                        :powerline-scale 1.3)
 
           browse-url-generic-program "google-chrome"
-          exec-path-from-shell-arguments (list "-i" "-l")
-    ))
+          org-odt-data-dir "/usr/share/emacs/25.1/etc/org"))
 
     (when (eq (dotfiles/machine-location) 'home)
     ;; notebook
@@ -389,7 +388,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
                                       :powerline-scale 1.3)
 
           browse-url-generic-program "google-chrome"
-          exec-path-from-shell-arguments (list "-i")))
+          exec-path-from-shell-arguments (list "-i")
+          org-odt-data-dir "/usr/share/emacs/25.1/etc/org"))
 
     (add-to-list 'load-path "~/.spacemacs.d" t)
     (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
