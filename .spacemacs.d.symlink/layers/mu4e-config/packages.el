@@ -176,12 +176,10 @@ Web: http://rs.geo.tuwien.ac.at")
         ;; the 'All Mail' folder by pressing ``ma''.
 
         (setq mu4e-maildir-shortcuts
-            '(("/TU/INBOX"  . ?i)
+            '(("/TU/INBOX"  . ?x)
+              ("/TU/it"  . ?i)
               ("/TU/geo"  . ?g)
               ("/TU/hsaf"  . ?h)
-              ("/TU/meetings"  . ?m)
-              ("/TU/conference"  . ?c)
-              ("/TU/research"  . ?r)
               ("/TU/tuw"  . ?t)
             ))
 
