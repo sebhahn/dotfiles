@@ -4,5 +4,3 @@ export PATH=$HOME/.cabal/bin:$PATH
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init - --no-rehash)"
 eval "$(pyenv virtualenv-init -)"
-export http_proxy=http://proxy.geo.tuwien.ac.at:3128
-export https_proxy=https://proxy.geo.tuwien.ac.at:3128
