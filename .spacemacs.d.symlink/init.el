@@ -31,10 +31,12 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layers
    '(
       ansible
-        (auto-completion
+      (auto-completion
         :variables
         auto-completion-enable-snippets-in-popup t
+        auto-completion-enable-sort-by-usage t
         auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/"
+        auto-completion-complete-with-key-sequence "jk"
         auto-completion-enable-help-tooltip nil)
       bibtex
       c-c++
@@ -52,9 +54,13 @@ This function should only modify configuration layer settings."
         git-gutter-use-fringe t)
       github
       gnus
+      helm
       html
       ipython-notebook
       latex
+      (latex :variables
+             latex-enable-auto-fill t
+             latex-enable-folding t)
       lua
       markdown
       mu4e-config
