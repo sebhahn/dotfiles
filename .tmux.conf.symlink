@@ -7,7 +7,7 @@ set -sg escape-time 0
 #
 # enable utf 8
 set -g status on
-set -g status-utf8 on
+# set -g status-utf8 on
 
 # Set the prefix to ^A.
 unbind C-b
@@ -106,7 +106,7 @@ set-option -g status-fg colour24
 set -g status-attr bright
 set-option -g status on
 set-option -g status-interval 2
-set-option -g status-utf8 on
+# set-option -g status-utf8 on
 set-option -g status-justify "centre"
 set-option -g status-left-length 80
 set-option -g status-right-length 50
