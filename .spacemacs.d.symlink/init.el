@@ -44,6 +44,8 @@ This function should only modify configuration layer settings."
       csv
       custom-org-config
       emacs-lisp
+      (elfeed
+       :variables rmh-elfeed-org-files (list "~/Dropbox/shahn/org/elfeed.org"))
       elixir
       erc
       erlang
