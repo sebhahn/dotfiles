@@ -42,13 +42,16 @@
 
    (setq bibtex-completion-bibliography "~/Dropbox/shahn/research/latex/zotero.bib")
    (setq helm-bibtex-library-path "~/Dropbox/shahn/research/publications")
-   (setq helm-bibtex-notes-path "~/Dropbox/shahn/research/notes")
+   (setq helm-bibtex-notes-path "~/Dropbox/shahn/org/pub_note.org")
    (setq helm-bibtex-notes-extension ".org")
    (setq helm-bibtex-pdf-open-function
      (lambda (fpath)
        (start-process "okular" "*okular*" "okular" fpath)))
 
    (setq helm-bibtex-additional-search-fields '(keywords journal))
+
+   (advice-add 'bibtex-completion-candidates
+               :filter-return 'reverse)
 
    (defun helm-bibtex-interleave-edit-notes (key)
      "Open the notes associated with the entry using `find-file'."
@@ -69,7 +72,7 @@
     :config
 
     (require 'org-ref-bibtex)
-    (setq org-ref-bibliography-notes "/home/shahn/Dropbox/shahn/research/notes/notes.org")
+    (setq org-ref-bibliography-notes "/home/shahn/Dropbox/shahn/org/pub_note.org")
     (setq org-ref-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/zotero"))
     (setq org-ref-pdf-directory "/home/shahn/Dropbox/shahn/research/publications")
     (setq reftex-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/zotero"))
