@@ -200,6 +200,15 @@ which require an initialization must be listed explicitly in the list.")
             ("\\paragraph{%s}" . "\\paragraph*{%s}")
             ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
+      (add-to-list 'org-latex-classes
+                   '("koma-report"
+                     "\\documentclass{scrreprt}"
+                     ("\\section{%s}" . "\\section*{%s}")
+                     ("\\subsection{%s}" . "\\subsection*{%s}")
+                     ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                     ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                     ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
       (setq org-ditaa-jar-path "/usr/bin/ditaa")
 
       (setq org-plantuml-jar-path "~/Dropbox/shahn/org/plantuml.jar")
