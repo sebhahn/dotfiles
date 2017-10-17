@@ -414,10 +414,10 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
       (setq shell-file-name "/usr/local/bin/zsh")
       (setenv "SHELL" "/usr/local/bin/zsh")
       (setq dotspacemacs-default-font '("Hack"
-                                        :size 14
+                                        :size 15
                                         :weight normal
                                         :width normal
-                                        :powerline-scale 1.3)
+                                        :powerline-scale 1.4)
 
           browse-url-generic-program "google-chrome"
           org-odt-data-dir "/usr/share/emacs/25.1/etc/org"))
