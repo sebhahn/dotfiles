@@ -43,6 +43,7 @@ This function should only modify configuration layer settings."
       colors
       csv
       custom-org-config
+      dash
       emacs-lisp
       (elfeed
        :variables
@@ -398,7 +399,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
     (defun dotfiles/machine-location ()
       "Get the machine location. Either returns home or work at the moment"
-    (let ((machines '(("shahn" . work) ("shahn-T450s" . home))))
+    (let ((machines '(("shahn" . work) ("shahnT450s" . home))))
       (cdr (assoc system-name machines))))
 
     (setq dotspacemacs-default-font '("Hack"
