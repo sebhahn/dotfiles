@@ -159,6 +159,8 @@ which require an initialization must be listed explicitly in the list.")
       ;; setup of latex processing
       (setq org-latex-pdf-process '("latexmk %f"))
 
+      (setq org-latex-with-hyperref nil)
+
       ;; setup of latex processing
       ;; (setq org-latex-pdf-process
       ;;       '("pdflatex -interaction nonstopmode -output-directory %o %f"

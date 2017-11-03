@@ -397,6 +397,10 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
+    (setq configuration-layer--elpa-archives '(("melpa" . "melpa.org/packages/")
+                                               ("org" . "orgmode.org/elpa/")
+                                               ("gnu" . "elpa.gnu.org/packages/")))
+
     (defun dotfiles/machine-location ()
       "Get the machine location. Either returns home or work at the moment"
     (let ((machines '(("shahn" . work) ("shahnT450s" . home))))
