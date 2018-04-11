@@ -21,6 +21,7 @@ Account TU
 MaildirStore tu-local
 Path ~/mbsync/TU/
 Inbox ~/mbsync/TU/INBOX
+SubFolders Legacy
 
 # CONNECTIONS SPECIFY LINKS BETWEEN REMOTE AND LOCAL FOLDERS
 #

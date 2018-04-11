@@ -494,7 +494,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
     (defun dotfiles/machine-location ()
       "Get the machine location. Either returns home or work at the moment"
-    (let ((machines '(("shahn" . work) ("shahnT450s" . home))))
+    (let ((machines '(("shahn" . work) ("shahn-7490" . home))))
       (cdr (assoc system-name machines))))
 
     (setq dotspacemacs-default-font '("Hack"
