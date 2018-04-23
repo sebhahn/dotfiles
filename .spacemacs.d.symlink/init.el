@@ -51,8 +51,8 @@ This function should only modify configuration layer settings."
       emacs-lisp
       (elfeed
        :variables
-       rmh-elfeed-org-files (list "~/Dropbox/shahn/org/elfeed.org")
-       elfeed-db-directory "~/Dropbox/shahn/org/.elfeed")
+       rmh-elfeed-org-files (list "~/ownCloud/org/elfeed.org")
+       elfeed-db-directory "~/ownCloud/org/.elfeed")
       elixir
       erc
       erlang
