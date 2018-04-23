@@ -100,10 +100,10 @@ which require an initialization must be listed explicitly in the list.")
 
       (setq org-src-fontify-natively 1)
       (setq org-agenda-span 'day)
-      (setq org-default-notes-file "~/Dropbox/shahn/org/refile.org")
+      (setq org-default-notes-file "~/ownCloud/org/refile.org")
 
-      (setq org-directory "~/Dropbox/shahn/org")
-      (setq org-agenda-files (quote ("~/Dropbox/shahn/org")))
+      (setq org-directory "~/ownCloud/org")
+      (setq org-agenda-files (quote ("~/ownCloud/org")))
 
       (setq org-agenda-persistent-filter t)
 
@@ -213,7 +213,7 @@ which require an initialization must be listed explicitly in the list.")
 
       (setq org-ditaa-jar-path "/usr/bin/ditaa")
 
-      (setq org-plantuml-jar-path "~/Dropbox/shahn/org/plantuml.jar")
+      (setq org-plantuml-jar-path "~/ownCloud/org/plantuml.jar")
 
       (org-babel-do-load-languages
        'org-babel-load-languages
@@ -248,7 +248,7 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-treat-S-cursor-todo-selection-as-state-change nil)
       ;; set tags according to state of the task
 
-      (setq org-agenda-diary-file "~/Dropbox/shahn/org/diary.org")
+      (setq org-agenda-diary-file "~/ownCloud/org/diary.org")
 
 
       ;; Diary
@@ -280,21 +280,21 @@ which require an initialization must be listed explicitly in the list.")
 
       ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
       (setq org-capture-templates
-            (quote (("t" "todo" entry (file "~/Dropbox/shahn/org/refile.org")
+            (quote (("t" "todo" entry (file "~/ownCloud/org/refile.org")
                      "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-                    ("r" "respond" entry (file "~/Dropbox/shahn/org/refile.org")
+                    ("r" "respond" entry (file "~/ownCloud/org/refile.org")
                      "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
-                    ("n" "note" entry (file "~/Dropbox/shahn/org/refile.org")
+                    ("n" "note" entry (file "~/ownCloud/org/refile.org")
                      "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
-                    ("j" "Journal" entry (file+datetree "~/Dropbox/shahn/org/diary.org")
+                    ("j" "Journal" entry (file+datetree "~/ownCloud/org/diary.org")
                      "* %?\n%U\n" :clock-in t :clock-resume t)
-                    ("w" "org-protocol" entry (file "~/Dropbox/shahn/org/refile.org")
+                    ("w" "org-protocol" entry (file "~/ownCloud/org/refile.org")
                      "* TODO Review %c\n%U\n" :immediate-finish t)
-                    ("m" "Meeting" entry (file "~/Dropbox/shahn/org/refile.org")
+                    ("m" "Meeting" entry (file "~/ownCloud/org/refile.org")
                      "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
-                    ("p" "Phone call" entry (file "~/Dropbox/shahn/org/refile.org")
+                    ("p" "Phone call" entry (file "~/ownCloud/org/refile.org")
                      "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
-                    ("h" "Habit" entry (file "~/Dropbox/shahn/org/refile.org")
+                    ("h" "Habit" entry (file "~/ownCloud/org/refile.org")
                      "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %a .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
 
       ;; Remove empty LOGBOOK drawers on clock out

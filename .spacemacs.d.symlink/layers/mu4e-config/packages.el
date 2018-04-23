@@ -311,7 +311,7 @@ Web: http://rs.geo.tuwien.ac.at")
         (add-hook 'org-store-link-functions 'org-mu4e-store-link)
         (setq org-mu4e-convert-to-html t)
 
-        (setq mu4e-org-contacts-file "~/Dropbox/shahn/org/contacts.org")
+        (setq mu4e-org-contacts-file "~/ownCloud/org/contacts.org")
         (add-to-list 'mu4e-headers-actions
                      '("org-contact-add" . mu4e-action-add-org-contact) t)
         (add-to-list 'mu4e-view-actions

@@ -40,9 +40,9 @@
      :config
      (progn
 
-   (setq bibtex-completion-bibliography "~/Dropbox/shahn/research/latex/zotero.bib")
-   (setq helm-bibtex-library-path "~/Dropbox/shahn/research/publications")
-   (setq helm-bibtex-notes-path "~/Dropbox/shahn/org/pub_note.org")
+   (setq bibtex-completion-bibliography "~/ownCloud/research/latex/zotero.bib")
+   (setq helm-bibtex-library-path "~/ownCloud/research/publications")
+   (setq helm-bibtex-notes-path "~/ownCloud/org/pub_note.org")
    (setq helm-bibtex-notes-extension ".org")
    (setq helm-bibtex-pdf-open-function
      (lambda (fpath)
@@ -72,10 +72,10 @@
     :config
 
     (require 'org-ref-bibtex)
-    (setq org-ref-bibliography-notes "/home/shahn/Dropbox/shahn/org/pub_note.org")
-    (setq org-ref-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/zotero"))
-    (setq org-ref-pdf-directory "/home/shahn/Dropbox/shahn/research/publications")
-    (setq reftex-default-bibliography '("/home/shahn/Dropbox/shahn/research/latex/zotero"))
+    (setq org-ref-bibliography-notes "/home/shahn/ownCloud/org/pub_note.org")
+    (setq org-ref-default-bibliography '("/home/shahn/ownCloud/research/latex/zotero"))
+    (setq org-ref-pdf-directory "/home/shahn/ownCloud/research/publications")
+    (setq reftex-default-bibliography '("/home/shahn/ownCloud/research/latex/zotero"))
 
     (defun org-ref-include-default-bibliography (backend)
       "Add bibliographystyle and bibliography links on export if they are needed."
