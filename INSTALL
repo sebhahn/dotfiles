@@ -38,11 +38,8 @@ git submodule init
 git submodule sync
 git submodule update
 
-# setup pure theme for zsh
-cd ~/.oh-my-zsh/custom/
-git clone https://github.com/sindresorhus/pure
-mv pure/pure.zsh pure.zsh-theme
-mv pure/async.zsh async.zsh
+# setup theme for zsh
+git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
 # setup spacemacs and submodules
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
