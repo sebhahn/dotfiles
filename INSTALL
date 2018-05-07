@@ -48,7 +48,3 @@ cd ~/.emacs.d
 git submodule init
 git submodule sync
 git submodule update
-
-# setup terminal theme
-cd $DOTFILES_ROOT
-bash terminal-theme.sh
