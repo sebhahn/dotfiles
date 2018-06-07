@@ -66,8 +66,8 @@ This function should only modify configuration layer settings."
       helm
       html
       ipython-notebook
-      latex
       (latex :variables
+             font-latex-fontify-script nil
              latex-enable-auto-fill t
              latex-enable-folding t)
       lua
