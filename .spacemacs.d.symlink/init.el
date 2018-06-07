@@ -76,7 +76,6 @@ This function should only modify configuration layer settings."
       (org
         :variables org-enable-reveal-js-support t)
       pandoc
-      pdf-tools
       plantuml
       (python
         :variables
