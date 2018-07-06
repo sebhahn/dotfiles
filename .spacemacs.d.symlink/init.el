@@ -75,6 +75,9 @@ This function should only modify configuration layer settings."
       mu4e-config
       (org
         :variables org-enable-reveal-js-support t)
+      (orgwiki
+       :variables
+       org-wiki-location "~/ownCloud/org/wiki/")
       pandoc
       plantuml
       (python
@@ -568,6 +571,12 @@ before packages are loaded."
       (delete-other-windows)
       (split-window-right)
       (mu4e)))
+
+  (spacemacs|define-custom-layout "@wiki"
+    :binding "w"
+    :body
+    (progn
+      (find-file "~/ownCloud/org/wiki/index.org")))
 
   (defun endless/fill-or-unfill ()
     "Like `fill-paragraph', but unfill if used twice."
