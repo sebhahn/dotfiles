@@ -9,7 +9,6 @@ ln -sf $DOTFILES_ROOT/.tmux.conf.symlink $HOME/.tmux.conf
 ln -sf $DOTFILES_ROOT/.mbsyncrc.symlink $HOME/.mbsyncrc
 ln -sf $DOTFILES_ROOT/.Xdefaults.symlink $HOME/.Xdefaults
 ln -sf $DOTFILES_ROOT/.latexmkrc.symlink $HOME/.latexmkrc
-ln -sf $DOTFILES_ROOT/.latex_gitconfig.symlink $HOME/.latex_gitconfig
 ln -sf $DOTFILES_ROOT/.config/* $HOME/.config
 ln -sf $DOTFILES_ROOT/bin/* ~/bin
 ln -sf $DOTFILES_ROOT/ranger/ranger.py ~/bin/ranger

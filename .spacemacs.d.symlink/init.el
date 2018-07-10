@@ -510,9 +510,9 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
     (when (eq (dotfiles/machine-location) 'work)
     ;; work machine
-      (setq shell-file-name "/usr/local/bin/zsh")
-      (setenv "SHELL" "/usr/local/bin/zsh")
-      (setq dotspacemacs-default-font '("Hack"
+      (setq shell-file-name "/usr/bin/zsh")
+      (setenv "SHELL" "/usr/bin/zsh")
+      (setq dotspacemacs-default-font '("Hack Nerd Font"
                                         :size 15
                                         :weight normal
                                         :width normal
