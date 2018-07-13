@@ -109,10 +109,10 @@ bindkey '\e[A' up-line-or-beginning-search
 bindkey '\eOB' down-line-or-beginning-search
 bindkey '\e[B' down-line-or-beginning-search
 
-alias db="cd ~/Dropbox/shahn/"
 alias zs="source ~/.zshrc"
 alias gum="git pull upstream master"
 alias gom="git push origin master"
+alias gud="git pull origin develop"
 
 . ~/z.sh
 
