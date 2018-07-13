@@ -143,9 +143,9 @@ bind k select-pane -U
 bind l select-pane -R
 bind-key -r C-h select-window -t :-
 bind-key -r C-l select-window -t :+
-bind -t vi-copy v begin-selection
-bind -t vi-copy y copy-selection
-bind -t vi-copy Escape cancel
+#bind -t vi-copy v begin-selection
+#bind -t vi-copy y copy-selection
+#bind -t vi-copy Escape cancel
 
 # to paste
 bind-key C-v run "xsel -o | tmux load-buffer - ; tmux paste-buffer"
@@ -187,8 +187,8 @@ setw -g alternate-screen off
 set -g terminal-overrides 'xterm:colors=256'
 
 # force a reload of the config file
-unbind r
-bind r source-file ~/.tmux.conf
+#unbind r
+#bind r source-file ~/.tmux.conf
 
 # quick pane cycling
 # unbind ^T
