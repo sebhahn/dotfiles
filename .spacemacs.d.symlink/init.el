@@ -513,10 +513,10 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
       (setq shell-file-name "/usr/bin/zsh")
       (setenv "SHELL" "/usr/bin/zsh")
       (setq dotspacemacs-default-font '("Hack Nerd Font"
-                                        :size 15
+                                        :size 16
                                         :weight normal
                                         :width normal
-                                        :powerline-scale 1.4)
+                                        :powerline-scale 1.5)
 
           browse-url-generic-program "google-chrome"
           org-odt-data-dir "/usr/share/emacs/25.1/etc/org"))
