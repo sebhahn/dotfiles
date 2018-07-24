@@ -524,7 +524,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
     (when (eq (dotfiles/machine-location) 'home)
     ;; notebook
     (setq dotspacemacs-default-font '("Hack"
-                                      :size 14
+                                      :size 15
                                       :weight normal
                                       :width normal
                                       :powerline-scale 1.3)
