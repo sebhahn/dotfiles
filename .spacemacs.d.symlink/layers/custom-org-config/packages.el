@@ -113,6 +113,10 @@ which require an initialization must be listed explicitly in the list.")
       (require 'ox-html)
       (require 'ox-md)
 
+      ;; If idle for more than 15 minutes, resolve the things by asking what to do
+      ;; with the clock time
+      (setq org-clock-idle-time 15)
+
       ;; log into the LOGBOOK drawer. Also stores notes there.
       (setq org-log-into-drawer t)
 
