@@ -63,30 +63,42 @@ which require an initialization must be listed explicitly in the list.")
     (progn
       (spacemacs/set-leader-keys "m'" 'org-edit-src-exit)
 
-      ;; set org agenda global
       (spacemacs/set-leader-keys "oo" 'org-agenda)
       (spacemacs/set-leader-keys "oc" 'org-capture)
+      (spacemacs/set-leader-keys "ol" 'org-store-link)
       (spacemacs/set-leader-keys "or" 'org-refile)
-      (spacemacs/set-leader-keys "oa" 'org-toggle-archive-tag)
+      (spacemacs/set-leader-keys "oi" 'org-iswitchb)
 
-      ;; set punch in and out keys
+      (spacemacs/set-leader-keys "ota" 'org-toggle-archive-tag)
 
-      (spacemacs/set-leader-keys "oI" 'bh/punch-in)
-      (spacemacs/set-leader-keys "oO" 'bh/punch-out)
+      (spacemacs/set-leader-keys "oar" 'org-agenda-clockreport-mode)
+      (spacemacs/set-leader-keys "oas" 'org-agenda-sunrise-sunset)
+      (spacemacs/set-leader-keys "oat" 'spacemacs/org-agenda-transient-state/body)
+      (spacemacs/set-leader-keys "oak" 'org-agenda-show-clocking-issues)
 
-      ;; Custom Key Bindings
-      (global-set-key "\C-cl" 'org-store-link)
-      (global-set-key "\C-ca" 'org-agenda)
-      (global-set-key "\C-cb" 'org-iswitchb)
-      (global-set-key (kbd "C-c c") 'org-capture)
-      (global-set-key (kbd "<f9>") 'org-agenda)
-      (global-set-key (kbd "<f8>") 'org-clock-goto)
-      (global-set-key (kbd "C-<f8>") 'org-clock-in)
-      (global-set-key (kbd "<f5>") 'bh/org-todo)
-      (global-set-key (kbd "<S-f5>") 'bh/widen)
-      (global-set-key (kbd "<f7> I") 'bh/punch-in)
-      (global-set-key (kbd "<f7> O") 'bh/punch-out)
-      (global-set-key (kbd "<f7> SPC") 'bh/clock-in-last-task)
+      ;; (spacemacs/set-leader-keys "oks" 'org-clock-in)
+      (spacemacs/set-leader-keys "oki" 'org-clock-in)
+      (spacemacs/set-leader-keys "oko" 'org-clock-out)
+      (spacemacs/set-leader-keys "okc" 'org-clock-cancel)
+      (spacemacs/set-leader-keys "oke" 'org-set-effort)
+      (spacemacs/set-leader-keys "okl" 'bh/clock-in-last-task)
+      (spacemacs/set-leader-keys "okg" 'org-clock-goto)
+      (spacemacs/set-leader-keys "okr" 'org-clock-report)
+      (spacemacs/set-leader-keys "okd" 'org-clock-mark-default-task)
+      (spacemacs/set-leader-keys "okk" 'org-clock-display)
+
+      (spacemacs/set-leader-keys "opi" 'bh/punch-in)
+      (spacemacs/set-leader-keys "opo" 'bh/punch-out)
+
+      (spacemacs/set-leader-keys "own" 'org-wiki-insert-new)
+      (spacemacs/set-leader-keys "owh" 'org-wiki-helm)
+      (spacemacs/set-leader-keys "owi" 'org-wiki-index)
+      (spacemacs/set-leader-keys "ows" 'org-wiki-search)
+      (spacemacs/set-leader-keys "owl" 'org-wiki-insert-link)
+
+      ;; (global-set-key (kbd "C-<f8>") 'org-clock-in)
+      ;; (global-set-key (kbd "<f5>") 'bh/org-todo)
+      ;; (global-set-key (kbd "<S-f5>") 'bh/widen)
 
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "C-l" 'org-toggle-latex-fragment))
 
@@ -115,7 +127,7 @@ which require an initialization must be listed explicitly in the list.")
 
       ;; If idle for more than 15 minutes, resolve the things by asking what to do
       ;; with the clock time
-      (setq org-clock-idle-time 15)
+      ;; (setq org-clock-idle-time 15)
 
       ;; log into the LOGBOOK drawer. Also stores notes there.
       (setq org-log-into-drawer t)
@@ -834,6 +846,9 @@ which require an initialization must be listed explicitly in the list.")
                         nil))  ; available to archive
                   (or subtree-end (point-max)))
               next-headline))))
+
+      (setq org-agenda-start-with-log-mode '(closed clock state))
+
       ;; Custom agenda command definitions
       (setq org-agenda-custom-commands
             (quote (("N" "Notes" tags "NOTE"
@@ -843,7 +858,7 @@ which require an initialization must be listed explicitly in the list.")
                      ((org-agenda-overriding-header "Habits")
                       (org-agenda-sorting-strategy
                        '(todo-state-down effort-up category-keep))))
-                    ("A" "Agenda"
+                    ("o" "My agenda"
                      ((agenda "" nil)
                       (tags "REFILE"
                             ((org-agenda-overriding-header "Tasks to Refile")
