@@ -48,6 +48,9 @@ This function should only modify configuration layer settings."
       csv
       custom-org-config
       dash
+      (deft
+       :variables
+       deft-directory "~/ownCloud/deft/")
       emacs-lisp
       (elfeed
        :variables
