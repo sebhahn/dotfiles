@@ -69,7 +69,16 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys "or" 'org-refile)
       (spacemacs/set-leader-keys "oi" 'org-iswitchb)
 
-      (spacemacs/set-leader-keys "ota" 'org-toggle-archive-tag)
+      (spacemacs/set-leader-keys "odn" 'deft-new-file)
+      (spacemacs/set-leader-keys "odN" 'deft-new-file-named)
+      (spacemacs/set-leader-keys "odf" 'deft-find-file)
+      (spacemacs/set-leader-keys "odd" 'deft-delete-file)
+      (spacemacs/set-leader-keys "odr" 'deft-rename-file)
+      (spacemacs/set-leader-keys "oda" 'deft-archive-file)
+      (spacemacs/set-leader-keys "odg" 'deft-refresh)
+      (spacemacs/set-leader-keys "odo" 'deft-open-file-other-window)
+
+      (spacemacs/set-leader-keys "osa" 'org-toggle-archive-tag)
 
       (spacemacs/set-leader-keys "oar" 'org-agenda-clockreport-mode)
       (spacemacs/set-leader-keys "oas" 'org-agenda-sunrise-sunset)
