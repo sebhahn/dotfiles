@@ -570,7 +570,7 @@ before packages are loaded."
     :binding "s"
     :body
     (progn
-      (org-agenda nil "A")
+      (org-agenda nil "o")
       (delete-other-windows)
       (split-window-right)
       (mu4e)))
