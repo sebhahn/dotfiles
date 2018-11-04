@@ -52,7 +52,7 @@ Department of Geodesy and Geoinformation (GEO)
 Research Group Microwave Remote Sensing
 Phone: +43 1 58801 12240
 E-mail: sebastian.hahn@geo.tuwien.ac.at
-Web: http://mrs.geo.tuwien.ac.at/")
+Web: http://rs.geo.tuwien.ac.at/")
 
 
 ;; For each package, define a function mu4e-config/init-<package-name>
@@ -181,6 +181,7 @@ Web: http://mrs.geo.tuwien.ac.at/")
               ("/TU/it"  . ?i)
               ("/TU/geo"  . ?g)
               ("/TU/hsaf"  . ?h)
+              ("/TU/sm2rain"  . ?s)
               ("/TU/tuw"  . ?t)
             ))
 
@@ -239,7 +240,7 @@ Web: http://mrs.geo.tuwien.ac.at/")
                     (if msg
                         (setq user-mail-address
                                 (cond
-                                ((mu4e-message-contact-field-matches msg :to "Sebastian.Hahn@geo.tuwien.ac.at")
+                                ((mu4e-message-contact-field-matches msg :to "sebastian.hahn@geo.tuwien.ac.at")
                                 "Sebastian.Hahn@geo.tuwien.ac.at")
                                 ((mu4e-message-contact-field-matches msg :to "sebastian.hahn@tuwien.ac.at")
                                  "Sebastian.Hahn@geo.tuwien.ac.at")
@@ -264,6 +265,14 @@ Web: http://mrs.geo.tuwien.ac.at/")
                                     (:flags . 6)
                                     (:from-or-to . 22)
                                     (:subject)))
+
+        (setq mu4e-headers-date-format "%Y-%m-%d")
+
+        ;; (setq mu4e-compose-format-flowed t)
+        (setq mu4e-view-show-addresses 't)
+
+        (setq message-citation-line-format "On %a, %d %b %Y at %R, %f wrote:\n"
+              message-citation-line-function 'message-insert-formatted-citation-line)
 
         (setq mu4e-hide-index-messages t)
 
@@ -307,15 +316,16 @@ Web: http://mrs.geo.tuwien.ac.at/")
         (require 'org)
         (require 'org-mu4e)
         (require 'org-contacts)
+
         (org-add-link-type "mu4e" 'org-mu4e-open)
         (add-hook 'org-store-link-functions 'org-mu4e-store-link)
         (setq org-mu4e-convert-to-html t)
 
-        (setq mu4e-org-contacts-file "~/ownCloud/org/contacts.org")
-        (add-to-list 'mu4e-headers-actions
-                     '("org-contact-add" . mu4e-action-add-org-contact) t)
-        (add-to-list 'mu4e-view-actions
-                     '("org-contact-add" . mu4e-action-add-org-contact) t)
+        ;; (setq mu4e-org-contacts-file "~/ownCloud/org/contacts.org")
+        ;; (add-to-list 'mu4e-headers-actions
+        ;;              '("org-contact-add" . mu4e-action-add-org-contact) t)
+        ;; (add-to-list 'mu4e-view-actions
+        ;;              '("org-contact-add" . mu4e-action-add-org-contact) t)
 
         ;; use helm for navigation
         (setq  mu4e-completing-read-function 'completing-read)
@@ -379,7 +389,8 @@ Web: http://mrs.geo.tuwien.ac.at/")
           "m" 'message-goto-body
           "b" 'message-goto-bcc
           "c" 'message-goto-cc
-          "s" 'message-goto-subject)
+          "s" 'message-goto-subject
+          "d" 'message-kill-buffer)
      )
    )
 
