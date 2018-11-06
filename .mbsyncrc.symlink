@@ -42,3 +42,42 @@ SyncState *
 
 Group tu
 Channel tu-inbox
+
+IMAPAccount TU-Git
+# Address to connect to
+Host mail.intern.tuwien.ac.at
+User intern/shahn/E120.Git
+PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/dotfiles/mail/tu.gpg"
+AuthMechs LOGIN
+SSLType IMAPS
+SSLVersions TLSv1
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+# REMOTE STORAGE (USE THE IMAP ACCOUNT SPECIFIED ABOVE)
+IMAPStore tu-git-remote
+Account TU-Git
+
+# LOCAL STORAGE (CREATE DIRECTORIES with mkdir -p Maildir/gmail)
+MaildirStore tu-git-local
+Path ~/mbsync/TU-Git/
+Inbox ~/mbsync/TU-Git/INBOX
+
+# CONNECTIONS SPECIFY LINKS BETWEEN REMOTE AND LOCAL FOLDERS
+#
+# CONNECTIONS ARE SPECIFIED USING PATTERNS, WHICH MATCH REMOTE MAIl
+# FOLDERS. SOME COMMONLY USED PATTERS INCLUDE:
+#
+# 1 "*" TO MATCH EVERYTHING
+# 2 "!DIR" TO EXCLUDE "DIR"
+# 3 "DIR" TO MATCH DIR
+
+Channel tu-git-inbox
+Master :tu-git-remote:
+Slave :tu-git-local:
+Patterns * 
+Create Both
+Expunge Both
+SyncState *
+
+Group tu-git
+Channel tu-git-inbox

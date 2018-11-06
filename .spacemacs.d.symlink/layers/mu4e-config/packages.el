@@ -102,6 +102,17 @@ Web: http://rs.geo.tuwien.ac.at/")
              (smtpmail-starttls-credentials '(("mail.intern.tuwien.ac.at" 587 nil nil)))
              (smtpmail-auth-credentials '(("mail.intern.tuwien.ac.at" 587 "shahn" nil)))
              (smtpmail-smtp-service 587))
+            ("TU-Git"
+             (mu4e-sent-folder "/TU-Git/Sent Items")
+             (mu4e-sent-messages-behavior sent)
+             (mu4e-drafts-folder "/TU-Git/Drafts")
+             (user-mail-address "git@geo.tuwien.ac.at")
+             (user-full-name  "Sebastian Hahn")
+             (smtpmail-smtp-user "shahn")
+             (smtpmail-smtp-server "mail.intern.tuwien.ac.at")
+             (smtpmail-starttls-credentials '(("mail.intern.tuwien.ac.at" 587 nil nil)))
+             (smtpmail-auth-credentials '(("mail.intern.tuwien.ac.at" 587 "shahn" nil)))
+             (smtpmail-smtp-service 587))
             ))
         (defun mu4e-config-set-account ()
           "Set the account for composing a message."
@@ -149,7 +160,7 @@ Web: http://rs.geo.tuwien.ac.at/")
               (lambda (msg)
                 (cond
                  ((string-match "TU" (mu4e-message-field msg :maildir)) "/TU/Archives")
-                 ;; ((string-match "TU-Git" (mu4e-message-field msg :maildir)) "/TU-Git/INBOX/.erledigt")
+                 ((string-match "TU-Git" (mu4e-message-field msg :maildir)) "/TU-Git/INBOX/.erledigt")
                  ;; ((string-match "Personal" (mu4e-message-field msg :maildir)) "/Personal/[Gmail].All Mail")
                   ;; messages to the mu mailing list go to the /mu folder
                   ;; ((mu4e-message-contact-field-matches msg :to "cpaulik@gmail.com") "/Personal/Archive")
@@ -164,7 +175,7 @@ Web: http://rs.geo.tuwien.ac.at/")
               (lambda (msg)
                 (cond
                  ((string-match "TU" (mu4e-message-field msg :maildir)) "/TU/Deleted Items")
-                 ;; ((string-match "TU-Git" (mu4e-message-field msg :maildir)) "/TU-Git/Gel&APY-schte Elemente")
+                 ((string-match "TU-Git" (mu4e-message-field msg :maildir)) "/TU-Git/Gel&APY-schte Elemente")
                  ;; ((string-match "Personal" (mu4e-message-field msg :maildir)) "/Personal/[Gmail].Trash")
                   ;; messages to the mu mailing list go to the /mu folder
                  ;; everything else goes to /archive
