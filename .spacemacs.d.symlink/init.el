@@ -50,7 +50,7 @@ This function should only modify configuration layer settings."
       dash
       (deft
        :variables
-       deft-directory "~/ownCloud/deft/")
+       deft-directory "~/ownCloud/org/deft/")
       emacs-lisp
       (elfeed
        :variables
