@@ -3,3 +3,4 @@ export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init - --no-rehash)"
 eval "$(pyenv virtualenv-init -)"
 export ARDUINO_PATH=/usr/local/arduino
+export SSH_ASKPASS=/usr/bin/ksshaskpass
