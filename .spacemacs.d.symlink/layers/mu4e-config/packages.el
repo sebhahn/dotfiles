@@ -52,7 +52,7 @@ Department of Geodesy and Geoinformation (GEO)
 Research Group Microwave Remote Sensing
 Phone: +43 1 58801 12240
 E-mail: sebastian.hahn@geo.tuwien.ac.at
-Web: http://rs.geo.tuwien.ac.at/")
+Web: http://mrs.geo.tuwien.ac.at/")
 
 
 ;; For each package, define a function mu4e-config/init-<package-name>
