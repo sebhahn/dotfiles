@@ -526,7 +526,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
     (when (eq (dotfiles/machine-location) 'home)
     ;; notebook
-    (setq dotspacemacs-default-font '("Hack"
+    (setq dotspacemacs-default-font '("Hack Nerd Font"
                                       :size 15
                                       :weight normal
                                       :width normal
@@ -537,7 +537,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
           org-odt-data-dir "/usr/share/emacs/25.1/etc/org"))
 
     (add-to-list 'load-path "~/.spacemacs.d" t)
-    (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 
     ;; make sure customize stuff is written into different file
     (setq custom-file "~/.spacemacs.d/custom.el")
