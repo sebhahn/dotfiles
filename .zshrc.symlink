@@ -61,7 +61,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(atom git github cabal command-not-found cp debian dirhistory extract pip python rsync wakeonlan wd zsh-syntax-highlighting ubuntu z)
+plugins=(autopep8 git github command-not-found cp debian dirhistory extract pip pylint pyenv python wakeonlan wd zsh-syntax-highlighting ubuntu z)
 
 # set full color terminal
 export TERM=xterm-256color
@@ -151,6 +151,3 @@ alias ptest='python setup.py test'
 
 # does that ring a bell?
 alias bell="echo -n $'\x7'"
-
-# BASE16_SHELL=$HOME/.config/base16-shell/
-# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
