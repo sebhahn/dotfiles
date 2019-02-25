@@ -124,7 +124,8 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-default-notes-file "~/ownCloud/org/refile.org")
 
       (setq org-directory "~/ownCloud/org")
-      (setq org-agenda-files (quote ("~/ownCloud/org")))
+      (setq org-agenda-files (list "~/ownCloud/org"
+                                   "~/ownCloud/org/wiki"))
 
       (setq org-agenda-persistent-filter t)
 
