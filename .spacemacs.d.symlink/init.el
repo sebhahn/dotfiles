@@ -527,10 +527,10 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
     (when (eq (dotfiles/machine-location) 'home)
     ;; notebook
     (setq dotspacemacs-default-font '("Hack Nerd Font"
-                                      :size 15
+                                      :size 14
                                       :weight normal
                                       :width normal
-                                      :powerline-scale 1.3)
+                                      :powerline-scale 0.8)
 
           browse-url-generic-program "google-chrome"
           exec-path-from-shell-arguments (list "-i")
