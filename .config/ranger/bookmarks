@@ -1,9 +1,8 @@
 r:/home/shahn/shares/radar
 q:/home/shahn/shares/common
 c:/home/shahn/swdvlp
-b:/home/shahn/Dropbox/shahn
 d:/home/shahn/Downloads
-':/home/shahn
+':/home/shahn/shares/teaching
 p:/home/shahn/shares/radar/Projects
 h:/home/shahn
 m:/home/shahn/shares/common-pf
@@ -14,6 +13,7 @@ o:/home/shahn/ownCloud
 3:/home/shahn/shares/radar/Datapool_raw/HSAF
 2:/home/shahn/shares/radar/Datapool_raw/ASCAT
 5:/home/shahn/shares/radar/Projects/H_SAF_CDOP3
-4:/home/shahn/shares/radar/Archive_Projects/H_SAF_CDOP2
+t:/home/shahn/shares/teaching
 w:/home/shahn/shares/radar/Datapool_processed/WARP
 x:/home/shahn/shares/exchange/staff/shahn
+4:/home/shahn/shares/radar/Archive_Projects/H_SAF_CDOP2
