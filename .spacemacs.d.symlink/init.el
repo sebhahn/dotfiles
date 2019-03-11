@@ -519,10 +519,10 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                                         :size 16
                                         :weight normal
                                         :width normal
-                                        :powerline-scale 1.5)
+                                        :powerline-scale 1.4)
 
           browse-url-generic-program "google-chrome"
-          org-odt-data-dir "/usr/share/emacs/25.1/etc/org"))
+          org-odt-data-dir "/usr/share/emacs/25.2/etc/org"))
 
     (when (eq (dotfiles/machine-location) 'home)
     ;; notebook
