@@ -58,6 +58,7 @@ This function should only modify configuration layer settings."
        elfeed-db-directory "~/ownCloud/org/.elfeed")
       elixir
       erc
+      epub
       erlang
       ess
       games
@@ -77,7 +78,8 @@ This function should only modify configuration layer settings."
       markdown
       mu4e-config
       (org
-        :variables org-enable-reveal-js-support t)
+        :variables org-enable-reveal-js-support t
+                   org-enable-epub-support t)
       (orgwiki
        :variables
        org-wiki-location "~/ownCloud/org/wiki/")
