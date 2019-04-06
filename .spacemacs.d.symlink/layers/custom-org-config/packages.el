@@ -183,7 +183,7 @@ which require an initialization must be listed explicitly in the list.")
       (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
       ;; setup of latex processing
-      (setq org-latex-pdf-process '("latexmk %f"))
+      (setq org-latex-pdf-process '("latexmk %f -output-directory=%o"))
 
       (setq org-latex-with-hyperref nil)
 
