@@ -182,8 +182,19 @@ which require an initialization must be listed explicitly in the list.")
       ;; setup org-cdlatex minor mode
       (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
-      ;; setup of latex processing
-      (setq org-latex-pdf-process '("latexmk %f -output-directory=%o"))
+      ;; (setq my-hash
+      ;;       #s(hash-table
+      ;;          size 3
+      ;;          test equal
+      ;;          data ("pdflatex" "-pdf"
+      ;;                "xelatex" "-xelatex"
+      ;;                "lualatex" "-lualatex")))
+
+      ;; for luatex and xelatex
+      ;; (setq org-latex-pdf-process '("latexmk %f -output-directory=%o -%latex"))
+
+      (setq org-latex-pdf-process (list
+                                   "latexmk -pdflatex='%latex -shell-escape -interaction nonstopmode' -pdf -output-directory=%o %f"))
 
       (setq org-latex-with-hyperref nil)
 
