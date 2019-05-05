@@ -522,7 +522,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
           browse-url-generic-program "google-chrome")
 
     (when (eq (dotfiles/machine-location) 'work)
-    ;; work machine
+    ;; work
       (setq shell-file-name "/usr/bin/zsh")
       (setenv "SHELL" "/usr/bin/zsh")
       (setq dotspacemacs-default-font '("Hack Nerd Font"
@@ -535,7 +535,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
           org-odt-data-dir "/usr/share/emacs/25.2/etc/org"))
 
     (when (eq (dotfiles/machine-location) 'home)
-    ;; notebook
+    ;; home
     (setq dotspacemacs-default-font '("Hack Nerd Font"
                                       :size 14
                                       :weight normal
@@ -569,15 +569,12 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
   (when (eq (dotfiles/machine-location) 'work)
-    ;; work machine
+    ;; work
     (setq user-full-name "Sebastian Hahn"
-          user-mail-address "sebastian.hahn@geo.tuwien.ac.at")
-    (setenv "NO_PROXY" "dvlp1.geo.tuwien.ac.at,localhost,127.0.0.1")
-    (setenv "no_proxy" "dvlp1.geo.tuwien.ac.at,localhost,127.0.0.1")
-    )
+          user-mail-address "sebastian.hahn@geo.tuwien.ac.at"))
 
   (when (eq (dotfiles/machine-location) 'home)
-    ;; home laptop
+    ;; home
     (setq user-full-name "Sebastian Hahn"
           user-mail-address "sebastian.hahn@gmail.com")
 
@@ -626,13 +623,6 @@ before packages are loaded."
               (yas-activate-extra-mode 'fundamental-mode)))
 
   (global-visual-line-mode t)
-
-  ;; fix error: split-window: Cannot split side window or parent of side window
-  (with-eval-after-load "helm"
-    (defun helm-persistent-action-display-window (&optional split-onewindow)
-      "Return the window that will be used for persistent action. If SPLIT-ONEWINDOW is non-`nil' window is split in persistent action."
-      (with-helm-window
-        (setq helm-persistent-action-display-window (get-mru-window)))))
 
   ;; fancy git icon
   (defadvice vc-mode-line (after strip-backend () activate)
