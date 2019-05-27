@@ -41,6 +41,8 @@ This function should only modify configuration layer settings."
         auto-completion-enable-sort-by-usage t
         auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/"
         auto-completion-complete-with-key-sequence "jk"
+        auto-completion-complete-with-key-sequence-delay 0.1
+        auto-completion-idle-delay 0.6
         auto-completion-enable-help-tooltip nil)
       bibtex
       c-c++
@@ -103,7 +105,7 @@ This function should only modify configuration layer settings."
       spell-checking
       syntax-checking
       tmux
-      treemacs
+      ;; treemacs
       version-control
       yaml
      )
