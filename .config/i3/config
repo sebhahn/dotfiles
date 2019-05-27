@@ -68,7 +68,7 @@ bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart du
 bindsym Print exec --no-startup-id i3-scrot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
-bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
+# bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # focus_follows_mouse no
@@ -103,7 +103,7 @@ bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
 # split orientation
-bindsym $mod+b split h;exec notify-send 'tile horizontally'
+# bindsym $mod+b split h;exec notify-send 'tile horizontally'
 bindsym $mod+v split v;exec notify-send 'tile vertically'
 bindsym $mod+q split toggle
 
@@ -418,9 +418,23 @@ mode "$mode_gaps_outer" {
         bindsym Escape mode "default"
 }
 
+## Manual management of external displays
+# Set the shortcuts and what they do
+set $mode_display Ext Screen (v) External ON, (h) External OFF
+mode "$mode_display" {
+    bindsym v exec --no-startup-id xrandr --output eDP1 --auto --off --output DP1-2 --auto --output DP2-1 --auto --right-of DP1-2, mode "default"
+    bindsym h exec --no-startup-id xrandr --output eDP1 --auto --output DP2-1 --auto --off --output DP1-2 --auto --off, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+# Declare here the shortcut to bring the display selection menu
+bindsym $mod+x mode "$mode_display"
+
 # visual stuff
-new_window pixel 3
-gaps inner 15
+new_window pixel 1
+gaps inner 3
 smart_gaps on
 
 # application shortcuts
@@ -428,14 +442,17 @@ smart_gaps on
 # bindsym $mod+i exec google-chrome-stable --incognito
 # bindsym $mod+s exec emacs
 # bindsym $mod+e exec gnome-terminal -e ranger
-bindsym $mod+Shift+e exec dolphin 
+# bindsym $mod+Shift+e exec dolphin 
 
 # start a terminal
 bindsym $mod+Return exec konsole
 
 # default location of programs
-assign [class="Google-chrome"] 1
-assign [class="Emacs"] 2
-assign [class="Dolphin"] 3
+# assign [class="Google-chrome-stable"] 1
+# assign [class="Emacs"] 2
+# assign [class="Ranger"] 3
+# assign [class="Dolphin"] 4
 
-exec rsibreak
+exec --no-startup-id rsibreak --autostart
+exec --no-startup-id owncloud
+exec --no-startup-id redshift
