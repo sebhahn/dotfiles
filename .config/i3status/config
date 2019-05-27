@@ -10,15 +10,15 @@ general {
         colors = true
         color_good = "#FFFFFF"
         color_degraded = "#666666"
-        color_bad = "#FF0000"
+        color_bad = "#FF6600"
         interval = 1
 }
 
 order += "disk /"
 # order += "run_watch DHCP"
-# order += "run_watch VPN"
+order += "run_watch VPN"
 # order += "wireless _first_"
-order += "battery 1"
+order += "battery 0"
 order += "volume master"
 order += "load"
 order += "tztime local"
@@ -28,8 +28,9 @@ wireless _first_ {
         format_down = "W: down"
 }
 
-battery 1 {
-        format = " %status %percentage %remaining "
+battery 0 {
+        format = " %status %percentage "
+        # format = " %status %percentage %remaining "
         status_chr = "⚇ CHR"
         status_bat = "⚡ BAT"
         status_full = "☻ FULL"
@@ -45,7 +46,7 @@ run_watch VPN {
 }
 
 tztime local {
-        format = " %Y-%m-%d %H:%M "
+        format = " %b %d, %I:%M %p"
 }
 
 load {
