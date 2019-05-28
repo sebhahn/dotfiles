@@ -1,5 +1,6 @@
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
 export ARDUINO_PATH=/usr/local/arduino
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 export SSH_ASKPASS=/usr/bin/ksshaskpass
 
 export PYENV_ROOT=$HOME/.pyenv
