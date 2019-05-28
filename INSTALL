@@ -9,6 +9,7 @@ ln -sf $DOTFILES_ROOT/.tmux.conf.symlink $HOME/.tmux.conf
 ln -sf $DOTFILES_ROOT/.mbsyncrc.symlink $HOME/.mbsyncrc
 ln -sf $DOTFILES_ROOT/.Xdefaults.symlink $HOME/.Xdefaults
 ln -sf $DOTFILES_ROOT/.latexmkrc.symlink $HOME/.latexmkrc
+ln -sf $DOTFILES_ROOT/.Xresources.symlink $HOME/.Xresources
 ln -sf $DOTFILES_ROOT/.config/* $HOME/.config
 ln -sf $DOTFILES_ROOT/bin/* ~/bin
 ln -sf $DOTFILES_ROOT/ranger/ranger.py ~/bin/ranger
@@ -44,6 +45,7 @@ git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/theme
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 ln -sf $DOTFILES_ROOT/.spacemacs.d.symlink/snippets/* ~/.emacs.d/private/snippets
 cd ~/.emacs.d
+git checkout develop
 git submodule init
 git submodule sync
 git submodule update
