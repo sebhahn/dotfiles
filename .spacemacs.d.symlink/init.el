@@ -523,10 +523,11 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
           browse-url-generic-program "google-chrome")
 
+    (setq shell-file-name "/usr/bin/zsh")
+    (setenv "SHELL" "/usr/bin/zsh")
+
     (when (eq (dotfiles/machine-location) 'work)
     ;; work
-      (setq shell-file-name "/usr/bin/zsh")
-      (setenv "SHELL" "/usr/bin/zsh")
       (setq dotspacemacs-default-font '("Hack Nerd Font"
                                         :size 16
                                         :weight normal
@@ -539,10 +540,10 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
     (when (eq (dotfiles/machine-location) 'home)
     ;; home
     (setq dotspacemacs-default-font '("Hack Nerd Font"
-                                      :size 14
+                                      :size 13
                                       :weight normal
                                       :width normal
-                                      :powerline-scale 0.8)
+                                      :powerline-scale 1.1)
 
           browse-url-generic-program "google-chrome"
           exec-path-from-shell-arguments (list "-i")
