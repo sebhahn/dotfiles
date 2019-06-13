@@ -103,7 +103,7 @@ set -g set-titles-string '#S:#I.#P #W'
 # powerline setup
 set-option -g status-bg colour235
 set-option -g status-fg colour24
-set -g status-attr bright
+# set -g status-attr bright
 set-option -g status on
 set-option -g status-interval 2
 # set-option -g status-utf8 on
