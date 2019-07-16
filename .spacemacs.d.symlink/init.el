@@ -86,7 +86,9 @@ This function should only modify configuration layer settings."
        :variables
        org-wiki-location "~/ownCloud/org/wiki/")
       pandoc
-      plantuml
+      (plantuml
+        :variables
+        plantuml-jar-path "~/ownCloud/org/plantuml.jar")
       (python
         :variables
         python-enable-yapf-format-on-save nil
