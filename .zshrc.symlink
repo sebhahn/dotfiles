@@ -61,7 +61,8 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(autopep8 git github command-not-found cp debian dirhistory extract pip pylint pyenv python wakeonlan wd zsh-syntax-highlighting ubuntu z)
+# plugins=(autopep8 git github command-not-found cp debian dirhistory extract pip pylint pyenv python wakeonlan wd zsh-syntax-highlighting ubuntu z)
+plugins=(git github cp dirhistory extract pip pyenv python wd zsh-syntax-highlighting ubuntu z)
 
 # set full color terminal
 export TERM=xterm-256color
@@ -122,13 +123,13 @@ source $ZSH/oh-my-zsh.sh
 POWERLEVEL9K_DIR_PATH_SEPARATOR=" $(print_icon "LEFT_SUBSEGMENT_SEPARATOR") "
 
 # configuration for tilix
-if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-        source /etc/profile.d/vte.sh
-fi
+#if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+#        source /etc/profile.d/vte.sh
+#fi
 
-if [[ -e $HOME/.mntrc ]]; then
-  source $HOME/.mntrc
-fi
+#if [[ -e $HOME/.mntrc ]]; then
+#  source $HOME/.mntrc
+#fi
 
 # emacs
 alias magit='ec -e "(magit-status \"$(pwd)\")"'
