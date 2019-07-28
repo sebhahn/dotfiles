@@ -629,6 +629,12 @@ before packages are loaded."
 
   (global-visual-line-mode t)
 
+  (with-eval-after-load 'python
+    (defun spacemacs//python-setup-shell (&rest args)
+        (progn
+          (setq python-shell-interpreter-args "-i")
+          (setq python-shell-interpreter "python"))))
+
   ;; fix error: split-window: Cannot split side window or parent of side window
   (with-eval-after-load "helm"
     (defun helm-persistent-action-display-window (&optional split-onewindow)
