@@ -547,7 +547,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                                       :width normal
                                       :powerline-scale 1.1)
 
-          browse-url-generic-program "google-chrome"
+          browse-url-generic-program "google-chrome-stable"
           exec-path-from-shell-arguments (list "-i")
           org-odt-data-dir "/usr/share/emacs/25.1/etc/org"))
 
