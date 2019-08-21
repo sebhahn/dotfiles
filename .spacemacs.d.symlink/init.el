@@ -88,7 +88,8 @@ This function should only modify configuration layer settings."
       pandoc
       (plantuml
         :variables
-        plantuml-jar-path "~/ownCloud/org/plantuml.jar")
+        plantuml-jar-path "~/ownCloud/org/plantuml.jar"
+        plantuml-default-exec-mode 'jar)
       (python
         :variables
         python-enable-yapf-format-on-save nil
