@@ -139,8 +139,8 @@ which require an initialization must be listed explicitly in the list.")
       ;; with the clock time
       ;; (setq org-clock-idle-time 15)
 
-      (setq org-tag-alist '(("important" . ?i)
-                            ("urgent"    . ?u)))
+      (setq org-tag-alist '(("i" . ?i)
+                            ("u" . ?u)))
 
       ;; log into the LOGBOOK drawer. Also stores notes there.
       (setq org-log-into-drawer t)
@@ -884,10 +884,10 @@ which require an initialization must be listed explicitly in the list.")
             (quote (("N" "Notes" tags "NOTE"
                      ((org-agenda-overriding-header "Notes")
                       (org-tags-match-list-sublevels t)))
-                    ("1" "Q1" tags-todo "+important+urgent")
-                    ("2" "Q2" tags-todo "+important-urgent")
-                    ("3" "Q3" tags-todo "-important+urgent")
-                    ("4" "Q4" tags-todo "-important-urgent")
+                    ("1" "Q1" tags-todo "+i+u")
+                    ("2" "Q2" tags-todo "+i-u")
+                    ("3" "Q3" tags-todo "-i+u")
+                    ("4" "Q4" tags-todo "-i-u")
                     ("h" "Habits" tags-todo "STYLE=\"habit\""
                      ((org-agenda-overriding-header "Habits")
                       (org-agenda-sorting-strategy
