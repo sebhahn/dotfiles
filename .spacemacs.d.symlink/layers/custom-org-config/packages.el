@@ -139,8 +139,9 @@ which require an initialization must be listed explicitly in the list.")
       ;; with the clock time
       ;; (setq org-clock-idle-time 15)
 
-      (setq org-tag-alist '(("i" . ?i)
-                            ("u" . ?u)))
+      ;; (setq org-tag-alist '(("IMP" . ?i)
+      ;;                       ("URG" . ?u)
+      ;;                       ("ARCHIVE" . ?a)))
 
       ;; log into the LOGBOOK drawer. Also stores notes there.
       (setq org-log-into-drawer t)
@@ -268,10 +269,14 @@ which require an initialization must be listed explicitly in the list.")
        )
 
       (setq org-confirm-babel-evaluate nil)
-      (setq org-todo-keywords
-            (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
-                    (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
 
+      ;; (setq org-todo-keywords
+      ;;       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
+      ;;               (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
+
+      (setq org-todo-keywords
+            (quote ((sequence "TODO(t)" "DOING(o)" "|" "DONE(d!)")
+                    (sequence "BLOCKED(b@/!)" "|" "REVIEW(r@/!)" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
 
       ;;(setq org-todo-keyword-faces
       ;;      (quote (("TODO" :foreground "red" :weight bold)
@@ -313,10 +318,13 @@ which require an initialization must be listed explicitly in the list.")
             (quote (("CANCELLED" ("CANCELLED" . t))
                     ("WAITING" ("WAITING" . t))
                     ("HOLD" ("WAITING") ("HOLD" . t))
-                    (done ("WAITING") ("HOLD"))
-                    ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
-                    ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
-                    ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
+                    (done ("WAITING") ("HOLD") ("BLOCKED"))
+                    ("TODO" ("WAITING") ("CANCELLED") ("HOLD") ("DOING") ("BLOCKED") ("REVIEW"))
+                    ("NEXT" ("WAITING") ("CANCELLED") ("HOLD") ("DOING") ("BLOCKED") ("REVIEW"))
+                    ("DONE" ("WAITING") ("CANCELLED") ("HOLD") ("DOING") ("BLOCKED") ("REVIEW"))
+                    ("DOING" ("DOING" . t))
+                    ("BLOCKED" ("BLOCKED" . t))
+                    ("REVIEW" ("BLOCKED") ("REVIEW" . t)))))
 
       ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
       (setq org-capture-templates
@@ -879,19 +887,51 @@ which require an initialization must be listed explicitly in the list.")
 
       (setq org-agenda-start-with-log-mode '(closed clock state))
 
+      (setq org-highest-priority ?A)
+      (setq org-lowerst-priority ?D)
+      (setq org-lowest-priority ?D)
+      (setq org-default-priority ?D)
+
       ;; Custom agenda command definitions
       (setq org-agenda-custom-commands
             (quote (("N" "Notes" tags "NOTE"
                      ((org-agenda-overriding-header "Notes")
                       (org-tags-match-list-sublevels t)))
-                    ("1" "Q1" tags-todo "+i+u")
-                    ("2" "Q2" tags-todo "+i-u")
-                    ("3" "Q3" tags-todo "-i+u")
-                    ("4" "Q4" tags-todo "-i-u")
+                    ("e" "Eisenhower matrix"
+                     ((agenda "" nil)
+                      (tags-todo "PRIORITY=\"A\""
+                                ((org-agenda-overriding-header "Important and Urgent (kitchen fire)")
+                                  (org-agenda-sorting-strategy '(category-keep))))
+                      (tags-todo "PRIORITY=\"B\""
+                                ((org-agenda-overriding-header "Important (end data, personally)")
+                                  (org-agenda-sorting-strategy '(category-keep))))
+                      (tags-todo "PRIORITY=\"C\""
+                                 ((org-agenda-overriding-header "Urgent (interruptions, delegate)")
+                                  (org-agenda-sorting-strategy '(category-keep))))
+                      (tags-todo "PRIORITY=\"D\""
+                                 ((org-agenda-overriding-header "Time waster")
+                                  (org-agenda-sorting-strategy '(category-keep))))))
                     ("h" "Habits" tags-todo "STYLE=\"habit\""
                      ((org-agenda-overriding-header "Habits")
                       (org-agenda-sorting-strategy
                        '(todo-state-down effort-up category-keep))))
+                    ("k" "Kanban agenda"
+                     ((agenda "" nil)
+                      (tags "REFILE"
+                            ((org-agenda-overriding-header "Tasks to Refile")
+                            (org-tags-match-list-sublevels nil)))
+                      (todo "TODO"
+                                ((org-agenda-overriding-header "Planned")
+                                  (org-agenda-sorting-strategy '(category-keep))))
+                      (todo "DOING"
+                                ((org-agenda-overriding-header "Doing")
+                                  (org-agenda-sorting-strategy '(category-keep))))
+                      (todo "BLOCKED"
+                                 ((org-agenda-overriding-header "Blocked")
+                                  (org-agenda-sorting-strategy '(category-keep))))
+                      (todo "REVIEW"
+                                 ((org-agenda-overriding-header "Review")
+                                  (org-agenda-sorting-strategy '(category-keep))))))
                     ("o" "My agenda"
                      ((agenda "" nil)
                       (tags "REFILE"
@@ -1087,27 +1127,38 @@ which require an initialization must be listed explicitly in the list.")
 
       ;; Resume clocking task when emacs is restarted
       (org-clock-persistence-insinuate)
-      ;;
+
       ;; Show lot of clocking history so it's easy to pick items off the C-F11 list
       (setq org-clock-history-length 23)
+
       ;; Resume clocking task on clock-in if the clock is open
       (setq org-clock-in-resume t)
+
       ;; Change tasks to NEXT when clocking in
-      (setq org-clock-in-switch-to-state 'bh/clock-in-to-next)
+      ;; (setq org-clock-in-switch-to-state 'bh/clock-in-to-next)
+      (setq org-clock-in-switch-to-state "DOING")
+
       ;; Separate drawers for clocking and logs
       (setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
+
       ;; Save clock data and state changes and notes in the LOGBOOK drawer
       (setq org-clock-into-drawer t)
+
       ;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
       (setq org-clock-out-remove-zero-time-clocks t)
+
       ;; Clock out when moving task to a done state
       (setq org-clock-out-when-done t)
+
       ;; Save the running clock and all clock history when exiting Emacs, load it on startup
       (setq org-clock-persist t)
+
       ;; Do not prompt to resume an active clock
       (setq org-clock-persist-query-resume nil)
+
       ;; Enable auto clock resolution for finding open clocks
       (setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
+
       ;; Include current clocking task in clock reports
       (setq org-clock-report-include-clocking-task t)
 
