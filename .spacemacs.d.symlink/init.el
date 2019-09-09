@@ -121,6 +121,7 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(org-mind-map
+                                      org-edna
                                       exec-path-from-shell)
 
    ;; A list of packages that cannot be updated.
