@@ -49,11 +49,11 @@
 (defvar work-sig "Dipl.-Ing. Sebastian Hahn
 Technische Universität Wien (TU Wien)
 Department of Geodesy and Geoinformation (GEO)
-Research Group Microwave Remote Sensing
-Phone: +43 1 58801 12240
+Research Group Microwave Remote Sensing (MRS)
+Address: Wiedner Hauptstr. 8-10, 1040 Vienna
+Phone: +43-1-58801-12240
 E-mail: sebastian.hahn@geo.tuwien.ac.at
 Web: http://mrs.geo.tuwien.ac.at/")
-
 
 ;; For each package, define a function mu4e-config/init-<package-name>
 ;;
@@ -252,11 +252,11 @@ Web: http://mrs.geo.tuwien.ac.at/")
                         (setq user-mail-address
                                 (cond
                                 ((mu4e-message-contact-field-matches msg :to "sebastian.hahn@geo.tuwien.ac.at")
-                                "Sebastian.Hahn@geo.tuwien.ac.at")
+                                "sebastian.hahn@geo.tuwien.ac.at")
                                 ((mu4e-message-contact-field-matches msg :to "sebastian.hahn@tuwien.ac.at")
-                                 "Sebastian.Hahn@geo.tuwien.ac.at")
+                                 "sebastian.hahn@geo.tuwien.ac.at")
                                 ((mu4e-message-contact-field-matches msg :to "shahn@ipf.tuwien.ac.at")
-                                "Sebastian.Hahn@geo.tuwien.ac.at")
+                                "sebastian.hahn@geo.tuwien.ac.at")
                                 ))))))
 
         ;; not possible because message body is not available in headers view

@@ -587,11 +587,11 @@ before packages are loaded."
 
     (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
 
-  (spacemacs|define-custom-layout "@Start"
+  (spacemacs|define-custom-layout "@agenda"
     :binding "s"
     :body
     (progn
-      (org-agenda nil "o")
+      (org-agenda nil "k")
       (delete-other-windows)
       (split-window-right)
       (mu4e)))
