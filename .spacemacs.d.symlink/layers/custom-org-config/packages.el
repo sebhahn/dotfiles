@@ -288,13 +288,11 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-capture-templates
             (quote (("t" "todo" entry (file "~/ownCloud/org/refile.org")
                      "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-                    ("o" "old todo" entry (file "~/ownCloud/org/refile.org")
-                     "* TODO %?\n%U\n:LOGBOOK:\nCLOCK: %U--%U\n:END:")
                     ("r" "remind" entry (file "~/ownCloud/org/remind.org")
                      "* REMIND %? :REMIND:\nDEADLINE: %^t\n%U\n%a\n")
                     ("n" "note" entry (file "~/ownCloud/org/refile.org")
                      "* %? :NOTE:\n%U\n%a\n")
-                    ("h" "H SAF journal" entry (file+olp+datetree "~/ownCloud/org/hsaf_diary.org")
+                    ("h" "hsaf journal" entry (file+olp+datetree "~/ownCloud/org/hsaf_diary.org")
                      "* %?\n%U\n")
                     ("j" "journal" entry (file+olp+datetree "~/ownCloud/org/diary.org")
                      "* %?\n%U\n" :clock-in t :clock-resume t)
@@ -306,10 +304,10 @@ which require an initialization must be listed explicitly in the list.")
                      "* %^{Description}\n%^t\n%?")
                     ("m" "meeting" entry (file "~/ownCloud/org/refile.org")
                      "* MEETING %? :MEETING:\n%U" :clock-in t :clock-resume t)
-                    ("p" "Phone call" entry (file "~/ownCloud/org/refile.org")
+                    ("p" "phone call" entry (file "~/ownCloud/org/refile.org")
                      "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
-                    ("h" "Habit" entry (file "~/ownCloud/org/refile.org")
-                     "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %a .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
+                    ("h" "habit" entry (file "~/ownCloud/org/refile.org")
+                     "* TODO %?\n%U\n%a\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %a .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: TODO\n:END:\n"))))
 
       ;; Do not dim blocked tasks
       (setq org-agenda-dim-blocked-tasks nil)
@@ -427,17 +425,51 @@ which require an initialization must be listed explicitly in the list.")
                       (todo "TODO"
                                 ((org-agenda-overriding-header "Planned")
                                  (org-agenda-todo-list-sublevels nil)
-                                  (org-agenda-sorting-strategy '(category-keep))))
+                                 (org-agenda-skip-function 'bh/skip-project-tasks)
+                                 (org-agenda-sorting-strategy '(priority-down))))
                       (todo "DOING"
                                 ((org-agenda-overriding-header "Doing")
                                  (org-agenda-todo-list-sublevels nil)
-                                  (org-agenda-sorting-strategy '(category-keep))))
+                                  (org-agenda-sorting-strategy '(priority-down))))
                       (todo "HOLD"
                                  ((org-agenda-overriding-header "Hold")
                                   (org-agenda-todo-list-sublevels nil)
-                                  (org-agenda-sorting-strategy '(category-keep))))
+                                  (org-agenda-sorting-strategy '(priority-down))))
                     )))))
 
+      (defun bh/skip-project-tasks ()
+        "Show non-project tasks.
+        Skip project and sub-project tasks, habits, and project related tasks."
+        (save-restriction
+          (widen)
+          (let* ((subtree-end (save-excursion (org-end-of-subtree t))))
+            (cond
+             ((bh/is-project-subtree-p)
+              subtree-end)
+             (t
+              nil)))))
+
+      (defun bh/find-project-task ()
+        "Move point to the parent (project) task if any"
+        (save-restriction
+          (widen)
+          (let ((parent-task (save-excursion (org-back-to-heading 'invisible-ok) (point))))
+            (while (org-up-heading-safe)
+              (when (member (nth 2 (org-heading-components)) org-todo-keywords-1)
+                (setq parent-task (point))))
+            (goto-char parent-task)
+            parent-task)))
+
+      (defun bh/is-project-subtree-p ()
+        "Any task with a todo keyword that is in a project subtree.
+        Callers of this function already widen the buffer view."
+        (let ((task (save-excursion (org-back-to-heading 'invisible-ok)
+                                    (point))))
+          (save-excursion
+            (bh/find-project-task)
+            (if (equal (point) task)
+                nil
+              t))))
 
       ;; Include agenda archive files when searching for things
       (setq org-agenda-text-search-extra-files (quote (agenda-archives)))
