@@ -401,15 +401,19 @@ which require an initialization must be listed explicitly in the list.")
                      ((agenda "" nil)
                       (tags-todo "PRIORITY=\"A\""
                                 ((org-agenda-overriding-header "Important and Urgent (kitchen fire)")
+                                 (org-agenda-skip-function 'bh/skip-project-tasks)
                                   (org-agenda-sorting-strategy '(category-keep))))
                       (tags-todo "PRIORITY=\"B\""
                                 ((org-agenda-overriding-header "Important (end data, personally)")
+                                 (org-agenda-skip-function 'bh/skip-project-tasks)
                                   (org-agenda-sorting-strategy '(category-keep))))
                       (tags-todo "PRIORITY=\"C\""
                                  ((org-agenda-overriding-header "Urgent (interruptions, delegate)")
+                                  (org-agenda-skip-function 'bh/skip-project-tasks)
                                   (org-agenda-sorting-strategy '(category-keep))))
                       (tags-todo "PRIORITY=\"D\""
                                  ((org-agenda-overriding-header "Time waster")
+                                  (org-agenda-skip-function 'bh/skip-project-tasks)
                                   (org-agenda-sorting-strategy '(category-keep))))))
 
                     ("h" "Habits" tags-todo "STYLE=\"habit\""
