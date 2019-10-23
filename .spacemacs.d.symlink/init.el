@@ -638,11 +638,11 @@ before packages are loaded."
           (setq python-shell-interpreter "python"))))
 
   ;; fix error: split-window: Cannot split side window or parent of side window
-  (with-eval-after-load "helm"
-    (defun helm-persistent-action-display-window (&optional split-onewindow)
-      "Return the window that will be used for persistent action. If SPLIT-ONEWINDOW is non-`nil' window is split in persistent action."
-      (with-helm-window
-        (setq helm-persistent-action-display-window (get-mru-window)))))
+  ;; (with-eval-after-load "helm"
+  ;;   (defun helm-persistent-action-display-window (&optional split-onewindow)
+  ;;     "Return the window that will be used for persistent action. If SPLIT-ONEWINDOW is non-`nil' window is split in persistent action."
+  ;;     (with-helm-window
+  ;;       (setq helm-persistent-action-display-window (get-mru-window)))))
 
   ;; fancy git icon
   (defadvice vc-mode-line (after strip-backend () activate)
