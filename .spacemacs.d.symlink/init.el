@@ -76,6 +76,7 @@ This function should only modify configuration layer settings."
              font-latex-fontify-script nil
              latex-enable-auto-fill t
              latex-enable-folding t)
+      lsp
       markdown
       multiple-cursors
       mu4e-config
