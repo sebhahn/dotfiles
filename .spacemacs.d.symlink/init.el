@@ -93,6 +93,7 @@ This function should only modify configuration layer settings."
         plantuml-default-exec-mode 'jar)
       (python
         :variables
+        python-backend 'anaconda
         python-enable-yapf-format-on-save nil
         python-auto-set-local-pyenv-version 'on-project-switch
         python-test-runner 'pytest)
