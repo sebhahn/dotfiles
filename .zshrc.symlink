@@ -132,7 +132,7 @@ POWERLEVEL9K_DIR_PATH_SEPARATOR=" $(print_icon "LEFT_SUBSEGMENT_SEPARATOR") "
 #fi
 
 # emacs
-alias magit='ec -e "(magit-status \"$(pwd)\")"'
+# alias magit='ec -e "(magit-status \"$(pwd)\")"'
 
 # bind C-j and C-k to up-down in history
 bindkey '^k' up-history
