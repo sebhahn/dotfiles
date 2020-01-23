@@ -151,7 +151,8 @@ http://mrs.geo.tuwien.ac.at/")
                     (message-insert-signature)
                     (message-goto-to)
                     ;; enable signing of emails by default
-                    (mml-secure-message-sign-pgpmime)))
+                    ;; (mml-secure-message-sign-pgpmime)
+                    ))
 
         ;; save message to Sent Messages
         (setq mu4e-sent-messages-behavior 'sent)
@@ -399,8 +400,10 @@ http://mrs.geo.tuwien.ac.at/")
           "m" 'message-goto-body
           "b" 'message-goto-bcc
           "c" 'message-goto-cc
-          "s" 'message-goto-subject
-          "d" 'message-kill-buffer)
+          "u" 'message-goto-subject
+          "d" 'message-kill-buffer
+          "e" 'mml-secure-message-encrypt-pgpmime
+          "s" 'mml-secure-message-sign-pgpmime)
      )
    )
 

@@ -108,7 +108,9 @@ This function should only modify configuration layer settings."
         shell-default-term-shell "/bin/zsh")
       speed-reading
       spell-checking
-      syntax-checking
+      (syntax-checking
+       :variables
+       syntax-checking-enable-tooltips nil)
       tmux
       ;; treemacs
       version-control
