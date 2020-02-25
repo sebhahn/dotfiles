@@ -105,6 +105,12 @@ which require an initialization must be listed explicitly in the list.")
     (progn
       ;; set org specific keybindings
 
+      (setq org-journal-dir "~/ownCloud/org/journal/")
+      (setq org-journal-file-format "%Y-%m")
+      (setq org-journal-date-prefix "#+TITLE: ")
+      (setq org-journal-date-format "%B %Y")
+      (setq org-journal-time-format "%m-%d")
+
       (add-hook 'org-agenda-mode-hook
                 '(lambda () (org-defkey org-agenda-mode-map "R" 'org-agenda-refile))
                 'append)
@@ -230,29 +236,36 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-confirm-babel-evaluate nil)
 
       (setq org-todo-keywords
-            (quote ((sequence "TODO(t)" "DOING(o)" "|" "DONE(d!)")
-                    (sequence "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
+            (quote ((sequence "TODO(t)" "DOING(o@/!)" "|" "DONE(d!)")
+                    (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELED(c@/!)"))))
+
+      ;; (setq org-todo-keyword-faces
+      ;;       '(("TODO" . org-warning) ("STARTED" . "yellow")
+      ;;         ("CANCELED" . (:foreground "blue" :weight bold))))
 
       ;; (setq org-enforce-todo-dependencies t)
+
+      (setq org-use-fast-todo-selection t)
+      ;; if state is changed using shift then no dates or notes are recorded
+
+      (setq org-treat-S-cursor-todo-selection-as-state-change nil)
+      ;; set tags according to state of the task
+
+      (setq org-todo-state-tags-triggers
+            (quote (("CANCELLED" ("DOING") ("CANCELLED" . t))
+                    (done ("HOLD"))
+                    ("TODO" ("CANCELLED") ("DOING") ("HOLD") )
+                    ("DONE" ("CANCELLED") ("DOING") ("HOLD") )
+                    ("DOING" ("DOING" . t))
+                    ("HOLD" ("CANCELLED") ("DOING") ("HOLD" . t)))))
+
+      (setq org-tags-exclude-from-inheritance '("PROJECT")
+            org-stuck-projects '("+PROJECT/-DONE" ("TODO") ()))
+
 
       (require 'org-edna)
       ;; Always necessary
       (org-edna-load)
-
-      ;;(setq org-todo-keyword-faces
-      ;;      (quote (("TODO" :foreground "red" :weight bold)
-      ;;              ("NEXT" :foreground "blue" :weight bold)
-      ;;              ("DONE" :foreground "forest green" :weight bold)
-      ;;              ("WAITING" :foreground "orange" :weight bold)
-      ;;              ("HOLD" :foreground "magenta" :weight bold)
-      ;;              ("CANCELLED" :foreground "forest green" :weight bold)
-      ;;              ("MEETING" :foreground "forest green" :weight bold)
-      ;;              ("PHONE" :foreground "forest green" :weight bold))))
-
-      (setq org-use-fast-todo-selection t)
-      ;; if state is changed using shift then no dates or notes are recorded
-      (setq org-treat-S-cursor-todo-selection-as-state-change nil)
-      ;; set tags according to state of the task
 
       (setq org-agenda-diary-file "~/ownCloud/org/diary.org")
 
@@ -275,14 +288,6 @@ which require an initialization must be listed explicitly in the list.")
 
       (setq holiday-local-holidays holiday-austria-holidays)
       (setq calendar-holidays (append holiday-local-holidays holiday-other-holidays))
-
-      (setq org-todo-state-tags-triggers
-            (quote (("CANCELLED" ("DOING") ("CANCELLED" . t))
-                    (done ("HOLD"))
-                     ("TODO" ("CANCELLED") ("DOING") ("HOLD") )
-                     ("DONE" ("CANCELLED") ("DOING") ("HOLD") )
-                     ("DOING" ("DOING" . t))
-                     ("HOLD" ("CANCELLED") ("DOING") ("HOLD" . t)))))
 
       ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
       (setq org-capture-templates
@@ -385,22 +390,25 @@ which require an initialization must be listed explicitly in the list.")
 
       (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
 
+      (setq org-agenda-tags-todo-honor-ignore-options t)
+
       ;; Custom agenda command definitions
       (setq org-agenda-custom-commands
             (quote (("N" "Notes" tags "NOTE"
                      ((org-agenda-overriding-header "Notes")
                       (org-tags-match-list-sublevels t)))
 
-                    ("d" "Upcoming deadlines" agenda ""
+                    ("d" "Upcoming deadlines"
+                       ((agenda "")
                        ((org-agenda-time-grid nil)
                         (org-deadline-warning-days 365)
                         (org-agenda-entry-types '(:deadline))
-                        ))
+                        )))
 
                     ("e" "Eisenhower matrix"
                      ((agenda "" nil)
                       (tags-todo "PRIORITY=\"A\""
-                                ((org-agenda-overriding-header "Important and Urgent (kitchen fire)")
+                                ((org-agenda-overriding-header "Urgent and Important (kitchen fire)")
                                  (org-agenda-skip-function 'bh/skip-project-tasks)
                                   (org-agenda-sorting-strategy '(category-keep))))
                       (tags-todo "PRIORITY=\"B\""
@@ -422,23 +430,27 @@ which require an initialization must be listed explicitly in the list.")
                        '(todo-state-down effort-up category-keep))))
 
                     ("k" "Kanban agenda"
-                     ((agenda "" nil)
+                     ((agenda "")
                       (tags "REFILE"
                             ((org-agenda-overriding-header "Tasks to Refile")
                             (org-tags-match-list-sublevels nil)))
                       (todo "TODO"
-                                ((org-agenda-overriding-header "Planned")
-                                 (org-agenda-todo-list-sublevels nil)
-                                 (org-agenda-skip-function 'bh/skip-project-tasks)
-                                 (org-agenda-sorting-strategy '(priority-down))))
+                              ((org-agenda-overriding-header "Todo")
+                                (org-agenda-todo-list-sublevels nil)
+                                (org-agenda-skip-function 'bh/skip-project-tasks)
+                                (org-agenda-sorting-strategy '(priority-down))))
                       (todo "DOING"
-                                ((org-agenda-overriding-header "Doing")
-                                 (org-agenda-todo-list-sublevels nil)
-                                  (org-agenda-sorting-strategy '(priority-down))))
+                            ((org-agenda-overriding-header "Doing")
+                              (org-agenda-todo-list-sublevels nil)
+                              (org-agenda-sorting-strategy '(priority-down))))
+                      (todo "WAITING"
+                            ((org-agenda-overriding-header "Waiting")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-sorting-strategy '(priority-down))))
                       (todo "HOLD"
-                                 ((org-agenda-overriding-header "Hold")
-                                  (org-agenda-todo-list-sublevels nil)
-                                  (org-agenda-sorting-strategy '(priority-down))))
+                            ((org-agenda-overriding-header "Hold")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-sorting-strategy '(priority-down))))
                     )))))
 
       (defun bh/skip-project-tasks ()
