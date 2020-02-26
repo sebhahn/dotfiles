@@ -88,6 +88,9 @@ HIST_STAMPS="yyyy-mm-dd"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git github cp dirhistory extract pip pyenv python wd zsh-syntax-highlighting ubuntu z)
 
+# set full color terminal
+export TERM=xterm-256color
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -116,8 +119,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# set full color terminal
-export TERM=xterm-256color
+. ~/z.sh	
+source $ZSH/oh-my-zsh.sh
 
 # set default editor
 export EDITOR=vim
@@ -163,3 +166,4 @@ alias ptest='python setup.py test'
 alias bell="echo -n $'\x7'"
 
 POWERLEVEL9K_DIR_PATH_SEPARATOR=" $(print_icon "LEFT_SUBSEGMENT_SEPARATOR") "
+
