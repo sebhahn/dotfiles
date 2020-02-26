@@ -32,8 +32,8 @@ git submodule update
 # setup oh-my-zsh and submodules
 cd $DOTFILES_ROOT
 ln -sf $DOTFILES_ROOT/z/z.sh ~/z.sh
-ln -sf $DOTFILES_ROOT/.oh-my-zsh ~/.oh-my-zsh
-cd $DOTFILES_ROOT/.oh-my-zsh
+ln -sf $DOTFILES_ROOT/ohmyzsh ~/.oh-my-zsh
+cd $DOTFILES_ROOT/ohmyzsh
 git submodule init
 git submodule sync
 git submodule update
