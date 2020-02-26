@@ -38,9 +38,6 @@ git submodule init
 git submodule sync
 git submodule update
 
-# setup theme for zsh
-git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-
 # setup spacemacs and submodules
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 ln -sf $DOTFILES_ROOT/.spacemacs.d.symlink/snippets/* ~/.emacs.d/private/snippets
