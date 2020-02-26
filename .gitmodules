@@ -1,9 +1,6 @@
 [submodule ".spacemacs.d.symlink/org-reveal"]
 	path = .spacemacs.d.symlink/org-reveal
 	url = https://github.com/yjwen/org-reveal.git
-[submodule ".oh-my-zsh"]
-	path = .oh-my-zsh
-	url = git@github.com:sebhahn/oh-my-zsh.git
 [submodule "z"]
 	path = z
 	url = https://github.com/rupa/z
