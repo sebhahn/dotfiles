@@ -10,3 +10,6 @@
 [submodule "ranger"]
 	path = ranger
 	url = git@github.com:ranger/ranger.git
+[submodule "ohmyzsh"]
+	path = ohmyzsh
+	url = git@github.com:sebhahn/ohmyzsh.git
