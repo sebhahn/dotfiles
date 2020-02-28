@@ -39,9 +39,10 @@ This function should only modify configuration layer settings."
         :variables
         auto-completion-enable-snippets-in-popup t
         auto-completion-enable-sort-by-usage t
-        auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/"
         auto-completion-complete-with-key-sequence "jk"
         auto-completion-complete-with-key-sequence-delay 0.1
+        auto-completion-private-snippets-directory nil
+        auto-completion-enable-help-tooltip 'manual
         auto-completion-idle-delay 0.6
         auto-completion-enable-help-tooltip nil)
       bibtex
@@ -108,6 +109,7 @@ This function should only modify configuration layer settings."
         :variables
         shell-default-shell 'term
         shell-default-term-shell "/bin/zsh")
+      shell-scripts
       speed-reading
       spell-checking
       (syntax-checking
@@ -115,7 +117,10 @@ This function should only modify configuration layer settings."
        syntax-checking-enable-tooltips nil)
       tmux
       ;; treemacs
-      version-control
+      (version-control
+       :variables
+       version-control-diff-tool 'git-gutter
+       version-control-global-margin t)
       yaml
      )
 
