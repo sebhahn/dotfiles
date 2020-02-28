@@ -205,15 +205,18 @@ http://mrs.geo.tuwien.ac.at/")
         ;; don't keep message buffers around
         (setq message-kill-buffer-on-exit t)
         (setq mu4e-use-fancy-chars t
-                mu4e-headers-draft-mark     '("D" . "⚒ ")  ; draft
-                mu4e-headers-seen-mark      '("S" . "☑ ")  ; seen
-                mu4e-headers-unseen-mark    '("u" . "☐ ")  ; unseen
-                mu4e-headers-flagged-mark   '("F" .  "⚵ ") ; flagged
-                mu4e-headers-new-mark       '("N" .  "✉ ") ; new
-                mu4e-headers-replied-mark   '("R" . "↵ ")  ; replied
-                mu4e-headers-passed-mark    '("P" . "⇉ ")  ; passed
-                mu4e-headers-encrypted-mark '("x" . "⚷ ")  ; encrypted
-                mu4e-headers-signed-mark    '("s" . "✍ ")) ; signed
+                mu4e-headers-draft-mark     '("D" . " ")  ; draft
+                ;; mu4e-headers-seen-mark      '("S" ."﫠 ")  ; seen
+                mu4e-headers-seen-mark      '("S" . "")  ; seen
+                mu4e-headers-attach-mark    '("A" . " ")  ; attach
+                mu4e-headers-unseen-mark    '("u" . "﫟 ")  ; unseen
+                mu4e-headers-flagged-mark   '("F" . " ") ; flagged
+                mu4e-headers-new-mark       '("N" . " ") ; new
+                mu4e-headers-replied-mark   '("R" . " ")  ; replied
+                mu4e-headers-passed-mark    '("P" . " ")  ; passed
+                mu4e-headers-encrypted-mark '("x" . " ")  ; encrypted
+                mu4e-headers-trashed-mark   '("T" . " ")
+                mu4e-headers-signed-mark    '("s" . " ")) ; signed
 
         ;;; message view action
         (defun mu4e-msgv-action-view-in-browser (msg)
@@ -238,6 +241,7 @@ http://mrs.geo.tuwien.ac.at/")
                                                  (dotfiles/machine-location)))  ;; or fetchmail, or ...
          mu4e-update-interval 300)             ;; update every 5 minutes
 
+        (setq mu4e-attachment-dir "~/Downloads")
 
         ;; enable snippets in messages
         (add-hook 'mu4e-compose-mode-hook 'spacemacs/load-yasnippet)
@@ -278,6 +282,7 @@ http://mrs.geo.tuwien.ac.at/")
                                     (:subject)))
 
         (setq mu4e-headers-date-format "%Y-%m-%d")
+
 
         ;; (setq mu4e-compose-format-flowed t)
         (setq mu4e-view-show-addresses 't)
