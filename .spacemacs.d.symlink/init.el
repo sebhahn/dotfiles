@@ -545,7 +545,8 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                                         :powerline-scale 1.4)
 
           browse-url-generic-program "google-chrome"
-          org-odt-data-dir "/usr/share/emacs/25.2/etc/org"))
+          add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"
+          org-odt-data-dir "/usr/local/share/emacs/25.2/etc/org"))
 
     (when (eq (dotfiles/machine-location) 'home)
     ;; home
@@ -557,10 +558,10 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
           browse-url-generic-program "google-chrome-stable"
           exec-path-from-shell-arguments (list "-i")
-          org-odt-data-dir "/usr/share/emacs/25.1/etc/org"))
+          add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e"
+          org-odt-data-dir "/usr/share/emacs/26.3/etc/org"))
 
     (add-to-list 'load-path "~/.spacemacs.d" t)
-    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 
     ;; make sure customize stuff is written into different file
     (setq custom-file "~/.spacemacs.d/custom.el")
