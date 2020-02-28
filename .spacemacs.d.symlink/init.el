@@ -527,9 +527,9 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
     (setq dotspacemacs-default-font '("Hack"
                                       :size 13
-                                      :weight normal
+                                      :weight regular
                                       :width normal
-                                      :powerline-scale 1)
+                                      :powerline-scale 1.1)
 
           browse-url-generic-program "google-chrome")
 
@@ -540,7 +540,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
     ;; work
       (setq dotspacemacs-default-font '("Hack Nerd Font"
                                         :size 16
-                                        :weight normal
+                                        :weight regular
                                         :width normal
                                         :powerline-scale 1.4)
 
@@ -550,9 +550,9 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
     (when (eq (dotfiles/machine-location) 'home)
     ;; home
-      (setq dotspacemacs-default-font '("Hack Nerd Font"
+      (setq dotspacemacs-default-font '("Hack Nerd Font Mono"
                                         :size 13
-                                        :weight normal
+                                        :weight regular
                                         :width normal
                                         :powerline-scale 1.1)
 
