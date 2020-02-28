@@ -330,12 +330,12 @@ which require an initialization must be listed explicitly in the list.")
                                 org-habit
                                 org-inlinetask
                                 org-irc
-                                org-mew
+                                ;; org-mew
                                 org-mhe
                                 org-protocol
                                 org-rmail
-                                org-vm
-                                org-wl
+                                ;; org-vm
+                                ;; org-wl
                                 org-w3m)))
 
       (require 'org-habit)
