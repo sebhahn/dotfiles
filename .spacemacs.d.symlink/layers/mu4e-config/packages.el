@@ -189,33 +189,32 @@ http://mrs.geo.tuwien.ac.at/")
 
         (setq mu4e-maildir-shortcuts
             '(("/TU/INBOX"  . ?x)
+              ("/TU/Archives"  . ?a)
               ("/TU/it"  . ?i)
               ("/TU/geo"  . ?g)
               ("/TU/hsaf"  . ?h)
               ("/TU/sm2rain"  . ?s)
-              ("/TU/tuw"  . ?t)
-            ))
+              ("/TU/tuw"  . ?t)))
 
         ;; something about ourselves
         (setq mu4e-compose-signature ""
             mu4e-user-mail-address-list
-            '("sebastian.hahn@geo.tuwien.ac.at")
-            )
+            '("sebastian.hahn@geo.tuwien.ac.at"))
 
         ;; don't keep message buffers around
         (setq message-kill-buffer-on-exit t)
         (setq mu4e-use-fancy-chars t
                 mu4e-headers-draft-mark     '("D" . " ")  ; draft
-                ;; mu4e-headers-seen-mark      '("S" ."﫠 ")  ; seen
-                mu4e-headers-seen-mark      '("S" . "")  ; seen
+                mu4e-headers-unread-mark    '("U" . " ")  ; unread
+                mu4e-headers-seen-mark      '("S" . "")    ; seen
                 mu4e-headers-attach-mark    '("A" . " ")  ; attach
                 mu4e-headers-unseen-mark    '("u" . "﫟 ")  ; unseen
-                mu4e-headers-flagged-mark   '("F" . " ") ; flagged
-                mu4e-headers-new-mark       '("N" . " ") ; new
+                mu4e-headers-flagged-mark   '("F" . " ")  ; flagged
+                mu4e-headers-new-mark       '("N" . " ")  ; new
                 mu4e-headers-replied-mark   '("R" . " ")  ; replied
                 mu4e-headers-passed-mark    '("P" . " ")  ; passed
                 mu4e-headers-encrypted-mark '("x" . " ")  ; encrypted
-                mu4e-headers-trashed-mark   '("T" . " ")
+                mu4e-headers-trashed-mark   '("T" . " ")  ; trash
                 mu4e-headers-signed-mark    '("s" . " ")) ; signed
 
         ;;; message view action
@@ -295,6 +294,40 @@ http://mrs.geo.tuwien.ac.at/")
         ;; add new bookmarks
         (add-to-list 'mu4e-bookmarks
             '("flag:flagged" "Flagged/Starred messages" ?f))
+
+        (add-to-list 'mu4e-marks
+                     '(gtag
+                       :char       "g"
+                       :prompt     "gtag"
+                       :ask-target (lambda () (read-string "tag: "))
+                       :action     (lambda (docid msg target)
+                                   (mu4e-action-retag-message msg (concat "+" target)))))
+
+        (add-to-list 'mu4e-marks
+                     '(rtag
+                       :char       "r"
+                       :prompt     "rtag"
+                       :ask-target (lambda () (read-string "remove tag: "))
+                       :action     (lambda (docid msg target)
+                                     (mu4e-action-retag-message msg (concat "-" target)))))
+
+        ;; (add-to-list 'mu4e-marks
+        ;;              '(archive
+        ;;                :char       "A"
+        ;;                :prompt     "Archive"
+        ;;                :show-target (lambda (target) "archive")
+        ;;                :action      (lambda (docid msg target)
+        ;;                               ;; must come before proc-move since retag runs
+        ;;                               ;; 'sed' on the file
+                                      ;; (mu4e-action-retag-message msg "-\\Inbox")
+                                      ;; (mu4e~proc-move docid nil "+S-u-N"))))
+
+        (mu4e~headers-defun-mark-for gtag)
+        (mu4e~headers-defun-mark-for rtag)
+        ;; (mu4e~headers-defun-mark-for archive)
+        (define-key mu4e-headers-mode-map (kbd "g") 'mu4e-headers-mark-for-tag)
+        (define-key mu4e-headers-mode-map (kbd "e") 'mu4e-headers-mark-for-tag)
+        ;; (define-key mu4e-headers-mode-map (kbd "A") 'mu4e-headers-mark-for-archive)
 
         (defun org-mu4e-store-link ()
         "Store a link to a mu4e query or message."
