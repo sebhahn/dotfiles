@@ -204,18 +204,19 @@ http://mrs.geo.tuwien.ac.at/")
         ;; don't keep message buffers around
         (setq message-kill-buffer-on-exit t)
         (setq mu4e-use-fancy-chars t
-                mu4e-headers-draft-mark     '("D" . " ")  ; draft
+                mu4e-headers-draft-mark     '("D" . " ")  ; draft
+                mu4e-headers-new-mark       '("N" . "")  ; new
                 mu4e-headers-unread-mark    '("U" . " ")  ; unread
-                mu4e-headers-seen-mark      '("S" . "")    ; seen
+                mu4e-headers-unseen-mark    '("u" . " ")  ; unseen
+                ;; mu4e-headers-seen-mark      '("S" . " ")  ; seen
+                mu4e-headers-seen-mark      '("S" . "")  ; seen
                 mu4e-headers-attach-mark    '("A" . " ")  ; attach
-                mu4e-headers-unseen-mark    '("u" . "﫟 ")  ; unseen
                 mu4e-headers-flagged-mark   '("F" . " ")  ; flagged
-                mu4e-headers-new-mark       '("N" . " ")  ; new
                 mu4e-headers-replied-mark   '("R" . " ")  ; replied
                 mu4e-headers-passed-mark    '("P" . " ")  ; passed
                 mu4e-headers-encrypted-mark '("x" . " ")  ; encrypted
                 mu4e-headers-trashed-mark   '("T" . " ")  ; trash
-                mu4e-headers-signed-mark    '("s" . " ")) ; signed
+                mu4e-headers-signed-mark    '("s" . " ")) ; signed
 
         ;;; message view action
         (defun mu4e-msgv-action-view-in-browser (msg)
