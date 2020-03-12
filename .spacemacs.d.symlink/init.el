@@ -50,7 +50,6 @@ This function should only modify configuration layer settings."
       colors
       csv
       custom-org-config
-      dap
       dash
       (deft
        :variables
@@ -78,8 +77,7 @@ This function should only modify configuration layer settings."
              font-latex-fontify-script nil
              latex-enable-auto-fill t
              latex-enable-folding t)
-      (lsp :variables
-           lsp-ui-doc-enable nil)
+      lsp
       markdown
       multiple-cursors
       mu4e-config
@@ -98,12 +96,8 @@ This function should only modify configuration layer settings."
         plantuml-default-exec-mode 'jar)
       (python
         :variables
-        ;; python-backend 'anaconda
-        python-backend 'lsp
-        python-format-on-save nil
-        python-save-before-test nil
-        python-sort-imports-on-save nil
-        ;; python-enable-yapf-format-on-save nil
+        python-backend 'anaconda
+        python-enable-yapf-format-on-save nil
         python-auto-set-local-pyenv-version 'on-project-switch
         python-test-runner 'pytest)
       python-config
@@ -649,21 +643,11 @@ before packages are loaded."
 
   (global-visual-line-mode t)
 
-  ;; (with-eval-after-load 'python
-  ;;   (defun spacemacs//python-setup-shell (&rest args)
-  ;;       (progn
-  ;;         (setq python-shell-interpreter-args "-i")
-  ;;         (setq python-shell-interpreter "python"))))
-
   (with-eval-after-load 'python
-    (defun python-shell-completion-native-try ()
-      "Return non-nil if can trigger native completion."
-      (let ((python-shell-completion-native-enable t)
-            (python-shell-completion-native-output-timeout
-             python-shell-completion-native-try-output-timeout))
-        (python-shell-completion-native-get-completions
-         (get-buffer-process (current-buffer))
-         nil "_"))))
+    (defun spacemacs//python-setup-shell (&rest args)
+        (progn
+          (setq python-shell-interpreter-args "-i")
+          (setq python-shell-interpreter "python"))))
 
   ;; fix error: split-window: Cannot split side window or parent of side window
   ;; (with-eval-after-load "helm"
@@ -696,12 +680,9 @@ before packages are loaded."
     ;; set javascript company backends
     (setq company-backends-js2-mode '((company-tern :with company-dabbrev-code :with company-yasnippet)))
     ;; set python company backends
-    ;; (setq company-backends-python-mode '((company-anaconda :with company-dabbrev-code :with company-yasnippet)))
-    ;; (setq company-transformers '(spacemacs//company-transformer-cancel
-    ;;                              company-sort-by-backend-importance))
-
-    (setq company-minimum-prefix-length 1
-          company-idle-delay 0.0) ;; default is 0.2
+    (setq company-backends-python-mode '((company-anaconda :with company-dabbrev-code :with company-yasnippet)))
+    (setq company-transformers '(spacemacs//company-transformer-cancel
+                                 company-sort-by-backend-importance))
 
   )
 
