@@ -262,11 +262,6 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-tags-exclude-from-inheritance '("PROJECT")
             org-stuck-projects '("+PROJECT/-DONE" ("TODO") ()))
 
-
-      (require 'org-edna)
-      ;; Always necessary
-      (org-edna-load)
-
       (setq org-agenda-diary-file "~/ownCloud/org/diary.org")
 
       ;; Diary
