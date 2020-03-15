@@ -98,12 +98,18 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys "owi" 'org-wiki-index)
       (spacemacs/set-leader-keys "ows" 'org-wiki-search)
       (spacemacs/set-leader-keys "owl" 'org-wiki-insert-link)
+      (spacemacs/set-leader-keys "owr" 'org-wiki-switch-root)
+      (spacemacs/set-leader-keys "owao" 'org-wiki-asset-open)
+      (spacemacs/set-leader-keys "owai" 'org-wiki-asset-insert)
 
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "C-l" 'org-toggle-latex-fragment))
 
     :post-config
     (progn
-      ;; set org specific keybindings
+
+      (setq org-wiki-location-list '("~/ownCloud/org/wiki"
+                                     "~/ownCloud/org/studies"))
+      (setq org-wiki-location (car org-wiki-location-list))
 
       (setq org-journal-dir "~/ownCloud/org/journal/")
       (setq org-journal-file-format "%Y-%m")
@@ -111,16 +117,16 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-journal-date-format "%B %Y")
       (setq org-journal-time-format "%m-%d")
 
-      (add-hook 'org-agenda-mode-hook
-                '(lambda () (org-defkey org-agenda-mode-map "R" 'org-agenda-refile))
-                'append)
+      ;; (add-hook 'org-agenda-mode-hook
+      ;;           '(lambda () (org-defkey org-agenda-mode-map "R" 'org-agenda-refile))
+      ;;           'append)
 
       (setq org-src-fontify-natively 1)
       (setq org-agenda-span 'day)
       (setq org-default-notes-file "~/ownCloud/org/refile.org")
-
       (setq org-directory "~/ownCloud/org")
-      (setq org-agenda-files (list "~/ownCloud/org"))
+      (setq org-agenda-files (list "~/ownCloud/org"
+                                   "~/ownCloud/org/studies"))
 
       (setq org-agenda-persistent-filter t)
 
@@ -284,29 +290,24 @@ which require an initialization must be listed explicitly in the list.")
       (setq holiday-local-holidays holiday-austria-holidays)
       (setq calendar-holidays (append holiday-local-holidays holiday-other-holidays))
 
-      ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
       (setq org-capture-templates
             (quote (("t" "todo" entry (file "~/ownCloud/org/refile.org")
                      "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-                    ("r" "remind" entry (file "~/ownCloud/org/remind.org")
-                     "* REMIND %? :REMIND:\nDEADLINE: %^t\n%U\n%a\n")
                     ("n" "note" entry (file "~/ownCloud/org/refile.org")
                      "* %? :NOTE:\n%U\n%a\n")
-                    ("h" "hsaf journal" entry (file+olp+datetree "~/ownCloud/org/hsaf_diary.org")
+                    ("h" "hsaf journal" entry (file+olp+datetree "~/ownCloud/org/hsaf.org" "Diary")
                      "* %?\n%U\n")
                     ("j" "journal" entry (file+olp+datetree "~/ownCloud/org/diary.org")
                      "* %?\n%U\n" :clock-in t :clock-resume t)
                     ("d" "all day journal" entry (file+olp+datetree "~/ownCloud/org/diary.org")
                      "* %?\n%t\n")
-                    ;; ("c" "calender" entry (file+olp+datetree "~/ownCloud/org/calender.org")
-                    ;;  "* %?\n%^t\n")
                     ("e" "event" entry (file "~/ownCloud/org/calender.org")
                      "* %^{Description}\n%^t\n%?")
                     ("m" "meeting" entry (file "~/ownCloud/org/refile.org")
-                     "* MEETING %? :MEETING:\n%U" :clock-in t :clock-resume t)
+                     "* %? :MEETING:\n%U" :clock-in t :clock-resume t)
                     ("p" "phone call" entry (file "~/ownCloud/org/refile.org")
-                     "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
-                    ("h" "habit" entry (file "~/ownCloud/org/refile.org")
+                     "* %? :PHONE:\n%U" :clock-in t :clock-resume t)
+                    ("a" "habit" entry (file "~/ownCloud/org/refile.org")
                      "* TODO %?\n%U\n%a\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %a .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: TODO\n:END:\n"))))
 
       ;; Do not dim blocked tasks
