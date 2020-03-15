@@ -79,16 +79,16 @@ This function should only modify configuration layer settings."
              latex-enable-folding t)
       lsp
       markdown
-      multiple-cursors
+      (mermaid :variables
+               ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
+      ;; multiple-cursors
       mu4e-config
       (org
         :variables org-enable-reveal-js-support t
                    org-enable-org-journal-support t
                    org-enable-github-support t
                    org-enable-epub-support t)
-      (orgwiki
-       :variables
-       org-wiki-location "~/ownCloud/org/wiki/")
+      orgwiki
       pandoc
       (plantuml
         :variables
