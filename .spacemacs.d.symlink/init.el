@@ -77,11 +77,11 @@ This function should only modify configuration layer settings."
              font-latex-fontify-script nil
              latex-enable-auto-fill t
              latex-enable-folding t)
-      lsp
+      ;; lsp
       markdown
       (mermaid :variables
                ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
-      ;; multiple-cursors
+      multiple-cursors
       mu4e-config
       (org
         :variables org-enable-reveal-js-support t
@@ -595,9 +595,7 @@ before packages are loaded."
   (when (eq (dotfiles/machine-location) 'home)
     ;; home
     (setq user-full-name "Sebastian Hahn"
-          user-mail-address "sebastian.hahn@gmail.com")
-
-    (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
+          user-mail-address "sebastian.hahn@gmail.com"))
 
   (spacemacs|define-custom-layout "@agenda"
     :binding "s"
@@ -649,40 +647,38 @@ before packages are loaded."
           (setq python-shell-interpreter-args "-i")
           (setq python-shell-interpreter "python"))))
 
-  ;; fix error: split-window: Cannot split side window or parent of side window
-  ;; (with-eval-after-load "helm"
-  ;;   (defun helm-persistent-action-display-window (&optional split-onewindow)
-  ;;     "Return the window that will be used for persistent action. If SPLIT-ONEWINDOW is non-`nil' window is split in persistent action."
-  ;;     (with-helm-window
-  ;;       (setq helm-persistent-action-display-window (get-mru-window)))))
-
   ;; fancy git icon
   (defadvice vc-mode-line (after strip-backend () activate)
     (when (stringp vc-mode)
       (let ((gitlogo (replace-regexp-in-string "^ Git." " Ⱶ " vc-mode)))
         (setq vc-mode gitlogo))))
 
-    (setq dired-listing-switches "-alhk")
-    (setq dired-listings-switches "-alhk")
-    (setq delete-by-moving-to-trash nil)
-    (setq wdired-allow-to-change-permissions t)
-    (setq compilation-finish-function nil)
-    ;; Make evil-mode up/down operate in screen lines instead of logical lines
-    (define-key evil-normal-state-map "j" 'evil-next-visual-line)
-    (define-key evil-normal-state-map "k" 'evil-previous-visual-line)
-    ;; Also in visual mode
-    (define-key evil-visual-state-map "j" 'evil-next-visual-line)
-    (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
-    (setq doc-view-resolution 300)
-    (setq vc-follow-symlinks t)
-    ;; set default browser
-    (setq browse-url-browser-function 'browse-url-generic)
-    ;; set javascript company backends
-    (setq company-backends-js2-mode '((company-tern :with company-dabbrev-code :with company-yasnippet)))
-    ;; set python company backends
-    (setq company-backends-python-mode '((company-anaconda :with company-dabbrev-code :with company-yasnippet)))
-    (setq company-transformers '(spacemacs//company-transformer-cancel
-                                 company-sort-by-backend-importance))
+  (setq dired-listing-switches "-alhk")
+  (setq dired-listings-switches "-alhk")
+  (setq delete-by-moving-to-trash nil)
+  (setq wdired-allow-to-change-permissions t)
+  (setq compilation-finish-function nil)
+
+  ;; Make evil-mode up/down operate in screen lines instead of logical lines
+  (define-key evil-normal-state-map "j" 'evil-next-visual-line)
+  (define-key evil-normal-state-map "k" 'evil-previous-visual-line)
+
+  ;; Also in visual mode
+  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+  (setq doc-view-resolution 300)
+  (setq vc-follow-symlinks t)
+
+  ;; set default browser
+  (setq browse-url-browser-function 'browse-url-generic)
+
+  ;; set javascript company backends
+  (setq company-backends-js2-mode '((company-tern :with company-dabbrev-code :with company-yasnippet)))
+
+  ;; set python company backends
+  (setq company-backends-python-mode '((company-anaconda :with company-dabbrev-code :with company-yasnippet)))
+  (setq company-transformers '(spacemacs//company-transformer-cancel
+                                company-sort-by-backend-importance))
 
   )
 
