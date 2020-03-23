@@ -133,7 +133,8 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(org-mind-map
                                       org-edna
-                                      exec-path-from-shell)
+                                      exec-path-from-shell
+                                      keychain-environment)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -586,6 +587,8 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+
+  (keychain-refresh-environment)
 
   (when (eq (dotfiles/machine-location) 'work)
     ;; work
