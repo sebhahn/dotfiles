@@ -85,7 +85,7 @@ This function should only modify configuration layer settings."
       mu4e-config
       (org
         :variables org-enable-reveal-js-support t
-                   org-enable-org-journal-support t
+                   org-enable-org-journal-support nil
                    org-enable-github-support t
                    org-enable-epub-support t)
       orgwiki
