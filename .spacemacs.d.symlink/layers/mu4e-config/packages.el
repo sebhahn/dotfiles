@@ -68,7 +68,7 @@ http://mrs.geo.tuwien.ac.at/")
         ;; use imagemagick if available
         (when (fboundp 'imagemagick-register-types)
         (imagemagick-register-types))
-        (setq mu4e-html2text-command "lynx -dump -width 120 -stdin")
+        (setq mu4e-html2text-command "lynx -dump -width 100 -stdin --display_charset=utf-8")
         (setq mu4e-change-filenames-when-moving t)
         ;; default
         ;; sending mail -- replace USERNAME with your gmail username
@@ -188,13 +188,13 @@ http://mrs.geo.tuwien.ac.at/")
         ;; the 'All Mail' folder by pressing ``ma''.
 
         (setq mu4e-maildir-shortcuts
-            '(("/TU/INBOX"  . ?x)
-              ("/TU/Archives"  . ?a)
-              ("/TU/it"  . ?i)
-              ("/TU/geo"  . ?g)
-              ("/TU/hsaf"  . ?h)
-              ("/TU/sm2rain"  . ?s)
-              ("/TU/tuw"  . ?t)))
+            '((:maildir "/TU/INBOX" :key ?x)
+              (:maildir "/TU/Archives" :key ?a)
+              (:maildir "/TU/it" :key ?i)
+              (:maildir "/TU/geo" :key ?g)
+              (:maildir "/TU/hsaf" :key ?h)
+              (:maildir "/TU/sm2rain" :key ?s)
+              (:maildir "/TU/tuw" :key ?t)))
 
         ;; something about ourselves
         (setq mu4e-compose-signature ""
@@ -293,8 +293,8 @@ http://mrs.geo.tuwien.ac.at/")
         (setq mu4e-hide-index-messages t)
 
         ;; add new bookmarks
-        (add-to-list 'mu4e-bookmarks
-            '("flag:flagged" "Flagged/Starred messages" ?f))
+        (add-to-list 'mu4e-bookmarks '(:name "Flagged messages" :query "flag:flagged" :key ?f))
+        (add-to-list 'mu4e-bookmarks '(:name "Big messages" :query "size:5M..500M" :key ?b))
 
         (add-to-list 'mu4e-marks
                      '(gtag
