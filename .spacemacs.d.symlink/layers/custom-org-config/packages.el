@@ -202,7 +202,7 @@ which require an initialization must be listed explicitly in the list.")
       ;; (setf org-latex-default-packages-alist
       ;;       (remove '("" "hyperref" nil) org-latex-default-packages-alist))
 
-      ;; (add-to-list 'org-latex-default-packages-alist
+      ;; (add-to-list 'org-latubuntuex-default-packages-alist
       ;;              `("colorlinks=true, linkcolor=teal, urlcolor=teal, citecolor=darkgray, anchorcolor=teal", "hyperref" nil))
 
       ;; add fontspec package for utf8 characters with xelatex
@@ -295,14 +295,20 @@ which require an initialization must be listed explicitly in the list.")
       (setq calendar-holidays (append holiday-local-holidays holiday-other-holidays))
 
       (setq org-capture-templates
-            (quote (("t" "todo" entry (file "~/ownCloud/org/refile.org")
+            (quote (("t" "todo+clock in" entry (file "~/ownCloud/org/refile.org")
                      "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+                    ("T" "todo" entry (file "~/ownCloud/org/refile.org")
+                     "* TODO %?\n%U\n%a\n")
                     ("n" "note" entry (file "~/ownCloud/org/refile.org")
                      "* %? :NOTE:\n%U\n%a\n")
+                    ("r" "remind" entry (file "~/ownCloud/org/refile.org")
+                     "* %? :RMD:\n%U\n%a\n")
                     ("h" "hsaf journal" entry (file+olp+datetree "~/ownCloud/org/hsaf.org" "Diary")
                      "* %?\n%U\n")
-                    ("j" "journal" entry (file+olp+datetree "~/ownCloud/org/diary.org")
+                    ("j" "journal+clock in" entry (file+olp+datetree "~/ownCloud/org/diary.org")
                      "* %?\n%U\n" :clock-in t :clock-resume t)
+                    ("J" "journal" entry (file+olp+datetree "~/ownCloud/org/diary.org")
+                     "* %?\n%U\n")
                     ("d" "all day journal" entry (file+olp+datetree "~/ownCloud/org/diary.org")
                      "* %?\n%t\n")
                     ("e" "event" entry (file "~/ownCloud/org/calender.org")
@@ -374,7 +380,7 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-archive-mark-done nil)
       (setq org-archive-location "%s_archive::* Archived Tasks")
 
-      (setq org-agenda-start-with-log-mode '(closed clock state))
+      ;; (setq org-agenda-start-with-log-mode '(clock))
 
       ;; Priority settings: A, B, C, D
       (setq org-highest-priority ?A)
@@ -383,75 +389,132 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-default-priority ?D)
 
       ;; Switch entry to DONE when all subentries are done, to TODO otherwise.
-      (defun org-summary-todo (n-done n-not-done)
-        "Switch entry to DONE when all subentries are done, to TODO otherwise."
-        (let (org-log-done org-log-states)   ; turn off logging
-          (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+      ;; (defun org-summary-todo (n-done n-not-done)
+      ;;   "Switch entry to DONE when all subentries are done, to TODO otherwise."
+      ;;   (let (org-log-done org-log-states)   ; turn off logging
+      ;;     (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
 
-      (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
+      ;; (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
+
+      (setq org-tags-exclude-from-inheritance (quote ("PRJ")))
 
       (setq org-agenda-tags-todo-honor-ignore-options t)
 
       ;; Custom agenda command definitions
       (setq org-agenda-custom-commands
-            (quote (("N" "Notes" tags "NOTE"
+            (quote (("N" "Notes" tags ""
                      ((org-agenda-overriding-header "Notes")
                       (org-tags-match-list-sublevels t)))
 
-                    ("d" "Upcoming deadlines"
-                       ((agenda "")
-                       ((org-agenda-time-grid nil)
-                        (org-deadline-warning-days 365)
-                        (org-agenda-entry-types '(:deadline))
-                        )))
+                    ("r" "Reminders" tags "+RMD"
+                     ((org-agenda-overriding-header "Reminders")
+                      (org-tags-match-list-sublevels t)))
+
+                    ("d" "Upcoming deadlines" agenda ""
+                     ((org-agenda-overriding-header "Upcoming deadlines")
+                      (org-agenda-span 'month)
+                      (org-agenda-time-grid nil)
+                      (org-deadline-warning-days 0)
+                      (org-agenda-entry-types '(:deadline))))
 
                     ("e" "Eisenhower matrix"
-                     ((agenda "" nil)
-                      (tags-todo "PRIORITY=\"A\""
-                                ((org-agenda-overriding-header "Urgent and Important (kitchen fire)")
-                                 (org-agenda-skip-function 'bh/skip-project-tasks)
-                                  (org-agenda-sorting-strategy '(category-keep))))
-                      (tags-todo "PRIORITY=\"B\""
-                                ((org-agenda-overriding-header "Important (end data, personally)")
-                                 (org-agenda-skip-function 'bh/skip-project-tasks)
-                                  (org-agenda-sorting-strategy '(category-keep))))
-                      (tags-todo "PRIORITY=\"C\""
-                                 ((org-agenda-overriding-header "Urgent (interruptions, delegate)")
-                                  (org-agenda-skip-function 'bh/skip-project-tasks)
-                                  (org-agenda-sorting-strategy '(category-keep))))
-                      (tags-todo "PRIORITY=\"D\""
-                                 ((org-agenda-overriding-header "Time waster")
-                                  (org-agenda-skip-function 'bh/skip-project-tasks)
-                                  (org-agenda-sorting-strategy '(category-keep))))))
+                      ((agenda ""
+                          ((org-agenda-show-log t)
+                           (org-agenda-log-mode-items '(clock closed state))))
+                      (tags "+PRJ+PRIORITY=\"A\"-TODO=\"DONE\""
+                          ((org-agenda-overriding-header "Urgent and Important (kitchen fire)")
+                           (org-agenda-todo-list-sublevels nil)
+                           (org-agenda-sorting-strategy '(category-keep))))
+                      (tags "+PRJ+PRIORITY=\"B\"-TODO=\"DONE\""
+                          ((org-agenda-overriding-header "Important (find date, personally)")
+                           (org-agenda-todo-list-sublevels nil)
+                           (org-agenda-sorting-strategy '(category-keep))))
+                      (tags "+PRJ+PRIORITY=\"C\"-TODO=\"DONE\""
+                          ((org-agenda-overriding-header "Urgent (interruptions, delegate)")
+                           (org-agenda-todo-list-sublevels nil)
+                           (org-agenda-sorting-strategy '(category-keep))))
+                      (tags "+PRJ+PRIORITY=\"D\"-TODO=\"DONE\""
+                          ((org-agenda-overriding-header "Time waster")
+                           (org-agenda-todo-list-sublevels nil)
+                           (org-agenda-sorting-strategy '(category-keep))))))
 
-                    ("h" "Habits" tags-todo "STYLE=\"habit\""
+                    ("h" "Habits" tags-todo ""
                      ((org-agenda-overriding-header "Habits")
                       (org-agenda-sorting-strategy
                        '(todo-state-down effort-up category-keep))))
 
-                    ("k" "Kanban agenda"
-                     ((agenda "")
+                    ("t" "Kanban agenda (tasks)"
+                     ((agenda ""
+                        ((org-agenda-show-log t)
+                         (org-agenda-log-mode-items '(clock closed state))))
                       (tags "REFILE"
-                            ((org-agenda-overriding-header "Tasks to Refile")
-                            (org-tags-match-list-sublevels nil)))
+                        ((org-agenda-overriding-header "Stuff to refile")
+                         (org-tags-match-list-sublevels nil)))
+                      (tags "-PRJ+TODO=\"TODO\""
+                        ((org-agenda-overriding-header "Todo")
+                         (org-agenda-todo-list-sublevels nil)
+                         (org-agenda-sorting-strategy '(priority-down))))
+                      (tags "-PRJ+TODO=\"DOING\""
+                        ((org-agenda-overriding-header "Doing")
+                         (org-agenda-todo-list-sublevels nil)
+                         (org-agenda-sorting-strategy '(priority-down))))
+                      (tags "-PRJ+TODO=\"WAITING\""
+                        ((org-agenda-overriding-header "Waiting")
+                         (org-agenda-todo-list-sublevels nil)
+                         (org-agenda-sorting-strategy '(priority-down))))
+                      (tags "-PRJ+TODO=\"HOLD\""
+                        ((org-agenda-overriding-header "Hold")
+                         (org-agenda-todo-list-sublevels nil)
+                         (org-agenda-sorting-strategy '(priority-down))))))
+
+                    ("k" "Kanban agenda (projects)"
+                     ((agenda ""
+                        ((org-agenda-show-log t)
+                         (org-agenda-log-mode-items '(clock closed state))))
+                      (tags "REFILE"
+                        ((org-agenda-overriding-header "Stuff to refile")
+                         (org-tags-match-list-sublevels nil)))
+                      (tags "+PRJ+TODO=\"TODO\""
+                        ((org-agenda-overriding-header "Todo")
+                         (org-agenda-todo-list-sublevels nil)
+                         (org-agenda-sorting-strategy '(priority-down))))
+                      (tags "+PRJ+TODO=\"DOING\""
+                        ((org-agenda-overriding-header "Doing")
+                         (org-agenda-todo-list-sublevels nil)
+                         (org-agenda-sorting-strategy '(priority-down))))
+                      (tags "+PRJ+TODO=\"WAITING\""
+                        ((org-agenda-overriding-header "Waiting")
+                         (org-agenda-todo-list-sublevels nil)
+                         (org-agenda-sorting-strategy '(priority-down))))
+                      (tags "+PRJ+TODO=\"HOLD\""
+                        ((org-agenda-overriding-header "Hold")
+                         (org-agenda-todo-list-sublevels nil)
+                         (org-agenda-sorting-strategy '(priority-down))))))
+
+                    ("K" "Kanban agenda (projects + tasks)"
+                     ((agenda ""
+                        ((org-agenda-show-log t)
+                         (org-agenda-log-mode-items '(clock closed state))))
+                      (tags "REFILE"
+                        ((org-agenda-overriding-header "Stuff to Refile")
+                         (org-tags-match-list-sublevels nil)))
                       (todo "TODO"
-                              ((org-agenda-overriding-header "Todo")
-                                (org-agenda-todo-list-sublevels nil)
-                                (org-agenda-skip-function 'bh/skip-project-tasks)
-                                (org-agenda-sorting-strategy '(priority-down))))
+                        ((org-agenda-overriding-header "Todo")
+                         (org-agenda-todo-list-sublevels nil)
+                         (org-agenda-sorting-strategy '(priority-down))))
                       (todo "DOING"
-                            ((org-agenda-overriding-header "Doing")
-                              (org-agenda-todo-list-sublevels nil)
-                              (org-agenda-sorting-strategy '(priority-down))))
+                        ((org-agenda-overriding-header "Doing")
+                         (org-agenda-todo-list-sublevels nil)
+                         (org-agenda-sorting-strategy '(priority-down))))
                       (todo "WAITING"
-                            ((org-agenda-overriding-header "Waiting")
-                             (org-agenda-todo-list-sublevels nil)
-                             (org-agenda-sorting-strategy '(priority-down))))
+                        ((org-agenda-overriding-header "Waiting")
+                         (org-agenda-todo-list-sublevels nil)
+                         (org-agenda-sorting-strategy '(priority-down))))
                       (todo "HOLD"
-                            ((org-agenda-overriding-header "Hold")
-                             (org-agenda-todo-list-sublevels nil)
-                             (org-agenda-sorting-strategy '(priority-down))))
-                    )))))
+                        ((org-agenda-overriding-header "Hold")
+                         (org-agenda-todo-list-sublevels nil)
+                         (org-agenda-sorting-strategy '(priority-down))))))
+                    )))
 
       (defun bh/skip-project-tasks ()
         "Show non-project tasks.
