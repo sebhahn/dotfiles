@@ -275,8 +275,7 @@ http://mrs.geo.tuwien.ac.at/")
             ))))
 
         ;; set fields to show in headers view
-        (setq mu4e-headers-fields '(
-                                    (:human-date . 12)
+        (setq mu4e-headers-fields '((:human-date . 12)
                                     (:flags . 6)
                                     (:from-or-to . 22)
                                     (:subject)))
@@ -295,6 +294,7 @@ http://mrs.geo.tuwien.ac.at/")
         ;; add new bookmarks
         (add-to-list 'mu4e-bookmarks '(:name "Flagged messages" :query "flag:flagged" :key ?f))
         (add-to-list 'mu4e-bookmarks '(:name "Big messages" :query "size:5M..500M" :key ?b))
+        (add-to-list 'mu4e-bookmarks '(:name "Today's send messages" :query "date:today..now from:sebastian.hahn@geo.tuwien.ac.at" :key ?s))
 
         (add-to-list 'mu4e-marks
                      '(gtag

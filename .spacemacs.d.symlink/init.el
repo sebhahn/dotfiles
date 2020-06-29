@@ -58,7 +58,8 @@ This function should only modify configuration layer settings."
       (elfeed
        :variables
        rmh-elfeed-org-files (list "~/ownCloud/org/elfeed.org")
-       elfeed-db-directory "~/ownCloud/org/.elfeed")
+       elfeed-db-directory "~/ownCloud/org/.elfeed"
+       elfeed-goodies/entry-pane-position 'bottom)
       elixir
       erc
       epub
