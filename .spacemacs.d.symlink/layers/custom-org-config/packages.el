@@ -407,7 +407,9 @@ which require an initialization must be listed explicitly in the list.")
                       (org-tags-match-list-sublevels t)))
 
                     ("r" "Reminders" tags "+RMD"
-                     ((org-agenda-overriding-header "Reminders")
+                     ((org-agenda-view-columns-initially t)
+                      (org-agenda-overriding-header "")
+                      (org-overriding-columns-format "%80ITEM 20%TIMESTAMP_IA")
                       (org-tags-match-list-sublevels t)))
 
                     ("d" "Upcoming deadlines" agenda ""
