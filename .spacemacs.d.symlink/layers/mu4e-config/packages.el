@@ -78,6 +78,10 @@ http://mrs.geo.tuwien.ac.at/")
         (require 'smtpmail-async)
         (setq send-mail-function 'async-smtpmail-send-it
               message-send-mail-function 'async-smtpmail-send-it)
+
+        ;; (setq send-mail-function 'smtpmail-send-it
+        ;;       message-send-mail-function 'smtpmail-send-it)
+
         (setq mu4e-maildir "~/mbsync")
         ;; setup main account
         (setq mu4e-sent-folder "/TU/Sent Items"
@@ -85,7 +89,6 @@ http://mrs.geo.tuwien.ac.at/")
               user-mail-address "sebastian.hahn@geo.tuwien.ac.at"
               smtpmail-default-smtp-server "mail.intern.tuwien.ac.at"
               smtpmail-smtp-server "mail.intern.tuwien.ac.at"
-              smtpmail-starttls-credentials '(("mail.intern.tuwien.ac.at" 587 nil nil))
               smtpmail-auth-credentials '(("mail.intern.tuwien.ac.at" 587 "shahn" nil))
               smtpmail-smtp-service 587)
         ;; setup information for account switching
@@ -98,7 +101,6 @@ http://mrs.geo.tuwien.ac.at/")
              (user-full-name  "Sebastian Hahn")
              (smtpmail-smtp-user "shahn")
              (smtpmail-smtp-server "mail.intern.tuwien.ac.at")
-             (smtpmail-starttls-credentials '(("mail.intern.tuwien.ac.at" 587 nil nil)))
              (smtpmail-auth-credentials '(("mail.intern.tuwien.ac.at" 587 "shahn" nil)))
              (smtpmail-smtp-service 587))
             ("TU-Git"
@@ -109,7 +111,6 @@ http://mrs.geo.tuwien.ac.at/")
              (user-full-name  "Sebastian Hahn")
              (smtpmail-smtp-user "shahn")
              (smtpmail-smtp-server "mail.intern.tuwien.ac.at")
-             (smtpmail-starttls-credentials '(("mail.intern.tuwien.ac.at" 587 nil nil)))
              (smtpmail-auth-credentials '(("mail.intern.tuwien.ac.at" 587 "shahn" nil)))
              (smtpmail-smtp-service 587))
             ))
@@ -238,8 +239,13 @@ http://mrs.geo.tuwien.ac.at/")
 
         (setq
          mu4e-get-mail-command (concat "mbsync " (mu4e-config/get-sync-channels
-                                                 (dotfiles/machine-location)))  ;; or fetchmail, or ...
-         mu4e-update-interval 300)             ;; update every 5 minutes
+                                                 (dotfiles/machine-location))))
+
+        ;; update every 5 minutes
+        (setq mu4e-update-interval (* 5 60))
+        (setq mu4e-index-update-in-background t)
+        (setq mu4e-compose-dont-reply-to-self t)
+        ;; (setq org-mu4e-link-query-in-headers-mode t)
 
         (setq mu4e-attachment-dir "~/Downloads")
 
@@ -330,52 +336,50 @@ http://mrs.geo.tuwien.ac.at/")
         (define-key mu4e-headers-mode-map (kbd "e") 'mu4e-headers-mark-for-tag)
         ;; (define-key mu4e-headers-mode-map (kbd "A") 'mu4e-headers-mark-for-archive)
 
-        (defun org-mu4e-store-link ()
-        "Store a link to a mu4e query or message."
-        (cond
-        ;; storing links to queries
-        ((eq major-mode 'mu4e-headers-mode)
-            (let* ((query (mu4e-last-query))
-                desc link)
-        (org-store-link-props :type "mu4e" :query query)
-        (setq
-            desc (concat "mu4e:query:" query)
-            link desc)
-        (org-add-link-props :link link :description desc)
-        link))
-            ;; storing links to messages
-        ((eq major-mode 'mu4e-view-mode)
-            (let* ((msg  (mu4e-message-at-point))
-            (msgid   (or (plist-get msg :message-id) "<none>"))
-            (from (car (car (mu4e-message-field msg :from))))
-            (to (car (car (mu4e-message-field msg :to))))
-            (subject (mu4e-message-field msg :subject))
-            link)
-            (setq link (concat "mu4e:msgid:" msgid))
-            (org-store-link-props :type "mu4e" :link link
-                    :message-id msgid)
-            (setq link (concat "mu4e:msgid:" msgid))
-            (org-store-link-props
-            :type "mu4e" :from from :to to :subject subject
-                    :message-id msgid)
+        ;; (defun org-mu4e-store-link ()
+        ;; "Store a link to a mu4e query or message."
+        ;; (cond
+        ;; ;; storing links to queries
+        ;; ((eq major-mode 'mu4e-headers-mode)
+        ;;     (let* ((query (mu4e-last-query))
+        ;;         desc link)
+        ;; (org-store-link-props :type "mu4e" :query query)
+        ;; (setq
+        ;;     desc (concat "mu4e:query:" query)
+        ;;     link desc)
+        ;; (org-add-link-props :link link :description desc)
+        ;; link))
+        ;;     ;; storing links to messages
+        ;; ((eq major-mode 'mu4e-view-mode)
+        ;;     (let* ((msg  (mu4e-message-at-point))
+        ;;     (msgid   (or (plist-get msg :message-id) "<none>"))
+        ;;     (from (car (car (mu4e-message-field msg :from))))
+        ;;     (to (car (car (mu4e-message-field msg :to))))
+        ;;     (subject (mu4e-message-field msg :subject))
+        ;;     link)
+        ;;     (setq link (concat "mu4e:msgid:" msgid))
+        ;;     (org-store-link-props :type "mu4e" :link link
+        ;;             :message-id msgid)
+        ;;     (setq link (concat "mu4e:msgid:" msgid))
+        ;;     (org-store-link-props
+        ;;     :type "mu4e" :from from :to to :subject subject
+        ;;             :message-id msgid)
 
-            (org-add-link-props :link link
-                    :description (funcall org-mu4e-link-desc-func msg))
-            link))))
+        ;;     (org-add-link-props :link link
+        ;;             :description (funcall org-mu4e-link-desc-func msg))
+        ;;     link))))
 
         (require 'org)
         (require 'org-mu4e)
         (require 'org-contacts)
 
-        (org-add-link-type "mu4e" 'org-mu4e-open)
-        (add-hook 'org-store-link-functions 'org-mu4e-store-link)
         (setq org-mu4e-convert-to-html t)
 
-        ;; (setq mu4e-org-contacts-file "~/ownCloud/org/contacts.org")
-        ;; (add-to-list 'mu4e-headers-actions
-        ;;              '("org-contact-add" . mu4e-action-add-org-contact) t)
-        ;; (add-to-list 'mu4e-view-actions
-        ;;              '("org-contact-add" . mu4e-action-add-org-contact) t)
+        (setq mu4e-org-contacts-file "~/ownCloud/org/contacts.org")
+        (add-to-list 'mu4e-headers-actions
+                     '("org-contact-add" . mu4e-action-add-org-contact) t)
+        (add-to-list 'mu4e-view-actions
+                     '("org-contact-add" . mu4e-action-add-org-contact) t)
 
         ;; use helm for navigation
         (setq  mu4e-completing-read-function 'completing-read)
