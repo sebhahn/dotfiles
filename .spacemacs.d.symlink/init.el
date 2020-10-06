@@ -616,6 +616,27 @@ before packages are loaded."
     (progn
       (find-file "~/ownCloud/org/wiki/index.org")))
 
+  (defun send-region-compilation(start end)
+    (interactive "r")
+    (let ((cur-window (selected-window)))
+    (append-to-buffer (get-buffer "*compilation*") start end)
+    (switch-to-buffer-other-window (get-buffer "*compilation*"))
+    (evil-insert-state)
+    (execute-kbd-macro (read-kbd-macro "DEL"))
+    (execute-kbd-macro (read-kbd-macro "RET"))
+    (select-window cur-window)))
+
+  (defun send-region-compilation-dbg(start end)
+    (interactive "r")
+    (append-to-buffer (get-buffer "*compilation*") start end)
+    (switch-to-buffer-other-window (get-buffer "*compilation*"))
+    (evil-insert-state)
+    (execute-kbd-macro (read-kbd-macro "DEL"))
+    (execute-kbd-macro (read-kbd-macro "RET")))
+
+  (spacemacs/set-leader-keys-for-major-mode 'python-mode "cs" 'send-region-compilation)
+  (spacemacs/set-leader-keys-for-major-mode 'python-mode "cS" 'send-region-compilation-dbg)
+
   (defun endless/fill-or-unfill ()
     "Like `fill-paragraph', but unfill if used twice."
     (interactive)
