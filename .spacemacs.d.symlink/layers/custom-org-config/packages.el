@@ -41,6 +41,7 @@ which require an initialization must be listed explicitly in the list.")
   (use-package org
     :defer t
     :commands (org-mode
+               org-roam-mode
                org-edit-src-exit
                org-agenda
                org-capture
@@ -59,11 +60,18 @@ which require an initialization must be listed explicitly in the list.")
 
       (spacemacs/set-leader-keys "oo" 'org-agenda)
       (spacemacs/set-leader-keys "oc" 'org-capture)
-      (spacemacs/set-leader-keys "or" 'org-refile)
-      (spacemacs/set-leader-keys "oi" 'org-iswitchb)
+
+      (spacemacs/set-leader-keys "osr" 'org-refile)
+      (spacemacs/set-leader-keys "osa" 'org-toggle-archive-tag)
+      ;; (spacemacs/set-leader-keys "oi" 'org-iswitchb)
+
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "sr" 'org-refile)
 
       (spacemacs/set-leader-keys "ols" 'org-store-link)
       (spacemacs/set-leader-keys "oli" 'org-insert-link)
+
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "ls" 'org-store-link)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "li" 'org-insert-link)
 
       (spacemacs/set-leader-keys "odn" 'deft-new-file)
       (spacemacs/set-leader-keys "odN" 'deft-new-file-named)
@@ -73,8 +81,6 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys "oda" 'deft-archive-file)
       (spacemacs/set-leader-keys "odg" 'deft-refresh)
       (spacemacs/set-leader-keys "odo" 'deft-open-file-other-window)
-
-      (spacemacs/set-leader-keys "osa" 'org-toggle-archive-tag)
 
       (spacemacs/set-leader-keys "oTh" 'org-toggle-heading)
 
@@ -87,15 +93,33 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys "oafr" 'org-agenda-filter-remove-all)
       (spacemacs/set-leader-keys "oaft" 'org-agenda-filter-by-tag)
 
-      ;; (spacemacs/set-leader-keys "oks" 'org-clock-in)
+      (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode "r" 'org-agenda-clockreport-mode)
+      (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode "t" 'spacemacs/org-agenda/transient-state/body)
+      (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode "k" 'org-agenda-show-clocking-issues)
+
       (spacemacs/set-leader-keys "oki" 'org-clock-in)
       (spacemacs/set-leader-keys "oko" 'org-clock-out)
       (spacemacs/set-leader-keys "okc" 'org-clock-cancel)
       (spacemacs/set-leader-keys "oke" 'org-set-effort)
+      (spacemacs/set-leader-keys "okm" 'org-modify-effort-estimate)
       (spacemacs/set-leader-keys "okg" 'org-clock-goto)
       (spacemacs/set-leader-keys "okr" 'org-clock-report)
       (spacemacs/set-leader-keys "okd" 'org-clock-mark-default-task)
       (spacemacs/set-leader-keys "okk" 'org-clock-display)
+      (spacemacs/set-leader-keys "okv" 'org-clock-remove-overlays)
+      (spacemacs/set-leader-keys "okl" 'org-clock-in-last)
+
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "ki" 'org-clock-in)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "ko" 'org-clock-out)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kc" 'org-clock-cancel)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "ke" 'org-set-effort)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "km" 'org-modify-effort-estimate)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kg" 'org-clock-goto)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kr" 'org-clock-report)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kd" 'org-clock-mark-default-task)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kk" 'org-clock-display)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kv" 'org-clock-remove-overlays)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kl" 'org-clock-in-last)
 
       (spacemacs/set-leader-keys "own" 'org-wiki-insert-new)
       (spacemacs/set-leader-keys "owh" 'org-wiki-helm)
@@ -106,20 +130,91 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys "owao" 'org-wiki-asset-open)
       (spacemacs/set-leader-keys "owai" 'org-wiki-asset-insert)
 
+      (spacemacs/declare-prefix "ar" "org-roam")
+      (spacemacs/set-leader-keys
+        "arl" 'org-roam
+        "art" 'org-roam-dailies-today
+        "arp" 'org-roam-yesterday
+        "ar." 'org-roam-today
+        "arn" 'org-roam-tomorrow
+        "arw" 'org-roam-random-note
+        "arff" 'org-roam-find-file
+        "arfr" 'org-roam-find-ref
+        "ari" 'org-roam-insert
+        "arg" 'org-roam-graph-show
+        "arc" 'org-roam-capture
+        "arb" 'org-roam-switch-to-buffer
+        "arx" 'org-roam-jump-to-index
+        "armta" 'org-roam-tag-add
+        "armtd" 'org-roam-tag-delete
+        "armaa" 'org-roam-alias-add
+        "armad" 'org-roam-alias-delete)
+
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rl" 'org-roam)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rt" 'org-roam-today)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rp" 'org-roam-yesterday)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "r." 'org-roam-today)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rn" 'org-roam-tomorrow)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rfr" 'org-roam-find-ref)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rff" 'org-roam-find-file)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rw" 'org-roam-random-note)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "ri" 'org-roam-insert)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rg" 'org-roam-graph-show)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rc" 'org-roam-capture)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rb" 'org-roam-switch-to-buffer)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rx" 'org-roam-jump-to-index)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rmta" 'org-roam-tag-add)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rmtd" 'org-roam-tag-delete)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rmaa" 'org-roam-alias-add)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rmad" 'org-roam-alias-delete)
+
+      (spacemacs/set-leader-keys "oS" 'org-download-screenshot)
+      (spacemacs/set-leader-keys "oC" 'org-download-clipboard)
+      (spacemacs/set-leader-keys "oY" 'org-download-yank)
+
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "C-l" 'org-toggle-latex-fragment))
 
     :post-config
     (progn
 
+      (setq org-roam-directory "~/ownCloud/org/roam/")
+      (setq org-roam-index-file "~/ownCloud/org/roam/index.org")
+
+      (setq org-roam-capture-templates
+            '(
+              ;; ("p" "project" entry (function org-roam--capture-get-point)
+              ;;  ;; "r Entry item!"
+              ;;  (file "~/.doom.d/templates/org-roam-project.org")
+              ;;  :file-name "${slug}"
+              ;;  :head "#+TITLE: ${title}\n#+STATUS: active \n#+FILE_UNDER: project \n"
+              ;;  :unnarrowed t)
+              ;; ("r" "research" entry (function org-roam--capture-get-point)
+              ;;  ;; "r Entry item!"
+              ;;  (file "~/.doom.d/templates/org-roam-research.org")
+              ;;  :file-name "${slug}"
+              ;;  :head "#+TITLE: ${title}\n#+STATUS: active \n#+FILE_UNDER: research \n"
+              ;;  :unnarrowed t)
+              ("d" "default" plain (function org-roam--capture-get-point)
+               "%?"
+               :file-name "${slug}"
+               :head "#+TITLE: ${title}\n"
+               :unnarrowed t)))
+
+      (setq deft-recursive t)
+      (setq deft-use-filter-string-for-filename t)
+      (setq deft-default-extension "org")
+      (setq deft-directory "~/ownCloud/org/roam/")
+
       (setq org-wiki-location-list '("~/ownCloud/org/wiki"
                                      "~/ownCloud/org/studies"))
       (setq org-wiki-location (car org-wiki-location-list))
 
-      (setq org-journal-dir "~/ownCloud/org/journal/")
-      (setq org-journal-file-format "%Y-%m")
-      (setq org-journal-date-prefix "#+TITLE: ")
-      (setq org-journal-date-format "%B %Y")
-      (setq org-journal-time-format "%m-%d")
+      ;; (setq org-journal-time-format "%m-%d")
+
+      (setq org-journal-dir "/ownCloud/org/roam/")
+      (setq org-journal-date-prefix "#+title: ")
+      (setq org-journal-file-format "%Y-%m-%d.org")
+      (setq org-journal-date-format "%A, %d %B %Y")
 
       ;; (add-hook 'org-agenda-mode-hook
       ;;           '(lambda () (org-defkey org-agenda-mode-map "R" 'org-agenda-refile))
@@ -329,6 +424,7 @@ which require an initialization must be listed explicitly in the list.")
       ; Enable habit tracking (and a bunch of other modules)
       (setq org-modules (quote (org-bbdb
                                 org-bibtex
+                                org-roam
                                 org-crypt
                                 org-gnus
                                 org-id
