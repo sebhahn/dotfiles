@@ -51,9 +51,7 @@ This function should only modify configuration layer settings."
       csv
       custom-org-config
       dash
-      (deft
-       :variables
-       deft-directory "~/ownCloud/org/deft/")
+      deft
       emacs-lisp
       (elfeed
        :variables
@@ -134,6 +132,9 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(org-mind-map
                                       org-edna
+                                      (org-roam :location (recipe :fetcher github :repo "jethrokuan/org-roam"))
+                                      (org-roam-bibtex :location (recipe :fetcher github :repo "org-roam/org-roam-bibtex"))
+                                      sqlite3
                                       exec-path-from-shell
                                       keychain-environment)
 
@@ -615,6 +616,12 @@ before packages are loaded."
     :body
     (progn
       (find-file "~/ownCloud/org/wiki/index.org")))
+
+  (spacemacs|define-custom-layout "@org-roam"
+    :binding "r"
+    :body
+    (progn
+      (find-file "~/ownCloud/org/roam/index.org")))
 
   (defun send-region-compilation(start end)
     (interactive "r")
