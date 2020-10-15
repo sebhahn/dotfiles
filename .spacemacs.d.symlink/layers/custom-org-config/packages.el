@@ -422,23 +422,23 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-agenda-compact-blocks t)
 
       ; Enable habit tracking (and a bunch of other modules)
-      (setq org-modules (quote (org-bbdb
-                                org-bibtex
+      (setq org-modules (quote (ol-bbdb
+                                ol-bibtex
                                 org-roam
                                 org-crypt
-                                org-gnus
+                                ol-gnus
                                 org-id
-                                org-info
+                                ol-info
                                 org-habit
                                 org-inlinetask
-                                org-irc
-                                ;; org-mew
-                                org-mhe
+                                ol-irc
+                                ol-mew
+                                ol-mhe
                                 org-protocol
-                                org-rmail
-                                ;; org-vm
-                                ;; org-wl
-                                org-w3m)))
+                                ol-rmail
+                                ol-vm
+                                ol-wl
+                                ol-w3m)))
 
       (require 'org-habit)
 
