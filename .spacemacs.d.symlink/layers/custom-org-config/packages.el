@@ -211,7 +211,7 @@ which require an initialization must be listed explicitly in the list.")
 
       ;; (setq org-journal-time-format "%m-%d")
 
-      (setq org-journal-dir "/ownCloud/org/roam/")
+      (setq org-journal-dir "~/ownCloud/org/roam/")
       (setq org-journal-date-prefix "#+title: ")
       (setq org-journal-file-format "%Y-%m-%d.org")
       (setq org-journal-date-format "%A, %d %B %Y")
