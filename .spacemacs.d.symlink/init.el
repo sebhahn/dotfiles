@@ -77,6 +77,7 @@ This function should only modify configuration layer settings."
              latex-enable-auto-fill t
              latex-enable-folding t)
       ;; lsp
+      json
       markdown
       (mermaid :variables
                ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
@@ -547,7 +548,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
     (when (eq (dotfiles/machine-location) 'work)
     ;; work
       (setq dotspacemacs-default-font '("Hack Nerd Font"
-                                        :size 16
+                                        :size 14
                                         :weight regular
                                         :width normal
                                         :powerline-scale 1.4)
