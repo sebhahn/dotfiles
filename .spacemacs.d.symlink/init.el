@@ -121,6 +121,7 @@ This function should only modify configuration layer settings."
        :variables
        version-control-diff-tool 'git-gutter
        version-control-global-margin t)
+      xclipboard
       yaml
      )
 
