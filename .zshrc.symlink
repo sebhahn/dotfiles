@@ -167,3 +167,8 @@ alias bell="echo -n $'\x7'"
 
 POWERLEVEL9K_DIR_PATH_SEPARATOR=" $(print_icon "LEFT_SUBSEGMENT_SEPARATOR") "
 
+# show subfolders as tree
+alias ft="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'"
+
+# gen password
+alias gen_pass="read -s pass; echo $pass | md5sum | base64 | cut -c -16"

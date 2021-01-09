@@ -33,8 +33,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
-      ansible
+   '(octave
+     ansible
       (auto-completion
         :variables
         auto-completion-enable-snippets-in-popup t
