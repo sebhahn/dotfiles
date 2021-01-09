@@ -10,6 +10,7 @@ ln -sf $DOTFILES_ROOT/.mbsyncrc.symlink $HOME/.mbsyncrc
 ln -sf $DOTFILES_ROOT/.Xdefaults.symlink $HOME/.Xdefaults
 ln -sf $DOTFILES_ROOT/.latexmkrc.symlink $HOME/.latexmkrc
 ln -sf $DOTFILES_ROOT/.Xresources.symlink $HOME/.Xresources
+ln -sf $DOTFILES_ROOT/.p10k.zsh.symlink $HOME/.p10k.zsh
 ln -sf $DOTFILES_ROOT/.config/* $HOME/.config
 ln -sf $DOTFILES_ROOT/bin/* ~/bin
 ln -sf $DOTFILES_ROOT/ranger/ranger.py ~/bin/ranger
@@ -46,3 +47,5 @@ git checkout develop
 git submodule init
 git submodule sync
 git submodule update
+
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $DOTFILES_ROOT/ohmyzsh/custom/themes/powerlevel10k
