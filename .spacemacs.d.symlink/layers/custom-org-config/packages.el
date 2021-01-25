@@ -205,13 +205,13 @@ which require an initialization must be listed explicitly in the list.")
       (setq deft-default-extension "org")
       (setq deft-directory "~/ownCloud/org/roam/")
 
-      (setq org-wiki-location-list '("~/ownCloud/org/wiki"
-                                     "~/ownCloud/org/studies"))
+      (setq org-wiki-location-list '("~/ownCloud/org/roam"
+                                     "~/ownCloud/org/roam/studies"))
       (setq org-wiki-location (car org-wiki-location-list))
 
       ;; (setq org-journal-time-format "%m-%d")
 
-      (setq org-journal-dir "~/ownCloud/org/roam/")
+      (setq org-journal-dir "~/ownCloud/org/roam/journal")
       (setq org-journal-date-prefix "#+title: ")
       (setq org-journal-file-format "%Y-%m-%d.org")
       (setq org-journal-date-format "%A, %d %B %Y")
@@ -225,7 +225,8 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-default-notes-file "~/ownCloud/org/refile.org")
       (setq org-directory "~/ownCloud/org")
       (setq org-agenda-files (list "~/ownCloud/org"
-                                   "~/ownCloud/org/studies"))
+                                   "~/ownCloud/org/roam/journal"
+                                   "~/ownCloud/org/roam/studies"))
 
       (setq org-agenda-persistent-filter t)
 
@@ -322,8 +323,8 @@ which require an initialization must be listed explicitly in the list.")
           ("\\paragraph{%s}" . "\\paragraph*{%s}")
           ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-      (setq org-ditaa-jar-path "~/ownCloud/org/ditaa-0.11.jar")
-      (setq org-plantuml-jar-path "~/ownCloud/org/plantuml.jar")
+      (setq org-ditaa-jar-path "~/ownCloud/org/bin/ditaa.jar")
+      (setq org-plantuml-jar-path "~/ownCloud/org/bin/plantuml.jar")
 
       (org-babel-do-load-languages
        'org-babel-load-languages
