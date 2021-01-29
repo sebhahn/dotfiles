@@ -134,9 +134,9 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys
         "arl" 'org-roam
         "art" 'org-roam-dailies-today
-        "arp" 'org-roam-yesterday
-        "ar." 'org-roam-today
-        "arn" 'org-roam-tomorrow
+        "arp" 'org-roam-dailies-yesterday
+        "ar." 'org-roam-dailies-today
+        "arn" 'org-roam-dailies-tomorrow
         "arw" 'org-roam-random-note
         "arff" 'org-roam-find-file
         "arfr" 'org-roam-find-ref
@@ -151,10 +151,10 @@ which require an initialization must be listed explicitly in the list.")
         "armad" 'org-roam-alias-delete)
 
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rl" 'org-roam)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rt" 'org-roam-today)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rp" 'org-roam-yesterday)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "r." 'org-roam-today)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rn" 'org-roam-tomorrow)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rt" 'org-roam-dailies-today)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rp" 'org-roam-dailies-yesterday)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "r." 'org-roam-dailies-today)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rn" 'org-roam-dailies-tomorrow)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rfr" 'org-roam-find-ref)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rff" 'org-roam-find-file)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rw" 'org-roam-random-note)
@@ -179,6 +179,7 @@ which require an initialization must be listed explicitly in the list.")
 
       (setq org-roam-directory "~/ownCloud/org/roam/")
       (setq org-roam-index-file "~/ownCloud/org/roam/index.org")
+      (setq org-roam-tag-sources '(prop all-directories))
 
       (setq org-roam-capture-templates
             '(
