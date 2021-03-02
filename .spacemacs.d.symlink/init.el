@@ -52,6 +52,7 @@ This function should only modify configuration layer settings."
       custom-org-config
       dash
       deft
+      docker
       emacs-lisp
       (elfeed
        :variables
