@@ -135,8 +135,8 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(org-mind-map
                                       org-edna
-                                      (org-roam :location (recipe :fetcher github :repo "jethrokuan/org-roam"))
-                                      (org-roam-bibtex :location (recipe :fetcher github :repo "org-roam/org-roam-bibtex"))
+				      org-roam
+				      org-roam-bibtex
                                       sqlite3
                                       exec-path-from-shell
                                       keychain-environment)
