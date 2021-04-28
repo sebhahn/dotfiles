@@ -18,7 +18,6 @@
      ;; reftex
      hydra
      key-chord
-     interleave
      org-ref
      )
   "List of all packages to install and/or initialize. Built-in packages which require an initialization must be listed explicitly in the list.")
@@ -52,18 +51,7 @@
 
    (advice-add 'bibtex-completion-candidates
                :filter-return 'reverse)
-
-   (defun helm-bibtex-interleave-edit-notes (key)
-     "Open the notes associated with the entry using `find-file'."
-     (let ((path (f-join helm-bibtex-notes-path (s-concat key helm-bibtex-notes-extension))))
-       (find-file path)
-       (unless  (file-exists-p path)
-         (insert (concat "#+INTERLEAVE_PDF: " (f-join helm-bibtex-library-path (s-concat key ".pdf")))))))
-   (helm-delete-action-from-source "Edit notes" helm-source-bibtex)
-   (helm-add-action-to-source "Edit notes" 'helm-bibtex-interleave-edit-notes helm-source-bibtex 7)
-       )
-     )
-   )
+)))
 
 (defun research-config/post-init-org-ref()
   "Init org ref package"
@@ -111,12 +99,6 @@
 (defun research-config/init-key-chord ()
   (use-package key-chord
     :defer t))
-
-(defun research-config/init-interleave ()
-  (use-package key-chord
-    :commands interleave
-    :defer t
-    ))
 
 ;; Often the body of an initialize function uses `use-package'
 ;; For more info on `use-package', see readme:
