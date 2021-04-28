@@ -116,7 +116,10 @@ This function should only modify configuration layer settings."
        :variables
        syntax-checking-enable-tooltips nil)
       tmux
-      ;; treemacs
+      (treemacs
+       :variables
+       treemacs-use-filewatch-mode t
+       treemacs-use-git-mode 'extended)
       (version-control
        :variables
        version-control-diff-tool 'git-gutter
