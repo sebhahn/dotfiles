@@ -121,15 +121,6 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "kv" 'org-clock-remove-overlays)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "kl" 'org-clock-in-last)
 
-      (spacemacs/set-leader-keys "own" 'org-wiki-insert-new)
-      (spacemacs/set-leader-keys "owh" 'org-wiki-helm)
-      (spacemacs/set-leader-keys "owi" 'org-wiki-index)
-      (spacemacs/set-leader-keys "ows" 'org-wiki-search)
-      (spacemacs/set-leader-keys "owl" 'org-wiki-insert-link)
-      (spacemacs/set-leader-keys "owr" 'org-wiki-switch-root)
-      (spacemacs/set-leader-keys "owao" 'org-wiki-asset-open)
-      (spacemacs/set-leader-keys "owai" 'org-wiki-asset-insert)
-
       (spacemacs/declare-prefix "ar" "org-roam")
       (spacemacs/set-leader-keys
         "arl" 'org-roam
@@ -205,10 +196,6 @@ which require an initialization must be listed explicitly in the list.")
       (setq deft-use-filter-string-for-filename t)
       (setq deft-default-extension "org")
       (setq deft-directory "~/ownCloud/org/roam/")
-
-      (setq org-wiki-location-list '("~/ownCloud/org/roam"
-                                     "~/ownCloud/org/roam/studies"))
-      (setq org-wiki-location (car org-wiki-location-list))
 
       ;; (setq org-journal-time-format "%m-%d")
 

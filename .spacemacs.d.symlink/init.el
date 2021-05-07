@@ -32,7 +32,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(octave
+   '(rust
+     octave
      ansible
       (auto-completion
         :variables
@@ -88,7 +89,6 @@ This function should only modify configuration layer settings."
                    org-enable-org-journal-support t
                    org-enable-github-support t
                    org-enable-epub-support t)
-      orgwiki
       pandoc
       (plantuml
         :variables
@@ -682,12 +682,6 @@ before packages are loaded."
       (delete-other-windows)
       (split-window-right)
       (mu4e)))
-
-  (spacemacs|define-custom-layout "@wiki"
-    :binding "w"
-    :body
-    (progn
-      (find-file "~/ownCloud/org/wiki/index.org")))
 
   (spacemacs|define-custom-layout "@org-roam"
     :binding "r"
