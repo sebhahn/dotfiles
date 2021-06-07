@@ -78,7 +78,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
- plugins=(archlinux cp dirhistory extract git pyenv rsync wd zsh-syntax-highlighting)
+ plugins=(archlinux cp dirhistory extract git rsync wd zsh-syntax-highlighting)
 
 # set full color terminal
 export TERM=xterm-256color
@@ -164,3 +164,9 @@ alias gen_pass="read -s pass; echo $pass | md5sum | base64 | cut -c -16"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+
