@@ -170,7 +170,7 @@ which require an initialization must be listed explicitly in the list.")
 
       (setq org-roam-directory "~/ownCloud/org/roam/")
       (setq org-roam-index-file "~/ownCloud/org/roam/index.org")
-      (setq org-roam-tag-sources '(prop all-directories))
+      (setq org-roam-tag-sources '(prop last-directory))
 
       (setq org-roam-capture-templates
             '(
@@ -210,9 +210,9 @@ which require an initialization must be listed explicitly in the list.")
 
       (setq org-src-fontify-natively 1)
       (setq org-agenda-span 'day)
-      (setq org-default-notes-file "~/ownCloud/org/refile.org")
-      (setq org-directory "~/ownCloud/org")
-      (setq org-agenda-files (list "~/ownCloud/org"
+      (setq org-default-notes-file "~/ownCloud/org/roam/agenda/refile.org")
+      (setq org-directory "~/ownCloud/org/roam")
+      (setq org-agenda-files (list "~/ownCloud/org/roam/agenda"
                                    "~/ownCloud/org/roam/daily"
                                    "~/ownCloud/org/roam/studies"))
 
@@ -379,29 +379,29 @@ which require an initialization must be listed explicitly in the list.")
       (setq calendar-holidays (append holiday-local-holidays holiday-other-holidays))
 
       (setq org-capture-templates
-            (quote (("t" "todo+clock in" entry (file "~/ownCloud/org/refile.org")
+            (quote (("t" "todo+clock in" entry (file "~/ownCloud/org/roam/agenda/refile.org")
                      "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-                    ("T" "todo" entry (file "~/ownCloud/org/refile.org")
+                    ("T" "todo" entry (file "~/ownCloud/org/roam/agenda/refile.org")
                      "* TODO %?\n%U\n%a\n")
-                    ("n" "note" entry (file "~/ownCloud/org/refile.org")
+                    ("n" "note" entry (file "~/ownCloud/org/roam/agenda/refile.org")
                      "* %? :NOTE:\n%U\n%a\n")
-                    ("r" "remind" entry (file "~/ownCloud/org/refile.org")
+                    ("r" "remind" entry (file "~/ownCloud/org/roam/agenda/refile.org")
                      "* %? :RMD:\n%U\n%a\n")
-                    ("h" "hsaf journal" entry (file+olp+datetree "~/ownCloud/org/hsaf.org" "Diary")
+                    ("h" "hsaf journal" entry (file+olp+datetree "~/ownCloud/org/roam/agenda/hsaf.org" "Diary")
                      "* %?\n%U\n")
-                    ("j" "journal+clock in" entry (file+olp+datetree "~/ownCloud/org/diary.org")
+                    ("j" "journal+clock in" entry (file+olp+datetree "~/ownCloud/org/roam/agenda/diary.org")
                      "* %?\n%U\n" :clock-in t :clock-resume t)
-                    ("J" "journal" entry (file+olp+datetree "~/ownCloud/org/diary.org")
+                    ("J" "journal" entry (file+olp+datetree "~/ownCloud/org/roam/agenda/diary.org")
                      "* %?\n%U\n")
-                    ("d" "all day journal" entry (file+olp+datetree "~/ownCloud/org/diary.org")
+                    ("d" "all day journal" entry (file+olp+datetree "~/ownCloud/org/roam/agenda/diary.org")
                      "* %?\n%t\n")
-                    ("e" "event" entry (file "~/ownCloud/org/calender.org")
+                    ("e" "event" entry (file "~/ownCloud/org/roam/agenda/calender.org")
                      "* %^{Description}\n%^t\n%?")
-                    ("m" "meeting" entry (file "~/ownCloud/org/refile.org")
+                    ("m" "meeting" entry (file "~/ownCloud/org/roam/agenda/refile.org")
                      "* %? :MEETING:\n%U" :clock-in t :clock-resume t)
-                    ("p" "phone call" entry (file "~/ownCloud/org/refile.org")
+                    ("p" "phone call" entry (file "~/ownCloud/org/roam/agenda/refile.org")
                      "* %? :PHONE:\n%U" :clock-in t :clock-resume t)
-                    ("a" "habit" entry (file "~/ownCloud/org/refile.org")
+                    ("a" "habit" entry (file "~/ownCloud/org/roam/agenda/refile.org")
                      "* TODO %?\n%U\n%a\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %a .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: TODO\n:END:\n"))))
 
       ;; Do not dim blocked tasks

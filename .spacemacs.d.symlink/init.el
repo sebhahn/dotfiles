@@ -56,8 +56,8 @@ This function should only modify configuration layer settings."
       emacs-lisp
       (elfeed
        :variables
-       rmh-elfeed-org-files (list "~/ownCloud/org/elfeed.org")
-       elfeed-db-directory "~/ownCloud/org/.elfeed"
+       rmh-elfeed-org-files (list "~/ownCloud/org/elfeed/elfeed.org")
+       elfeed-db-directory "~/ownCloud/org/elfeed/db"
        elfeed-goodies/entry-pane-position 'bottom)
       elixir
       erc
@@ -92,7 +92,7 @@ This function should only modify configuration layer settings."
       pandoc
       (plantuml
         :variables
-        plantuml-jar-path "~/ownCloud/org/plantuml.jar"
+        plantuml-jar-path "~/ownCloud/org/bin/plantuml.jar"
         plantuml-default-exec-mode 'jar)
       (python
         :variables
@@ -596,6 +596,8 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
+    (setq byte-compile-warnings '(cl-functions))
+
     (setq configuration-layer--elpa-archives '(("melpa" . "melpa.org/packages/")
                                                ("org" . "orgmode.org/elpa/")
                                                ("gnu" . "elpa.gnu.org/packages/")))
@@ -663,6 +665,7 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
   (keychain-refresh-environment)
+
 
   (when (eq (dotfiles/machine-location) 'work)
     ;; work
