@@ -199,7 +199,7 @@ which require an initialization must be listed explicitly in the list.")
 
       ;; (setq org-journal-time-format "%m-%d")
 
-      (setq org-journal-dir "~/ownCloud/org/roam/journal")
+      (setq org-journal-dir "~/ownCloud/org/roam/daily")
       (setq org-journal-date-prefix "#+title: ")
       (setq org-journal-file-format "%Y-%m-%d.org")
       (setq org-journal-date-format "%A, %d %B %Y")
@@ -213,7 +213,7 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-default-notes-file "~/ownCloud/org/refile.org")
       (setq org-directory "~/ownCloud/org")
       (setq org-agenda-files (list "~/ownCloud/org"
-                                   "~/ownCloud/org/roam/journal"
+                                   "~/ownCloud/org/roam/daily"
                                    "~/ownCloud/org/roam/studies"))
 
       (setq org-agenda-persistent-filter t)
@@ -463,7 +463,7 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-agenda-skip-timestamp-if-done t)
 
       (setq org-archive-mark-done nil)
-      (setq org-archive-location "%s_archive::* Archived Tasks")
+      (setq org-archive-location "./archive/%s_archive::* Archived Tasks")
 
       ;; (setq org-agenda-start-with-log-mode '(clock))
 
