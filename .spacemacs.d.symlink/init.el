@@ -778,8 +778,8 @@ before packages are loaded."
 
   ;; set python company backends
   (setq company-backends-python-mode '((company-anaconda :with company-dabbrev-code :with company-yasnippet)))
-  (setq company-transformers '(spacemacs//company-transformer-cancel
-                                company-sort-by-backend-importance))
+  ;; (setq company-transformers '(spacemacs//company-transformer-cancel
+  ;;                               company-sort-by-backend-importance))
 
   (defvaralias 'helm-c-yas-space-match-any-greedy 'helm-yas-space-match-any-greedy "Temporary alias for Emacs27")
 

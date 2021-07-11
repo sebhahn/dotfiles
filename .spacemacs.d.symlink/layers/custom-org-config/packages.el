@@ -63,16 +63,21 @@ which require an initialization must be listed explicitly in the list.")
 
       (spacemacs/set-leader-keys "osr" 'org-refile)
       (spacemacs/set-leader-keys "osa" 'org-toggle-archive-tag)
-      ;; (spacemacs/set-leader-keys "oi" 'org-iswitchb)
 
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "sr" 'org-refile)
 
+      (spacemacs/declare-prefix "ol" "org-link")
       (spacemacs/set-leader-keys "ols" 'org-store-link)
       (spacemacs/set-leader-keys "oli" 'org-insert-link)
 
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "ls" 'org-store-link)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "li" 'org-insert-link)
 
+      (spacemacs/declare-prefix "oj" "org-journal")
+      (spacemacs/set-leader-keys "ojn" 'org-journal-new-entry)
+      (spacemacs/set-leader-keys "ojs" 'org-journal-new-scheduled-entry)
+
+      (spacemacs/declare-prefix "od" "org-deft")
       (spacemacs/set-leader-keys "odn" 'deft-new-file)
       (spacemacs/set-leader-keys "odN" 'deft-new-file-named)
       (spacemacs/set-leader-keys "odf" 'deft-find-file)
@@ -84,6 +89,7 @@ which require an initialization must be listed explicitly in the list.")
 
       (spacemacs/set-leader-keys "oTh" 'org-toggle-heading)
 
+      (spacemacs/declare-prefix "ok" "org-agenda")
       (spacemacs/set-leader-keys "oar" 'org-agenda-clockreport-mode)
       (spacemacs/set-leader-keys "oas" 'org-agenda-sunrise-sunset)
       (spacemacs/set-leader-keys "oat" 'spacemacs/org-agenda-transient-state/body)
@@ -97,6 +103,7 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode "t" 'spacemacs/org-agenda/transient-state/body)
       (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode "k" 'org-agenda-show-clocking-issues)
 
+      (spacemacs/declare-prefix "ok" "org-clock")
       (spacemacs/set-leader-keys "oki" 'org-clock-in)
       (spacemacs/set-leader-keys "oko" 'org-clock-out)
       (spacemacs/set-leader-keys "okc" 'org-clock-cancel)
@@ -121,43 +128,41 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "kv" 'org-clock-remove-overlays)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "kl" 'org-clock-in-last)
 
-      (spacemacs/declare-prefix "ar" "org-roam")
+      (spacemacs/declare-prefix "or" "org-roam")
       (spacemacs/set-leader-keys
-        "arl" 'org-roam
-        "art" 'org-roam-dailies-find-today
-        "arp" 'org-roam-dailies-find-yesterday
-        "ar." 'org-roam-dailies-find-today
-        "arn" 'org-roam-dailies-find-tomorrow
-        "arw" 'org-roam-random-note
-        "arff" 'org-roam-find-file
-        "arfr" 'org-roam-find-ref
-        "ari" 'org-roam-insert
-        "arg" 'org-roam-graph-show
-        "arc" 'org-roam-capture
-        "arb" 'org-roam-switch-to-buffer
-        "arx" 'org-roam-jump-to-index
-        "armta" 'org-roam-tag-add
-        "armtd" 'org-roam-tag-delete
-        "armaa" 'org-roam-alias-add
-        "armad" 'org-roam-alias-delete)
+        "orl" 'org-roam
+        "orp" 'org-roam-dailies-find-yesterday
+        "or." 'org-roam-dailies-find-today
+        "orn" 'org-roam-dailies-find-tomorrow
+        "orw" 'org-roam-random-note
+        "orf" 'org-roam-find-file
+        "orr" 'org-roam-find-ref
+        "ori" 'org-roam-insert
+        "org" 'org-roam-graph-show
+        "orc" 'org-roam-capture
+        "orb" 'org-roam-switch-to-buffer
+        "orx" 'org-roam-jump-to-index
+        "orta" 'org-roam-tag-add
+        "ortd" 'org-roam-tag-delete
+        "oraa" 'org-roam-alias-add
+        "orad" 'org-roam-alias-delete)
 
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rl" 'org-roam)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rt" 'org-roam-dailies-find-today)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rp" 'org-roam-dailies-find-yesterday)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "r." 'org-roam-dailies-find-today)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rn" 'org-roam-dailies-find-tomorrow)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rfr" 'org-roam-find-ref)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rff" 'org-roam-find-file)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rw" 'org-roam-random-note)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rf" 'org-roam-find-file)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rr" 'org-roam-find-ref)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "ri" 'org-roam-insert)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rg" 'org-roam-graph-show)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rc" 'org-roam-capture)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rb" 'org-roam-switch-to-buffer)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rx" 'org-roam-jump-to-index)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rmta" 'org-roam-tag-add)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rmtd" 'org-roam-tag-delete)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rmaa" 'org-roam-alias-add)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rmad" 'org-roam-alias-delete)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rta" 'org-roam-tag-add)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rtd" 'org-roam-tag-delete)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "raa" 'org-roam-alias-add)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rad" 'org-roam-alias-delete)
 
       (spacemacs/set-leader-keys "oS" 'org-download-screenshot)
       (spacemacs/set-leader-keys "oC" 'org-download-clipboard)
@@ -330,12 +335,7 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-confirm-babel-evaluate nil)
 
       (setq org-todo-keywords
-            (quote ((sequence "TODO(t)" "DOING(o@/!)" "|" "DONE(d!)")
-                    (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELED(c@/!)"))))
-
-      ;; (setq org-todo-keyword-faces
-      ;;       '(("TODO" . org-warning) ("STARTED" . "yellow")
-      ;;         ("CANCELED" . (:foreground "blue" :weight bold))))
+            (quote ((sequence  "TODO(t)" "DOING(o)" "BLOCKED(b@/!)" "|" "DONE(d!)" "CANCELED(c@/!)") )))
 
       ;; (setq org-enforce-todo-dependencies t)
 
@@ -346,15 +346,15 @@ which require an initialization must be listed explicitly in the list.")
       ;; set tags according to state of the task
 
       (setq org-todo-state-tags-triggers
-            (quote (("CANCELLED" ("DOING") ("CANCELLED" . t))
-                    (done ("HOLD"))
-                    ("TODO" ("CANCELLED") ("DOING") ("HOLD") )
-                    ("DONE" ("CANCELLED") ("DOING") ("HOLD") )
-                    ("DOING" ("DOING" . t))
-                    ("HOLD" ("CANCELLED") ("DOING") ("HOLD" . t)))))
+            (quote ((done ("CANCELED") ("DOING") ("BLOCKED"))
+                    ("TODO" ("CANCELED") ("DOING") ("BLOCKED"))
+                    ("DOING" ("BLOCKED") ("DOING" . t))
+                    ("BLOCKED" ("DOING") ("BLOCKED" . t))
+                    ("DONE" ("CANCELED") ("DOING") ("BLOCKED"))
+                    ("CANCELED" ("DOING") ("CANCELED" . t)))))
 
-      (setq org-tags-exclude-from-inheritance '("PROJECT")
-            org-stuck-projects '("+PROJECT/-DONE" ("TODO") ()))
+      (setq org-tags-exclude-from-inheritance '("PRJ")
+            org-stuck-projects '("+PRJ/-DONE-CANCELED" ("TODO") ()))
 
       (setq org-agenda-diary-file "~/ownCloud/org/diary.org")
 
@@ -530,7 +530,7 @@ which require an initialization must be listed explicitly in the list.")
                       (org-agenda-sorting-strategy
                        '(todo-state-down effort-up category-keep))))
 
-                    ("t" "Kanban agenda (tasks)"
+                    ("t" "Kanban agenda (tasks only)"
                      ((agenda ""
                         ((org-agenda-show-log t)
                          (org-agenda-log-mode-items '(clock closed state))))
@@ -545,16 +545,12 @@ which require an initialization must be listed explicitly in the list.")
                         ((org-agenda-overriding-header "Doing")
                          (org-agenda-todo-list-sublevels nil)
                          (org-agenda-sorting-strategy '(priority-down))))
-                      (tags "-PRJ+TODO=\"WAITING\""
-                        ((org-agenda-overriding-header "Waiting")
-                         (org-agenda-todo-list-sublevels nil)
-                         (org-agenda-sorting-strategy '(priority-down))))
-                      (tags "-PRJ+TODO=\"HOLD\""
-                        ((org-agenda-overriding-header "Hold")
+                      (tags "-PRJ+TODO=\"BLOCKED\""
+                        ((org-agenda-overriding-header "Blocked")
                          (org-agenda-todo-list-sublevels nil)
                          (org-agenda-sorting-strategy '(priority-down))))))
 
-                    ("k" "Kanban agenda (projects)"
+                    ("k" "Kanban agenda (projects only)"
                      ((agenda ""
                         ((org-agenda-show-log t)
                          (org-agenda-log-mode-items '(clock closed state))))
@@ -569,12 +565,8 @@ which require an initialization must be listed explicitly in the list.")
                         ((org-agenda-overriding-header "Doing")
                          (org-agenda-todo-list-sublevels nil)
                          (org-agenda-sorting-strategy '(priority-down))))
-                      (tags "+PRJ+TODO=\"WAITING\""
-                        ((org-agenda-overriding-header "Waiting")
-                         (org-agenda-todo-list-sublevels nil)
-                         (org-agenda-sorting-strategy '(priority-down))))
-                      (tags "+PRJ+TODO=\"HOLD\""
-                        ((org-agenda-overriding-header "Hold")
+                      (tags "+PRJ+TODO=\"BLOCKED\""
+                        ((org-agenda-overriding-header "BLOCKED")
                          (org-agenda-todo-list-sublevels nil)
                          (org-agenda-sorting-strategy '(priority-down))))))
 
@@ -593,49 +585,11 @@ which require an initialization must be listed explicitly in the list.")
                         ((org-agenda-overriding-header "Doing")
                          (org-agenda-todo-list-sublevels nil)
                          (org-agenda-sorting-strategy '(priority-down))))
-                      (todo "WAITING"
-                        ((org-agenda-overriding-header "Waiting")
-                         (org-agenda-todo-list-sublevels nil)
-                         (org-agenda-sorting-strategy '(priority-down))))
-                      (todo "HOLD"
-                        ((org-agenda-overriding-header "Hold")
+                      (todo "BLOCKED"
+                        ((org-agenda-overriding-header "Blocked")
                          (org-agenda-todo-list-sublevels nil)
                          (org-agenda-sorting-strategy '(priority-down))))))
                     )))
-
-      (defun bh/skip-project-tasks ()
-        "Show non-project tasks.
-        Skip project and sub-project tasks, habits, and project related tasks."
-        (save-restriction
-          (widen)
-          (let* ((subtree-end (save-excursion (org-end-of-subtree t))))
-            (cond
-             ((bh/is-project-subtree-p)
-              subtree-end)
-             (t
-              nil)))))
-
-      (defun bh/find-project-task ()
-        "Move point to the parent (project) task if any"
-        (save-restriction
-          (widen)
-          (let ((parent-task (save-excursion (org-back-to-heading 'invisible-ok) (point))))
-            (while (org-up-heading-safe)
-              (when (member (nth 2 (org-heading-components)) org-todo-keywords-1)
-                (setq parent-task (point))))
-            (goto-char parent-task)
-            parent-task)))
-
-      (defun bh/is-project-subtree-p ()
-        "Any task with a todo keyword that is in a project subtree.
-        Callers of this function already widen the buffer view."
-        (let ((task (save-excursion (org-back-to-heading 'invisible-ok)
-                                    (point))))
-          (save-excursion
-            (bh/find-project-task)
-            (if (equal (point) task)
-                nil
-              t))))
 
       ;; Include agenda archive files when searching for things
       (setq org-agenda-text-search-extra-files (quote (agenda-archives)))
@@ -681,7 +635,6 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-clock-in-resume t)
 
       ;; Change tasks to NEXT when clocking in
-      ;; (setq org-clock-in-switch-to-state 'bh/clock-in-to-next)
       ;; (setq org-clock-in-switch-to-state "DOING")
 
       ;; Separate drawers for clocking and logs
