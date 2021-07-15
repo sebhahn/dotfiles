@@ -39,15 +39,21 @@
      :config
      (progn
 
-   (setq bibtex-completion-bibliography "~/ownCloud/research/latex/zotero.bib")
    (setq helm-bibtex-library-path "~/ownCloud/research/publications")
-   (setq helm-bibtex-notes-path "~/ownCloud/org/pub_note.org")
-   (setq helm-bibtex-notes-extension ".org")
+   (setq helm-bibtex-bibliography "~/ownCloud/research/latex/zotero.bib")
+   (setq bibtex-completion-bibliography "~/ownCloud/research/latex/zotero.bib")
+   (setq helm-bibtex-notes-path "~/ownCloud/org/roam")
+   (setq bibtex-notes-path "~/ownCloud/org/roam")
+   (setq bibtex-completion-notes-path "~/ownCloud/org/roam")
+
    (setq helm-bibtex-pdf-open-function
      (lambda (fpath)
        (start-process "okular" "*okular*" "okular" fpath)))
 
    (setq helm-bibtex-additional-search-fields '(keywords journal))
+
+   (setq bibtex-completion-notes-template-multiple-files
+         (format "#+TITLE: ${title}\n#+ROAM_KEY: cite:${=key=}\n\n"))
 
    (advice-add 'bibtex-completion-candidates
                :filter-return 'reverse)
@@ -60,10 +66,19 @@
     :config
 
     (require 'org-ref-bibtex)
-    (setq org-ref-bibliography-notes "/home/shahn/ownCloud/org/pub_note.org")
-    (setq org-ref-default-bibliography '("/home/shahn/ownCloud/research/latex/zotero"))
+
+    (setq reftex-default-bibliography '("/home/shahn/ownCloud/research/latex/zotero.bib"))
+
+    ;; (setq org-ref-bibliography-notes "/home/shahn/ownCloud/org/roam/pub_note.org")
+    (setq org-ref-default-bibliography '("/home/shahn/ownCloud/research/latex/zotero.bib"))
     (setq org-ref-pdf-directory "/home/shahn/ownCloud/research/publications")
-    (setq reftex-default-bibliography '("/home/shahn/ownCloud/research/latex/zotero"))
+
+    ;; Tell org-ref to let helm-bibtex find notes for it
+    (setq org-ref-notes-function
+          (lambda (thekey)
+            (let ((bibtex-completion-bibliography (org-ref-find-bibliography)))
+              (bibtex-completion-edit-notes
+               (list (car (org-ref-get-bibtex-key-and-file thekey)))))))
 
     (defun org-ref-include-default-bibliography (backend)
       "Add bibliographystyle and bibliography links on export if they are needed."
