@@ -36,6 +36,13 @@ which require an initialization must be listed explicitly in the list.")
     (progn
       (org-ac/config-default))))
 
+(defun custom-org-config/init-org-roam-bibtex ()
+  (use-package org-roam-bibtex
+    :after org-roam
+    :hook (org-roam-mode . org-roam-bibtex-mode)
+    :config
+    (require 'org-ref))) ; optional: if Org Ref is not loaded anywhere else, load it here
+
 (defun custom-org-config/pre-init-org ()
 ;;   "Initialize my package"
   (use-package org
@@ -70,6 +77,7 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys "ols" 'org-store-link)
       (spacemacs/set-leader-keys "oli" 'org-insert-link)
 
+      (spacemacs/declare-prefix-for-mode 'org-mode "l" "org-link")
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "ls" 'org-store-link)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "li" 'org-insert-link)
 
@@ -78,6 +86,7 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys "ojs" 'org-journal-new-scheduled-entry)
 
       (spacemacs/declare-prefix "od" "org-deft")
+      (spacemacs/set-leader-keys "odl" 'deft)
       (spacemacs/set-leader-keys "odn" 'deft-new-file)
       (spacemacs/set-leader-keys "odN" 'deft-new-file-named)
       (spacemacs/set-leader-keys "odf" 'deft-find-file)
@@ -86,6 +95,17 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys "oda" 'deft-archive-file)
       (spacemacs/set-leader-keys "odg" 'deft-refresh)
       (spacemacs/set-leader-keys "odo" 'deft-open-file-other-window)
+
+      (spacemacs/declare-prefix-for-mode 'org-mode "k" "org-deft")
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "dl" 'deft)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "dn" 'deft-new-file)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "dN" 'deft-new-file-named)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "df" 'deft-find-file)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "dd" 'deft-delete-file)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "dr" 'deft-rename-file)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "da" 'deft-archive-file)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "dg" 'deft-refresh)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "do" 'deft-open-file-other-window)
 
       (spacemacs/set-leader-keys "oTh" 'org-toggle-heading)
 
@@ -110,19 +130,24 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys "oke" 'org-set-effort)
       (spacemacs/set-leader-keys "okm" 'org-modify-effort-estimate)
       (spacemacs/set-leader-keys "okg" 'org-clock-goto)
+      (spacemacs/set-leader-keys "okj" 'org-clock-jump-to-current-clock)
       (spacemacs/set-leader-keys "okr" 'org-clock-report)
+      (spacemacs/set-leader-keys "okR" 'org-resolve-clocks)
       (spacemacs/set-leader-keys "okd" 'org-clock-mark-default-task)
       (spacemacs/set-leader-keys "okk" 'org-clock-display)
       (spacemacs/set-leader-keys "okv" 'org-clock-remove-overlays)
       (spacemacs/set-leader-keys "okl" 'org-clock-in-last)
 
+      (spacemacs/declare-prefix-for-mode 'org-mode "k" "org-clock")
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "ki" 'org-clock-in)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "ko" 'org-clock-out)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "kc" 'org-clock-cancel)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "ke" 'org-set-effort)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "km" 'org-modify-effort-estimate)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "kg" 'org-clock-goto)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kj" 'org-clock-jump-to-current-clock)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "kr" 'org-clock-report)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kR" 'org-resolve-clocks)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "kd" 'org-clock-mark-default-task)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "kk" 'org-clock-display)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "kv" 'org-clock-remove-overlays)
@@ -147,6 +172,7 @@ which require an initialization must be listed explicitly in the list.")
         "oraa" 'org-roam-alias-add
         "orad" 'org-roam-alias-delete)
 
+      (spacemacs/declare-prefix-for-mode 'org-mode "r" "org-roam")
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rl" 'org-roam)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rp" 'org-roam-dailies-find-yesterday)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "r." 'org-roam-dailies-find-today)
@@ -167,6 +193,12 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys "oS" 'org-download-screenshot)
       (spacemacs/set-leader-keys "oC" 'org-download-clipboard)
       (spacemacs/set-leader-keys "oY" 'org-download-yank)
+
+      (spacemacs/declare-prefix-for-mode 'org-mode "D" "dates")
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "Dd" 'org-deadline)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "Ds" 'org-schedule)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "Dt" 'org-time-stamp)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "DT" 'org-time-stamp-inactive)
 
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "C-l" 'org-toggle-latex-fragment))
 
