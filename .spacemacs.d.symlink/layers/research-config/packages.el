@@ -35,6 +35,7 @@
      :init
      (progn
        (evil-leader/set-key "ob" 'helm-bibtex)
+       (evil-leader/set-key "oB" 'helm-bibtex-with-notes)
        )
      :config
      (progn
@@ -63,6 +64,11 @@
   "Init org ref package"
   (use-package org-ref
     :defer t
+    :init
+    (progn
+      (spacemacs/set-leader-keys "on" 'org-ref-open-notes-at-point)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rN" 'org-ref-open-notes-at-point)
+      )
     :config
 
     (require 'org-ref-bibtex)

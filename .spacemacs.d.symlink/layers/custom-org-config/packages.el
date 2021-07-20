@@ -36,6 +36,14 @@ which require an initialization must be listed explicitly in the list.")
     (progn
       (org-ac/config-default))))
 
+(defun custom-org-config/init-org-roam ()
+  (use-package org-roam
+    :ensure t
+    :config
+    (org-roam-setup)
+    ;; If using org-roam-protocol
+    (require 'org-roam-protocol)))
+
 (defun custom-org-config/init-org-roam-bibtex ()
   (use-package org-roam-bibtex
     :after org-roam
@@ -155,40 +163,44 @@ which require an initialization must be listed explicitly in the list.")
 
       (spacemacs/declare-prefix "or" "org-roam")
       (spacemacs/set-leader-keys
-        "orl" 'org-roam
-        "orp" 'org-roam-dailies-find-yesterday
-        "or." 'org-roam-dailies-find-today
-        "orn" 'org-roam-dailies-find-tomorrow
-        "orw" 'org-roam-random-note
-        "orf" 'org-roam-find-file
-        "orr" 'org-roam-find-ref
-        "ori" 'org-roam-insert
-        "org" 'org-roam-graph-show
+        "orl" 'org-roam-buffer-toggle
+        "orp" 'org-roam-dailies-goto-yesterday
+        "or." 'org-roam-dailies-goto-today
+        "orn" 'org-roam-dailies-goto-tomorrow
+        "orw" 'org-roam-node-random
+        "orf" 'org-roam-node-find
+        "ori" 'org-roam-node-insert
+        "orI" 'orb-insert
+        "orA" 'orb-note-action
+        "org" 'org-roam-graph
         "orc" 'org-roam-capture
-        "orb" 'org-roam-switch-to-buffer
-        "orx" 'org-roam-jump-to-index
+        "orra" 'org-roam-ref-add
+        "orrf" 'org-roam-ref-find
+        "orrr" 'org-roam-ref-remove
         "orta" 'org-roam-tag-add
-        "ortd" 'org-roam-tag-delete
+        "ortd" 'org-roam-tag-remove
         "oraa" 'org-roam-alias-add
-        "orad" 'org-roam-alias-delete)
+        "orad" 'org-roam-alias-remove)
 
       (spacemacs/declare-prefix-for-mode 'org-mode "r" "org-roam")
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rl" 'org-roam)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rp" 'org-roam-dailies-find-yesterday)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "r." 'org-roam-dailies-find-today)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rn" 'org-roam-dailies-find-tomorrow)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rw" 'org-roam-random-note)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rf" 'org-roam-find-file)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rr" 'org-roam-find-ref)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "ri" 'org-roam-insert)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rg" 'org-roam-graph-show)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rl" 'org-roam-buffer-toggle)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rp" 'org-roam-dailies-goto-yesterday)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "r." 'org-roam-dailies-goto-today)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rn" 'org-roam-dailies-goto-tomorrow)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rw" 'org-roam-node-random)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rf" 'org-roam-node-find)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "ri" 'org-roam-node-insert)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rI" 'orb-insert)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rA" 'orb-note-action)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rg" 'org-roam-graph)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rc" 'org-roam-capture)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rb" 'org-roam-switch-to-buffer)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rx" 'org-roam-jump-to-index)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rra" 'org-roam-ref-add)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rrf" 'org-roam-ref-find)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rrr" 'org-roam-ref-remove)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rta" 'org-roam-tag-add)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rtd" 'org-roam-tag-delete)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rtr" 'org-roam-tag-remove)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "raa" 'org-roam-alias-add)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rad" 'org-roam-alias-delete)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rar" 'org-roam-alias-remove)
 
       (spacemacs/set-leader-keys "oS" 'org-download-screenshot)
       (spacemacs/set-leader-keys "oC" 'org-download-clipboard)
@@ -205,12 +217,28 @@ which require an initialization must be listed explicitly in the list.")
     :post-config
     (progn
 
+      (setq org-roam-v2-ack t)
       (setq org-roam-directory "~/ownCloud/org/roam/")
       (setq org-roam-index-file "~/ownCloud/org/roam/index.org")
       (setq org-roam-tag-sources '(prop last-directory))
+      (setq orb-insert-link-description "citation")
 
-      (setq org-roam-capture-templates
-            '(
+      (setq org-roam-db-node-include-function
+       (lambda () (not (member "ATTACH" (org-get-tags)))))
+
+      (add-to-list 'display-buffer-alist
+                   '("\\*org-roam\\*"
+                     (display-buffer-in-side-window)
+                     (side . right)
+                     (slot . 0)
+                     (window-width . 0.33)
+                     (window-parameters . ((no-other-window . t)
+                                           (no-delete-other-windows . t)))))
+
+      (setq org-roam-completion-everywhere t)
+
+      ;; (setq org-roam-capture-templates
+            ;; '(
               ;; ("p" "project" entry (function org-roam--capture-get-point)
               ;;  ;; "r Entry item!"
               ;;  (file "~/.doom.d/templates/org-roam-project.org")
@@ -223,11 +251,11 @@ which require an initialization must be listed explicitly in the list.")
               ;;  :file-name "${slug}"
               ;;  :head "#+TITLE: ${title}\n#+STATUS: active \n#+FILE_UNDER: research \n"
               ;;  :unnarrowed t)
-              ("d" "default" plain (function org-roam--capture-get-point)
-               "%?"
-               :file-name "${slug}"
-               :head "#+TITLE: ${title}\n"
-               :unnarrowed t)))
+              ;; ("d" "default" plain (function org-roam--capture-get-point)
+              ;;  "%?"
+              ;;  :file-name "${slug}"
+              ;;  :head "#+TITLE: ${title}\n"
+              ;;  :unnarrowed t)))
 
       (setq deft-recursive t)
       (setq deft-use-filter-string-for-filename t)
@@ -250,7 +278,6 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-default-notes-file "~/ownCloud/org/roam/agenda/refile.org")
       (setq org-directory "~/ownCloud/org/roam")
       (setq org-agenda-files (list "~/ownCloud/org/roam/agenda"
-                                   "~/ownCloud/org/roam/daily"
                                    "~/ownCloud/org/roam/studies"))
 
       (setq org-agenda-persistent-filter t)
