@@ -62,7 +62,6 @@ which require an initialization must be listed explicitly in the list.")
                org-capture
                org-toggle-latex-fragment
                org-store-link
-               org-agenda
                org-iswitchb
                org-clock-goto
                org-clock-in))
@@ -615,18 +614,22 @@ which require an initialization must be listed explicitly in the list.")
                          (org-agenda-log-mode-items '(clock closed state))))
                       (tags "REFILE"
                         ((org-agenda-overriding-header "Stuff to refile")
+                         (org-agenda-prefix-format "  %?-12t% s")
                          (org-tags-match-list-sublevels nil)))
                       (tags "+PRJ+TODO=\"TODO\""
                         ((org-agenda-overriding-header "Todo")
                          (org-agenda-todo-list-sublevels nil)
+                         (org-agenda-prefix-format "  %?-12t% s")
                          (org-agenda-sorting-strategy '(priority-down))))
                       (tags "+PRJ+TODO=\"DOING\""
                         ((org-agenda-overriding-header "Doing")
                          (org-agenda-todo-list-sublevels nil)
+                         (org-agenda-prefix-format "  %?-12t% s")
                          (org-agenda-sorting-strategy '(priority-down))))
                       (tags "+PRJ+TODO=\"BLOCKED\""
                         ((org-agenda-overriding-header "BLOCKED")
                          (org-agenda-todo-list-sublevels nil)
+                         (org-agenda-prefix-format "  %?-12t% s")
                          (org-agenda-sorting-strategy '(priority-down))))))
 
                     ("K" "Kanban agenda (projects + tasks)"
@@ -725,10 +728,10 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-time-stamp-rounding-minutes (quote (1 1)))
 
       (setq org-agenda-clock-consistency-checks
-            (quote (:max-duration "4:00"
+            (quote (:max-duration "1:00"
                     :min-duration 0
                     :max-gap 0
-                    :gap-ok-around ("4:00"))))
+                    :gap-ok-around ("1:00"))))
 
       ;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
       (setq org-clock-out-remove-zero-time-clocks t)
