@@ -51,7 +51,9 @@ This function should only modify configuration layer settings."
       csv
       custom-org-config
       dash
-      deft
+      (deft
+       :variables
+       deft-zetteldeft t)
       docker
       emacs-lisp
       (elfeed
