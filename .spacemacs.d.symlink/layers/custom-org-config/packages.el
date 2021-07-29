@@ -169,8 +169,8 @@ which require an initialization must be listed explicitly in the list.")
         "orw" 'org-roam-node-random
         "orf" 'org-roam-node-find
         "ori" 'org-roam-node-insert
-        "orI" 'orb-insert
-        "orA" 'orb-note-action
+        "orI" 'orb-insert-link
+        "orA" 'orb-note-actions
         "org" 'org-roam-graph
         "orc" 'org-roam-capture
         "orra" 'org-roam-ref-add
@@ -189,8 +189,8 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rw" 'org-roam-node-random)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rf" 'org-roam-node-find)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "ri" 'org-roam-node-insert)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rI" 'orb-insert)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rA" 'orb-note-action)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rI" 'orb-insert-link)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rA" 'orb-note-actions)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rg" 'org-roam-graph)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rc" 'org-roam-capture)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "rra" 'org-roam-ref-add)
@@ -236,25 +236,11 @@ which require an initialization must be listed explicitly in the list.")
 
       (setq org-roam-completion-everywhere t)
 
-      ;; (setq org-roam-capture-templates
-            ;; '(
-              ;; ("p" "project" entry (function org-roam--capture-get-point)
-              ;;  ;; "r Entry item!"
-              ;;  (file "~/.doom.d/templates/org-roam-project.org")
-              ;;  :file-name "${slug}"
-              ;;  :head "#+TITLE: ${title}\n#+STATUS: active \n#+FILE_UNDER: project \n"
-              ;;  :unnarrowed t)
-              ;; ("r" "research" entry (function org-roam--capture-get-point)
-              ;;  ;; "r Entry item!"
-              ;;  (file "~/.doom.d/templates/org-roam-research.org")
-              ;;  :file-name "${slug}"
-              ;;  :head "#+TITLE: ${title}\n#+STATUS: active \n#+FILE_UNDER: research \n"
-              ;;  :unnarrowed t)
-              ;; ("d" "default" plain (function org-roam--capture-get-point)
-              ;;  "%?"
-              ;;  :file-name "${slug}"
-              ;;  :head "#+TITLE: ${title}\n"
-              ;;  :unnarrowed t)))
+      (setq org-roam-capture-templates
+            '(("d" "default" plain "%?"
+               :if-new (file+head "${slug}.org"
+                                  "#+title: ${title}\n")
+               :unnarrowed t)))
 
       (setq deft-recursive t)
       (setq deft-use-filter-string-for-filename t)
