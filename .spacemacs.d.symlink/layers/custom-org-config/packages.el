@@ -218,8 +218,8 @@ which require an initialization must be listed explicitly in the list.")
 
       (setq org-roam-v2-ack t)
       (setq org-roam-directory "~/ownCloud/org/roam/")
-      (setq org-roam-index-file "~/ownCloud/org/roam/index.org")
-      (setq org-roam-tag-sources '(prop last-directory))
+      (setq org-roam-db-location "~/ownCloud/org/org-roam.db")
+
       (setq orb-insert-link-description "citation")
 
       (setq org-roam-db-node-include-function
@@ -708,8 +708,6 @@ which require an initialization must be listed explicitly in the list.")
 
       ;; Include current clocking task in clock reports
       (setq org-clock-report-include-clocking-task t)
-
-      (require 'org-id)
 
       (setq org-time-stamp-rounding-minutes (quote (1 1)))
 
