@@ -635,10 +635,10 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
     (when (eq (dotfiles/machine-location) 'home)
     ;; home
       (setq dotspacemacs-default-font '("Hack Nerd Font Mono"
-                                        :size 13
+                                        :size 14
                                         :weight regular
                                         :width normal
-                                        :powerline-scale 1.1)
+                                        :powerline-scale 1.4)
 
             browse-url-generic-program "google-chrome-stable"
             exec-path-from-shell-arguments (list "-i")
