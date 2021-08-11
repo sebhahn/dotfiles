@@ -40,9 +40,9 @@
      :config
      (progn
 
-   (setq helm-bibtex-library-path "~/ownCloud/research/publications")
-   (setq helm-bibtex-bibliography "~/ownCloud/research/latex/zotero.bib")
-   (setq bibtex-completion-bibliography "~/ownCloud/research/latex/zotero.bib")
+   (setq helm-bibtex-library-path "~/ownCloud/areas/research/publications")
+   (setq helm-bibtex-bibliography "~/ownCloud/areas/research/latex/zotero.bib")
+   (setq bibtex-completion-bibliography "~/ownCloud/areas/research/latex/zotero.bib")
    (setq helm-bibtex-notes-path "~/ownCloud/org/roam")
    (setq bibtex-notes-path "~/ownCloud/org/roam")
    (setq bibtex-completion-notes-path "~/ownCloud/org/roam")
@@ -73,11 +73,11 @@
 
     (require 'org-ref-bibtex)
 
-    (setq reftex-default-bibliography '("/home/shahn/ownCloud/research/latex/zotero.bib"))
+    (setq reftex-default-bibliography '("~/ownCloud/areas/research/latex/zotero.bib"))
 
     ;; (setq org-ref-bibliography-notes "/home/shahn/ownCloud/org/roam/pub_note.org")
-    (setq org-ref-default-bibliography '("/home/shahn/ownCloud/research/latex/zotero.bib"))
-    (setq org-ref-pdf-directory "/home/shahn/ownCloud/research/publications")
+    (setq org-ref-default-bibliography '("~/ownCloud/areas/research/latex/zotero.bib"))
+    (setq org-ref-pdf-directory "~/ownCloud/areas/research/publications")
 
     ;; Tell org-ref to let helm-bibtex find notes for it
     (setq org-ref-notes-function
