@@ -194,8 +194,6 @@ http://mrs.geo.tuwien.ac.at/")
               (:maildir "/TU/it" :key ?i)
               (:maildir "/TU/geo" :key ?g)
               (:maildir "/TU/hsaf" :key ?h)
-              (:maildir "/TU/sm2rain" :key ?s)
-              (:maildir "/TU/tuw" :key ?t)))
 
         ;; something about ourselves
         (setq mu4e-compose-signature ""
@@ -312,7 +310,7 @@ http://mrs.geo.tuwien.ac.at/")
 
         (add-to-list 'mu4e-marks
                      '(rtag
-                       :char       "r"
+                      :char       "r"
                        :prompt     "rtag"
                        :ask-target (lambda () (read-string "remove tag: "))
                        :action     (lambda (docid msg target)
@@ -383,6 +381,9 @@ http://mrs.geo.tuwien.ac.at/")
 
         ;; use helm for navigation
         (setq  mu4e-completing-read-function 'completing-read)
+
+        ;; No HTML mail
+        (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
 
         ;; setup helm and dired for attachments
 
