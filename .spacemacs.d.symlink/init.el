@@ -37,14 +37,17 @@ This function should only modify configuration layer settings."
      ansible
       (auto-completion
         :variables
-        auto-completion-enable-snippets-in-popup t
-        auto-completion-enable-sort-by-usage t
+        auto-completion-return-key-behavior 'complete
+        auto-completion-tab-key-behavior 'cycle
         auto-completion-complete-with-key-sequence "jk"
         auto-completion-complete-with-key-sequence-delay 0.1
+        auto-completion-minimum-prefix-length 2
+        auto-completion-idle-delay 0.2
         auto-completion-private-snippets-directory nil
-        auto-completion-enable-help-tooltip 'manual
-        auto-completion-idle-delay 0.6
-        auto-completion-enable-help-tooltip nil)
+        auto-completion-enable-snippets-in-popup nil
+        auto-completion-enable-help-tooltip nil
+        auto-completion-use-company-box nil
+        auto-completion-enable-sort-by-usage nil)
       bibtex
       c-c++
       colors
@@ -775,13 +778,13 @@ before packages are loaded."
   ;; set default browser
   (setq browse-url-browser-function 'browse-url-generic)
 
-  ;; set javascript company backends
-  (setq company-backends-js2-mode '((company-tern :with company-dabbrev-code :with company-yasnippet)))
-
   ;; set python company backends
   (setq company-backends-python-mode '((company-anaconda :with company-dabbrev-code :with company-yasnippet)))
-  ;; (setq company-transformers '(spacemacs//company-transformer-cancel
-  ;;                               company-sort-by-backend-importance))
+
+  ;; Add the relevant packages to the layer
+  ;; here it is `company-anaconda'
+  (setq python-packages
+        '((company-anaconda :toggle (configuration-layer/package-used-p 'company))))
 
   (defvaralias 'helm-c-yas-space-match-any-greedy 'helm-yas-space-match-any-greedy "Temporary alias for Emacs27")
 
