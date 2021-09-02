@@ -31,6 +31,14 @@ which require an initialization must be listed explicitly in the list.")
 (defun python-config/init-flycheck-pyflakes()
   (use-package flycheck-pyflakes)
   )
+
+(defun python-config/init-company-anaconda ()
+  (use-package company-anaconda
+    :defer t
+    :init
+    (spacemacs|add-company-backends
+      :backends company-anaconda
+      :modes python-mode)))
 ;; (defun python-config/init-my-package ()
 ;;   "Initialize my package"
 ;;   )
