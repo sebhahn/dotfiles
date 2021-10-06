@@ -33,8 +33,8 @@ SubFolders Legacy
 # 3 "DIR" TO MATCH DIR
 
 Channel tu-inbox
-Master :tu-remote:
-Slave :tu-local:
+Far :tu-remote:
+Near :tu-local:
 Patterns * 
 Create Both
 Expunge Both
@@ -72,8 +72,8 @@ Inbox ~/mbsync/TU-Git/INBOX
 # 3 "DIR" TO MATCH DIR
 
 Channel tu-git-inbox
-Master :tu-git-remote:
-Slave :tu-git-local:
+Far :tu-git-remote:
+Near :tu-git-local:
 Patterns * 
 Create Both
 Expunge Both
