@@ -102,7 +102,7 @@ This function should only modify configuration layer settings."
       (python
         :variables
         python-backend 'anaconda
-        python-enable-yapf-format-on-save nil
+        python-formatter 'black
         python-auto-set-local-pyenv-version 'on-project-switch
         python-test-runner 'pytest)
       python-config
