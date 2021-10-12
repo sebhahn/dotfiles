@@ -13,7 +13,7 @@
 (defvar python-config-packages
   '(
     ;; package python-configs go here
-    ;; py-autopep8
+    py-autopep8
     flycheck-pyflakes
     )
   "List of all packages to install and/or initialize. Built-in packages
@@ -24,9 +24,9 @@ which require an initialization must be listed explicitly in the list.")
 
 ;; For each package, define a function python-config/init-<package-python-config>
 ;;
-;; (defun python-config/init-py-autopep8()
-;;   (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
-;;   )
+(defun python-config/init-py-autopep8()
+  (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+  )
 
 (defun python-config/init-flycheck-pyflakes()
   (use-package flycheck-pyflakes)
