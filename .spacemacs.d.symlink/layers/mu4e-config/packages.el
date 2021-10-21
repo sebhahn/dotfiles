@@ -443,6 +443,14 @@ http://mrs.geo.tuwien.ac.at/")
           "d" 'message-kill-buffer
           "e" 'mml-secure-message-encrypt-pgpmime
           "s" 'mml-secure-message-sign-pgpmime)
+
+        (with-eval-after-load "mm-decode"
+          (add-to-list 'mm-discouraged-alternatives "text/html")
+          (add-to-list 'mm-discouraged-alternatives "text/richtext"))
+
+        (setq shr-color-visible-luminance-min 80)
+
+        (setq gnus-unbuttonized-mime-types nil)
      )
    )
 

@@ -12,12 +12,7 @@
 
 (defvar research-config-packages
    '(
-     ;; package research-configs go here
-     ;; parsebib
      helm-bibtex
-     ;; reftex
-     hydra
-     key-chord
      org-ref
      )
   "List of all packages to install and/or initialize. Built-in packages which require an initialization must be listed explicitly in the list.")
@@ -42,19 +37,11 @@
 
    (setq helm-bibtex-library-path "~/ownCloud/areas/research/publications")
    (setq helm-bibtex-bibliography "~/ownCloud/areas/research/latex/zotero.bib")
-   (setq bibtex-completion-bibliography "~/ownCloud/areas/research/latex/zotero.bib")
    (setq helm-bibtex-notes-path "~/ownCloud/org/roam")
-   (setq bibtex-notes-path "~/ownCloud/org/roam")
-   (setq bibtex-completion-notes-path "~/ownCloud/org/roam")
-
    (setq helm-bibtex-pdf-open-function
      (lambda (fpath)
        (start-process "okular" "*okular*" "okular" fpath)))
-
    (setq helm-bibtex-additional-search-fields '(keywords journal))
-
-   (setq bibtex-completion-notes-template-multiple-files
-         (format "#+TITLE: ${title}\n#+ROAM_KEY: cite:${=key=}\n\n"))
 
    (advice-add 'bibtex-completion-candidates
                :filter-return 'reverse)
@@ -65,61 +52,26 @@
   (use-package org-ref
     :defer t
     :init
-    (progn
+   (progn
       (spacemacs/set-leader-keys "on" 'org-ref-open-notes-at-point)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rN" 'org-ref-open-notes-at-point)
+      ;; (spacemacs/set-leader-keys-for-major-mode 'org-mode "rN" 'org-ref-open-notes-at-point)
       )
     :config
 
     (require 'org-ref-bibtex)
 
+    (setq bibtex-completion-bibliography '("~/ownCloud/areas/research/latex/zotero.bib")
+          bibtex-completion-library-path '("~/ownCloud/areas/research/publications/")
+          bibtex-completion-notes-path "~/ownCloud/org/roam/"
+          bibtex-completion-notes-template-multiple-files (format "#+TITLE: ${title}\n#+ROAM_KEY: cite:${=key=}\n\n")
+
+      bibtex-completion-additional-search-fields '(keywords)
+      bibtex-completion-pdf-open-function
+          (lambda (fpath)
+            (start-process "okular" "*okular*" "okular" fpath)))
+
     (setq reftex-default-bibliography '("~/ownCloud/areas/research/latex/zotero.bib"))
-
-    ;; (setq org-ref-bibliography-notes "/home/shahn/ownCloud/org/roam/pub_note.org")
-    (setq org-ref-default-bibliography '("~/ownCloud/areas/research/latex/zotero.bib"))
-    (setq org-ref-pdf-directory "~/ownCloud/areas/research/publications")
-
-    ;; Tell org-ref to let helm-bibtex find notes for it
-    (setq org-ref-notes-function
-          (lambda (thekey)
-            (let ((bibtex-completion-bibliography (org-ref-find-bibliography)))
-              (bibtex-completion-edit-notes
-               (list (car (org-ref-get-bibtex-key-and-file thekey)))))))
-
-    (defun org-ref-include-default-bibliography (backend)
-      "Add bibliographystyle and bibliography links on export if they are needed."
-      (cond
-      ((eq backend 'latex)
-        (let* ((links (org-element-map (org-element-parse-buffer) 'link #'identity))
-        (cites (-filter (lambda (link)
-              (member (org-element-property :type link) org-ref-cite-types))
-            links))
-        (style (-filter (lambda (link)
-              (string= (org-element-property :type link) "bibliographystyle"))
-            links))
-        (bibliography (-filter (lambda (link)
-                (string= (org-element-property :type link) "bibliography"))
-              links)))
-          (when cites
-      (unless style
-        (goto-char (point-max))
-        (insert "\nbibliographystyle:unsrt"))
-      (unless bibliography
-        (goto-char (point-max))
-        (insert (format
-          "\nbibliography:%s"
-          (mapconcat (lambda (x)
-            (file-relative-name x (file-name-directory (buffer-file-name))))
-                org-ref-default-bibliography ",")))))))))
-
-
-    (add-hook 'org-export-before-processing-hook #'org-ref-include-default-bibliography)))
-
-(defun research-config/post-init-hydra ())
-
-(defun research-config/init-key-chord ()
-  (use-package key-chord
-    :defer t))
+))
 
 ;; Often the body of an initialize function uses `use-package'
 ;; For more info on `use-package', see readme:
