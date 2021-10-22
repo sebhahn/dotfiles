@@ -35,7 +35,7 @@
      :config
      (progn
 
-   (setq helm-bibtex-library-path "~/ownCloud/areas/research/publications")
+   (setq helm-bibtex-library-path "~/ownCloud/areas/research/publications/")
    (setq helm-bibtex-bibliography "~/ownCloud/areas/research/latex/zotero.bib")
    (setq helm-bibtex-notes-path "~/ownCloud/org/roam")
    (setq helm-bibtex-pdf-open-function
