@@ -242,6 +242,12 @@ which require an initialization must be listed explicitly in the list.")
                                   "#+title: ${title}\n")
                :unnarrowed t)))
 
+      (setq org-roam-mode-section-functions
+            (list #'org-roam-backlinks-section
+                  #'org-roam-reflinks-section
+                  ;; #'org-roam-unlinked-references-section
+                  ))
+
       (setq deft-recursive t)
       (setq deft-use-filter-string-for-filename t)
       (setq deft-default-extension "org")
