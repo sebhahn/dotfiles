@@ -47,12 +47,17 @@
           mml2015-encrypt-to-self t)))
 
 (defvar work-sig "Dipl.-Ing. Sebastian Hahn
-Research Group Microwave Remote Sensing (MRS)
-Department of Geodesy and Geoinformation (GEO)
-Technische Universität Wien (TU Wien)
-Wiedner Hauptstr. 8-10/E120, 1040 Vienna, Austria
-Phone: +43-1-58801-12240
-http://mrs.geo.tuwien.ac.at/")
+Senior Scientist
+
+Technische Universitaet Wien
+E120-01-1 - Forschungsgruppe Mikrowellenfernerkundung
+Wiedner Hauptstr. 8-10
+1040 Wien
+
++43 1 58801 12240
+sebastian.hahn@geo.tuwien.ac.at
+https://mrs.geo.tuwien.ac.at/")
+
 
 ;; For each package, define a function mu4e-config/init-<package-name>
 ;;
