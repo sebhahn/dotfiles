@@ -73,7 +73,6 @@ This function should only modify configuration layer settings."
       (git
         :variables
         git-gutter-use-fringe t)
-      github
       gnus
       helm
       html
