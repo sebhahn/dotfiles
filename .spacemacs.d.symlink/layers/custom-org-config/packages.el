@@ -488,7 +488,7 @@ which require an initialization must be listed explicitly in the list.")
 
       ;; Always highlight the current agenda line
       (add-hook 'org-agenda-mode-hook
-                '(lambda () (hl-line-mode 1))
+                #'(lambda () (hl-line-mode 1))
                 'append)
 
       ;; Keep tasks with dates on the global todo lists
