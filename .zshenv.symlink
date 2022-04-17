@@ -1,4 +1,4 @@
-export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 export SSH_ASKPASS=/usr/bin/ksshaskpass
 export GIT_INTERNAL_GETTEXT_TEST_FALLBACKS=1
