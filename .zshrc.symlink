@@ -118,10 +118,6 @@ export EDITOR=vim
 export VISUAL=vim
 export ALTERNATE_EDITOR=""
 
-# set no proxy for internal pip server at work
-NO_PROXY=${no_proxy-localhost}
-export no_proxy=dvlp1.geo.tuwien.ac.at,$NO_PROXY
-
 # smart history search after typing and pressing up-down keys
 autoload -Uz up-line-or-beginning-search
 autoload -Uz down-line-or-beginning-search
