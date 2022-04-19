@@ -11,10 +11,8 @@
 ;;; License: GPLv3
 
 (defvar research-config-packages
-   '(
-     helm-bibtex
-     org-ref
-     )
+   '(helm-bibtex
+     org-ref)
   "List of all packages to install and/or initialize. Built-in packages which require an initialization must be listed explicitly in the list.")
 
 (defvar research-config-excluded-packages '()
