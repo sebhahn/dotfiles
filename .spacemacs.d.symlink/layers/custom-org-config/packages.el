@@ -25,9 +25,11 @@ which require an initialization must be listed explicitly in the list.")
 ;; For each package, define a function custom-org-config/init-<package-custom-org-config>
 ;;
 
-(defun custom-org-config/post-init-org-plus-contrib ())
+(defun custom-org-config/post-init-org-plus-contrib ()
+  )
 
-(defun custom-org-config/init-cdlatex())
+(defun custom-org-config/init-cdlatex()
+  )
 
 (defun custom-org-config/init-org-ac()
   (use-package org-ac
@@ -41,7 +43,6 @@ which require an initialization must be listed explicitly in the list.")
     :ensure t
     :config
     (org-roam-setup)
-    ;; If using org-roam-protocol
     (require 'org-roam-protocol)))
 
 (defun custom-org-config/init-org-roam-bibtex ()
@@ -49,7 +50,7 @@ which require an initialization must be listed explicitly in the list.")
     :after org-roam
     :hook (org-roam-mode . org-roam-bibtex-mode)
     :config
-    (require 'org-ref))) ; optional: if Org Ref is not loaded anywhere else, load it here
+    (require 'org-ref)))
 
 (defun custom-org-config/pre-init-org ()
 ;;   "Initialize my package"
@@ -67,7 +68,6 @@ which require an initialization must be listed explicitly in the list.")
                org-clock-in))
 
   (spacemacs|use-package-add-hook org
-
     :post-init
     (progn
       (spacemacs/set-leader-keys "m'" 'org-edit-src-exit)
@@ -722,9 +722,6 @@ which require an initialization must be listed explicitly in the list.")
                     :min-duration 0
                     :max-gap 0
                     :gap-ok-around ("1:00"))))
-
-      ;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
-      (setq org-clock-out-remove-zero-time-clocks t)
 
       ;; Agenda clock report parameters
       (setq org-agenda-clockreport-parameter-plist
