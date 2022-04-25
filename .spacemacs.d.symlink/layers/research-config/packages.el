@@ -11,39 +11,11 @@
 ;;; License: GPLv3
 
 (defvar research-config-packages
-   '(helm-bibtex
-     org-ref)
+   '(org-ref)
   "List of all packages to install and/or initialize. Built-in packages which require an initialization must be listed explicitly in the list.")
 
 (defvar research-config-excluded-packages '()
   "List of packages to exclude.")
-
-;; For each package, define a function research-config/init-<package-research-config>
-;;
-(defun research-config/post-init-helm-bibtex()
-   "Initialize my package"
-   (use-package helm-bibtex
-     :defer t
-     :commands helm-bibtex
-     :init
-     (progn
-       (evil-leader/set-key "ob" 'helm-bibtex)
-       (evil-leader/set-key "oB" 'helm-bibtex-with-notes)
-       )
-     :config
-     (progn
-
-   (setq helm-bibtex-library-path "~/ownCloud/areas/research/publications/")
-   (setq helm-bibtex-bibliography "~/ownCloud/areas/research/latex/zotero.bib")
-   (setq helm-bibtex-notes-path "~/ownCloud/org/roam")
-   (setq helm-bibtex-pdf-open-function
-     (lambda (fpath)
-       (start-process "okular" "*okular*" "okular" fpath)))
-   (setq helm-bibtex-additional-search-fields '(keywords journal))
-
-   (advice-add 'bibtex-completion-candidates
-               :filter-return 'reverse)
-)))
 
 (defun research-config/post-init-org-ref()
   "Init org ref package"
@@ -57,6 +29,9 @@
     :config
 
     (require 'org-ref-bibtex)
+    (require 'org-ref-arxiv)
+    (require 'org-ref-scopus)
+    (require 'bibtex)
 
     (setq bibtex-completion-bibliography '("~/ownCloud/areas/research/latex/zotero.bib")
           bibtex-completion-library-path '("~/ownCloud/areas/research/publications/")
@@ -66,7 +41,22 @@
       bibtex-completion-additional-search-fields '(keywords)
       bibtex-completion-pdf-open-function
           (lambda (fpath)
-            (start-process "okular" "*okular*" "okular" fpath)))
+            (start-process "zathura" "*zathura*" "/usr/bin/zathura" fpath)))
+
+    (setq org-ref-open-pdf-function
+          (lambda (fpath)
+            (start-process "zathura" "*zathura*" "/usr/bin/zathura" fpath)))
+
+    (setq bibtex-autokey-year-length 4
+	        bibtex-autokey-name-year-separator "-"
+	        bibtex-autokey-year-title-separator "-"
+	        bibtex-autokey-titleword-separator "-"
+	        bibtex-autokey-titlewords 2
+	        bibtex-autokey-titlewords-stretch 1
+	        bibtex-autokey-titleword-length 5
+	        org-ref-bibtex-hydra-key-binding (kbd "H-b"))
+
+    (define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
 
     (setq reftex-default-bibliography '("~/ownCloud/areas/research/latex/zotero.bib"))
 ))

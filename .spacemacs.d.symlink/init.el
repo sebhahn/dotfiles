@@ -32,25 +32,30 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(rust
-     octave
-     ansible
+   '(ansible
       (auto-completion
         :variables
         auto-completion-return-key-behavior 'complete
         auto-completion-tab-key-behavior 'cycle
-        auto-completion-complete-with-key-sequence "jk"
+      ;;   auto-completion-complete-with-key-sequence "jk"
         auto-completion-complete-with-key-sequence-delay 0.1
-        auto-completion-minimum-prefix-length 2
-        auto-completion-idle-delay 0.2
+        auto-completion-minimum-prefix-length 3
+        auto-completion-idle-delay 0.4
         auto-completion-private-snippets-directory nil
         auto-completion-enable-snippets-in-popup nil
         auto-completion-enable-help-tooltip nil
-        auto-completion-use-company-box nil
+      ;;   auto-completion-use-company-box nil
         auto-completion-enable-sort-by-usage nil)
-      bibtex
+      (bibtex :variables
+              bibtex-enable-ebib-support t
+              ebib-preload-bib-files '("~/ownCloud/areas/research/latex/zotero.bib")
+              ebib-file-search-dirs '("~/ownCloud/areas/research/publications/")
+              ebib-file-associations '(("pdf" . "zathura") ("ps" . "gv"))
+              ebib-import-directory "~/ownCloud/areas/research/publications/")
       c-c++
       colors
+      (compleseus :variables
+                  compleseus-engine 'vertico)
       csv
       custom-org-config
       dash
@@ -69,26 +74,24 @@ This function should only modify configuration layer settings."
       epub
       erlang
       ess
-      games
       (git
         :variables
         git-gutter-use-fringe t)
       gnus
-      helm
+      ;; helm
       html
       ipython-notebook
       (latex :variables
              font-latex-fontify-script nil
              latex-enable-auto-fill t
              latex-enable-folding t)
-      ;; lsp
+      lsp
       json
       markdown
       (mermaid :variables
                ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
       multiple-cursors
       mu4e-config
-      notmuch
       (org
         :variables org-enable-reveal-js-support t
                    org-enable-org-journal-support t
@@ -101,7 +104,9 @@ This function should only modify configuration layer settings."
         plantuml-default-exec-mode 'jar)
       (python
         :variables
-        python-backend 'anaconda
+        ;; python-backend 'anaconda
+        python-backend 'lsp
+        python-lsp-server 'pyright
         python-formatter 'yapf
         python-auto-set-local-pyenv-version 'on-project-switch
         python-test-runner 'pytest)
@@ -109,7 +114,7 @@ This function should only modify configuration layer settings."
       ranger
       research-config
       search-engine
-      semantic
+      ;; semantic
       (shell
         :variables
         shell-default-shell 'term
@@ -140,11 +145,13 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(org-mind-map
-                                      org-edna
+   dotspacemacs-additional-packages '(org-edna
                                       org-roam
                                       org-roam-bibtex
                                       sqlite3
+                                      company-bibtex
+                                      company-jedi
+                                      jedi
                                       exec-path-from-shell
                                       keychain-environment)
 
@@ -636,10 +643,13 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                                                ("org" . "orgmode.org/elpa/")
                                                ("gnu" . "elpa.gnu.org/packages/")))
 
+    (setq shell-file-name "/usr/bin/zsh")
+    (setenv "SHELL" "/usr/bin/zsh")
+
     (defun dotfiles/machine-location ()
       "Get the machine location. Either returns home or work at the moment"
-    (let ((machines '(("shahn" . work) ("shahn-7490" . home))))
-      (cdr (assoc system-name machines))))
+      (let ((machines '(("shahn" . work) ("shahn-7490" . home))))
+            (cdr (assoc system-name machines))))
 
     (setq dotspacemacs-default-font '("Hack"
                                       :size 13
@@ -649,11 +659,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
           browse-url-generic-program "google-chrome")
 
-    (setq shell-file-name "/usr/bin/zsh")
-    (setenv "SHELL" "/usr/bin/zsh")
-
     (when (eq (dotfiles/machine-location) 'work)
-    ;; work
       (setq dotspacemacs-default-font '("Hack Nerd Font"
                                         :size 14
                                         :weight regular
@@ -665,7 +671,6 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
       (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
 
     (when (eq (dotfiles/machine-location) 'home)
-    ;; home
       (setq dotspacemacs-default-font '("Hack Nerd Font Mono"
                                         :size 14
                                         :weight regular
@@ -701,14 +706,11 @@ before packages are loaded."
 
   (keychain-refresh-environment)
 
-
   (when (eq (dotfiles/machine-location) 'work)
-    ;; work
     (setq user-full-name "Sebastian Hahn"
           user-mail-address "sebastian.hahn@geo.tuwien.ac.at"))
 
   (when (eq (dotfiles/machine-location) 'home)
-    ;; home
     (setq user-full-name "Sebastian Hahn"
           user-mail-address "sebastian.hahn@gmail.com"))
 
@@ -748,18 +750,18 @@ before packages are loaded."
   (spacemacs/set-leader-keys-for-major-mode 'python-mode "cs" 'send-region-compilation)
   (spacemacs/set-leader-keys-for-major-mode 'python-mode "cS" 'send-region-compilation-dbg)
 
-  (defun endless/fill-or-unfill ()
-    "Like `fill-paragraph', but unfill if used twice."
-    (interactive)
-    (let ((fill-column
-           (if (eq last-command 'endless/fill-or-unfill)
-               (progn (setq this-command nil)
-                      (point-max))
-             fill-column)))
-      (call-interactively #'fill-paragraph)))
+  ;; (defun endless/fill-or-unfill ()
+  ;;   "Like `fill-paragraph', but unfill if used twice."
+  ;;   (interactive)
+  ;;   (let ((fill-column
+  ;;          (if (eq last-command 'endless/fill-or-unfill)
+  ;;              (progn (setq this-command nil)
+  ;;                     (point-max))
+  ;;            fill-column)))
+  ;;     (call-interactively #'fill-paragraph)))
 
-  (global-set-key [remap fill-paragraph]
-                  #'endless/fill-or-unfill)
+  ;; (global-set-key [remap fill-paragraph]
+  ;;                 #'endless/fill-or-unfill)
 
   (setq sp-highlight-pair-overlay nil
         sp-escape-quotes-after-insert nil
@@ -772,16 +774,15 @@ before packages are loaded."
 
   ;; enable fundamental-mode snippets for all modes
   (add-hook 'yas-minor-mode-hook
-            (lambda ()
-              (yas-activate-extra-mode 'fundamental-mode)))
+            (lambda () (yas-activate-extra-mode 'fundamental-mode)))
 
   (global-visual-line-mode t)
 
-  (with-eval-after-load 'python
-    (defun spacemacs//python-setup-shell (&rest args)
-        (progn
-          (setq python-shell-interpreter-args "-i")
-          (setq python-shell-interpreter "python"))))
+  ;; (with-eval-after-load 'python
+  ;;   (defun spacemacs//python-setup-shell (&rest args)
+  ;;       (progn
+  ;;         (setq python-shell-interpreter-args "-i")
+  ;;         (setq python-shell-interpreter "python"))))
 
   ;; fancy git icon
   (defadvice vc-mode-line (after strip-backend () activate)
@@ -802,21 +803,31 @@ before packages are loaded."
   ;; Also in visual mode
   (define-key evil-visual-state-map "j" 'evil-next-visual-line)
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+
   (setq doc-view-resolution 300)
   (setq vc-follow-symlinks t)
 
   ;; set default browser
   (setq browse-url-browser-function 'browse-url-generic)
 
+  ;; (global-company-mode t)
+
   ;; set python company backends
-  (setq company-backends-python-mode '((company-anaconda :with company-dabbrev-code :with company-yasnippet)))
+  ;; (setq company-backends-python-mode '((company-anaconda :with company-dabbrev-code :with company-yasnippet)))
+  ;; (add-to-list 'company-backends 'company-jedi)
 
   ;; Add the relevant packages to the layer
   ;; here it is `company-anaconda'
-  (setq python-packages
-        '((company-anaconda :toggle (configuration-layer/package-used-p 'company))))
+  ;; (setq python-packages
+  ;;       '((company-anaconda :toggle (configuration-layer/package-used-p 'company))))
 
-  (defvaralias 'helm-c-yas-space-match-any-greedy 'helm-yas-space-match-any-greedy "Temporary alias for Emacs27")
+  ;; (eval-after-load "company"
+  ;;   '(add-to-list 'company-backends 'company-anaconda))
+  ;; (add-hook 'python-mode-hook 'anaconda-mode)
+
+  ;; (evil-declare-change-repeat 'company-complete)
+
+  ;; (defvaralias 'helm-c-yas-space-match-any-greedy 'helm-yas-space-match-any-greedy "Temporary alias for Emacs27")
 
   )
 
