@@ -656,7 +656,6 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                                       :weight regular
                                       :width normal
                                       :powerline-scale 1.1)
-
           browse-url-generic-program "google-chrome")
 
     (when (eq (dotfiles/machine-location) 'work)
@@ -667,7 +666,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                                         :powerline-scale 1.4)
 
           browse-url-generic-program "google-chrome"
-          org-odt-data-dir "/usr/local/share/emacs/25.2/etc/org")
+          org-odt-data-dir "/usr/share/emacs/26.3/etc/org")
       (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
 
     (when (eq (dotfiles/machine-location) 'home)
@@ -679,7 +678,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
             browse-url-generic-program "google-chrome-stable"
             exec-path-from-shell-arguments (list "-i")
-            org-odt-data-dir "/usr/share/emacs/26.3/etc/org")
+            org-odt-data-dir "/usr/share/emacs/28.1/etc/org")
       (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e"))
 
     (add-to-list 'load-path "~/.spacemacs.d" t)
