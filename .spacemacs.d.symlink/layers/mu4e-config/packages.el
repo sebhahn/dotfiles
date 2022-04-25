@@ -15,7 +15,7 @@
 (defconst mu4e-config-packages
   '(
     ;; package names go here
-    helm-mu
+    ;; helm-mu
     mu4e-maildirs-extension
     (mu4e :location local)
     (org-mu4e :location local)
@@ -25,13 +25,13 @@
 
 ;; For each package, define a function mu4e-config/init-<package-name>
 ;;
-(defun mu4e-config/init-helm-mu ()
-  (use-package helm-mu
-    :defer t
-    :commands helm-mu
-    :init (spacemacs/set-leader-keys "oM" 'helm-mu
-                                     "oC" 'helm-mu-contacts))
-  )
+;; (defun mu4e-config/init-helm-mu ()
+;;   (use-package helm-mu
+;;     :defer t
+;;     :commands helm-mu
+;;     :init (spacemacs/set-leader-keys "oM" 'helm-mu
+;;                                      "oC" 'helm-mu-contacts))
+;;   )
 
 
 (defun mu4e-config/init-mu4e-maildirs-extension ()
@@ -383,7 +383,7 @@ https://mrs.geo.tuwien.ac.at/")
                      '("org-contact-add" . mu4e-action-add-org-contact) t)
 
         ;; use helm for navigation
-        (setq  mu4e-completing-read-function 'completing-read)
+        ;; (setq  mu4e-completing-read-function 'completing-read)
 
         ;; setup helm and dired for attachments
 
@@ -403,13 +403,13 @@ https://mrs.geo.tuwien.ac.at/")
 
         (setq gnus-dired-mail-mode 'mu4e-user-agent)
 
-        (require 'helm)
-        (add-to-list 'helm-find-files-actions
-                     '("Attach files for mu4e" .
-                       helm-mu4e-attach) t)
+        ;; (require 'helm)
+        ;; (add-to-list 'helm-find-files-actions
+        ;;              '("Attach files for mu4e" .
+        ;;                helm-mu4e-attach) t)
 
-        (defun helm-mu4e-attach (_file)
-          (gnus-dired-attach (helm-marked-candidates)))
+        ;; (defun helm-mu4e-attach (_file)
+        ;;   (gnus-dired-attach (helm-marked-candidates)))
 
         ;; store all attachments of an email into the same folder
         (setq mu4e-save-multiple-attachments-without-asking t)
