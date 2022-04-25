@@ -14,7 +14,8 @@ set -g detach-on-destroy off
 setw -g alternate-screen off
 
 # Contains a list of entries which override terminal descriptions
-set -g terminal-overrides 'xterm:colors=256'
+# set -g terminal-overrides 'xterm:colors=256'
+set -g default-terminal "screen.xterm-256color"
 
 
 # Session options
