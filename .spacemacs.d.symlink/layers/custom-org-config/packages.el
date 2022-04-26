@@ -38,26 +38,12 @@ which require an initialization must be listed explicitly in the list.")
     (progn
       (org-ac/config-default))))
 
-(defun custom-org-config/init-org-roam ()
-  (use-package org-roam
-    :ensure t
-    :config
-    (org-roam-setup)
-    (require 'org-roam-protocol)))
-
-(defun custom-org-config/init-org-roam-bibtex ()
-  (use-package org-roam-bibtex
-    :after org-roam
-    :hook (org-roam-mode . org-roam-bibtex-mode)
-    :config
-    (require 'org-ref)))
 
 (defun custom-org-config/pre-init-org ()
 ;;   "Initialize my package"
   (use-package org
     :defer t
     :commands (org-mode
-               org-roam-mode
                org-edit-src-exit
                org-agenda
                org-capture
@@ -160,47 +146,6 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "kv" 'org-clock-remove-overlays)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "kl" 'org-clock-in-last)
 
-      (spacemacs/declare-prefix "or" "org-roam")
-      (spacemacs/set-leader-keys
-        "orl" 'org-roam-buffer-toggle
-        "orp" 'org-roam-dailies-goto-yesterday
-        "or." 'org-roam-dailies-goto-today
-        "orn" 'org-roam-dailies-goto-tomorrow
-        "orw" 'org-roam-node-random
-        "orf" 'org-roam-node-find
-        "ori" 'org-roam-node-insert
-        "orI" 'orb-insert-link
-        "orA" 'orb-note-actions
-        "org" 'org-roam-graph
-        "orc" 'org-roam-capture
-        "orra" 'org-roam-ref-add
-        "orrf" 'org-roam-ref-find
-        "orrr" 'org-roam-ref-remove
-        "orta" 'org-roam-tag-add
-        "ortd" 'org-roam-tag-remove
-        "oraa" 'org-roam-alias-add
-        "orad" 'org-roam-alias-remove)
-
-      (spacemacs/declare-prefix-for-mode 'org-mode "r" "org-roam")
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rl" 'org-roam-buffer-toggle)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rp" 'org-roam-dailies-goto-yesterday)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "r." 'org-roam-dailies-goto-today)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rn" 'org-roam-dailies-goto-tomorrow)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rw" 'org-roam-node-random)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rf" 'org-roam-node-find)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "ri" 'org-roam-node-insert)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rI" 'orb-insert-link)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rA" 'orb-note-actions)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rg" 'org-roam-graph)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rc" 'org-roam-capture)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rra" 'org-roam-ref-add)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rrf" 'org-roam-ref-find)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rrr" 'org-roam-ref-remove)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rta" 'org-roam-tag-add)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rtr" 'org-roam-tag-remove)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "raa" 'org-roam-alias-add)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "rar" 'org-roam-alias-remove)
-
       (spacemacs/set-leader-keys "oS" 'org-download-screenshot)
       (spacemacs/set-leader-keys "oC" 'org-download-clipboard)
       (spacemacs/set-leader-keys "oY" 'org-download-yank)
@@ -215,38 +160,6 @@ which require an initialization must be listed explicitly in the list.")
 
     :post-config
     (progn
-
-      (setq org-roam-v2-ack t)
-      (setq org-roam-directory "~/ownCloud/org/roam/")
-      (setq org-roam-db-location "~/ownCloud/org/org-roam.db")
-
-      (setq orb-insert-link-description "citation")
-
-      (setq org-roam-db-node-include-function
-       (lambda () (not (member "ATTACH" (org-get-tags)))))
-
-      (add-to-list 'display-buffer-alist
-                   '("\\*org-roam\\*"
-                     (display-buffer-in-side-window)
-                     (side . right)
-                     (slot . 0)
-                     (window-width . 0.33)
-                     (window-parameters . ((no-other-window . t)
-                                           (no-delete-other-windows . t)))))
-
-      (setq org-roam-completion-everywhere t)
-
-      (setq org-roam-capture-templates
-            '(("d" "default" plain "%?"
-               :if-new (file+head "${slug}.org"
-                                  "#+title: ${title}\n")
-               :unnarrowed t)))
-
-      (setq org-roam-mode-section-functions
-            (list #'org-roam-backlinks-section
-                  #'org-roam-reflinks-section
-                  ;; #'org-roam-unlinked-references-section
-                  ))
 
       (setq deft-recursive t)
       (setq deft-use-filter-string-for-filename t)
@@ -270,6 +183,8 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-directory "~/ownCloud/org/roam")
       (setq org-agenda-files (list "~/ownCloud/org/roam/agenda"
                                    "~/ownCloud/org/roam/studies"))
+
+      (setq org-return-follows-link t)
 
       (setq org-agenda-persistent-filter t)
 
@@ -463,7 +378,6 @@ which require an initialization must be listed explicitly in the list.")
       ; Enable habit tracking (and a bunch of other modules)
       (setq org-modules (quote (ol-bbdb
                                 ol-bibtex
-                                org-roam
                                 org-crypt
                                 ol-gnus
                                 org-id
