@@ -84,16 +84,17 @@ This function should only modify configuration layer settings."
       lsp
       json
       markdown
-      (mermaid :variables
-               ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
       multiple-cursors
+      my-mermaid
+      my-mu4e
+      my-org
+      my-org-roam
+      my-research
       (org
         :packages (not org-roam)
         :variables org-enable-reveal-js-support t
                    org-enable-org-journal-support t
                    org-enable-epub-support t)
-      my-org-roam
-      my-mu4e
       pandoc
       (plantuml
         :variables
@@ -109,7 +110,6 @@ This function should only modify configuration layer settings."
         python-test-runner 'pytest)
       python-config
       ranger
-      research-config
       search-engine
       semantic
       (shell
@@ -138,9 +138,6 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(sqlite3
-                                      company-bibtex
-                                      company-jedi
-                                      jedi
                                       exec-path-from-shell
                                       keychain-environment)
 
@@ -734,19 +731,6 @@ before packages are loaded."
 
   (spacemacs/set-leader-keys-for-major-mode 'python-mode "cs" 'send-region-compilation)
   (spacemacs/set-leader-keys-for-major-mode 'python-mode "cS" 'send-region-compilation-dbg)
-
-  ;; (defun endless/fill-or-unfill ()
-  ;;   "Like `fill-paragraph', but unfill if used twice."
-  ;;   (interactive)
-  ;;   (let ((fill-column
-  ;;          (if (eq last-command 'endless/fill-or-unfill)
-  ;;              (progn (setq this-command nil)
-  ;;                     (point-max))
-  ;;            fill-column)))
-  ;;     (call-interactively #'fill-paragraph)))
-
-  ;; (global-set-key [remap fill-paragraph]
-  ;;                 #'endless/fill-or-unfill)
 
   (setq sp-highlight-pair-overlay nil
         sp-escape-quotes-after-insert nil
