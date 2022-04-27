@@ -59,10 +59,6 @@ This function should only modify configuration layer settings."
       csv
       custom-org-config
       dash
-      (deft
-       :variables
-       deft-zetteldeft t)
-      docker
       emacs-lisp
       (elfeed
        :variables
@@ -91,12 +87,13 @@ This function should only modify configuration layer settings."
       (mermaid :variables
                ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
       multiple-cursors
-      mu4e-config
       (org
+        :packages (not org-roam)
         :variables org-enable-reveal-js-support t
                    org-enable-org-journal-support t
-                   org-enable-github-support t
                    org-enable-epub-support t)
+      my-org-roam
+      my-mu4e
       pandoc
       (plantuml
         :variables
@@ -114,22 +111,17 @@ This function should only modify configuration layer settings."
       ranger
       research-config
       search-engine
-      ;; semantic
+      semantic
       (shell
         :variables
         shell-default-shell 'term
         shell-default-term-shell "/bin/zsh")
       shell-scripts
-      speed-reading
       spell-checking
       (syntax-checking
        :variables
        syntax-checking-enable-tooltips nil)
       tmux
-      (treemacs
-       :variables
-       treemacs-use-filewatch-mode t
-       treemacs-use-git-mode 'extended)
       (version-control
        :variables
        version-control-diff-tool 'git-gutter
@@ -145,10 +137,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(org-edna
-                                      org-roam
-                                      org-roam-bibtex
-                                      sqlite3
+   dotspacemacs-additional-packages '(sqlite3
                                       company-bibtex
                                       company-jedi
                                       jedi
@@ -643,9 +632,6 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                                                ("org" . "orgmode.org/elpa/")
                                                ("gnu" . "elpa.gnu.org/packages/")))
 
-    (setq shell-file-name "/usr/bin/zsh")
-    (setenv "SHELL" "/usr/bin/zsh")
-
     (defun dotfiles/machine-location ()
       "Get the machine location. Either returns home or work at the moment"
       (let ((machines '(("shahn" . work) ("shahn-7490" . home))))
@@ -809,25 +795,9 @@ before packages are loaded."
   ;; set default browser
   (setq browse-url-browser-function 'browse-url-generic)
 
-  ;; (global-company-mode t)
-
-  ;; set python company backends
-  ;; (setq company-backends-python-mode '((company-anaconda :with company-dabbrev-code :with company-yasnippet)))
-  ;; (add-to-list 'company-backends 'company-jedi)
-
-  ;; Add the relevant packages to the layer
-  ;; here it is `company-anaconda'
-  ;; (setq python-packages
-  ;;       '((company-anaconda :toggle (configuration-layer/package-used-p 'company))))
-
-  ;; (eval-after-load "company"
-  ;;   '(add-to-list 'company-backends 'company-anaconda))
-  ;; (add-hook 'python-mode-hook 'anaconda-mode)
-
-  ;; (evil-declare-change-repeat 'company-complete)
-
-  ;; (defvaralias 'helm-c-yas-space-match-any-greedy 'helm-yas-space-match-any-greedy "Temporary alias for Emacs27")
-
+  ;; fix issue with org-roam buffer
+  ;; https://github.com/org-roam/org-roam/issues/1732
+   (global-page-break-lines-mode 0)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

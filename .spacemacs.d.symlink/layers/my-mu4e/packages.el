@@ -1,50 +1,52 @@
-;;; packages.el --- mu4e-config Layer packages File for Spacemacs
+;;; packages.el --- my-mu4e layer packages file for Spacemacs.
 ;;
-;; Copyright (c) 2012-2014 Sylvain Benner
-;; Copyright (c) 2014-2015 Sylvain Benner & Contributors
+;; Copyright (c) 2012-2021 Sylvain Benner & Contributors
 ;;
-;; Author: Sylvain Benner <sylvain.benner@gmail.com>
+;; Author: Sebastian Hahn <sebastian.hahn@gmail.com>
 ;; URL: https://github.com/syl20bnr/spacemacs
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
-;;; License: GPLv3
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-;; List of all packages to install and/or initialize. Built-in packages
-;; which require an initialization must be listed explicitly in the list.
-(defconst mu4e-config-packages
-  '(
-    ;; package names go here
-    ;; helm-mu
-    mu4e-maildirs-extension
+;;; Commentary:
+
+;; See the Spacemacs documentation and FAQs for instructions on how to implement
+;; a new layer:
+;;
+;;   SPC h SPC layers RET
+;;
+;;
+;; Briefly, each package to be installed or configured by this layer should be
+;; added to `my-mu4e-packages'. Then, for each package PACKAGE:
+;;
+;; - If PACKAGE is not referenced by any other Spacemacs layer, define a
+;;   function `my-mu4e/init-PACKAGE' to load and initialize the package.
+
+;; - Otherwise, PACKAGE is already referenced by another Spacemacs layer, so
+;;   define the functions `my-mu4e/pre-init-PACKAGE' and/or
+;;   `my-mu4e/post-init-PACKAGE' to customize the package as it is loaded.
+
+;;; Code:
+
+(defconst my-mu4e-packages
+  '(mu4e-maildirs-extension
     (mu4e :location local)
     (org-mu4e :location local)
     (mml2015 :location local)
-    persp-mode
-    ))
-
-;; For each package, define a function mu4e-config/init-<package-name>
-;;
-;; (defun mu4e-config/init-helm-mu ()
-;;   (use-package helm-mu
-;;     :defer t
-;;     :commands helm-mu
-;;     :init (spacemacs/set-leader-keys "oM" 'helm-mu
-;;                                      "oC" 'helm-mu-contacts))
-;;   )
-
-
-(defun mu4e-config/init-mu4e-maildirs-extension ()
-  (use-package mu4e-maildirs-extension
-    :defer t))
-
-
-(defun mu4e-config/init-mml2015 ()
-  (use-package mml2015
-    :defer t
-    :config
-    (setq mml2015-signers '("0E8EDF3B")
-          mml2015-encrypt-to-self t)))
+    persp-mode)
+  )
 
 (defvar work-sig "Dipl.-Ing. Sebastian Hahn
 Senior Scientist
@@ -58,10 +60,18 @@ Wiedner Hauptstr. 8-10
 sebastian.hahn@geo.tuwien.ac.at
 https://mrs.geo.tuwien.ac.at/")
 
+(defun my-mu4e/init-mu4e-maildirs-extension ()
+  (use-package mu4e-maildirs-extension
+    :defer t))
 
-;; For each package, define a function mu4e-config/init-<package-name>
-;;
-(defun mu4e-config/init-mu4e ()
+(defun my-mu4e/init-mml2015 ()
+  (use-package mml2015
+    :defer t
+    :config
+    (setq mml2015-signers '("0E8EDF3B")
+          mml2015-encrypt-to-self t)))
+
+(defun my-mu4e/init-mu4e ()
    "Initialize my package"
    (use-package mu4e
      :defer t
@@ -70,9 +80,11 @@ https://mrs.geo.tuwien.ac.at/")
      (spacemacs/set-leader-keys "om" 'mu4e)
      :config
         (setq mu4e-view-show-images t)
+
         ;; use imagemagick if available
         (when (fboundp 'imagemagick-register-types)
         (imagemagick-register-types))
+
         (setq mu4e-html2text-command "lynx -dump -width 100 -stdin --display_charset=utf-8")
         (setq mu4e-change-filenames-when-moving t)
         ;; default
@@ -97,7 +109,8 @@ https://mrs.geo.tuwien.ac.at/")
               smtpmail-auth-credentials '(("mail.intern.tuwien.ac.at" 587 "shahn" nil))
               smtpmail-smtp-service 587)
         ;; setup information for account switching
-        (defvar mu4e-config-account-alist
+
+        (defvar my-mu4e-account-alist
           '(("TU"
              (mu4e-sent-folder "/TU/Sent Items")
              (mu4e-sent-messages-behavior sent)
@@ -119,7 +132,7 @@ https://mrs.geo.tuwien.ac.at/")
              (smtpmail-auth-credentials '(("mail.intern.tuwien.ac.at" 587 "shahn" nil)))
              (smtpmail-smtp-service 587))
             ))
-        (defun mu4e-config-set-account ()
+        (defun my-mu4e-set-account ()
           "Set the account for composing a message."
           (let* ((account
                   (if mu4e-compose-parent-message
@@ -128,16 +141,16 @@ https://mrs.geo.tuwien.ac.at/")
                         (match-string 1 maildir))
                     (completing-read (format "Compose with account: (%s) "
                                              (mapconcat #'(lambda (var) (car var))
-                                                        mu4e-config-account-alist "/"))
-                                     (mapcar #'(lambda (var) (car var)) mu4e-config-account-alist)
-                                     nil t nil nil (caar mu4e-config-account-alist))))
-                 (account-vars (cdr (assoc account mu4e-config-account-alist))))
+                                                        my-mu4e-account-alist "/"))
+                                     (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
+                                     nil t nil nil (caar my-mu4e-account-alist))))
+                 (account-vars (cdr (assoc account my-mu4e-account-alist))))
             (if account-vars
                 (mapc #'(lambda (var)
                           (set (car var) (cadr var)))
                       account-vars)
               (error "No email account found"))))
-        (add-hook 'mu4e-compose-pre-hook 'mu4e-config-set-account)
+        (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
         ;; set signature based on account
 
         (defun my-set-signature ()
@@ -241,7 +254,7 @@ https://mrs.geo.tuwien.ac.at/")
                         '("View in browser" . mu4e-msgv-action-view-in-browser) t)
 
         (setq
-         mu4e-get-mail-command (concat "mbsync " (mu4e-config/get-sync-channels
+         mu4e-get-mail-command (concat "mbsync " (my-mu4e/get-sync-channels
                                                  (dotfiles/machine-location))))
 
         ;; update every 5 minutes
@@ -429,7 +442,7 @@ https://mrs.geo.tuwien.ac.at/")
         (evilified-state-evilify-map mu4e-headers-mode-map
           :mode mu4e-headers-mode
           :bindings
-          (kbd "C-c w") 'mu4e-config/refresh-work-only)
+          (kbd "C-c w") 'my-mu4e/refresh-work-only)
 
         (evilified-state-evilify-map mu4e-view-mode-map
           :mode mu4e-view-mode
@@ -459,13 +472,13 @@ https://mrs.geo.tuwien.ac.at/")
      )
    )
 
-(defun mu4e-config/init-org-mu4e ()
+(defun my-mu4e/init-org-mu4e ()
   "init org integration for mu4e"
   (use-package org-mu4e
     :defer nil)
   )
 
-(defun mu4e-config/post-init-persp-mode ()
+(defun my-mu4e/post-init-persp-mode ()
   (spacemacs|define-custom-layout "@Mail"
     :binding "m"
     :body
