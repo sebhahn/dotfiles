@@ -1,4 +1,4 @@
-;;; packages.el --- org-roam layer packages file for Spacemacs.
+;;; packages.el --- my-org-roam layer packages file for Spacemacs.
 ;;
 ;; Copyright (c) 2012-2021 Sylvain Benner & Contributors
 ;;
@@ -29,22 +29,21 @@
 ;;
 ;;
 ;; Briefly, each package to be installed or configured by this layer should be
-;; added to `org-roam-packages'. Then, for each package PACKAGE:
+;; added to `my-org-roam-packages'. Then, for each package PACKAGE:
 ;;
 ;; - If PACKAGE is not referenced by any other Spacemacs layer, define a
-;;   function `org-roam/init-PACKAGE' to load and initialize the package.
+;;   function `my-org-roam/init-PACKAGE' to load and initialize the package.
 
 ;; - Otherwise, PACKAGE is already referenced by another Spacemacs layer, so
-;;   define the functions `org-roam/pre-init-PACKAGE' and/or
-;;   `org-roam/post-init-PACKAGE' to customize the package as it is loaded.
+;;   define the functions `my-org-roam/pre-init-PACKAGE' and/or
+;;   `my-org-roam/post-init-PACKAGE' to customize the package as it is loaded.
 
 ;;; Code:
 
-(defconst org-roam-packages
+(defconst my-org-roam-packages
   '(org-roam
     org-roam-bibtex)
-
-  "The list of Lisp packages required by the org-roam layer.
+  "The list of Lisp packages required by the my-org-roam layer.
 
 Each entry is either:
 
@@ -71,7 +70,7 @@ Each entry is either:
       - A list beginning with the symbol `recipe' is a melpa
         recipe.  See: https://github.com/milkypostman/melpa#recipe-format")
 
-(defun org-roam/init-org-roam ()
+(defun my-org-roam/init-org-roam ()
   (use-package org-roam
     :defer t
     :hook (after-init . org-roam-setup)
@@ -151,7 +150,7 @@ Each entry is either:
         :unnarrowed t)))
     ))
 
-(defun org-roam/init-org-roam-bibtex ()
+(defun my-org-roam/init-org-roam-bibtex ()
   (use-package org-roam-bibtex
     :after org-roam
     :hook (org-roam-mode . org-roam-bibtex-mode)

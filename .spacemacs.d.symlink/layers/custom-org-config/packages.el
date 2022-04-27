@@ -78,28 +78,6 @@ which require an initialization must be listed explicitly in the list.")
       (spacemacs/set-leader-keys "ojn" 'org-journal-new-entry)
       (spacemacs/set-leader-keys "ojs" 'org-journal-new-scheduled-entry)
 
-      (spacemacs/declare-prefix "od" "org-deft")
-      (spacemacs/set-leader-keys "odl" 'deft)
-      (spacemacs/set-leader-keys "odn" 'deft-new-file)
-      (spacemacs/set-leader-keys "odN" 'deft-new-file-named)
-      (spacemacs/set-leader-keys "odf" 'deft-find-file)
-      (spacemacs/set-leader-keys "odd" 'deft-delete-file)
-      (spacemacs/set-leader-keys "odr" 'deft-rename-file)
-      (spacemacs/set-leader-keys "oda" 'deft-archive-file)
-      (spacemacs/set-leader-keys "odg" 'deft-refresh)
-      (spacemacs/set-leader-keys "odo" 'deft-open-file-other-window)
-
-      (spacemacs/declare-prefix-for-mode 'org-mode "k" "org-deft")
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "dl" 'deft)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "dn" 'deft-new-file)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "dN" 'deft-new-file-named)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "df" 'deft-find-file)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "dd" 'deft-delete-file)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "dr" 'deft-rename-file)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "da" 'deft-archive-file)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "dg" 'deft-refresh)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "do" 'deft-open-file-other-window)
-
       (spacemacs/set-leader-keys "oTh" 'org-toggle-heading)
 
       (spacemacs/declare-prefix "ok" "org-agenda")
@@ -161,12 +139,8 @@ which require an initialization must be listed explicitly in the list.")
     :post-config
     (progn
 
-      (setq deft-recursive t)
-      (setq deft-use-filter-string-for-filename t)
-      (setq deft-default-extension "org")
-      (setq deft-directory "~/ownCloud/org/roam/")
-
       ;; (setq org-journal-time-format "%m-%d")
+      (setq org-replace-disputed-keys t)
 
       (setq org-journal-dir "~/ownCloud/org/roam/daily")
       (setq org-journal-date-prefix "#+title: ")
