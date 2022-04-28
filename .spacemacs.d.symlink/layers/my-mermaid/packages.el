@@ -46,7 +46,7 @@
 
 (defun my-mermaid/post-init-org ()
   (spacemacs|use-package-add-hook org
-    :post-config (add-to-list 'org-babel-load-languages '(mermaid . t))))
+    :post-config (add-to-list 'org-babel-load-languages '((mermaid . t) (scheme . t)))))
 
 (defun my-mermaid/init-ob-mermaid ()
   (use-package ob-mermaid

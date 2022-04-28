@@ -41,30 +41,19 @@
 ;;; Code:
 
 (defconst my-python-packages
-  '()
-  "The list of Lisp packages required by the my-python layer.
+  '(flycheck-pyflakes)
+  )
 
-Each entry is either:
+(defun my-python/init-flycheck-pyflakes()
+  (use-package flycheck-pyflakes)
+  )
 
-1. A symbol, which is interpreted as a package to be installed, or
+;; syntax checking: flake8
+;; suppress unused imports easily: autoflake
 
-2. A list of the form (PACKAGE KEYS...), where PACKAGE is the
-    name of the package to be installed or loaded, and KEYS are
-    any number of keyword-value-pairs.
+;; pip install 'python-lsp-server[all]' flake8 autoflake yapf pytest nose importmagic epc pylint
+;; dap-mode, debugging: pip install "ptvsd>=4.2"
 
-    The following keys are accepted:
+;; .python-version for automatic change
 
-    - :excluded (t or nil): Prevent the package from being loaded
-      if value is non-nil
-
-    - :location: Specify a custom installation location.
-      The following values are legal:
-
-      - The symbol `elpa' (default) means PACKAGE will be
-        installed using the Emacs package manager.
-
-      - The symbol `local' directs Spacemacs to load the file at
-        `./local/PACKAGE/PACKAGE.el'
-
-      - A list beginning with the symbol `recipe' is a melpa
-        recipe.  See: https://github.com/milkypostman/melpa#recipe-format")
+;; think about setting python-lsp-git-root
