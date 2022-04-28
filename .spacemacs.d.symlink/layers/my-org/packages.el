@@ -41,30 +41,37 @@
 ;;; Code:
 
 (defconst my-org-packages
-  '()
-  "The list of Lisp packages required by the my-org layer.
+   '())
+;; org-plus-contrib
+;;     (org :location built-in)
+;;     (org-ac :location built-in)
+;;     cdlatex)
+;;   )
 
-Each entry is either:
+;; (defun my-org/init-cdlatex()
+;;   )
 
-1. A symbol, which is interpreted as a package to be installed, or
+;; (defun my-org/init-org-ac()
+;;   (use-package org-ac
+;;     :defer t
+;;     :config
+;;     (progn
+;;       (org-ac/config-default)))
+;;   )
 
-2. A list of the form (PACKAGE KEYS...), where PACKAGE is the
-    name of the package to be installed or loaded, and KEYS are
-    any number of keyword-value-pairs.
-
-    The following keys are accepted:
-
-    - :excluded (t or nil): Prevent the package from being loaded
-      if value is non-nil
-
-    - :location: Specify a custom installation location.
-      The following values are legal:
-
-      - The symbol `elpa' (default) means PACKAGE will be
-        installed using the Emacs package manager.
-
-      - The symbol `local' directs Spacemacs to load the file at
-        `./local/PACKAGE/PACKAGE.el'
-
-      - A list beginning with the symbol `recipe' is a melpa
-        recipe.  See: https://github.com/milkypostman/melpa#recipe-format")
+;; (defun custom-org-config/pre-init-org ()
+;;   (use-package org
+;;     :defer t
+;;     :commands (org-mode
+;;                org-edit-src-exit
+;;                org-agenda
+;;                org-capture
+;;                org-toggle-latex-fragment
+;;                org-store-link
+;;                org-iswitchb
+;;                org-clock-goto
+;;                org-clock-in))
+;;   (spacemacs|use-package-add-hook org
+;;     :post-init
+;;     )
+;;   )

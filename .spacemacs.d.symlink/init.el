@@ -77,11 +77,17 @@ This function should only modify configuration layer settings."
       ;; helm
       html
       ipython-notebook
-      (latex :variables
-             font-latex-fontify-script nil
-             latex-enable-auto-fill t
-             latex-enable-folding t)
-      lsp
+      (latex
+       :variables
+       font-latex-fontify-script nil
+       latex-enable-auto-fill nil
+       latex-enable-folding t)
+      (lsp
+       :variables
+       lsp-modeline-diagnostics-enable nil
+       lsp-modeline-diagnostics-scope :file
+       ;; lsp-modeline-code-actions-enable nil
+       )
       json
       markdown
       multiple-cursors
@@ -90,6 +96,7 @@ This function should only modify configuration layer settings."
       my-org
       my-org-roam
       my-research
+      my-python
       (org
         :packages (not org-roam)
         :variables org-enable-reveal-js-support t
@@ -102,13 +109,12 @@ This function should only modify configuration layer settings."
         plantuml-default-exec-mode 'jar)
       (python
         :variables
-        ;; python-backend 'anaconda
         python-backend 'lsp
         python-lsp-server 'pyright
         python-formatter 'yapf
+        ;; python-format-on-save t
         python-auto-set-local-pyenv-version 'on-project-switch
         python-test-runner 'pytest)
-      python-config
       ranger
       search-engine
       semantic
@@ -778,6 +784,11 @@ before packages are loaded."
 
   ;; set default browser
   (setq browse-url-browser-function 'browse-url-generic)
+
+  ;; lsp
+  (setq lsp-idle-delay 3.0)
+  (setq lsp-ui-doc-delay 3.0)
+  (setq lsp-ui-sideline-delay 3.0)
 
   ;; fix issue with org-roam buffer
   ;; https://github.com/org-roam/org-roam/issues/1732
