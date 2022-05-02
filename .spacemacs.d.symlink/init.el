@@ -144,8 +144,9 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(sqlite3
-                                      exec-path-from-shell
-                                      keychain-environment)
+                                      jedi
+                                      company-jedi
+                                      exec-path-from-shell)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -692,8 +693,6 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
-  (keychain-refresh-environment)
-
   (when (eq (dotfiles/machine-location) 'work)
     (setq user-full-name "Sebastian Hahn"
           user-mail-address "sebastian.hahn@geo.tuwien.ac.at"))
@@ -735,8 +734,9 @@ before packages are loaded."
     (execute-kbd-macro (read-kbd-macro "DEL"))
     (execute-kbd-macro (read-kbd-macro "RET")))
 
-  (spacemacs/set-leader-keys-for-major-mode 'python-mode "cs" 'send-region-compilation)
-  (spacemacs/set-leader-keys-for-major-mode 'python-mode "cS" 'send-region-compilation-dbg)
+  (spacemacs/set-leader-keys-for-major-mode 'python-mode
+    "cs" 'send-region-compilation
+    "cS" 'send-region-compilation-dbg)
 
   (setq sp-highlight-pair-overlay nil
         sp-escape-quotes-after-insert nil
@@ -748,8 +748,8 @@ before packages are loaded."
   (setq spacemacs-space-doc-modificators nil)
 
   ;; enable fundamental-mode snippets for all modes
-  (add-hook 'yas-minor-mode-hook
-            (lambda () (yas-activate-extra-mode 'fundamental-mode)))
+  ;; (add-hook 'yas-minor-mode-hook
+  ;;           (lambda () (yas-activate-extra-mode 'fundamental-mode)))
 
   (global-visual-line-mode t)
 
@@ -760,10 +760,11 @@ before packages are loaded."
   ;;         (setq python-shell-interpreter "python"))))
 
   ;; fancy git icon
-  (defadvice vc-mode-line (after strip-backend () activate)
-    (when (stringp vc-mode)
-      (let ((gitlogo (replace-regexp-in-string "^ Git." " Ⱶ " vc-mode)))
-        (setq vc-mode gitlogo))))
+  ;; (defadvice vc-mode-line (after strip-backend () activate)
+  ;;   (when (stringp vc-mode)
+  ;;     (let ((gitlogo (replace-regexp-in-string "^ Git." " Ⱶ " vc-mode)))
+  ;;       (setq vc-mode gitlogo))))
+
 
   (setq dired-listing-switches "-alhk")
   (setq dired-listings-switches "-alhk")
@@ -785,10 +786,21 @@ before packages are loaded."
   ;; set default browser
   (setq browse-url-browser-function 'browse-url-generic)
 
-  ;; lsp
-  (setq lsp-idle-delay 3.0)
-  (setq lsp-ui-doc-delay 3.0)
-  (setq lsp-ui-sideline-delay 3.0)
+  ;; (global-company-mode)
+  ;; (add-hook 'python-mode-hook 'anaconda-mode)
+
+  ;; Add the relevant packages to the layer
+  ;; here it is `company-anaconda'
+  ;; (setq python-packages
+  ;;       '((company-anaconda :toggle (configuration-layer/package-used-p 'company))))
+
+  ;; (setq company-backends-python-mode '((company-anaconda :with company-dabbrev-code :with company-yasnippet)))
+
+  (with-eval-after-load 'python
+    (defun spacemacs//python-setup-shell (&rest args)
+      (progn
+        (setq python-shell-interpreter-args "-i")
+        (setq python-shell-interpreter "python"))))
 
   ;; fix issue with org-roam buffer
   ;; https://github.com/org-roam/org-roam/issues/1732
