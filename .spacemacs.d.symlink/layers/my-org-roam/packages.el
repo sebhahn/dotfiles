@@ -73,7 +73,7 @@ Each entry is either:
 (defun my-org-roam/init-org-roam ()
   (use-package org-roam
     :defer t
-    :hook (after-init . org-roam-setup)
+    :after (org)
     :init
     (setq org-roam-v2-ack t)
     (progn
@@ -148,6 +148,8 @@ Each entry is either:
         :if-new (file+head "${slug}.org"
                             "#+title: ${title}\n")
         :unnarrowed t)))
+
+    (org-roam-setup)
     ))
 
 (defun my-org-roam/init-org-roam-bibtex ()
