@@ -85,7 +85,7 @@ This function should only modify configuration layer settings."
       (lsp
        :variables
        lsp-modeline-diagnostics-enable nil
-       lsp-modeline-diagnostics-scope :file
+       ;; lsp-modeline-diagnostics-scope :file
        ;; lsp-modeline-code-actions-enable nil
        )
       json
@@ -801,6 +801,8 @@ before packages are loaded."
       (progn
         (setq python-shell-interpreter-args "-i")
         (setq python-shell-interpreter "python"))))
+
+  (setq read-process-output-max (* 1024 1024))
 
   ;; fix issue with org-roam buffer
   ;; https://github.com/org-roam/org-roam/issues/1732
