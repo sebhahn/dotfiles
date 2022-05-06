@@ -37,15 +37,15 @@ This function should only modify configuration layer settings."
         :variables
         auto-completion-return-key-behavior 'complete
         auto-completion-tab-key-behavior 'cycle
-      ;;   auto-completion-complete-with-key-sequence "jk"
+        auto-completion-complete-with-key-sequence "jk"
         auto-completion-complete-with-key-sequence-delay 0.1
         auto-completion-minimum-prefix-length 3
         auto-completion-idle-delay 0.4
         auto-completion-private-snippets-directory nil
         auto-completion-enable-snippets-in-popup nil
         auto-completion-enable-help-tooltip nil
-      ;;   auto-completion-use-company-box nil
-        auto-completion-enable-sort-by-usage nil)
+        auto-completion-use-company-box nil
+        auto-completion-enable-sort-by-usage t)
       (bibtex :variables
               bibtex-enable-ebib-support t
               ebib-preload-bib-files '("~/ownCloud/areas/research/latex/zotero.bib")
@@ -73,6 +73,7 @@ This function should only modify configuration layer settings."
       (git
         :variables
         git-gutter-use-fringe t)
+      fasd
       gnus
       ;; helm
       html
@@ -83,14 +84,15 @@ This function should only modify configuration layer settings."
        latex-enable-auto-fill nil
        latex-enable-folding t)
       (lsp
-       :variables
-       lsp-modeline-diagnostics-enable nil
+       ;; :variables
+       ;; lsp-modeline-diagnostics-enable nil
        ;; lsp-modeline-diagnostics-scope :file
        ;; lsp-modeline-code-actions-enable nil
        )
       json
       markdown
       multiple-cursors
+      my-eglot
       my-mermaid
       my-mu4e
       my-org
@@ -109,8 +111,8 @@ This function should only modify configuration layer settings."
         plantuml-default-exec-mode 'jar)
       (python
         :variables
-        python-backend 'lsp
-        python-lsp-server 'pyright
+        python-backend 'anaconda
+        ;; python-lsp-server 'pyright
         python-formatter 'yapf
         ;; python-format-on-save t
         python-auto-set-local-pyenv-version 'on-project-switch
@@ -144,8 +146,6 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(sqlite3
-                                      jedi
-                                      company-jedi
                                       exec-path-from-shell)
 
    ;; A list of packages that cannot be updated.
@@ -753,18 +753,11 @@ before packages are loaded."
 
   (global-visual-line-mode t)
 
-  ;; (with-eval-after-load 'python
-  ;;   (defun spacemacs//python-setup-shell (&rest args)
-  ;;       (progn
-  ;;         (setq python-shell-interpreter-args "-i")
-  ;;         (setq python-shell-interpreter "python"))))
-
   ;; fancy git icon
-  ;; (defadvice vc-mode-line (after strip-backend () activate)
-  ;;   (when (stringp vc-mode)
-  ;;     (let ((gitlogo (replace-regexp-in-string "^ Git." " Ⱶ " vc-mode)))
-  ;;       (setq vc-mode gitlogo))))
-
+  (defadvice vc-mode-line (after strip-backend () activate)
+    (when (stringp vc-mode)
+      (let ((gitlogo (replace-regexp-in-string "^ Git." " Ⱶ " vc-mode)))
+        (setq vc-mode gitlogo))))
 
   (setq dired-listing-switches "-alhk")
   (setq dired-listings-switches "-alhk")
@@ -787,14 +780,23 @@ before packages are loaded."
   (setq browse-url-browser-function 'browse-url-generic)
 
   ;; (global-company-mode)
-  ;; (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'company-mode)
+  (add-to-list 'company-backends '(company-jedi company-files))
+
+  ;; (add-hook 'python-mode-hook 'jedi:setup)
+  ;; (setq jedi:complete-on-dot t)
+
+  ;; (defun my/python-mode-hook ()
+  ;;   (add-to-list 'company-backends 'company-jedi))
+
 
   ;; Add the relevant packages to the layer
   ;; here it is `company-anaconda'
   ;; (setq python-packages
   ;;       '((company-anaconda :toggle (configuration-layer/package-used-p 'company))))
 
-  ;; (setq company-backends-python-mode '((company-anaconda :with company-dabbrev-code :with company-yasnippet)))
+  ;; (setq company-backends-python-mode '((company-anaconda :with company-jedi :with company-yasnippet)))
 
   (with-eval-after-load 'python
     (defun spacemacs//python-setup-shell (&rest args)
@@ -807,6 +809,7 @@ before packages are loaded."
   ;; fix issue with org-roam buffer
   ;; https://github.com/org-roam/org-roam/issues/1732
    (global-page-break-lines-mode 0)
+   (windmove-mode 0)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

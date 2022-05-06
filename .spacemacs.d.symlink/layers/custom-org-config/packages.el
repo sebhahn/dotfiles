@@ -56,83 +56,90 @@ which require an initialization must be listed explicitly in the list.")
   (spacemacs|use-package-add-hook org
     :post-init
     (progn
-      (spacemacs/set-leader-keys "m'" 'org-edit-src-exit)
-
-      (spacemacs/set-leader-keys "oo" 'org-agenda)
-      (spacemacs/set-leader-keys "oc" 'org-capture)
-
-      (spacemacs/set-leader-keys "osr" 'org-refile)
-      (spacemacs/set-leader-keys "osa" 'org-toggle-archive-tag)
+      (spacemacs/set-leader-keys
+        "m'" 'org-edit-src-exit
+        "oo" 'org-agenda
+        "oc" 'org-capture
+        "osr" 'org-refile
+        "osa" 'org-toggle-archive-tag)
 
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "sr" 'org-refile)
 
       (spacemacs/declare-prefix "ol" "org-link")
-      (spacemacs/set-leader-keys "ols" 'org-store-link)
-      (spacemacs/set-leader-keys "oli" 'org-insert-link)
+      (spacemacs/set-leader-keys
+        "ols" 'org-store-link
+        "oli" 'org-insert-link)
 
       (spacemacs/declare-prefix-for-mode 'org-mode "l" "org-link")
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "ls" 'org-store-link)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "li" 'org-insert-link)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode
+        "ls" 'org-store-link
+        "li" 'org-insert-link)
 
       (spacemacs/declare-prefix "oj" "org-journal")
-      (spacemacs/set-leader-keys "ojn" 'org-journal-new-entry)
-      (spacemacs/set-leader-keys "ojs" 'org-journal-new-scheduled-entry)
-
-      (spacemacs/set-leader-keys "oTh" 'org-toggle-heading)
+      (spacemacs/set-leader-keys
+        "ojn" 'org-journal-new-entry
+        "ojs" 'org-journal-new-scheduled-entry
+        "oTh" 'org-toggle-heading)
 
       (spacemacs/declare-prefix "ok" "org-agenda")
-      (spacemacs/set-leader-keys "oar" 'org-agenda-clockreport-mode)
-      (spacemacs/set-leader-keys "oas" 'org-agenda-sunrise-sunset)
-      (spacemacs/set-leader-keys "oat" 'spacemacs/org-agenda-transient-state/body)
-      (spacemacs/set-leader-keys "oak" 'org-agenda-show-clocking-issues)
-      (spacemacs/set-leader-keys "oan" 'org-agenda-next-line)
-      (spacemacs/set-leader-keys "oag" 'org-agenda-toggle-time-grid)
-      (spacemacs/set-leader-keys "oafr" 'org-agenda-filter-remove-all)
-      (spacemacs/set-leader-keys "oaft" 'org-agenda-filter-by-tag)
+      (spacemacs/set-leader-keys
+        "oar" 'org-agenda-clockreport-mode
+        "oas" 'org-agenda-sunrise-sunset
+        "oat" 'spacemacs/org-agenda-transient-state/body
+        "oak" 'org-agenda-show-clocking-issues
+        "oan" 'org-agenda-next-line
+        "oag" 'org-agenda-toggle-time-grid
+        "oafr" 'org-agenda-filter-remove-all
+        "oaft" 'org-agenda-filter-by-tag)
 
-      (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode "r" 'org-agenda-clockreport-mode)
-      (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode "t" 'spacemacs/org-agenda/transient-state/body)
-      (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode "k" 'org-agenda-show-clocking-issues)
+      (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
+        "r" 'org-agenda-clockreport-mode
+        "t" 'spacemacs/org-agenda/transient-state/body
+        "k" 'org-agenda-show-clocking-issues)
 
       (spacemacs/declare-prefix "ok" "org-clock")
-      (spacemacs/set-leader-keys "oki" 'org-clock-in)
-      (spacemacs/set-leader-keys "oko" 'org-clock-out)
-      (spacemacs/set-leader-keys "okc" 'org-clock-cancel)
-      (spacemacs/set-leader-keys "oke" 'org-set-effort)
-      (spacemacs/set-leader-keys "okm" 'org-modify-effort-estimate)
-      (spacemacs/set-leader-keys "okg" 'org-clock-goto)
-      (spacemacs/set-leader-keys "okj" 'org-clock-jump-to-current-clock)
-      (spacemacs/set-leader-keys "okr" 'org-clock-report)
-      (spacemacs/set-leader-keys "okR" 'org-resolve-clocks)
-      (spacemacs/set-leader-keys "okd" 'org-clock-mark-default-task)
-      (spacemacs/set-leader-keys "okk" 'org-clock-display)
-      (spacemacs/set-leader-keys "okv" 'org-clock-remove-overlays)
-      (spacemacs/set-leader-keys "okl" 'org-clock-in-last)
+      (spacemacs/set-leader-keys
+        "oki" 'org-clock-in
+        "oko" 'org-clock-out
+        "okc" 'org-clock-cancel
+        "oke" 'org-set-effort
+        "okm" 'org-modify-effort-estimate
+        "okg" 'org-clock-goto
+        "okj" 'org-clock-jump-to-current-clock
+        "okr" 'org-clock-report
+        "okR" 'org-resolve-clocks
+        "okd" 'org-clock-mark-default-task
+        "okk" 'org-clock-display
+        "okv" 'org-clock-remove-overlays
+        "okl" 'org-clock-in-last)
 
       (spacemacs/declare-prefix-for-mode 'org-mode "k" "org-clock")
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "ki" 'org-clock-in)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "ko" 'org-clock-out)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kc" 'org-clock-cancel)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "ke" 'org-set-effort)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "km" 'org-modify-effort-estimate)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kg" 'org-clock-goto)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kj" 'org-clock-jump-to-current-clock)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kr" 'org-clock-report)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kR" 'org-resolve-clocks)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kd" 'org-clock-mark-default-task)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kk" 'org-clock-display)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kv" 'org-clock-remove-overlays)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "kl" 'org-clock-in-last)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode
+        "ki" 'org-clock-in
+        "ko" 'org-clock-out
+        "kc" 'org-clock-cancel
+        "ke" 'org-set-effort
+        "km" 'org-modify-effort-estimate
+        "kg" 'org-clock-goto
+        "kj" 'org-clock-jump-to-current-clock
+        "kr" 'org-clock-report
+        "kR" 'org-resolve-clocks
+        "kd" 'org-clock-mark-default-task
+        "kk" 'org-clock-display
+        "kv" 'org-clock-remove-overlays
+        "kl" 'org-clock-in-last)
 
-      (spacemacs/set-leader-keys "oS" 'org-download-screenshot)
-      (spacemacs/set-leader-keys "oC" 'org-download-clipboard)
-      (spacemacs/set-leader-keys "oY" 'org-download-yank)
+      (spacemacs/set-leader-keys
+        "oS" 'org-download-screenshot
+        "oC" 'org-download-clipboard
+        "oY" 'org-download-yank)
 
       (spacemacs/declare-prefix-for-mode 'org-mode "D" "dates")
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "Dd" 'org-deadline)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "Ds" 'org-schedule)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "Dt" 'org-time-stamp)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "DT" 'org-time-stamp-inactive)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode
+        "Dd" 'org-deadline
+        "Ds" 'org-schedule
+        "Dt" 'org-time-stamp
+        "DT" 'org-time-stamp-inactive)
 
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "C-l" 'org-toggle-latex-fragment))
 
@@ -142,7 +149,7 @@ which require an initialization must be listed explicitly in the list.")
       ;; (setq org-journal-time-format "%m-%d")
       (setq org-replace-disputed-keys t)
 
-      (setq org-journal-dir "~/ownCloud/org/roam/daily")
+      (setq org-journal-dir "~/ownCloud/org/roam/areas/daily")
       (setq org-journal-date-prefix "#+title: ")
       (setq org-journal-file-format "%Y-%m-%d.org")
       (setq org-journal-date-format "%A, %d %B %Y")
@@ -153,10 +160,10 @@ which require an initialization must be listed explicitly in the list.")
 
       (setq org-src-fontify-natively 1)
       (setq org-agenda-span 'day)
-      (setq org-default-notes-file "~/ownCloud/org/roam/agenda/refile.org")
+      (setq org-default-notes-file "~/ownCloud/org/roam/areas/agenda/refile.org")
       (setq org-directory "~/ownCloud/org/roam")
-      (setq org-agenda-files (list "~/ownCloud/org/roam/agenda"
-                                   "~/ownCloud/org/roam/studies"))
+      (setq org-agenda-files (list "~/ownCloud/org/roam/areas/agenda"
+                                   "~/ownCloud/org/roam/projects"))
 
       (setq org-return-follows-link t)
 
@@ -263,7 +270,6 @@ which require an initialization must be listed explicitly in the list.")
        '((python . t)
          (ditaa . t)
          (plantuml . t)
-         ;; (sh . t)
          (dot . t)
          (ruby . t)
          (R . t)
@@ -318,29 +324,29 @@ which require an initialization must be listed explicitly in the list.")
       (setq calendar-holidays (append holiday-local-holidays holiday-other-holidays))
 
       (setq org-capture-templates
-            (quote (("t" "todo+clock in" entry (file "~/ownCloud/org/roam/agenda/refile.org")
+            (quote (("t" "todo+clock in" entry (file "~/ownCloud/org/roam/areas/agenda/refile.org")
                      "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-                    ("T" "todo" entry (file "~/ownCloud/org/roam/agenda/refile.org")
+                    ("T" "todo" entry (file "~/ownCloud/org/roam/areas/agenda/refile.org")
                      "* TODO %?\n%U\n%a\n")
-                    ("n" "note" entry (file "~/ownCloud/org/roam/agenda/refile.org")
+                    ("n" "note" entry (file "~/ownCloud/org/roam/areas/agenda/refile.org")
                      "* %? :NOTE:\n%U\n%a\n")
-                    ("r" "remind" entry (file "~/ownCloud/org/roam/agenda/refile.org")
+                    ("r" "remind" entry (file "~/ownCloud/org/roam/areas/agenda/refile.org")
                      "* %? :RMD:\n%U\n%a\n")
-                    ("h" "hsaf journal" entry (file+olp+datetree "~/ownCloud/org/roam/agenda/hsaf.org" "Diary")
+                    ("h" "hsaf journal" entry (file+olp+datetree "~/ownCloud/org/roam/areas/agenda/hsaf.org" "Diary")
                      "* %?\n%U\n")
-                    ("j" "journal+clock in" entry (file+olp+datetree "~/ownCloud/org/roam/agenda/diary.org")
+                    ("j" "journal+clock in" entry (file+olp+datetree "~/ownCloud/org/roam/areas/agenda/diary.org")
                      "* %?\n%U\n" :clock-in t :clock-resume t)
-                    ("J" "journal" entry (file+olp+datetree "~/ownCloud/org/roam/agenda/diary.org")
+                    ("J" "journal" entry (file+olp+datetree "~/ownCloud/org/roam/areas/agenda/diary.org")
                      "* %?\n%U\n")
-                    ("d" "all day journal" entry (file+olp+datetree "~/ownCloud/org/roam/agenda/diary.org")
+                    ("d" "all day journal" entry (file+olp+datetree "~/ownCloud/org/roam/areas/agenda/diary.org")
                      "* %?\n%t\n")
-                    ("e" "event" entry (file "~/ownCloud/org/roam/agenda/calender.org")
+                    ("e" "event" entry (file "~/ownCloud/org/roam/areas/agenda/calender.org")
                      "* %^{Description}\n%^t\n%?")
-                    ("m" "meeting" entry (file "~/ownCloud/org/roam/agenda/refile.org")
+                    ("m" "meeting" entry (file "~/ownCloud/org/roam/areas/agenda/refile.org")
                      "* %? :MEETING:\n%U" :clock-in t :clock-resume t)
-                    ("p" "phone call" entry (file "~/ownCloud/org/roam/agenda/refile.org")
+                    ("p" "phone call" entry (file "~/ownCloud/org/roam/areas/agenda/refile.org")
                      "* %? :PHONE:\n%U" :clock-in t :clock-resume t)
-                    ("a" "habit" entry (file "~/ownCloud/org/roam/agenda/refile.org")
+                    ("a" "habit" entry (file "~/ownCloud/org/roam/areas/agenda/refile.org")
                      "* TODO %?\n%U\n%a\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %a .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: TODO\n:END:\n"))))
 
       ;; Do not dim blocked tasks
@@ -401,7 +407,7 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-agenda-skip-timestamp-if-done t)
 
       (setq org-archive-mark-done nil)
-      (setq org-archive-location "./archive/%s_archive::* Archived Tasks")
+      (setq org-archive-location "~/ownCloud/org/roam/archive/%s_archive::* Archived Tasks")
 
       ;; (setq org-agenda-start-with-log-mode '(clock))
 
