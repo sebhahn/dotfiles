@@ -75,7 +75,7 @@ This function should only modify configuration layer settings."
         git-gutter-use-fringe t)
       fasd
       gnus
-      ;; helm
+      ;;helm
       html
       ipython-notebook
       (latex
@@ -83,15 +83,11 @@ This function should only modify configuration layer settings."
        font-latex-fontify-script nil
        latex-enable-auto-fill nil
        latex-enable-folding t)
-      (lsp
-       ;; :variables
-       ;; lsp-modeline-diagnostics-enable nil
-       ;; lsp-modeline-diagnostics-scope :file
-       ;; lsp-modeline-code-actions-enable nil
-       )
+      lsp
       json
       markdown
       multiple-cursors
+      my-consult
       my-eglot
       my-mermaid
       my-mu4e
@@ -112,7 +108,6 @@ This function should only modify configuration layer settings."
       (python
         :variables
         python-backend 'anaconda
-        ;; python-lsp-server 'pyright
         python-formatter 'yapf
         ;; python-format-on-save t
         python-auto-set-local-pyenv-version 'on-project-switch
@@ -784,18 +779,6 @@ before packages are loaded."
   (add-hook 'python-mode-hook 'company-mode)
   (add-to-list 'company-backends '(company-jedi company-files))
 
-  ;; (add-hook 'python-mode-hook 'jedi:setup)
-  ;; (setq jedi:complete-on-dot t)
-
-  ;; (defun my/python-mode-hook ()
-  ;;   (add-to-list 'company-backends 'company-jedi))
-
-
-  ;; Add the relevant packages to the layer
-  ;; here it is `company-anaconda'
-  ;; (setq python-packages
-  ;;       '((company-anaconda :toggle (configuration-layer/package-used-p 'company))))
-
   ;; (setq company-backends-python-mode '((company-anaconda :with company-jedi :with company-yasnippet)))
 
   (with-eval-after-load 'python
@@ -806,9 +789,15 @@ before packages are loaded."
 
   (setq read-process-output-max (* 1024 1024))
 
+  (spacemacs/set-leader-keys
+    "fx" 'consult-file-externally
+    "ps" 'projectile-ripgrep)
+
   ;; fix issue with org-roam buffer
   ;; https://github.com/org-roam/org-roam/issues/1732
    (global-page-break-lines-mode 0)
+
+   ;; remove windmove-mode, shadows org bindings
    (windmove-mode 0)
   )
 

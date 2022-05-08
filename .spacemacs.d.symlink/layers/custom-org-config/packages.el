@@ -134,13 +134,6 @@ which require an initialization must be listed explicitly in the list.")
         "oC" 'org-download-clipboard
         "oY" 'org-download-yank)
 
-      (spacemacs/declare-prefix-for-mode 'org-mode "D" "dates")
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode
-        "Dd" 'org-deadline
-        "Ds" 'org-schedule
-        "Dt" 'org-time-stamp
-        "DT" 'org-time-stamp-inactive)
-
       (spacemacs/set-leader-keys-for-major-mode 'org-mode "C-l" 'org-toggle-latex-fragment))
 
     :post-config
