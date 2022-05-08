@@ -80,10 +80,13 @@ Each entry is either:
       (spacemacs/declare-prefix "or" "org-roam")
       (spacemacs/set-leader-keys
         "orl" 'org-roam-buffer-toggle
-        "orp" 'org-roam-dailies-goto-yesterday
-        "or." 'org-roam-dailies-goto-today
-        "orn" 'org-roam-dailies-goto-tomorrow
-        "orw" 'org-roam-node-random
+        "ordp" 'org-roam-dailies-goto-yesterday
+        "ord." 'org-roam-dailies-goto-today
+        "ordn" 'org-roam-dailies-goto-tomorrow
+        "orgd" 'org-roam-dailies-goto-date
+        "orgp" 'org-roam-dailies-goto-previous-note
+        "orgn" 'org-roam-dailies-goto-next-note
+        "ord." 'org-roam-dailies-capture-today
         "orf" 'org-roam-node-find
         "ori" 'org-roam-node-insert
         "orI" 'orb-insert-link
@@ -101,10 +104,13 @@ Each entry is either:
       (spacemacs/declare-prefix-for-mode 'org-mode "r" "org-roam")
       (spacemacs/set-leader-keys-for-major-mode 'org-mode
         "rl" 'org-roam-buffer-toggle
-        "rp" 'org-roam-dailies-goto-yesterday
-        "r." 'org-roam-dailies-goto-today
-        "rn" 'org-roam-dailies-goto-tomorrow
-        "rw" 'org-roam-node-random
+        "rdp" 'org-roam-dailies-goto-yesterday
+        "rd." 'org-roam-dailies-goto-today
+        "rdn" 'org-roam-dailies-goto-tomorrow
+        "rgd" 'org-roam-dailies-goto-date
+        "rgp" 'org-roam-dailies-goto-previous-note
+        "rgn" 'org-roam-dailies-goto-next-note
+        "rd." 'org-roam-dailies-capture-today
         "rf" 'org-roam-node-find
         "ri" 'org-roam-node-insert
         "rI" 'orb-insert-link
@@ -120,6 +126,7 @@ Each entry is either:
         "rar" 'org-roam-alias-remove))
     :custom
     (org-roam-directory "~/ownCloud/org/roam/")
+    (org-roam-dailies-directory "~/ownCloud/org/roam/areas/daily/")
     :config
     (progn
       (spacemacs|hide-lighter org-roam-mode)
@@ -149,7 +156,7 @@ Each entry is either:
                             "#+title: ${title}\n")
         :unnarrowed t)))
 
-    (org-roam-setup)
+    (org-roam-db-autosync-mode)
     ))
 
 (defun my-org-roam/init-org-roam-bibtex ()
