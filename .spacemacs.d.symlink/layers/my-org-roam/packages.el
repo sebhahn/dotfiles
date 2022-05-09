@@ -80,13 +80,13 @@ Each entry is either:
       (spacemacs/declare-prefix "or" "org-roam")
       (spacemacs/set-leader-keys
         "orl" 'org-roam-buffer-toggle
+        "ordc" 'org-roam-dailies-capture-today
         "ordp" 'org-roam-dailies-goto-yesterday
         "ord." 'org-roam-dailies-goto-today
         "ordn" 'org-roam-dailies-goto-tomorrow
         "orgd" 'org-roam-dailies-goto-date
         "orgp" 'org-roam-dailies-goto-previous-note
         "orgn" 'org-roam-dailies-goto-next-note
-        "ord." 'org-roam-dailies-capture-today
         "orf" 'org-roam-node-find
         "ori" 'org-roam-node-insert
         "orI" 'orb-insert-link
@@ -104,13 +104,13 @@ Each entry is either:
       (spacemacs/declare-prefix-for-mode 'org-mode "r" "org-roam")
       (spacemacs/set-leader-keys-for-major-mode 'org-mode
         "rl" 'org-roam-buffer-toggle
+        "rdc" 'org-roam-dailies-capture-today
         "rdp" 'org-roam-dailies-goto-yesterday
         "rd." 'org-roam-dailies-goto-today
         "rdn" 'org-roam-dailies-goto-tomorrow
         "rgd" 'org-roam-dailies-goto-date
         "rgp" 'org-roam-dailies-goto-previous-note
         "rgn" 'org-roam-dailies-goto-next-note
-        "rd." 'org-roam-dailies-capture-today
         "rf" 'org-roam-node-find
         "ri" 'org-roam-node-insert
         "rI" 'orb-insert-link
