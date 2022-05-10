@@ -61,8 +61,8 @@
 
     (setq bibtex-completion-bibliography '("~/ownCloud/areas/research/latex/zotero.bib")
           bibtex-completion-library-path '("~/ownCloud/areas/research/publications/")
-          bibtex-completion-notes-path "~/ownCloud/org/roam/"
-          bibtex-completion-notes-template-multiple-files (format "#+TITLE: ${title}\n#+ROAM_KEY: cite:${=key=}\n\n")
+          bibtex-completion-notes-path "~/ownCloud/org/roam/resources/publications/"
+          bibtex-completion-notes-template-multiple-files (format ":PROPERTIES:\n:ID: ${=key=}\n:ROAM_ALIASES: ${=key=}\n:ROAM_REFS: cite:${=key=}\n:END:\n#+TITLE: ${title}\n\n")
           bibtex-completion-additional-search-fields '(keywords)
           bibtex-completion-pdf-open-function (lambda (fpath)
             (start-process "zathura" "*zathura*" "/usr/bin/zathura" fpath)))
