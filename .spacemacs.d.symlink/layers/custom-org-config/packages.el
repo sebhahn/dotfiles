@@ -272,6 +272,18 @@ which require an initialization must be listed explicitly in the list.")
          (latex . t))
        )
 
+      (defun my-beamer-bold (contents backend info)
+        (if (not (eq backend 'beamer)) contents
+          (replace-regexp-in-string "\\`\\\\[A-Za-z0-9]+" "\\\\textbf" contents)))
+
+      (defun my-beamer-structure (contents backend info)
+        (if (not (eq backend 'beamer)) contents
+          (replace-regexp-in-string "\\`\\\\[A-Za-z0-9]+" "\\\\structure" contents)))
+
+      (add-to-list 'org-export-filter-bold-functions 'my-beamer-bold)
+      (add-to-list 'org-export-filter-strike-through-functions
+                   'my-beamer-structure)
+
       (setq org-confirm-babel-evaluate nil)
 
       (setq org-todo-keywords
