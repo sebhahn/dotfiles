@@ -83,7 +83,11 @@
       (spacemacs/set-leader-keys
         "orF" 'consult-org-roam-file-find
         "orb" 'consult-org-roam-backlinks
-        "or/" 'consult-org-roam-search))
+        "or/" 'consult-org-roam-search)
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode
+        "rF" 'consult-org-roam-file-find
+        "rb" 'consult-org-roam-backlinks
+        "r/" 'consult-org-roam-search))
     ;; Eventually suppress previewing for certain functions
     (consult-customize
      consult-org-roam-forward-links
