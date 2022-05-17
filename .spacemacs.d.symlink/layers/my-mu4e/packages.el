@@ -41,11 +41,13 @@
 ;;; Code:
 
 (defconst my-mu4e-packages
-  '(mu4e-maildirs-extension
-    (mu4e :location local)
-    (org-mu4e :location local)
+  '((mu4e :location local)
+    mu4e-alert
+    mu4e-maildirs-extension
     (mml2015 :location local)
-    persp-mode)
+    org
+    persp-mode
+    window-purpose)
   )
 
 (defvar work-sig "Dipl.-Ing. Sebastian Hahn
@@ -60,9 +62,16 @@ Wiedner Hauptstr. 8-10
 sebastian.hahn@geo.tuwien.ac.at
 https://mrs.geo.tuwien.ac.at/")
 
+;; (defun my-mu4e/init-mu4e-maildirs-extension ()
+;;   (use-package mu4e-maildirs-extension
+;;     :defer t))
+
 (defun my-mu4e/init-mu4e-maildirs-extension ()
+  "If mu4e-use-maildirs-extension is non-nil, set
+mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
   (use-package mu4e-maildirs-extension
-    :defer t))
+    :if mu4e-use-maildirs-extension
+    :init (with-eval-after-load 'mu4e (mu4e-maildirs-extension-load))))
 
 (defun my-mu4e/init-mml2015 ()
   (use-package mml2015
@@ -71,13 +80,87 @@ https://mrs.geo.tuwien.ac.at/")
     (setq mml2015-signers '("0E8EDF3B")
           mml2015-encrypt-to-self t)))
 
+(defun my-mu4e/pre-init-org ()
+  (if mu4e-org-link-support
+      (with-eval-after-load 'org
+        (require 'mu4e-meta)
+        (if (version<= mu4e-mu-version "1.3.5")
+            (require 'org-mu4e)
+          (require 'mu4e-org))
+        ;; We require mu4e due to an existing bug https://github.com/djcb/mu/issues/1829
+        ;; Note that this bug prevents lazy-loading.
+        (if (version<= mu4e-mu-version "1.4.15")
+            (require 'mu4e))))
+  (if mu4e-org-compose-support
+      (progn
+        (spacemacs/set-leader-keys-for-major-mode 'mu4e-compose-mode
+          "o" 'org-mu4e-compose-org-mode)
+        (autoload 'org-mu4e-compose-org-mode "org-mu4e")
+        )))
+
+(defun my-mu4e/post-init-window-purpose ()
+  (let ((modes))
+    (dolist (mode mu4e-list-modes)
+      (add-to-list 'modes (cons mode 'mail)))
+    (dolist (mode mu4e-view-modes)
+      (add-to-list 'modes (cons mode 'mail-view)))
+    (purpose-set-extension-configuration
+     :mu4e-layer
+     (purpose-conf :mode-purposes modes))))
+
+;; (defun my-mu4e/post-init-persp-mode ()
+;;   (spacemacs|define-custom-layout "@Mail"
+;;     :binding "m"
+;;     :body
+;;     (mu4e)))
+
+(defun my-mu4e/post-init-persp-mode ()
+  (spacemacs|define-custom-layout mu4e-spacemacs-layout-name
+    :binding mu4e-spacemacs-layout-binding
+    :body
+    (progn
+      (defun spacemacs-layouts/add-mu4e-buffer-to-persp ()
+        (persp-add-buffer (current-buffer)
+                          (persp-get-by-name
+                           mu4e-spacemacs-layout-name)))
+      (spacemacs/add-to-hooks 'spacemacs-layouts/add-mu4e-buffer-to-persp
+                              '(mu4e-main-mode-hook
+                                mu4e-headers-mode-hook
+                                mu4e-view-mode-hook
+                                mu4e-compose-mode-hook))
+      (call-interactively 'mu4e)
+      ;; (call-interactively 'mu4e-update-index)
+
+      (define-advice mu4e~stop (:after nil kill-mu4e-layout-after-mu4e~stop)
+        (when mu4e-spacemacs-kill-layout-on-exit
+          (persp-kill mu4e-spacemacs-layout-name))))))
+
+(defun my-mu4e/init-mu4e-alert ()
+  (use-package mu4e-alert
+    :defer t
+    :init (with-eval-after-load 'mu4e
+            (when mu4e-enable-notifications
+              (mu4e-alert-enable-notifications))
+            (when mu4e-enable-mode-line
+              (mu4e-alert-enable-mode-line-display)))))
+
 (defun my-mu4e/init-mu4e ()
    "Initialize my package"
    (use-package mu4e
      :defer t
-     :commands mu4e
+     :commands (mu4e mu4e-compose-new)
      :init
-     (spacemacs/set-leader-keys "om" 'mu4e)
+     (progn
+       (spacemacs/set-leader-keys "om" 'mu4e)
+       (global-set-key (kbd "C-x m") 'mu4e-compose-new)
+       (setq mu4e-completing-read-function 'completing-read
+             mu4e-use-fancy-chars 't
+             mu4e-view-show-images 't
+             message-kill-buffer-on-exit 't
+             mu4e-org-support nil)
+       (let ((dir "~/Downloads"))
+         (when (file-directory-p dir)
+           (setq mu4e-attachment-dir dir))))
      :config
         (setq mu4e-view-show-images t)
 
@@ -208,10 +291,7 @@ https://mrs.geo.tuwien.ac.at/")
 
         (setq mu4e-maildir-shortcuts
             '((:maildir "/TU/INBOX" :key ?x)
-              (:maildir "/TU/Archives" :key ?a)
-              (:maildir "/TU/it" :key ?i)
-              (:maildir "/TU/geo" :key ?g)
-              (:maildir "/TU/hsaf" :key ?h)))
+              (:maildir "/TU/Archives" :key ?a)))
 
         ;; something about ourselves
         (setq mu4e-compose-signature ""
@@ -398,8 +478,7 @@ https://mrs.geo.tuwien.ac.at/")
         ;; use helm for navigation
         ;; (setq  mu4e-completing-read-function 'completing-read)
 
-        ;; setup helm and dired for attachments
-
+        ;; from http://www.djcbsoftware.nl/code/mu/mu4e/Attaching-files-with-dired.html
         (require 'gnus-dired)
         ;; make the `gnus-dired-mail-buffers' function also work on
         ;; message-mode derived modes, such as mu4e-compose-mode
@@ -414,15 +493,9 @@ https://mrs.geo.tuwien.ac.at/")
                   (push (buffer-name buffer) buffers))))
             (nreverse buffers)))
 
+
         (setq gnus-dired-mail-mode 'mu4e-user-agent)
-
-        ;; (require 'helm)
-        ;; (add-to-list 'helm-find-files-actions
-        ;;              '("Attach files for mu4e" .
-        ;;                helm-mu4e-attach) t)
-
-        ;; (defun helm-mu4e-attach (_file)
-        ;;   (gnus-dired-attach (helm-marked-candidates)))
+        (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 
         ;; store all attachments of an email into the same folder
         (setq mu4e-save-multiple-attachments-without-asking t)
@@ -471,15 +544,3 @@ https://mrs.geo.tuwien.ac.at/")
         (setq gnus-unbuttonized-mime-types nil)
      )
    )
-
-(defun my-mu4e/init-org-mu4e ()
-  "init org integration for mu4e"
-  (use-package org-mu4e
-    :defer nil)
-  )
-
-(defun my-mu4e/post-init-persp-mode ()
-  (spacemacs|define-custom-layout "@Mail"
-    :binding "m"
-    :body
-    (mu4e)))
