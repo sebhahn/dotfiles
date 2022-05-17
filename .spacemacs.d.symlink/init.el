@@ -779,8 +779,6 @@ before packages are loaded."
   (add-hook 'python-mode-hook 'company-mode)
   (add-to-list 'company-backends '(company-jedi company-files))
 
-  ;; (setq company-backends-python-mode '((company-anaconda :with company-jedi :with company-yasnippet)))
-
   (with-eval-after-load 'python
     (defun spacemacs//python-setup-shell (&rest args)
       (progn
