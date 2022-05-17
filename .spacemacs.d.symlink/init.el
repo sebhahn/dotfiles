@@ -114,7 +114,7 @@ This function should only modify configuration layer settings."
         python-test-runner 'pytest)
       ranger
       search-engine
-      semantic
+      ;;semantic
       (shell
         :variables
         shell-default-shell 'term
@@ -147,8 +147,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(evil-escape
-                                    evil-terminal-cursor-changer
+   dotspacemacs-excluded-packages '(evil-terminal-cursor-changer
                                     sublime-themes
                                     magithub)
 
