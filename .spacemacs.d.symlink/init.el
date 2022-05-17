@@ -99,6 +99,7 @@ This function should only modify configuration layer settings."
         :packages (not org-roam)
         :variables org-enable-reveal-js-support t
                    org-enable-org-journal-support t
+                   org-enable-org-contacts-support t
                    org-enable-epub-support t)
       pandoc
       (plantuml

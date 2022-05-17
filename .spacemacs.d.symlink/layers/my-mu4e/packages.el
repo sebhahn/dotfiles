@@ -389,7 +389,7 @@ https://mrs.geo.tuwien.ac.at/")
         (require 'org-mu4e)
         (require 'org-contacts)
 
-        (setq mu4e-org-contacts-file "~/ownCloud/org/contacts.org")
+        (setq mu4e-org-contacts-file "~/ownCloud/org/roam/areas/agenda/contacts.org")
         (add-to-list 'mu4e-headers-actions
                      '("org-contact-add" . mu4e-action-add-org-contact) t)
         (add-to-list 'mu4e-view-actions
