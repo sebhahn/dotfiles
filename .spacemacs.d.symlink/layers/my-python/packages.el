@@ -43,6 +43,7 @@
 (defconst my-python-packages
   '(flycheck-pyflakes
     ;; jedi
+    company-anaconda
     company-jedi)
   )
 
@@ -53,22 +54,22 @@
 (defun my-python/init-company-jedi()
   (use-package company-jedi)
 
-  (defun my/python-mode-hook ()
+  (defun my-python/python-mode-hook ()
     (add-to-list 'company-backends 'company-jedi))
 
-  (add-hook 'python-mode-hook 'my/python-mode-hook)
+  (add-hook 'python-mode-hook 'my-python/python-mode-hook)
   )
 
-;; (defun my-python/init-jedi()
-;;   (use-package jedi)
-;;   )
+(defun my-python/post-init-company-anaconda ()
+  (use-package company-anaconda
+    :defer t
+    :init
+    (spacemacs|add-company-backends
+      :backends company-anaconda :with company-jedi :with company-yasnippet
+      :modes python-mode)))
 
 ;; syntax checking: flake8
 ;; suppress unused imports easily: autoflake
 
 ;; pip install 'python-lsp-server[all]' flake8 autoflake yapf pytest nose importmagic epc pylint
 ;; dap-mode, debugging: pip install "ptvsd>=4.2"
-
-;; .python-version for automatic change
-
-;; think about setting python-lsp-git-root
