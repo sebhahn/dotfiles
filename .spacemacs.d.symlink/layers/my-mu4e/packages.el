@@ -43,7 +43,7 @@
 (defconst my-mu4e-packages
   '((mu4e :location local)
     mu4e-alert
-    mu4e-maildirs-extension
+    ;; mu4e-maildirs-extension
     (mml2015 :location local)
     org
     persp-mode
@@ -53,9 +53,9 @@
 (defvar work-sig "Dipl.-Ing. Sebastian Hahn
 Senior Scientist
 
-Technische Universitaet Wien
+Technische Universität Wien
 E120-01-1 - Forschungsgruppe Mikrowellenfernerkundung
-Wiedner Hauptstr. 8-10
+Wiedner Hauptstraße 8-18
 1040 Wien
 
 +43 1 58801 12240
@@ -66,12 +66,12 @@ https://mrs.geo.tuwien.ac.at/")
 ;;   (use-package mu4e-maildirs-extension
 ;;     :defer t))
 
-(defun my-mu4e/init-mu4e-maildirs-extension ()
-  "If mu4e-use-maildirs-extension is non-nil, set
-mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
-  (use-package mu4e-maildirs-extension
-    :if mu4e-use-maildirs-extension
-    :init (with-eval-after-load 'mu4e (mu4e-maildirs-extension-load))))
+;; (defun my-mu4e/init-mu4e-maildirs-extension ()
+;;   "If mu4e-use-maildirs-extension is non-nil, set
+;; mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
+;;   (use-package mu4e-maildirs-extension
+;;     :if mu4e-use-maildirs-extension
+;;     :init (with-eval-after-load 'mu4e (mu4e-maildirs-extension-load))))
 
 (defun my-mu4e/init-mml2015 ()
   (use-package mml2015
@@ -291,7 +291,8 @@ mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
 
         (setq mu4e-maildir-shortcuts
             '((:maildir "/TU/INBOX" :key ?x)
-              (:maildir "/TU/Archives" :key ?a)))
+              (:maildir "/TU/Archives" :key ?a)
+              (:maildir "/TU/Sent Items" :key ?s)))
 
         ;; something about ourselves
         (setq mu4e-compose-signature ""
@@ -504,7 +505,7 @@ mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
         (setq mail-user-agent 'mu4e-user-agent)
 
         ;; enable mu4e maildirs extension
-        (mu4e-maildirs-extension)
+        ;; (mu4e-maildirs-extension)
 
         ;; spacemacs stuff
         (evilified-state-evilify-map mu4e-main-mode-map

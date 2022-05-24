@@ -33,13 +33,13 @@
 (defvar mu4e-spacemacs-kill-layout-on-exit t
   "When `t` exiting mu4e app will automatically kill its layout")
 
-(defvar mu4e-enable-notifications t
+(defvar mu4e-enable-notifications nil
   "If non-nil, enable desktop notifications for unread emails.")
 
-(defvar mu4e-enable-mode-line t
+(defvar mu4e-enable-mode-line nil
   "If non-nil, enable display of unread emails in mode-line.")
 
-(defvar mu4e-use-maildirs-extension t
+(defvar mu4e-use-maildirs-extension nil
   "Use mu4e-maildirs-extension package if value is non-nil.")
 
 (defvar mu4e-list-modes
