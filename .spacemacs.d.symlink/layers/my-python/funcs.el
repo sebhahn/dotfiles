@@ -17,6 +17,24 @@
         (inferior-python-mode)))
     ))
 
+(defun my-python/send-region-compilation(start end)
+  (interactive "r")
+  (let ((cur-window (selected-window)))
+    (append-to-buffer (get-buffer "*compilation*") start end)
+    (switch-to-buffer-other-window (get-buffer "*compilation*"))
+    (evil-insert-state)
+    (execute-kbd-macro (read-kbd-macro "DEL"))
+    (execute-kbd-macro (read-kbd-macro "RET"))
+    (select-window cur-window)))
+
+(defun my-python/send-region-compilation-dbg(start end)
+  (interactive "r")
+  (append-to-buffer (get-buffer "*compilation*") start end)
+  (switch-to-buffer-other-window (get-buffer "*compilation*"))
+  (evil-insert-state)
+  (execute-kbd-macro (read-kbd-macro "DEL"))
+  (execute-kbd-macro (read-kbd-macro "RET")))
+
 ;; (with-eval-after-load 'compile
 ;;   (add-hook 'compilation-mode-hook
 ;;     (lambda ()
