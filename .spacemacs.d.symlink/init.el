@@ -711,28 +711,6 @@ before packages are loaded."
     (progn
       (find-file "~/ownCloud/org/roam/index.org")))
 
-  (defun send-region-compilation(start end)
-    (interactive "r")
-    (let ((cur-window (selected-window)))
-    (append-to-buffer (get-buffer "*compilation*") start end)
-    (switch-to-buffer-other-window (get-buffer "*compilation*"))
-    (evil-insert-state)
-    (execute-kbd-macro (read-kbd-macro "DEL"))
-    (execute-kbd-macro (read-kbd-macro "RET"))
-    (select-window cur-window)))
-
-  (defun send-region-compilation-dbg(start end)
-    (interactive "r")
-    (append-to-buffer (get-buffer "*compilation*") start end)
-    (switch-to-buffer-other-window (get-buffer "*compilation*"))
-    (evil-insert-state)
-    (execute-kbd-macro (read-kbd-macro "DEL"))
-    (execute-kbd-macro (read-kbd-macro "RET")))
-
-  (spacemacs/set-leader-keys-for-major-mode 'python-mode
-    "cs" 'send-region-compilation
-    "cS" 'send-region-compilation-dbg)
-
   (setq sp-highlight-pair-overlay nil
         sp-escape-quotes-after-insert nil
         sp-escape-wrapped-region nil)
@@ -770,14 +748,15 @@ before packages are loaded."
 
   (setq doc-view-resolution 300)
   (setq vc-follow-symlinks t)
+  (setq lsp-pyls-plugins-jedi-use-pyenv-environment t)
 
   ;; set default browser
   (setq browse-url-browser-function 'browse-url-generic)
 
   ;; (global-company-mode)
-  (add-hook 'python-mode-hook 'anaconda-mode)
-  (add-hook 'python-mode-hook 'company-mode)
-  (add-to-list 'company-backends '(company-jedi company-files))
+  ;; (add-hook 'python-mode-hook 'anaconda-mode)
+  ;; (add-hook 'python-mode-hook 'company-mode)
+  ;; (add-to-list 'company-backends '(company-jedi company-files))
 
   (with-eval-after-load 'python
     (defun spacemacs//python-setup-shell (&rest args)
