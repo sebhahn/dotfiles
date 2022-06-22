@@ -139,6 +139,8 @@ which require an initialization must be listed explicitly in the list.")
     :post-config
     (progn
 
+      (setq org-contacts-files (list "~/ownCloud/org/roam/areas/agenda/contacts.org"))
+
       ;; (setq org-journal-time-format "%m-%d")
       (setq org-replace-disputed-keys t)
 
