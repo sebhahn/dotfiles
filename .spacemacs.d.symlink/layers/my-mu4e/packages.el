@@ -43,7 +43,7 @@
 (defconst my-mu4e-packages
   '((mu4e :location local)
     mu4e-alert
-    ;; mu4e-maildirs-extension
+    mu4e-maildirs-extension
     (mml2015 :location local)
     org
     persp-mode
@@ -62,16 +62,12 @@ Wiedner Hauptstraße 8-18
 sebastian.hahn@geo.tuwien.ac.at
 https://mrs.geo.tuwien.ac.at/")
 
-;; (defun my-mu4e/init-mu4e-maildirs-extension ()
-;;   (use-package mu4e-maildirs-extension
-;;     :defer t))
-
-;; (defun my-mu4e/init-mu4e-maildirs-extension ()
-;;   "If mu4e-use-maildirs-extension is non-nil, set
-;; mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
-;;   (use-package mu4e-maildirs-extension
-;;     :if mu4e-use-maildirs-extension
-;;     :init (with-eval-after-load 'mu4e (mu4e-maildirs-extension-load))))
+(defun my-mu4e/init-mu4e-maildirs-extension ()
+  "If mu4e-use-maildirs-extension is non-nil, set
+mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
+  (use-package mu4e-maildirs-extension
+    :if mu4e-use-maildirs-extension
+    :init (with-eval-after-load 'mu4e (mu4e-maildirs-extension-load))))
 
 (defun my-mu4e/init-mml2015 ()
   (use-package mml2015
@@ -108,12 +104,6 @@ https://mrs.geo.tuwien.ac.at/")
      :mu4e-layer
      (purpose-conf :mode-purposes modes))))
 
-;; (defun my-mu4e/post-init-persp-mode ()
-;;   (spacemacs|define-custom-layout "@Mail"
-;;     :binding "m"
-;;     :body
-;;     (mu4e)))
-
 (defun my-mu4e/post-init-persp-mode ()
   (spacemacs|define-custom-layout mu4e-spacemacs-layout-name
     :binding mu4e-spacemacs-layout-binding
@@ -147,7 +137,6 @@ https://mrs.geo.tuwien.ac.at/")
 (defun my-mu4e/init-mu4e ()
    "Initialize my package"
    (use-package mu4e
-     :defer t
      :commands (mu4e mu4e-compose-new)
      :init
      (progn
@@ -303,10 +292,12 @@ https://mrs.geo.tuwien.ac.at/")
         (setq message-kill-buffer-on-exit t)
         (setq mu4e-use-fancy-chars t
                 mu4e-headers-draft-mark     '("D" . " ")  ; draft
-                mu4e-headers-new-mark       '("N" . "")  ; new
+                mu4e-headers-new-mark       '("N" . " ")  ; new
                 mu4e-headers-unread-mark    '("U" . " ")  ; unread
                 mu4e-headers-unseen-mark    '("u" . " ")  ; unseen
                 ;; mu4e-headers-seen-mark      '("S" . " ")  ; seen
+                mu4e-headers-personal-mark  '("p" . " ")   ; personal
+                mu4e-headers-list-mark      '("s" . " ")  ; list
                 mu4e-headers-seen-mark      '("S" . "")  ; seen
                 mu4e-headers-attach-mark    '("A" . " ")  ; attach
                 mu4e-headers-flagged-mark   '("F" . " ")  ; flagged
@@ -314,7 +305,7 @@ https://mrs.geo.tuwien.ac.at/")
                 mu4e-headers-passed-mark    '("P" . " ")  ; passed
                 mu4e-headers-encrypted-mark '("x" . " ")  ; encrypted
                 mu4e-headers-trashed-mark   '("T" . " ")  ; trash
-                mu4e-headers-signed-mark    '("s" . " ")) ; signed
+                mu4e-headers-signed-mark    '("s" . " ")) ; signed
 
         ;;; message view action
         (defun mu4e-msgv-action-view-in-browser (msg)
@@ -516,11 +507,30 @@ https://mrs.geo.tuwien.ac.at/")
         (evilified-state-evilify-map mu4e-headers-mode-map
           :mode mu4e-headers-mode
           :bindings
-          (kbd "C-c w") 'my-mu4e/refresh-work-only)
+          (kbd "C-c w") 'my-mu4e/refresh-work-only
+          (kbd "C-j") 'mu4e-headers-next
+          (kbd "C-k") 'mu4e-headers-prev
+          (kbd "J") (lambda ()
+                      (interactive)
+                      (mu4e-headers-mark-thread nil '(read))))
+
+        (evilified-state-evilify-map
+          mu4e-headers-mode-map
+          :mode mu4e-headers-mode
+          :bindings
+          (kbd "C-j") 'mu4e-headers-next
+          (kbd "C-k") 'mu4e-headers-prev
+          (kbd "J") (lambda ()
+                      (interactive)
+                      (mu4e-headers-mark-thread nil '(read))))
 
         (evilified-state-evilify-map mu4e-view-mode-map
           :mode mu4e-view-mode
           :bindings
+                 (kbd "J") (lambda ()
+                             (interactive)
+                             (mu4e-view-mark-thread '(read)))
+                 (kbd "gu") 'mu4e-view-go-to-url
                  (kbd "RET") 'browse-url-at-point
                  (kbd "x") 'mu4e-mark-execute-all
                  (kbd "C-j") 'mu4e-view-headers-next
@@ -533,6 +543,9 @@ https://mrs.geo.tuwien.ac.at/")
           "c" 'message-goto-cc
           "u" 'message-goto-subject
           "d" 'message-kill-buffer
+          "w" 'message-dont-send         ; saves as draft
+          "x" 'message-send-and-exit
+          "f" 'mml-attach-file
           "e" 'mml-secure-message-encrypt-pgpmime
           "s" 'mml-secure-message-sign-pgpmime)
 
