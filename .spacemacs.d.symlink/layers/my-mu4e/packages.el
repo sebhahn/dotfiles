@@ -281,6 +281,7 @@ mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
         (setq mu4e-maildir-shortcuts
             '((:maildir "/TU/INBOX" :key ?x)
               (:maildir "/TU/Archives" :key ?a)
+              (:maildir "/TU/Drafts" :key ?d)
               (:maildir "/TU/Sent Items" :key ?s)))
 
         ;; something about ourselves
