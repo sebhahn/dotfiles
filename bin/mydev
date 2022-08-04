@@ -18,8 +18,12 @@ if [ $? != 0 ]; then
 
     tmux new-window -t $SESSION:2 -n 'emacs'
     tmux send-keys "emacs -nw" C-m
-    tmux new-window -t $SESSION:3 -n 'ranger' 'ranger'
+
+    tmux new-window -t $SESSION:3 -n 'ranger'
+    tmux send-keys "ranger" C-m
+
     tmux new-window -t $SESSION:4 -n 'cmd1'
+
     tmux split-window -h
     tmux new-window -t $SESSION:5 -n 'cmd2'
 
