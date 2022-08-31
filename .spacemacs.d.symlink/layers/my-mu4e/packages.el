@@ -54,7 +54,7 @@
 Senior Scientist
 
 Technische Universität Wien
-E120-01-1 - Forschungsgruppe Mikrowellenfernerkundung
+E120-01 - Forschungsbereich Fernerkundung
 Wiedner Hauptstraße 8-18
 1040 Wien
 
