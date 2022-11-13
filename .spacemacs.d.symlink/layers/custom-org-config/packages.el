@@ -506,7 +506,7 @@ which require an initialization must be listed explicitly in the list.")
                     ("k" "Kanban agenda (projects only)"
                      ((agenda ""
                         ((org-agenda-show-log t)
-                         (org-agenda-log-mode-items '(clock closed state))))
+                         (org-agenda-log-mode-items '(clock))))
                       (tags "REFILE"
                         ((org-agenda-overriding-header "Stuff to refile")
                          (org-agenda-prefix-format "  %?-12t% s")
