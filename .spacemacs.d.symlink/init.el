@@ -248,12 +248,6 @@ It should only modify the values of Spacemacs settings."
    ;; (default 'vim)
    dotspacemacs-editing-style 'vim
 
-   ;; If non-nil, show vim-like empty line indicators at the end of files.
-   ;; Takes effect only if `spacemacs-evil' layer is enabled.
-   ;; NOTICE: `spacemacs-evil' is included in `spacemacs' distribution.
-   ;; See `dotspacemacs-distribution'.
-   dotspacemacs-evil-show-empty-line-indicators nil
-
    ;; If non-nil show the version string in the Spacemacs buffer. It will
    ;; appear as (spacemacs version)@(emacs version)
    ;; (default t)
@@ -457,8 +451,8 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-maximized-at-startup nil
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
-   ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
-   ;; borderless fullscreen. (default nil)
+   ;; variable with `dotspacemacs-maximized-at-startup' to obtain fullscreen
+   ;; without external boxes. Also disables the internal border. (default nil)
    dotspacemacs-undecorated-at-startup nil
 
    ;; A value from the range (0..100), in increasing opacity, which describes
@@ -470,6 +464,11 @@ It should only modify the values of Spacemacs settings."
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
    dotspacemacs-inactive-transparency 90
+
+   ;; A value from the range (0..100), in increasing opacity, which describes the
+   ;; transparency level of a frame background when it's active or selected. Transparency
+   ;; can be toggled through `toggle-background-transparency'. (default 90)
+   dotspacemacs-background-transparency 90
 
    ;; If non-nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
@@ -580,7 +579,9 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil - same as frame-title-format)
    dotspacemacs-icon-title-format nil
 
-   ;; Show trailing whitespace (default t)
+   ;; Color highlight trailing whitespace in all prog-mode and text-mode derived
+   ;; modes such as c++-mode, python-mode, emacs-lisp, html-mode, rst-mode etc.
+   ;; (default t)
    dotspacemacs-show-trailing-whitespace t
 
    ;; Delete whitespace while saving buffer. Possible values are `all'
@@ -677,7 +678,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
             browse-url-generic-program "google-chrome-stable"
             ;; exec-path-from-shell-arguments (list "-i")
-            org-odt-data-dir "/usr/share/emacs/28.1/etc/org")
+            org-odt-data-dir "/usr/share/emacs/27.1/etc/org")
       (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
 
     (add-to-list 'load-path "~/.spacemacs.d" t)
