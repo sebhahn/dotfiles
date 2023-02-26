@@ -1,0 +1,18 @@
+configuration {
+  display-window: "windows:";
+  display-run: "run:";
+  display-ssh: "ssh:";
+  display-drun: "app:";
+  display-combi: "combi:";
+  display-filebrowser: "file:";
+
+  drun-display-format: "{icon} {name}";
+  font: "Hack 10";
+  modi: "window,run,ssh,drun,combi,filebrowser";
+  show-icons: true;
+  icon-theme: "Papirus";
+  terminal: "alacritty";
+  combi-mode: "window,drun,ssh";
+}
+
+@theme "~/.config/rofi/theme.rasi"
