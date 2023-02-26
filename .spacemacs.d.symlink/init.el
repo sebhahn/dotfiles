@@ -768,6 +768,8 @@ before packages are loaded."
   ;; set default browser
   (setq browse-url-browser-function 'browse-url-generic)
 
+  (setq-default persp-auto-save-opt 0)
+
   ;; (global-company-mode)
   ;; (add-hook 'python-mode-hook 'anaconda-mode)
   ;; (add-hook 'python-mode-hook 'company-mode)
