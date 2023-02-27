@@ -167,6 +167,13 @@ alias sd='fasd -sid'     # interactive directory selection
 alias sf='fasd -sif'     # interactive file selection
 alias z='fasd_cd -d'     # cd, same functionality as j in autojump
 alias zz='fasd_cd -d -i' # cd with interactive selection
+alias grep='grep --color=auto'
+alias update='sudo apt-get update && sudo apt-get upgrade -y'
+alias cpr='rsync --progress -avz --ignore-existing'
+alias tree='tree -C --dirsfirst'
+alias weather='function _weather() { curl wttr.in/$1; }; _weather'
+alias encrypt='function _encrypt() { openssl enc -aes-256-cbc -salt -in $1 -out $2; }; _encrypt'
+alias decrypt='function _decrypt() { openssl enc -d -aes-256-cbc -in $1 -out $2; }; _decrypt'
 
 eval "$(pyenv init -)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
