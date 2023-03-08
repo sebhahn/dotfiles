@@ -53,21 +53,21 @@ This function should only modify configuration layer settings."
               ebib-file-search-dirs '("~/ownCloud/areas/research/publications/")
               ebib-file-associations '(("pdf" . "zathura") ("ps" . "gv"))
               ebib-import-directory "~/ownCloud/areas/research/publications/")
-      c-c++
+      ;; c-c++
       colors
       (compleseus :variables
                   compleseus-engine 'vertico)
       csv
       custom-org-config
-      dash
+      ;; dash
       emacs-lisp
       (elfeed
        :variables
        rmh-elfeed-org-files (list "~/ownCloud/org/elfeed/elfeed.org")
        elfeed-db-directory "~/ownCloud/org/elfeed/db"
        elfeed-goodies/entry-pane-position 'bottom)
-      elixir
-      erc
+      ;; elixir
+      ;; erc
       epub
       erlang
       ess
