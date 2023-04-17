@@ -1,76 +1,92 @@
-# Server options
-# --------------
-
-# Specify default shell
+# specify default shell
 set-option -g default-shell /bin/zsh
 
-# Tweak timing between key sequences
+# tweak timing between key sequences
 set -sg escape-time 0
 
-# If off, the client is switched to the most recently active of the remaining sessions
+# if off, the client is switched to the most recently active of the remaining sessions
 set -g detach-on-destroy off
 
-# This option configures whether programs running inside tmux may use the terminal alternate screen feature
-setw -g alternate-screen off
+# this option configures whether programs running inside tmux may use the terminal alternate screen feature
+set-option -w -g alternate-screen off
 
-# Contains a list of entries which override terminal descriptions
-# set -g terminal-overrides 'xterm:colors=256'
 set -g default-terminal "screen.xterm-256color"
+set-option -ga terminal-overrides ",xterm-256color:Tc"
 
+# --> Catppuccin (Macchiato)
+# thm_bg="#24273a"
+# thm_fg="#cad3f5"
+# thm_cyan="#91d7e3"
+# thm_black="#1e2030"
+# thm_gray="#363a4f"
+# thm_magenta="#c6a0f6"
+# thm_pink="#f5bde6"
+# thm_red="#ed8796"
+# thm_green="#a6da95"
+# thm_yellow="#eed49f"
+# thm_blue="#8aadf4"
+# thm_orange="#f5a97f"
+# thm_black4="#5b6078"
 
-# Session options
-# ---------------
-
-# Start counting window number (base-index) at 1, rather than the default, 0
+# start counting window number (base-index) at 1, rather than the default, 0
 set -g base-index 1
 
-# Like base-index but set the starting index for pane numbers
+# like base-index but set the starting index for pane numbers
 set -g pane-base-index 1
 
-# Powerline setup
-set-option -g status-bg colour235
-set-option -g status-fg colour24
-set-option -g status on
-set-option -g status-interval 2
-set-option -g status-justify "centre"
-set-option -g status-left-length 80
-set-option -g status-right-length 50
-set -g status-left '#[fg=colour255, bg=colour24] #(date +"%I:%M %p") #[fg=colour24, bg=colour32]#[fg=colour255, bg=colour32] Session:#S #[fg=colour32, bg=colour235]'
-set -g status-right '#[fg=colour32, bg=colour235]#[fg=colour255, bg=colour32] #H #[fg=colour24, bg=colour32]#[fg=colour255, bg=colour24] #(date +"%F") '
-
-
-# Window options
-# --------------
-
-set-option -w -g window-status-current-format "#[fg=colour24, bg=colour235]#[fg=colour255, bg=colour24] #I | #W #[fg=colour24, bg=colour235]"
-set-option -w -g window-status-format "#[fg=colour250, bg=colour24] #I|#W "
-
-# Terminal emulator window title
-set -g set-titles on
-set -g set-titles-string '#S:#I.#P #W'
-
-# Notifying if other windows has activities
-setw -g monitor-activity on
-set -g visual-activity off
-
-
-# Pane options
-# ------------
-
-# Enable utf 8
-set -g status on
-
-# Set the maximum number of lines held in window history
+# set the maximum number of lines held in window history
 set -g history-limit 4096
 
 # display a visible indicator of each pane shown
-setw -g display-panes-time 2000
+set-option -w -g display-panes-time 2000
 
+# terminal emulator window title
+set -g set-titles on
+set -g set-titles-string '#S@#H | #I.#P #W'
 
-# Key bindings
-# ------------
+set-option -g status on
+# set-option -g status-bg "#24273a"
+set-option -g status-bg "#232627"
+set-option -g status-justify "left"
+set-option -g status-left-length 100
+set-option -g status-right-length 100
 
-# Set the prefix to ^A.
+# messages
+set-option -g message-style "fg=#91d7e3,bg=#363a4f,align=centre"
+set-option -g message-command-style "fg=#91d7e3,bg=#363a4f,align=centre"
+
+# panes
+set-option -g pane-border-style fg="#363a4f"
+set-option -g pane-active-border-style fg="#8aadf4"
+
+# windows
+set-option -w -g window-status-activity-style "fg=#cad3f5,bg=#24273a,none"
+set-option -w -g window-status-separator ""
+set-option -w -g window-status-style "fg=#cad3f5,bg=#24273a,none"
+
+# statusline
+set-option -w -g window-status-format "#[fg=#cad3f5,bg=#24273a] #W #[fg=#24273a,bg=#8aadf4] #I #[fg=#8aadf4,bg=#24273a]#[fg=#cad3f5,bg=#24273a,nobold,nounderscore,noitalics]"
+# set-option -w -g window-status-format "#[fg=#cad3f5,bg=#24273a] #W #[fg=#24273a,bg=#8aadf4] #I#[fg=#8aadf4,bg=#24273a]#[fg=#cad3f5,bg=$thm_bg,nobold,nounderscore,noitalics] "
+
+set-option -w -g window-status-current-format "#[fg=#cad3f5,bg=#363a4f] #W #[fg=#24273a,bg=#f5a97f] #I #[fg=#f5a97f,bg=#24273a]#[fg=#cad3f5,bg=#24273a,nobold,nounderscore,noitalics]"
+# set-option -w -g window-status-current-format "#[fg=#cad3f5,bg=#363a4f] #W #[fg=#24273a,bg=#f5a97f] #I#[fg=#f5a97f,bg=#24273a]#[fg=#cad3f5,bg=#24273a,nobold,nounderscore,noitalics] "
+
+set -g status-left ""
+
+set -g status-right "#[fg=#f5bde6,bg=#24273a,nobold,nounderscore,noitalics]#[fg=#24273a,bg=#f5bde6,nobold,nounderscore,noitalics]  #[fg=#cad3f5,bg=#363a4f] #W #{?client_prefix,#[fg=#ed8796],#[fg=#a6da95]}#[bg=#363a4f]#{?client_prefix,#[bg=#ed8796],#[bg=#a6da95]}#[fg=#24273a]  #[fg=#cad3f5,bg=#363a4f] #S #[fg=#8aadf4,bg=#363a4f]#[fg=#24273a,bg=#8aadf4]  #[fg=#cad3f5,bg=#363a4f] #(whoami) #[fg=#8aadf4,bg=#363a4f]#[fg=#24273a,bg=#8aadf4] 🖵 #[fg=#cad3f5,bg=#363a4f] #H #[fg=#8aadf4,bg=#363a4f]#[fg=#24273a,bg=#8aadf4]  #[fg=#cad3f5,bg=#363a4f] #(date +'%I:%M %p')"
+
+# set -g status-right "#[fg=#f5bde6,bg=#24273a,nobold,nounderscore,noitalics]#[fg=#24273a,bg=#f5bde6,nobold,nounderscore,noitalics] #[fg=#cad3f5,bg=#363a4f] #W #{?client_prefix,#[fg=#ed8796],#[fg=#a6da95]}#[bg=#363a4f]#{?client_prefix,#[bg=#ed8796],#[bg=#a6da95]}#[fg=#24273a] #[fg=#cad3f5,bg=#363a4f] #S #[fg=#8aadf4,bg=#363a4f]#[fg=#24273a,bg=#8aadf4] #[fg=#cad3f5,bg=#363a4f] #(whoami) #[fg=#8aadf4,bg=#363a4f]#[fg=#24273a,bg=#8aadf4]A #[fg=#cad3f5,bg=#363a4f] #H #[fg=#8aadf4,bg=#363a4f]#[fg=#24273a,bg=#8aadf4] #[fg=#cad3f5,bg=#363a4f] #(date +'%I:%M %p')"
+
+# modes
+set-option -w -g clock-mode-colour "#8aadf4"
+set-option -w -g mode-style "fg=#f5bde6 bg=#5b6078 bold"
+
+set-option -w -g monitor-activity on
+set -g visual-activity off
+
+# key bindings
+
+# set the prefix to ^A.
 unbind-key C-b
 set -g prefix ^A
 bind-key a send-prefix
