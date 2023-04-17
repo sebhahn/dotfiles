@@ -79,7 +79,7 @@ set -g status-right "#[fg=#f5bde6,bg=#24273a,nobold,nounderscore,noitalics]#[fg=
 
 # modes
 set-option -w -g clock-mode-colour "#8aadf4"
-set-option -w -g mode-style "fg=#f5bde6 bg=#5b6078 bold"
+set-option -w -g mode-style "fg=#f5bde6,bg=#5b6078,bold"
 
 set-option -w -g monitor-activity on
 set -g visual-activity off
