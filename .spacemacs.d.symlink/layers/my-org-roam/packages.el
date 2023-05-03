@@ -78,6 +78,8 @@ Each entry is either:
     (setq org-roam-v2-ack t)
     (progn
       (spacemacs/declare-prefix "or" "org-roam")
+      (spacemacs/declare-prefix "org" "org-roam-dailies-goto")
+      (spacemacs/declare-prefix "orr" "org-roam-refs")
       (spacemacs/set-leader-keys
         "orl" 'org-roam-buffer-toggle
         "ordc" 'org-roam-dailies-capture-today
