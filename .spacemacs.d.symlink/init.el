@@ -32,7 +32,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(ansible
+   '(
+      ansible
       (auto-completion
         :variables
         auto-completion-return-key-behavior 'complete
@@ -85,6 +86,7 @@ This function should only modify configuration layer settings."
        latex-enable-auto-fill nil
        latex-enable-folding t)
       lsp
+      lua
       json
       markdown
       multiple-cursors
@@ -115,6 +117,7 @@ This function should only modify configuration layer settings."
         python-auto-set-local-pyenv-version 'on-project-switch
         python-test-runner 'pytest)
       ranger
+      rust
       search-engine
       ;;semantic
       (shell
