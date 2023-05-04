@@ -510,7 +510,9 @@ mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
         (evilified-state-evilify-map mu4e-main-mode-map
           :mode mu4e-main-mode
           :bindings
-          (kbd "TAB") 'mu4e-maildirs-extension-toggle-maildir-at-point)
+          (kbd "j") 'mu4e-search-maildir
+          (kbd "C-j") 'next-line
+          (kbd "C-k") 'previous-line)
 
         (evilified-state-evilify-map mu4e-headers-mode-map
           :mode mu4e-headers-mode
