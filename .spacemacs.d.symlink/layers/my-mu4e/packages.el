@@ -121,9 +121,9 @@ mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
                           (persp-get-by-name
                            mu4e-spacemacs-layout-name)))
       (spacemacs/add-to-hooks 'spacemacs-layouts/add-mu4e-buffer-to-persp
-                              '(mu4e-main-mode-hook
+                              '(mu4e-main-rendered-hook
                                 mu4e-headers-mode-hook
-                                mu4e-view-mode-hook
+                                mu4e-view-rendered-hook
                                 mu4e-compose-mode-hook))
       (call-interactively 'mu4e)
       ;; (call-interactively 'mu4e-update-index)
@@ -239,7 +239,6 @@ mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
                  ((string-match "sebastian.hahn" user-mail-address) work-sig)
                  (t ""))))
 
-
         ;; handle signatures with message buffer
         (setq mu4e-compose-signature-auto-include nil)
         (add-hook 'mu4e-compose-mode-hook
@@ -259,14 +258,7 @@ mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
                 (cond
                  ((string-match "TU" (mu4e-message-field msg :maildir)) "/TU/Archives")
                  ((string-match "TU-Git" (mu4e-message-field msg :maildir)) "/TU-Git/INBOX/.erledigt")
-                 ;; ((string-match "Personal" (mu4e-message-field msg :maildir)) "/Personal/[Gmail].All Mail")
-                  ;; messages to the mu mailing list go to the /mu folder
-                  ;; ((mu4e-message-contact-field-matches msg :to "cpaulik@gmail.com") "/Personal/Archive")
-                 ;; messages sent directly to me go to /archive
-                 ;; also `mu4e-user-mail-address-p' can be used
                  ((mu4e-message-contact-field-matches msg :to "sebastian.hahn@geo.tuwien.ac.at") "/TU/Archives")
-                 ;; everything else goes to /archive
-                 ;; important to have a catch-all at the end!
                  (t  "/archive"))))
 
         (setq mu4e-trash-folder
@@ -274,10 +266,6 @@ mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
                 (cond
                  ((string-match "TU" (mu4e-message-field msg :maildir)) "/TU/Deleted Items")
                  ((string-match "TU-Git" (mu4e-message-field msg :maildir)) "/TU-Git/Gel&APY-schte Elemente")
-                 ;; ((string-match "Personal" (mu4e-message-field msg :maildir)) "/Personal/[Gmail].Trash")
-                  ;; messages to the mu mailing list go to the /mu folder
-                 ;; everything else goes to /archive
-                 ;; important to have a catch-all at the end!
                  (t  "/trash"))))
 
         ;; setup some handy shortcuts
@@ -338,7 +326,7 @@ mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
                                                  (dotfiles/machine-location))))
 
         ;; update every 5 minutes
-        (setq mu4e-update-interval (* 5 60))
+        (setq mu4e-update-interval (* 10 60))
         (setq mu4e-index-update-in-background t)
         (setq mu4e-compose-dont-reply-to-self t)
         ;; (setq org-mu4e-link-query-in-headers-mode t)
@@ -347,7 +335,7 @@ mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
 
         ;; enable snippets in messages
         (add-hook 'mu4e-compose-mode-hook 'spacemacs/load-yasnippet)
-        (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
+        (add-hook 'mu4e-view-rendered-hook 'visual-line-mode)
 
         ;; send mail from address that received it
         (add-hook 'mu4e-compose-pre-hook
@@ -394,9 +382,10 @@ mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
         (setq mu4e-hide-index-messages t)
 
         ;; add new bookmarks
+
         (add-to-list 'mu4e-bookmarks '(:name "Flagged messages" :query "flag:flagged" :key ?f))
         (add-to-list 'mu4e-bookmarks '(:name "Big messages" :query "size:5M..500M" :key ?b))
-        (add-to-list 'mu4e-bookmarks '(:name "Today's send messages" :query "date:today..now from:sebastian.hahn@geo.tuwien.ac.at" :key ?s))
+        (add-to-list 'mu4e-bookmarks '(:name "Today's send messages" :query "date:today..now AND from:sebastian.hahn@geo.tuwien.ac.at" :key ?s))
 
         (add-to-list 'mu4e-marks
                      '(gtag
@@ -566,5 +555,8 @@ mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
         (setq shr-color-visible-luminance-min 80)
 
         (setq gnus-unbuttonized-mime-types nil)
+
+        (setq mu4e-read-option-use-builtin nil
+	            mu4e-completing-read-function 'completing-read)
      )
    )
