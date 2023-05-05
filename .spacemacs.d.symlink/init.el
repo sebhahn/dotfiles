@@ -663,16 +663,14 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
     (setq dotspacemacs-default-font '("Hack"
                                       :size 13
                                       :weight regular
-                                      :width normal
-                                      :powerline-scale 1.1)
+                                      :width normal)
           browse-url-generic-program "google-chrome")
 
     (when (eq (dotfiles/machine-location) 'work)
       (setq dotspacemacs-default-font '("Hack Nerd Font"
                                         :size 14
                                         :weight regular
-                                        :width normal
-                                        :powerline-scale 1.4)
+                                        :width normal)
 
           browse-url-generic-program "google-chrome"
           org-odt-data-dir "/usr/share/emacs/26.3/etc/org")
@@ -682,12 +680,14 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
       (setq dotspacemacs-default-font '("Hack Nerd Font Mono"
                                         :size 14
                                         :weight regular
-                                        :width normal
-                                        :powerline-scale 1.4)
-
+                                        :width normal)
             browse-url-generic-program "google-chrome-stable"
             ;; exec-path-from-shell-arguments (list "-i")
-            org-odt-data-dir "/usr/share/emacs/27.1/etc/org")
+            org-odt-data-dir "/usr/share/emacs/27.1/etc/org"
+            dotspacemacs-mode-line-theme '(spacemacs
+                                          :separator arrow
+                                          :separator-scale 1.5))
+
       (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
 
     (add-to-list 'load-path "~/.spacemacs.d" t)
@@ -739,7 +739,7 @@ before packages are loaded."
         sp-escape-quotes-after-insert nil
         sp-escape-wrapped-region nil)
 
-  (setq powerline-default-separator 'arrow)
+  ;; (setq powerline-default-separator 'arrow)
 
   ;; disable all the space-doc stuff
   (setq spacemacs-space-doc-modificators nil)
