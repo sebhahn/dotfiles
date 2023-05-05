@@ -7,11 +7,11 @@ configuration {
   display-filebrowser: "file:";
 
   drun-display-format: "{icon} {name}";
-  font: "Hack 10";
+  font: "Hack Nerd Font 11";
   modi: "window,run,ssh,drun,combi,filebrowser";
   show-icons: true;
   icon-theme: "Papirus";
-  terminal: "alacritty";
+  terminal: "wezterm";
   combi-mode: "window,drun,ssh";
 }
 
