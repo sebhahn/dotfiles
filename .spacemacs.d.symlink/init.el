@@ -712,13 +712,8 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
-  (when (eq (dotfiles/machine-location) 'work)
-    (setq user-full-name "Sebastian Hahn"
-          user-mail-address "sebastian.hahn@geo.tuwien.ac.at"))
-
-  (when (eq (dotfiles/machine-location) 'home)
-    (setq user-full-name "Sebastian Hahn"
-          user-mail-address "sebastian.hahn@gmail.com"))
+  (setq user-full-name "Sebastian Hahn"
+        user-mail-address "sebastian.hahn@geo.tuwien.ac.at")
 
   (spacemacs|define-custom-layout "@agenda"
     :binding "s"
@@ -789,6 +784,8 @@ before packages are loaded."
       (progn
         (setq python-shell-interpreter-args "-i")
         (setq python-shell-interpreter "python"))))
+
+  (setq python-shell-completion-native-enable nil)
 
   (setq read-process-output-max (* 1024 1024))
 
