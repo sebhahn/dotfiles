@@ -556,6 +556,8 @@ mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
 
         (setq gnus-unbuttonized-mime-types nil)
 
+        (setq mu4e-headers-include-related nil)
+
         (setq mu4e-read-option-use-builtin nil
 	            mu4e-completing-read-function 'completing-read)
      )
