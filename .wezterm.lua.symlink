@@ -27,5 +27,11 @@ config.window_background_opacity = 0.95
 
 config.default_prog = { 'zsh', '-l' }
 
+config.window_close_confirmation = 'NeverPrompt'
+config.skip_close_confirmation_for_processes_named = { 'bash', 'sh', 'zsh', 'fish', 'tmux' }
+
+config.initial_rows = 42
+config.initial_cols = 120
+
 -- and finally, return the configuration to wezterm
 return config
