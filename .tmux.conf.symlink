@@ -52,8 +52,8 @@ set-option -g status-left-length 100
 set-option -g status-right-length 100
 
 # messages
-set-option -g message-style "fg=#91d7e3,bg=#363a4f,align=centre"
-set-option -g message-command-style "fg=#91d7e3,bg=#363a4f,align=centre"
+#set-option -g message-style "fg=#91d7e3,bg=#363a4f,align=centre"
+#set-option -g message-command-style "fg=#91d7e3,bg=#363a4f,align=centre"
 
 # panes
 set-option -g pane-border-style fg="#363a4f"
