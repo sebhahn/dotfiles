@@ -8,7 +8,7 @@ configuration {
 
   drun-display-format: "{icon} {name}";
   font: "Hack Nerd Font 11";
-  modi: "window,run,ssh,drun,combi,filebrowser";
+  modi: "window,run,ssh,drun,combi,filebrowser,file-browser-extended";
   show-icons: true;
   icon-theme: "Papirus";
   terminal: "wezterm";
