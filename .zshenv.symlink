@@ -1,4 +1,4 @@
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export GIT_INTERNAL_GETTEXT_TEST_FALLBACKS=1
 
 export LANGUAGE="en_US.UTF-8"
