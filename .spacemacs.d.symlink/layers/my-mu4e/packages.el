@@ -455,7 +455,7 @@ mu4e-use-maildirs-extension-load to be evaluated after mu4e has been loaded."
         ;;     link))))
 
         (require 'org)
-        (require 'org-mu4e)
+        ;; (require 'org-mu4e)
         (require 'org-contacts)
 
         (setq mu4e-org-contacts-file "~/ownCloud/org/roam/areas/agenda/contacts.org")
