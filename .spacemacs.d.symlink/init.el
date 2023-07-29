@@ -34,6 +34,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layers
    '(
       ansible
+      ;;asciidoc
       (auto-completion
         :variables
         auto-completion-return-key-behavior 'complete
@@ -69,16 +70,16 @@ This function should only modify configuration layer settings."
        elfeed-goodies/entry-pane-position 'bottom)
       ;; elixir
       ;; erc
-      epub
-      erlang
-      ess
+      ;; epub
+      ;; erlang
+      ;; ess
       (git
         :variables
         git-gutter-use-fringe t)
       fasd
-      gnus
+      ;; gnus
       ;;helm
-      html
+      ;; html
       ipython-notebook
       (latex
        :variables
@@ -117,7 +118,7 @@ This function should only modify configuration layer settings."
         python-auto-set-local-pyenv-version 'on-project-switch
         python-test-runner 'pytest)
       ranger
-      rust
+      ;; rust
       search-engine
       ;;semantic
       (shell
@@ -678,7 +679,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
     (when (eq (dotfiles/machine-location) 'home)
       (setq dotspacemacs-default-font '("Hack Nerd Font Mono"
-                                        :size 14
+                                        :size 15
                                         :weight regular
                                         :width normal)
             browse-url-generic-program "google-chrome-stable"
