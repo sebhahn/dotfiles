@@ -248,9 +248,9 @@ https://www.tuwien.at/mg/geo/rs/")
         (setq mu4e-refile-folder
               (lambda (msg)
                 (cond
-                 ((string-match "TU" (mu4e-message-field msg :maildir)) "/TU/Archives")
+                 ((string-match "TU" (mu4e-message-field msg :maildir)) "/TU/Archive")
                  ((string-match "TU-Git" (mu4e-message-field msg :maildir)) "/TU-Git/INBOX/.erledigt")
-                 ((mu4e-message-contact-field-matches msg :to "sebastian.hahn@geo.tuwien.ac.at") "/TU/Archives")
+                 ((mu4e-message-contact-field-matches msg :to "sebastian.hahn@geo.tuwien.ac.at") "/TU/Archive")
                  (t  "/archive"))))
 
         (setq mu4e-trash-folder
@@ -267,7 +267,7 @@ https://www.tuwien.at/mg/geo/rs/")
 
         (setq mu4e-maildir-shortcuts
             '((:maildir "/TU/INBOX" :key ?x)
-              (:maildir "/TU/Archives" :key ?a)
+              (:maildir "/TU/Archive" :key ?a)
               (:maildir "/TU/Drafts" :key ?d)
               (:maildir "/TU/Sent Items" :key ?s)))
 
