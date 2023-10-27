@@ -184,8 +184,4 @@ alias tl='tmux list-sessions'
 # show subfolders as tree
 alias ft="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'"
 
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
 [[ ! -f ~/.init_startup ]] || source ~/.init_startup
