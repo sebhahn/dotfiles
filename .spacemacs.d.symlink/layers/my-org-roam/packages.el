@@ -42,37 +42,13 @@
 
 (defconst my-org-roam-packages
   '(org-roam
-    org-roam-bibtex)
-  "The list of Lisp packages required by the my-org-roam layer.
-
-Each entry is either:
-
-1. A symbol, which is interpreted as a package to be installed, or
-
-2. A list of the form (PACKAGE KEYS...), where PACKAGE is the
-    name of the package to be installed or loaded, and KEYS are
-    any number of keyword-value-pairs.
-
-    The following keys are accepted:
-
-    - :excluded (t or nil): Prevent the package from being loaded
-      if value is non-nil
-
-    - :location: Specify a custom installation location.
-      The following values are legal:
-
-      - The symbol `elpa' (default) means PACKAGE will be
-        installed using the Emacs package manager.
-
-      - The symbol `local' directs Spacemacs to load the file at
-        `./local/PACKAGE/PACKAGE.el'
-
-      - A list beginning with the symbol `recipe' is a melpa
-        recipe.  See: https://github.com/milkypostman/melpa#recipe-format")
+    org-roam-bibtex
+    citar
+    citar-embark
+    citar-org-roam))
 
 (defun my-org-roam/init-org-roam ()
   (use-package org-roam
-    :defer t
     :after (org)
     :init
     (setq org-roam-v2-ack t)
@@ -134,7 +110,7 @@ Each entry is either:
       (spacemacs|hide-lighter org-roam-mode)
       (when org-enable-roam-protocol
         (add-hook 'org-roam-mode-hook (lambda ()
-                                        (require 'org-roam-protocol))))
+                                       (require 'org-roam-protocol))))
 
       (evilified-state-evilify-map org-roam-mode-map
         :mode org-roam-mode
@@ -152,14 +128,17 @@ Each entry is either:
     (setq org-roam-file-extensions '("org"))
     (setq org-roam-db-node-include-function
           (lambda () (not (member "ATTACH" (org-get-tags)))))
+
     (setq org-roam-capture-templates
       '(("d" "default" plain "%?"
-        :if-new (file+head "${slug}.org"
-                            "#+title: ${title}\n")
-        :unnarrowed t)))
-
+          :if-new (file+head "${slug}.org" "#+title: ${title}\n")
+          :unnarrowed t)
+        ("n" "literature note" plain "%?"
+          :target
+          (file+head "~/ownCloud/org/roam/resources/publications/${citar-citekey}.org" "#+title: ${title}\n\n")
+          :unnarrowed t)))
     (org-roam-db-autosync-mode)
-    ))
+ ))
 
 (defun my-org-roam/init-org-roam-bibtex ()
   (use-package org-roam-bibtex
@@ -169,5 +148,56 @@ Each entry is either:
                 (("C-c n a" . orb-note-actions)))
     :config
     (setq orb-insert-link-description "citation")
-    (require 'org-ref)
     ))
+
+(defun my-org-roam/init-citar ()
+  (use-package citar
+    :after org
+    :custom
+    (org-cite-global-bibliography '("~/ownCloud/areas/research/latex/zotero.bib"))
+    (org-cite-insert-processor 'citar)
+    (org-cite-follow-processor 'citar)
+    (org-cite-activate-processor 'citar)
+    (citar-bibliography org-cite-global-bibliography)
+    (citar-notes-paths '("~/ownCloud/org/roam/resources/publications/"))
+    (citar-library-paths '("~/ownCloud/areas/research/publications/"))
+    (citar-file-note-extension '("org"))
+    (citar-at-point-function 'embark-act)
+    (citar-indicators (list citar-indicator-files ; plain text
+                            citar-indicator-notes-icons))
+    ;; optional: org-cite-insert is also bound to C-c C-x C-@
+    :bind
+    (:map org-mode-map
+          :package org ("C-c b" . #'org-cite-insert))
+    :hook
+    (LaTeX-mode . citar-capf-setup)
+    (org-mode . citar-capf-setup)
+    :config
+    ;; (add-to-list 'citar-file-open-functions '("pdf" . citar-file-open-external))
+    ;; (spacemacs/set-leader-keys "o b" 'citar-open)
+    (spacemacs/declare-prefix "ob" "citar")
+    (spacemacs/set-leader-keys
+      "obo" 'citar-open
+      "obi" 'citar-insert-citation
+      "obc" 'citar-create-note
+      "obd" 'citar-dwim)
+    (spacemacs/set-leader-keys-for-major-mode 'org-mode
+      "rbo" 'citar-open
+      "rbi" 'citar-insert-citation
+      "rbc" 'citar-create-note
+      "rbd" 'citar-dwim)
+    (add-to-list 'citar-file-open-functions '("pdf" . (lambda (fpath) (start-process "zathura" "*zathura*" "/usr/bin/zathura" fpath))))))
+
+(defun my-org-roam/init-citar-embark ()
+  (use-package citar-embark
+    :after citar embark
+    :no-require
+    :config (citar-embark-mode)))
+
+(defun my-org-roam/init-citar-org-roam ()
+  (use-package citar-org-roam
+    :after (citar org-roam)
+    :config (citar-org-roam-mode)
+    :custom
+    (citar-org-roam-note-title-template "${title}")
+    (citar-org-roam-capture-template-key "n")))

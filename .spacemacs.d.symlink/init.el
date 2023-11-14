@@ -80,7 +80,7 @@ This function should only modify configuration layer settings."
       ;; gnus
       ;;helm
       ;; html
-      ipython-notebook
+      ;; ipython-notebook
       (latex
        :variables
        font-latex-fontify-script nil
@@ -91,13 +91,13 @@ This function should only modify configuration layer settings."
       json
       markdown
       multiple-cursors
-      my-consult
+      ;; my-consult
       my-eglot
       my-mermaid
       my-mu4e
       my-org
       my-org-roam
-      my-research
+      ;; my-research
       my-python
       (org
         :packages (not org-roam)
@@ -117,7 +117,7 @@ This function should only modify configuration layer settings."
         ;; python-format-on-save t
         python-auto-set-local-pyenv-version 'on-project-switch
         python-test-runner 'pytest)
-      ranger
+      ;; ranger
       ;; rust
       search-engine
       ;;semantic
@@ -147,8 +147,7 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(sqlite3
-                                      doom-themes
-                                      color-theme-sanityinc-tomorrow
+                                      ripgrep
                                       exec-path-from-shell)
 
    ;; A list of packages that cannot be updated.
@@ -255,7 +254,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil show the version string in the Spacemacs buffer. It will
    ;; appear as (spacemacs version)@(emacs version)
    ;; (default t)
-   dotspacemacs-startup-buffer-show-version t
+   dotspacemacs-startup-buffer-show-version nil
 
    ;; Specify the startup banner. Default value is `official', it displays
    ;; the official spacemacs logo. An integer value is the index of text
@@ -263,7 +262,7 @@ It should only modify the values of Spacemacs settings."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner 'random
 
    ;; Scale factor controls the scaling (size) of the startup banner. Default
    ;; value is `auto' for scaling the logo automatically to fit all buffer
@@ -282,8 +281,8 @@ It should only modify the values of Spacemacs settings."
    ;; pair of numbers, e.g. `(recents-by-project . (7 .  5))', where the first
    ;; number is the project limit and the second the limit on the recent files
    ;; within a project.
-   dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7))
+   dotspacemacs-startup-lists '((recents . 3)
+                                (projects . 3))
 
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
@@ -323,14 +322,20 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(material
-                         doom-one
-                         spacemacs-dark
-                         spacemacs-light
-                         solarized-light
-                         solarized-dark
-                         leuven
-                         monokai
-                         zenburn)
+                         base16-material-palenight
+                         base16-materia
+                         base16-material
+                         ;; base16-material-darker
+                         ;; base16-onedark
+                         ;; base16-spacemacs
+                         base16-3024
+                         base16-eighties
+                         base16-tomorrow-night
+                         hemisu-dark
+                         farmhouse-dark
+                         apropospriate-dark
+                         majapahit-dark
+                         spacemacs-dark)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
@@ -339,7 +344,8 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
+   ;; dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
+   dotspacemacs-mode-line-theme '(spacemacs)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -348,11 +354,11 @@ It should only modify the values of Spacemacs settings."
    ;; Default font or prioritized list of fonts. The `:size' can be specified as
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+   dotspacemacs-default-font '("Hack Nerd Font Mono"
+                               :size 14
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 0.5)
 
    ;; The leader key (default "SPC")
    dotspacemacs-leader-key "SPC"
@@ -440,7 +446,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
    ;; nil to boost the loading time. (default t)
-   dotspacemacs-loading-progress-bar t
+   dotspacemacs-loading-progress-bar nil
 
    ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
@@ -484,7 +490,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil unicode symbols are displayed in the mode line.
    ;; If you use Emacs as a daemon and wants unicode characters only in GUI set
    ;; the value to quoted `display-graphic-p'. (default t)
-   dotspacemacs-mode-line-unicode-symbols t
+   dotspacemacs-mode-line-unicode-symbols nil
 
    ;; If non-nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters point
@@ -578,7 +584,7 @@ It should only modify the values of Spacemacs settings."
    ;; performance issues, instead of calculating the frame title by
    ;; `spacemacs/title-prepare' all the time.
    ;; (default "%I@%S")
-   dotspacemacs-frame-title-format "%I@%S"
+   dotspacemacs-frame-title-format "%I"
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
@@ -645,7 +651,7 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
-    (setq byte-compile-warnings '(cl-functions))
+    ;; (setq byte-compile-warnings '(cl-functions))
 
     (setq configuration-layer--elpa-archives '(("melpa" . "melpa.org/packages/")
                                                ("org" . "orgmode.org/elpa/")
@@ -654,7 +660,9 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
     (defun dotfiles/machine-location ()
       "Get the machine location. Either returns home or work at the moment"
       (let ((machines '(("shahn" . work)
+                        ("project4" . work)
                         ("project5" . work)
+                        ("project6" . work)
                         ("project9" . work)
                         ("project10" . work)
                         ("project12" . work)
@@ -662,16 +670,16 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                         ("shahn-7490" . home))))
             (cdr (assoc system-name machines))))
 
-    (setq dotspacemacs-default-font '("Hack"
-                                      :size 13
-                                      :weight regular
+    (setq dotspacemacs-default-font '("Hack Nerd Font"
+                                      :size 14
+                                      :weight normal
                                       :width normal)
           browse-url-generic-program "google-chrome")
 
     (when (eq (dotfiles/machine-location) 'work)
       (setq dotspacemacs-default-font '("Hack Nerd Font"
                                         :size 14
-                                        :weight regular
+                                        :weight normal
                                         :width normal)
 
           browse-url-generic-program "google-chrome"
@@ -680,15 +688,12 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
     (when (eq (dotfiles/machine-location) 'home)
       (setq dotspacemacs-default-font '("Hack Nerd Font Mono"
-                                        :size 15
-                                        :weight regular
+                                        :size 14
+                                        :weight normal
                                         :width normal)
             browse-url-generic-program "google-chrome-stable"
             ;; exec-path-from-shell-arguments (list "-i")
-            org-odt-data-dir "/usr/share/emacs/27.1/etc/org"
-            dotspacemacs-mode-line-theme '(spacemacs
-                                          :separator arrow
-                                          :separator-scale 1.5))
+            org-odt-data-dir "/usr/share/emacs/27.1/etc/org")
 
       (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
 
@@ -736,8 +741,6 @@ before packages are loaded."
         sp-escape-quotes-after-insert nil
         sp-escape-wrapped-region nil)
 
-  ;; (setq powerline-default-separator 'arrow)
-
   ;; disable all the space-doc stuff
   (setq spacemacs-space-doc-modificators nil)
 
@@ -769,7 +772,6 @@ before packages are loaded."
 
   (setq doc-view-resolution 300)
   (setq vc-follow-symlinks t)
-  (setq lsp-pyls-plugins-jedi-use-pyenv-environment t)
 
   ;; set default browser
   (setq browse-url-browser-function 'browse-url-generic)
@@ -801,6 +803,13 @@ before packages are loaded."
 
    ;; remove windmove-mode, shadows org bindings
    (windmove-mode 0)
+
+   ;; disable undo-tree
+   (global-undo-tree-mode -1)
+   (setq evil-undo-system 'undo-redo)
+   (evil-set-undo-system 'undo-redo)
+
+   (spacemacs/toggle-mode-line-minor-modes-off)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

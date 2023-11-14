@@ -9,8 +9,7 @@
 ;;; License: GPLv3
 
 (defvar custom-org-config-packages
-  '(
-    org-plus-contrib
+  '(org-plus-contrib
     (org :location built-in)
     (org-ac :location built-in)
     cdlatex
@@ -141,24 +140,21 @@ which require an initialization must be listed explicitly in the list.")
 
       (setq org-contacts-files (list "~/ownCloud/org/roam/areas/agenda/contacts.org"))
 
-      ;; (setq org-journal-time-format "%m-%d")
       (setq org-replace-disputed-keys t)
 
       (setq org-journal-dir "~/ownCloud/org/roam/areas/daily")
       (setq org-journal-date-prefix "#+title: ")
       (setq org-journal-file-format "%Y-%m-%d.org")
       (setq org-journal-date-format "%A, %d %B %Y")
-
-      ;; (add-hook 'org-agenda-mode-hook
-      ;;           '(lambda () (org-defkey org-agenda-mode-map "R" 'org-agenda-refile))
-      ;;           'append)
+      ;; (setq org-journal-time-format "%m-%d")
 
       (setq org-src-fontify-natively 1)
       (setq org-agenda-span 'day)
       (setq org-default-notes-file "~/ownCloud/org/roam/areas/agenda/refile.org")
+
       (setq org-directory "~/ownCloud/org/roam")
-      (setq org-agenda-files (list "~/ownCloud/org/roam/areas/agenda"
-                                   "~/ownCloud/org/roam/projects"))
+      (setq org-agenda-files (list "~/ownCloud/org/roam/areas/agenda"))
+                                   ;; "~/ownCloud/org/roam/projects"))
 
       (setq org-return-follows-link t)
 
@@ -192,13 +188,6 @@ which require an initialization must be listed explicitly in the list.")
       ;; refile targets
       (setq org-refile-allow-creating-parent-nodes 'confirm)
 
-      ;; refile only within the current buffer
-      (defun my/org-refile-within-current-buffer ()
-        "Move the entry at point to another heading in the current buffer."
-        (interactive)
-        (let ((org-refile-targets '((nil :maxlevel . 5))))
-          (org-refile)))
-
       ;; enable helm org refile into subsection of agenda file
       (setq org-outline-path-complete-in-steps nil)
 
@@ -208,6 +197,7 @@ which require an initialization must be listed explicitly in the list.")
 
       (require 'ox-latex)
       (setq org-latex-listings 'minted)
+
       ;; setup minted to have frame, small text and line numbers
       (setq org-latex-minted-options
                  '(("frame" "lines")
@@ -243,12 +233,12 @@ which require an initialization must be listed explicitly in the list.")
 
       (add-to-list 'org-latex-classes
         '("koma-article"
-        "\\documentclass{scrartcl}"
-        ("\\section{%s}" . "\\section*{%s}")
-        ("\\subsection{%s}" . "\\subsection*{%s}")
-        ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-        ("\\paragraph{%s}" . "\\paragraph*{%s}")
-        ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+          "\\documentclass{scrartcl}"
+          ("\\section{%s}" . "\\section*{%s}")
+          ("\\subsection{%s}" . "\\subsection*{%s}")
+          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+          ("\\paragraph{%s}" . "\\paragraph*{%s}")
+          ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
       (add-to-list 'org-latex-classes
         '("koma-report"
@@ -292,12 +282,10 @@ which require an initialization must be listed explicitly in the list.")
             (quote ((sequence  "TODO(t)" "DOING(o)" "BLOCKED(b@/!)" "|" "DONE(d!)" "CANCELED(c@/!)") )))
 
       ;; (setq org-enforce-todo-dependencies t)
-
       (setq org-use-fast-todo-selection t)
-      ;; if state is changed using shift then no dates or notes are recorded
 
+      ;; if state is changed using shift then no dates or notes are recorded
       (setq org-treat-S-cursor-todo-selection-as-state-change nil)
-      ;; set tags according to state of the task
 
       (setq org-todo-state-tags-triggers
             (quote ((done ("CANCELED") ("DOING") ("BLOCKED"))
@@ -309,6 +297,10 @@ which require an initialization must be listed explicitly in the list.")
 
       (setq org-tags-exclude-from-inheritance '("PRJ")
             org-stuck-projects '("+PRJ/-DONE-CANCELED" ("TODO") ()))
+
+      ;; (setq org-todo-keyword-faces
+      ;;       '(("TODO" . org-warning) ("STARTED" . "yellow")
+      ;;         ("CANCELED" . (:foreground "blue" :weight bold))))
 
       (setq org-agenda-diary-file "~/ownCloud/org/diary.org")
 
@@ -630,8 +622,3 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-agenda-clockreport-parameter-plist
             (quote (:link t :maxlevel 5 :fileskip0 t :compact t :narrow 80)))
     )))
-
-;;
-;; Often the body of an initialize function uses `use-package'
-;; For more info on `use-package', see readme:
-;; https://github.com/jwiegley/use-package
