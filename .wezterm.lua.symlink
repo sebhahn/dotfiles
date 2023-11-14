@@ -16,10 +16,12 @@ end
 -- config.color_scheme = 'AdventureTime'
 
 config.font = wezterm.font 'Hack Nerd Font Mono'
-config.font_size = 11.0
+config.font_size = 10.6
 
-config.color_scheme = 'Material (base16)'
+-- config.color_scheme = 'Material (base16)'
 -- config.color_scheme = 'MaterialDark'
+
+config.color_scheme = 'Bamboo'
 
 config.hide_tab_bar_if_only_one_tab = true
 config.term = 'xterm-256color'
