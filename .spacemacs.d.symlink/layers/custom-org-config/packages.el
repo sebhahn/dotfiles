@@ -138,9 +138,14 @@ which require an initialization must be listed explicitly in the list.")
     :post-config
     (progn
 
-      (setq org-contacts-files (list "~/ownCloud/org/roam/areas/agenda/contacts.org"))
+      ;; (setq org-replace-disputed-keys t)
+      (setq org-src-fontify-natively t)
+      (setq org-return-follows-link t)
 
-      (setq org-replace-disputed-keys t)
+      (setq org-ditaa-jar-path "~/ownCloud/org/bin/ditaa.jar")
+      (setq org-plantuml-jar-path "~/ownCloud/org/bin/plantuml.jar")
+
+      (setq org-contacts-files (list "~/ownCloud/org/roam/areas/agenda/contacts.org"))
 
       (setq org-journal-dir "~/ownCloud/org/roam/areas/daily")
       (setq org-journal-date-prefix "#+title: ")
@@ -148,17 +153,71 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-journal-date-format "%A, %d %B %Y")
       ;; (setq org-journal-time-format "%m-%d")
 
-      (setq org-src-fontify-natively 1)
-      (setq org-agenda-span 'day)
       (setq org-default-notes-file "~/ownCloud/org/roam/areas/agenda/refile.org")
-
       (setq org-directory "~/ownCloud/org/roam")
+
+      (setq org-agenda-span 'day)
       (setq org-agenda-files (list "~/ownCloud/org/roam/areas/agenda"))
-                                   ;; "~/ownCloud/org/roam/projects"))
-
-      (setq org-return-follows-link t)
-
       (setq org-agenda-persistent-filter t)
+      (setq org-agenda-diary-file "~/ownCloud/org/roam/diary.org")
+      (setq org-agenda-dim-blocked-tasks nil)
+      (setq org-agenda-compact-blocks t)
+
+      ;; Keep tasks with dates on the global todo lists
+      (setq org-agenda-todo-ignore-with-date nil)
+
+      ;; Keep tasks with deadlines on the global todo lists
+      (setq org-agenda-todo-ignore-deadlines nil)
+
+      ;; Keep tasks with scheduled dates on the global todo lists
+      (setq org-agenda-todo-ignore-scheduled nil)
+
+      ;; Keep tasks with timestamps on the global todo lists
+      (setq org-agenda-todo-ignore-timestamp nil)
+
+      ;; Remove completed deadline tasks from the agenda view
+      (setq org-agenda-skip-deadline-if-done t)
+
+      ;; Remove completed scheduled tasks from the agenda view
+      (setq org-agenda-skip-scheduled-if-done t)
+
+      ;; Remove completed items from search results
+      (setq org-agenda-skip-timestamp-if-done t)
+
+      ;; Limit restriction lock highlighting to the headline only
+      (setq org-agenda-restriction-lock-highlight-subtree nil)
+
+      ;; Include agenda archive files when searching for things
+      (setq org-agenda-text-search-extra-files (quote (agenda-archives)))
+
+      ;; Show all future entries for repeating tasks
+      (setq org-agenda-repeating-timestamp-show-all t)
+
+      ;; Show all agenda dates - even if they are empty
+      (setq org-agenda-show-all-dates t)
+
+      ;; Sorting order for tasks on the agenda
+      (setq org-agenda-sorting-strategy
+            (quote ((agenda habit-down time-up user-defined-up effort-up category-keep)
+                    (todo category-up effort-up)
+                    (tags category-up effort-up)
+                    (search category-up))))
+
+      ;; Start the weekly agenda on Monday
+      (setq org-agenda-start-on-weekday 1)
+
+      ;; Enable display of the time grid so we can see the marker for the current time
+      (setq org-agenda-time-grid '((daily today)
+                                  (800 1000 1200 1400 1600 1800 2000)
+                                  "......" "----------------"))
+
+      ;; Display tags farther right
+      (setq org-agenda-tags-column -102)
+
+      ;; Use sticky agenda's so they persist
+      (setq org-agenda-sticky t)
+
+      (setq org-agenda-tags-todo-honor-ignore-options t)
 
       (require 'ox-odt)
       (require 'ox-texinfo)
@@ -166,9 +225,8 @@ which require an initialization must be listed explicitly in the list.")
       (require 'ox-html)
       (require 'ox-md)
 
-      ;; If idle for more than 15 minutes, resolve the things by asking what to do
-      ;; with the clock time
-      ;; (setq org-clock-idle-time 15)
+      ;; If idle for more than 15 minutes, resolve the things by asking what to do  with the clock time
+      (setq org-clock-idle-time 15)
 
       ;; log into the LOGBOOK drawer. Also stores notes there.
       (setq org-log-into-drawer t)
@@ -184,14 +242,12 @@ which require an initialization must be listed explicitly in the list.")
       ;; (without directory) as level 1 of the path
       (setq org-refile-use-outline-path 'file)
 
-      ;; allow to create new nodes (must be confirmed by the user) as
-      ;; refile targets
+      ;; allow to create new nodes (must be confirmed by the user) as refile targets
       (setq org-refile-allow-creating-parent-nodes 'confirm)
 
       ;; enable helm org refile into subsection of agenda file
       (setq org-outline-path-complete-in-steps nil)
 
-      ;;(add-hook 'org-mode-hook 'turn-on-org-cdlatex)
       (add-hook 'org-mode-hook 'org-indent-mode)
       (add-hook 'org-mode-hook 'auto-fill-mode)
 
@@ -249,9 +305,6 @@ which require an initialization must be listed explicitly in the list.")
           ("\\paragraph{%s}" . "\\paragraph*{%s}")
           ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-      (setq org-ditaa-jar-path "~/ownCloud/org/bin/ditaa.jar")
-      (setq org-plantuml-jar-path "~/ownCloud/org/bin/plantuml.jar")
-
       (org-babel-do-load-languages
        'org-babel-load-languages
        '((python . t)
@@ -273,13 +326,21 @@ which require an initialization must be listed explicitly in the list.")
           (replace-regexp-in-string "\\`\\\\[A-Za-z0-9]+" "\\\\structure" contents)))
 
       (add-to-list 'org-export-filter-bold-functions 'my-beamer-bold)
-      (add-to-list 'org-export-filter-strike-through-functions
-                   'my-beamer-structure)
+      (add-to-list 'org-export-filter-strike-through-functions 'my-beamer-structure)
 
       (setq org-confirm-babel-evaluate nil)
 
       (setq org-todo-keywords
-            (quote ((sequence  "TODO(t)" "DOING(o)" "BLOCKED(b@/!)" "|" "DONE(d!)" "CANCELED(c@/!)") )))
+            (quote ((sequence "TODO(t)" "INPR(i)" "|" "DONE(d)")
+                    (sequence "WAIT(w@/!)" "HOLD(h@/!)" "|" "CNCL(c@/!)"))))
+
+      (setq org-todo-keyword-faces
+            (quote (("TODO" :foreground "#f36c60" :weight bold)
+                    ("DONE" :foreground "#8fb573" :weight bold)
+                    ("INPR" :foreground "#aaaaff" :weight bold)
+                    ("WAIT" :foreground "#dbb671" :weight bold)
+                    ("HOLD" :foreground "#70c2be" :weight bold)
+                    ("CNCL" :foreground "#8fb573" :weight bold))))
 
       ;; (setq org-enforce-todo-dependencies t)
       (setq org-use-fast-todo-selection t)
@@ -287,22 +348,8 @@ which require an initialization must be listed explicitly in the list.")
       ;; if state is changed using shift then no dates or notes are recorded
       (setq org-treat-S-cursor-todo-selection-as-state-change nil)
 
-      (setq org-todo-state-tags-triggers
-            (quote ((done ("CANCELED") ("DOING") ("BLOCKED"))
-                    ("TODO" ("CANCELED") ("DOING") ("BLOCKED"))
-                    ("DOING" ("BLOCKED") ("DOING" . t))
-                    ("BLOCKED" ("DOING") ("BLOCKED" . t))
-                    ("DONE" ("CANCELED") ("DOING") ("BLOCKED"))
-                    ("CANCELED" ("DOING") ("CANCELED" . t)))))
-
-      (setq org-tags-exclude-from-inheritance '("PRJ")
-            org-stuck-projects '("+PRJ/-DONE-CANCELED" ("TODO") ()))
-
-      ;; (setq org-todo-keyword-faces
-      ;;       '(("TODO" . org-warning) ("STARTED" . "yellow")
-      ;;         ("CANCELED" . (:foreground "blue" :weight bold))))
-
-      (setq org-agenda-diary-file "~/ownCloud/org/diary.org")
+      (setq org-tags-exclude-from-inheritance '("PRJ"))
+      (setq org-stuck-projects '("+PRJ/-DONE-CNCL" ("TODO" "WAIT" "HOLD") ()))
 
       ;; Diary
       (require 'holidays)
@@ -341,8 +388,8 @@ which require an initialization must be listed explicitly in the list.")
                      "* %?\n%U\n")
                     ("d" "all day journal" entry (file+olp+datetree "~/ownCloud/org/roam/areas/agenda/diary.org")
                      "* %?\n%t\n")
-                    ("e" "event" entry (file "~/ownCloud/org/roam/areas/agenda/calender.org")
-                     "* %^{Description}\n%^t\n%?")
+                    ;; ("e" "event" entry (file "~/ownCloud/org/roam/areas/agenda/calender.org")
+                    ;;  "* %^{Description}\n%^t\n%?")
                     ("m" "meeting" entry (file "~/ownCloud/org/roam/areas/agenda/refile.org")
                      "* %? :MEETING:\n%U" :clock-in t :clock-resume t)
                     ("p" "phone call" entry (file "~/ownCloud/org/roam/areas/agenda/refile.org")
@@ -350,65 +397,29 @@ which require an initialization must be listed explicitly in the list.")
                     ("a" "habit" entry (file "~/ownCloud/org/roam/areas/agenda/refile.org")
                      "* TODO %?\n%U\n%a\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %a .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: TODO\n:END:\n"))))
 
-      ;; Do not dim blocked tasks
-      (setq org-agenda-dim-blocked-tasks nil)
 
-      ;; Compact the block agenda view
-      (setq org-agenda-compact-blocks t)
-
-      ; Enable habit tracking (and a bunch of other modules)
-      (setq org-modules (quote (ol-bbdb
-                                ol-bibtex
+      (setq org-modules (quote (ol-bibtex
                                 org-crypt
                                 ol-gnus
                                 org-id
                                 ol-info
                                 org-habit
                                 org-inlinetask
-                                ol-irc
-                                ol-mew
-                                ol-mhe
                                 org-protocol
-                                ol-rmail
-                                ol-vm
-                                ol-wl
-                                ol-w3m)))
+                                )))
 
       (require 'org-habit)
 
       (setq org-show-entry-below (quote ((default))))
 
-      ;; Limit restriction lock highlighting to the headline only
-      (setq org-agenda-restriction-lock-highlight-subtree nil)
 
       ;; Always highlight the current agenda line
       (add-hook 'org-agenda-mode-hook
                 #'(lambda () (hl-line-mode 1))
                 'append)
 
-      ;; Keep tasks with dates on the global todo lists
-      (setq org-agenda-todo-ignore-with-date nil)
-
-      ;; Keep tasks with deadlines on the global todo lists
-      (setq org-agenda-todo-ignore-deadlines nil)
-
-      ;; Keep tasks with scheduled dates on the global todo lists
-      (setq org-agenda-todo-ignore-scheduled nil)
-
-      ;; Keep tasks with timestamps on the global todo lists
-      (setq org-agenda-todo-ignore-timestamp nil)
-
-      ;; Remove completed deadline tasks from the agenda view
-      (setq org-agenda-skip-deadline-if-done t)
-
-      ;; Remove completed scheduled tasks from the agenda view
-      (setq org-agenda-skip-scheduled-if-done t)
-
-      ;; Remove completed items from search results
-      (setq org-agenda-skip-timestamp-if-done t)
-
       (setq org-archive-mark-done nil)
-      (setq org-archive-location "~/ownCloud/org/roam/archive/%s_archive::* Archived Tasks")
+      (setq org-archive-location "~/ownCloud/org/roam/areas/archive/%s_archive::* Archived Tasks")
 
       ;; (setq org-agenda-start-with-log-mode '(clock))
 
@@ -427,8 +438,6 @@ which require an initialization must be listed explicitly in the list.")
       ;; (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
 
       (setq org-tags-exclude-from-inheritance (quote ("PRJ")))
-
-      (setq org-agenda-tags-todo-honor-ignore-options t)
 
       ;; Custom agenda command definitions
       (setq org-agenda-custom-commands
@@ -482,18 +491,22 @@ which require an initialization must be listed explicitly in the list.")
                       (tags "REFILE"
                         ((org-agenda-overriding-header "Stuff to refile")
                          (org-tags-match-list-sublevels nil)))
-                      (tags "-PRJ+TODO=\"TODO\""
+                      (tags "-PRJ/TODO"
                         ((org-agenda-overriding-header "Todo")
                          (org-agenda-todo-list-sublevels nil)
                          (org-agenda-sorting-strategy '(priority-down))))
-                      (tags "-PRJ+TODO=\"DOING\""
-                        ((org-agenda-overriding-header "Doing")
+                      (tags "-PRJ/INPR"
+                        ((org-agenda-overriding-header "In progress")
                          (org-agenda-todo-list-sublevels nil)
                          (org-agenda-sorting-strategy '(priority-down))))
-                      (tags "-PRJ+TODO=\"BLOCKED\""
-                        ((org-agenda-overriding-header "Blocked")
+                      (tags "-PRJ/WAIT"
+                        ((org-agenda-overriding-header "Waiting")
+                          (org-agenda-todo-list-sublevels nil)
+                          (org-agenda-sorting-strategy '(priority-down)))
+                      (tags "-PRJ/HOLD"
+                        ((org-agenda-overriding-header "On hold")
                          (org-agenda-todo-list-sublevels nil)
-                         (org-agenda-sorting-strategy '(priority-down))))))
+                         (org-agenda-sorting-strategy '(priority-down)))))))
 
                     ("k" "Kanban agenda (projects only)"
                      ((agenda ""
@@ -503,21 +516,26 @@ which require an initialization must be listed explicitly in the list.")
                         ((org-agenda-overriding-header "Stuff to refile")
                          (org-agenda-prefix-format "  %?-12t% s")
                          (org-tags-match-list-sublevels nil)))
-                      (tags "+PRJ+TODO=\"TODO\""
+                      (tags "PRJ/TODO"
                         ((org-agenda-overriding-header "Todo")
                          (org-agenda-todo-list-sublevels nil)
                          (org-agenda-prefix-format "  %?-12t% s")
                          (org-agenda-sorting-strategy '(priority-down))))
-                      (tags "+PRJ+TODO=\"DOING\""
-                        ((org-agenda-overriding-header "Doing")
+                      (tags "PRJ/INPR"
+                        ((org-agenda-overriding-header "In progress")
                          (org-agenda-todo-list-sublevels nil)
                          (org-agenda-prefix-format "  %?-12t% s")
                          (org-agenda-sorting-strategy '(priority-down))))
-                      (tags "+PRJ+TODO=\"BLOCKED\""
-                        ((org-agenda-overriding-header "BLOCKED")
+                      (tags "PRJ/WAIT"
+                        ((org-agenda-overriding-header "Waiting")
                          (org-agenda-todo-list-sublevels nil)
                          (org-agenda-prefix-format "  %?-12t% s")
-                         (org-agenda-sorting-strategy '(priority-down))))))
+                         (org-agenda-sorting-strategy '(priority-down))))
+                      (tags "PRJ/HOLD"
+                          ((org-agenda-overriding-header "On hold")
+                          (org-agenda-todo-list-sublevels nil)
+                          (org-agenda-prefix-format "  %?-12t% s")
+                          (org-agenda-sorting-strategy '(priority-down))))))
 
                     ("K" "Kanban agenda (projects + tasks)"
                      ((agenda ""
@@ -530,49 +548,19 @@ which require an initialization must be listed explicitly in the list.")
                         ((org-agenda-overriding-header "Todo")
                          (org-agenda-todo-list-sublevels nil)
                          (org-agenda-sorting-strategy '(priority-down))))
-                      (todo "DOING"
-                        ((org-agenda-overriding-header "Doing")
+                      (todo "INPR"
+                        ((org-agenda-overriding-header "In progress")
                          (org-agenda-todo-list-sublevels nil)
                          (org-agenda-sorting-strategy '(priority-down))))
-                      (todo "BLOCKED"
-                        ((org-agenda-overriding-header "Blocked")
+                      (todo "WAIT"
+                        ((org-agenda-overriding-header "Waiting")
                          (org-agenda-todo-list-sublevels nil)
-                         (org-agenda-sorting-strategy '(priority-down))))))
+                         (org-agenda-sorting-strategy '(priority-down))))
+                      (todo "HOLD"
+                          ((org-agenda-overriding-header "On hold")
+                          (org-agenda-todo-list-sublevels nil)
+                          (org-agenda-sorting-strategy '(priority-down))))))
                     )))
-
-      ;; Include agenda archive files when searching for things
-      (setq org-agenda-text-search-extra-files (quote (agenda-archives)))
-
-      ;; Show all future entries for repeating tasks
-      (setq org-agenda-repeating-timestamp-show-all t)
-
-      ;; Show all agenda dates - even if they are empty
-      (setq org-agenda-show-all-dates t)
-
-      ;; Sorting order for tasks on the agenda
-      (setq org-agenda-sorting-strategy
-            (quote ((agenda habit-down time-up user-defined-up effort-up category-keep)
-                    (todo category-up effort-up)
-                    (tags category-up effort-up)
-                    (search category-up))))
-
-      ;; Start the weekly agenda on Monday
-      (setq org-agenda-start-on-weekday 1)
-
-      ;; Enable display of the time grid so we can see the marker for the current time
-      ;; (setq org-agenda-time-grid (quote ((daily today remove-match)
-      ;;                                    #("----------------" 0 16 (org-heading t))
-      ;;                                    (0900 1100 1300 1500 1700))))
-
-      (setq org-agenda-time-grid '((daily today)
-                                  (800 1000 1200 1400 1600 1800 2000)
-                                  "......" "----------------"))
-
-      ;; Display tags farther right
-      (setq org-agenda-tags-column -102)
-
-      ;; Use sticky agenda's so they persist
-      (setq org-agenda-sticky t)
 
       ;; Resume clocking task when emacs is restarted
       (org-clock-persistence-insinuate)
@@ -583,8 +571,8 @@ which require an initialization must be listed explicitly in the list.")
       ;; Resume clocking task on clock-in if the clock is open
       (setq org-clock-in-resume t)
 
-      ;; Change tasks to NEXT when clocking in
-      ;; (setq org-clock-in-switch-to-state "DOING")
+      ;; Change tasks to "in progress" when clocking in
+      (setq org-clock-in-switch-to-state "INPR")
 
       ;; Separate drawers for clocking and logs
       (setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
