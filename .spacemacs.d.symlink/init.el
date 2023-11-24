@@ -683,7 +683,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                                         :width normal)
 
           browse-url-generic-program "google-chrome"
-          org-odt-data-dir "/usr/share/emacs/26.3/etc/org")
+          org-odt-data-dir "/usr/share/emacs/27.1/etc/org")
       (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
 
     (when (eq (dotfiles/machine-location) 'home)
