@@ -810,6 +810,9 @@ before packages are loaded."
    (evil-set-undo-system 'undo-redo)
 
    (spacemacs/toggle-mode-line-minor-modes-off)
+
+   (setq writeroom-width 120)
+   (setq writeroom-fullscreen-effect 'maximized)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

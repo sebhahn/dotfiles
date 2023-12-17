@@ -76,8 +76,13 @@ which require an initialization must be listed explicitly in the list.")
 
       (spacemacs/declare-prefix "oj" "org-journal")
       (spacemacs/set-leader-keys
-        "ojn" 'org-journal-new-entry
-        "ojs" 'org-journal-new-scheduled-entry
+        "ojk" 'org-journal-new-entry
+        "oje" 'org-journal-new-scheduled-entry
+        "ojs" 'org-journal-search
+        "ojn" 'org-journal-next-entry
+        "ojd" 'org-journal-display-entry
+        "ojp" 'org-journal-previous-entry
+        "ojf" 'org-journal-open-current-journal-file
         "oTh" 'org-toggle-heading)
 
       (spacemacs/declare-prefix "ok" "org-agenda")
@@ -114,6 +119,7 @@ which require an initialization must be listed explicitly in the list.")
 
       (spacemacs/declare-prefix-for-mode 'org-mode "k" "org-clock")
       (spacemacs/set-leader-keys-for-major-mode 'org-mode
+        "is" 'org-insert-subheading-respect-content
         "ki" 'org-clock-in
         "ko" 'org-clock-out
         "kc" 'org-clock-cancel
@@ -138,6 +144,11 @@ which require an initialization must be listed explicitly in the list.")
     :post-config
     (progn
 
+      (defun org-insert-subheading-respect-content (&optional)
+        (interactive)
+        (let ((org-insert-heading-respect-content t))
+          (org-insert-subheading t)))
+
       ;; (setq org-replace-disputed-keys t)
       (setq org-src-fontify-natively t)
       (setq org-return-follows-link t)
@@ -147,11 +158,12 @@ which require an initialization must be listed explicitly in the list.")
 
       (setq org-contacts-files (list "~/ownCloud/org/roam/areas/agenda/contacts.org"))
 
-      (setq org-journal-dir "~/ownCloud/org/roam/areas/daily")
-      (setq org-journal-date-prefix "#+title: ")
-      (setq org-journal-file-format "%Y-%m-%d.org")
+      (setq org-journal-dir "~/ownCloud/org/roam/areas/yearly")
+      (setq org-journal-date-prefix "* ")
+      (setq org-journal-file-type 'yearly)
+      (setq org-journal-file-format "%Y.org")
       (setq org-journal-date-format "%A, %d %B %Y")
-      ;; (setq org-journal-time-format "%m-%d")
+      (setq org-journal-time-format "%Y-%m-%d %I:%M %p")
 
       (setq org-default-notes-file "~/ownCloud/org/roam/areas/agenda/refile.org")
       (setq org-directory "~/ownCloud/org/roam")
@@ -226,7 +238,7 @@ which require an initialization must be listed explicitly in the list.")
       (require 'ox-md)
 
       ;; If idle for more than 15 minutes, resolve the things by asking what to do  with the clock time
-      (setq org-clock-idle-time 15)
+      (setq org-clock-idle-time 90)
 
       ;; log into the LOGBOOK drawer. Also stores notes there.
       (setq org-log-into-drawer t)
@@ -572,7 +584,7 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-clock-in-resume t)
 
       ;; Change tasks to "in progress" when clocking in
-      (setq org-clock-in-switch-to-state "INPR")
+      ;; (setq org-clock-in-switch-to-state "INPR")
 
       ;; Separate drawers for clocking and logs
       (setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
