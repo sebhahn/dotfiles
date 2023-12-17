@@ -813,6 +813,7 @@ before packages are loaded."
 
    (setq writeroom-width 120)
    (setq writeroom-fullscreen-effect 'maximized)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
