@@ -59,7 +59,7 @@ Wiedner Hauptstraße 8-18
 
 +43 1 58801 12240
 sebastian.hahn@geo.tuwien.ac.at
-https://www.tuwien.at/mg/geo/rs/")
+https://tuwien.at/mg/geo/rs/")
 
 (defun my-mu4e/init-mml2015 ()
   (use-package mml2015
