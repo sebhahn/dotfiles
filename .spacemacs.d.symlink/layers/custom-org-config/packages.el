@@ -134,6 +134,16 @@ which require an initialization must be listed explicitly in the list.")
         "kv" 'org-clock-remove-overlays
         "kl" 'org-clock-in-last)
 
+      (spacemacs/declare-prefix-for-mode 'org-mode "j" "org-journal")
+      (spacemacs/set-leader-keys
+        "jk" 'org-journal-new-entry
+        "je" 'org-journal-new-scheduled-entry
+        "js" 'org-journal-search
+        "jn" 'org-journal-next-entry
+        "jd" 'org-journal-display-entry
+        "jp" 'org-journal-previous-entry
+        "jf" 'org-journal-open-current-journal-file)
+
       (spacemacs/set-leader-keys
         "oS" 'org-download-screenshot
         "oC" 'org-download-clipboard
@@ -158,11 +168,11 @@ which require an initialization must be listed explicitly in the list.")
 
       (setq org-contacts-files (list "~/ownCloud/org/roam/areas/agenda/contacts.org"))
 
-      (setq org-journal-dir "~/ownCloud/org/roam/areas/yearly")
+      (setq org-journal-dir "~/ownCloud/org/roam/areas/agenda")
       (setq org-journal-date-prefix "* ")
       (setq org-journal-file-type 'yearly)
       (setq org-journal-file-format "%Y.org")
-      (setq org-journal-date-format "%A, %d %B %Y")
+      (setq org-journal-date-format "%a, %d %b %Y")
       (setq org-journal-time-format "%Y-%m-%d %I:%M %p")
 
       (setq org-default-notes-file "~/ownCloud/org/roam/areas/agenda/refile.org")
