@@ -33,110 +33,98 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-      ansible
-      ;;asciidoc
-      (auto-completion
-        :variables
-        auto-completion-return-key-behavior 'complete
-        auto-completion-tab-key-behavior 'cycle
-        auto-completion-complete-with-key-sequence "jk"
-        auto-completion-complete-with-key-sequence-delay 0.1
-        auto-completion-minimum-prefix-length 3
-        auto-completion-idle-delay 0.4
-        auto-completion-private-snippets-directory nil
-        auto-completion-enable-snippets-in-popup nil
-        auto-completion-enable-help-tooltip nil
-        auto-completion-use-company-box nil
-        auto-completion-enable-sort-by-usage t
-        :disabled-for org git)
-      (bibtex :variables
-              bibtex-enable-ebib-support t
-              ebib-preload-bib-files '("~/ownCloud/areas/research/latex/zotero.bib")
-              ebib-file-search-dirs '("~/ownCloud/areas/research/publications/")
-              ebib-file-associations '(("pdf" . "zathura") ("ps" . "gv"))
-              ebib-import-directory "~/ownCloud/areas/research/publications/")
-      ;; c-c++
-      colors
-      (compleseus :variables
-                  compleseus-engine 'vertico)
-      csv
-      custom-org-config
-      ;; dash
-      emacs-lisp
-      (elfeed
-       :variables
-       rmh-elfeed-org-files (list "~/ownCloud/org/elfeed/elfeed.org")
-       elfeed-db-directory "~/ownCloud/org/elfeed/db"
-       elfeed-goodies/entry-pane-position 'bottom)
-      ;; elixir
-      ;; erc
-      ;; epub
-      ;; erlang
-      ;; ess
-      (git
-        :variables
-        git-gutter-use-fringe t)
-      fasd
-      ;; gnus
-      ;;helm
-      ;; html
-      ;; ipython-notebook
-      (latex
-       :variables
-       font-latex-fontify-script nil
-       latex-enable-auto-fill nil
-       latex-enable-folding t)
-      lsp
-      lua
-      json
-      markdown
-      multiple-cursors
-      ;; my-consult
-      my-eglot
-      my-mermaid
-      my-mu4e
-      my-org
-      my-org-roam
-      ;; my-research
-      my-python
-      (org
-        :packages (not org-roam)
-        :variables org-enable-reveal-js-support t
-                   org-enable-org-journal-support t
-                   org-enable-org-contacts-support t
-                   org-enable-epub-support t)
-      pandoc
-      (plantuml
-        :variables
-        plantuml-jar-path "~/ownCloud/org/bin/plantuml.jar"
-        plantuml-default-exec-mode 'jar)
-      (python
-        :variables
-        python-backend 'anaconda
-        python-formatter 'yapf
-        ;; python-format-on-save t
-        python-auto-set-local-pyenv-version 'on-project-switch
-        python-test-runner 'pytest)
-      ;; ranger
-      ;; rust
-      search-engine
-      ;;semantic
-      (shell
-        :variables
-        shell-default-shell 'term
-        shell-default-term-shell "/bin/zsh")
-      shell-scripts
-      spell-checking
-      (syntax-checking
-       :variables
-       syntax-checking-enable-tooltips nil)
-      tmux
-      (version-control
-       :variables
-       version-control-diff-tool 'git-gutter
-       version-control-global-margin t)
-      xclipboard
-      yaml
+     ansible
+     (auto-completion
+      :variables
+      auto-completion-return-key-behavior 'complete
+      auto-completion-tab-key-behavior 'cycle
+      auto-completion-complete-with-key-sequence "jk"
+      auto-completion-complete-with-key-sequence-delay 0.1
+      auto-completion-minimum-prefix-length 3
+      auto-completion-idle-delay 0.4
+      auto-completion-private-snippets-directory nil
+      auto-completion-enable-snippets-in-popup nil
+      auto-completion-enable-help-tooltip nil
+      auto-completion-use-company-box nil
+      auto-completion-enable-sort-by-usage t
+      :disabled-for org git)
+     (bibtex :variables
+             bibtex-enable-ebib-support t
+             ebib-preload-bib-files '("~/ownCloud/areas/research/latex/zotero.bib")
+             ebib-file-search-dirs '("~/ownCloud/areas/research/publications/")
+             ebib-file-associations '(("pdf" . "zathura") ("ps" . "gv"))
+             ebib-import-directory "~/ownCloud/areas/research/publications/")
+     colors
+     (compleseus :variables
+                 compleseus-engine 'vertico)
+     csv
+     custom-org-config
+     (emacs-lisp
+      :variables
+      emacs-lisp-enable-flycheck t)
+     (elfeed
+      :variables
+      rmh-elfeed-org-files (list "~/ownCloud/org/elfeed/elfeed.org")
+      elfeed-db-directory "~/ownCloud/org/elfeed/db"
+      elfeed-goodies/entry-pane-position 'bottom)
+     (git
+      :variables
+      git-gutter-use-fringe t)
+     fasd
+     html
+     ipython-notebook
+     (latex
+      :variables
+      font-latex-fontify-script nil
+      latex-enable-auto-fill nil
+      latex-enable-folding t)
+     lsp
+     lua
+     json
+     markdown
+     multiple-cursors
+     my-eglot
+     my-mermaid
+     my-mu4e
+     my-org
+     my-org-roam
+     my-python
+     (org
+      :packages (not org-roam)
+      :variables org-enable-reveal-js-support t
+      org-enable-org-journal-support t
+      org-enable-org-contacts-support t
+      org-enable-epub-support t)
+     pandoc
+     (plantuml
+      :variables
+      plantuml-jar-path "~/ownCloud/org/bin/plantuml.jar"
+      plantuml-default-exec-mode 'jar)
+     (python
+      :variables
+      python-backend 'anaconda
+      python-formatter 'yapf
+      ;; python-format-on-save t
+      python-auto-set-local-pyenv-version 'on-project-switch
+      python-test-runner 'pytest)
+     search-engine
+     semantic
+     (shell
+      :variables
+      shell-default-shell 'term
+      shell-default-term-shell "/bin/zsh")
+     shell-scripts
+     spell-checking
+     (syntax-checking
+      :variables
+      syntax-checking-enable-tooltips nil)
+     tmux
+     (version-control
+      :variables
+      version-control-diff-tool 'git-gutter
+      version-control-global-margin t)
+     xclipboard
+     yaml
      )
 
    ;; List of additional packages that will be installed without being
@@ -148,6 +136,7 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(sqlite3
                                       ripgrep
+                                      catppuccin-theme
                                       modus-themes
                                       exec-path-from-shell)
 
@@ -325,6 +314,8 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '((atom-one-dark :location "~/.spacemacs.d/atom-one-dark-theme")
+                         catppuccin
+                         modus-vivendi
                          (material :location "~/.spacemacs.d/material-theme")
                          spacemacs-dark)
 
@@ -634,7 +625,7 @@ default it calls `spacemacs/load-spacemacs-env' which loads the environment
 variables declared in `~/.spacemacs.env' or `~/.spacemacs.d/.spacemacs.env'.
 See the header of this file for more information."
   (spacemacs/load-spacemacs-env)
-)
+  )
 
 (defun dotspacemacs/user-init ()
   "Initialization for user code:
@@ -643,61 +634,57 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
-    ;; (setq byte-compile-warnings '(cl-functions))
+  ;; (setq byte-compile-warnings '(cl-functions))
+  (setq configuration-layer--elpa-archives '(("melpa" . "melpa.org/packages/")
+                                             ("org" . "orgmode.org/elpa/")
+                                             ("gnu" . "elpa.gnu.org/packages/")))
 
-    (setq configuration-layer--elpa-archives '(("melpa" . "melpa.org/packages/")
-                                               ("org" . "orgmode.org/elpa/")
-                                               ("gnu" . "elpa.gnu.org/packages/")))
+  (defun dotfiles/machine-location ()
+    "Get the machine location. Either returns home or work at the moment"
+    (let ((machines '(("shahn" . work)
+                      ("project4" . work)
+                      ("project5" . work)
+                      ("project6" . work)
+                      ("project9" . work)
+                      ("project10" . work)
+                      ("project12" . work)
+                      ("project14" . work)
+                      ("shahn-7490" . home))))
+      (cdr (assoc system-name machines))))
 
-    (defun dotfiles/machine-location ()
-      "Get the machine location. Either returns home or work at the moment"
-      (let ((machines '(("shahn" . work)
-                        ("project4" . work)
-                        ("project5" . work)
-                        ("project6" . work)
-                        ("project9" . work)
-                        ("project10" . work)
-                        ("project12" . work)
-                        ("project14" . work)
-                        ("shahn-7490" . home))))
-            (cdr (assoc system-name machines))))
+  (setq dotspacemacs-default-font '("JetBrainsMono Nerd Font"
+                                    :size 11.0
+                                    :weight Medium
+                                    :width normal)
+        browse-url-generic-program "google-chrome")
 
-    (setq dotspacemacs-default-font '("Hack Nerd Font"
+  (when (eq (dotfiles/machine-location) 'work)
+    (setq dotspacemacs-default-font '("JetBrainsMono Nerd Font"
                                       :size 11.0
-                                      :weight normal
-                                      :width normal
-                                      :powerline-scale 1.0)
-
-          browse-url-generic-program "google-chrome")
-
-    (when (eq (dotfiles/machine-location) 'work)
-      (setq dotspacemacs-default-font '("Hack Nerd Font"
-                                        :size 11.0
-                                        :weight normal
-                                        :width normal
-                                        :powerline-scale 1.0)
+                                      :weight Medium
+                                      :width normal)
 
           browse-url-generic-program "google-chrome"
           org-odt-data-dir "/usr/share/emacs/27.1/etc/org")
-      (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
+    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
 
-    (when (eq (dotfiles/machine-location) 'home)
-      (setq dotspacemacs-default-font '("JetBrainsMono Nerd Font"
-                                        :size 11.0
-                                        :weight normal
-                                        :width normal)
+  (when (eq (dotfiles/machine-location) 'home)
+    (setq dotspacemacs-default-font '("JetBrainsMono Nerd Font"
+                                      :size 11.0
+                                      :weight Medium
+                                      :width normal)
 
-            browse-url-generic-program "google-chrome-stable"
-            ;; exec-path-from-shell-arguments (list "-i")
-            org-odt-data-dir "/usr/share/emacs/27.1/etc/org")
+          browse-url-generic-program "google-chrome-stable"
+          ;; exec-path-from-shell-arguments (list "-i")
+          org-odt-data-dir "/usr/share/emacs/27.1/etc/org")
 
-      (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
+    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
 
-    (add-to-list 'load-path "~/.spacemacs.d" t)
+  (add-to-list 'load-path "~/.spacemacs.d" t)
 
-    ;; make sure customize stuff is written into different file
-    (setq custom-file "~/.spacemacs.d/custom.el")
-    (load custom-file)
+  ;; make sure customize stuff is written into different file
+  (setq custom-file "~/.spacemacs.d/custom.el")
+  (load custom-file)
   )
 
 (defun dotspacemacs/user-load ()
@@ -705,7 +692,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
 dump."
-)
+  )
 
 
 (defun dotspacemacs/user-config ()
@@ -725,13 +712,15 @@ before packages are loaded."
       (org-agenda nil "k")
       (delete-other-windows)
       (split-window-right)
-      (mu4e)))
+      (find-file "~/ownCloud/org/roam/areas/agenda/2024.org")))
 
   (spacemacs|define-custom-layout "@org-roam"
     :binding "r"
     :body
     (progn
-      (find-file "~/ownCloud/org/roam/index.org")))
+      (find-file "~/ownCloud/org/roam/index.org")
+      (split-window-right)
+      (find-file "~/ownCloud/org/roam/areas/agenda/2024.org")))
 
   (setq sp-highlight-pair-overlay nil
         sp-escape-quotes-after-insert nil
@@ -741,8 +730,8 @@ before packages are loaded."
   (setq spacemacs-space-doc-modificators nil)
 
   ;; enable fundamental-mode snippets for all modes
-  ;; (add-hook 'yas-minor-mode-hook
-  ;;           (lambda () (yas-activate-extra-mode 'fundamental-mode)))
+  (add-hook 'yas-minor-mode-hook
+            (lambda () (yas-activate-extra-mode 'fundamental-mode)))
 
   (global-visual-line-mode t)
 
@@ -795,44 +784,48 @@ before packages are loaded."
 
   ;; fix issue with org-roam buffer
   ;; https://github.com/org-roam/org-roam/issues/1732
-   (global-page-break-lines-mode 0)
+  (global-page-break-lines-mode 0)
 
-   ;; remove windmove-mode, shadows org bindings
-   (windmove-mode 0)
+  ;; remove windmove-mode, shadows org bindings
+  (windmove-mode 0)
 
-   ;; disable undo-tree
-   (global-undo-tree-mode -1)
-   (setq evil-undo-system 'undo-redo)
-   (evil-set-undo-system 'undo-redo)
+  ;; disable undo-tree
+  (global-undo-tree-mode -1)
+  (setq evil-undo-system 'undo-redo)
+  (evil-set-undo-system 'undo-redo)
 
-   ;; (spacemacs/toggle-mode-line-minor-modes-off)
+  ;; (spacemacs/toggle-mode-line-minor-modes-off)
 
-   (setq writeroom-width 120)
-   (setq writeroom-fullscreen-effect 'maximized)
-   (setq anzu-cons-mode-line-p nil)
+  (setq writeroom-width 120)
+  (setq writeroom-fullscreen-effect 'maximized)
 
-    (setq doom-modeline-bar-width 3
-          doom-modeline-height 25
-          doom-modeline-major-mode-icon t
-          doom-modeline-buffer-file-name-style 'auto
-          doom-modeline-buffer-state-icon t
-          doom-modeline-minor-modes nil
-          doom-modeline-enable-word-count t
-          doom-modeline-modal-icon t
-          doom-modeline-github nil ;; Set to t if you want to show github notifications
-          doom-modeline-gnus nil   ;; Set to t if you want to show gnus notifications
-          doom-modeline-irc nil    ;; Set to t if you want to show irc notifications
-          doom-modeline-lsp t
-          doom-modeline-indent-info nil
-          ;; doom-modeline-enable-word-count t
-          ;; doom-modeline-continuous-word-count-modes '(markdown-mode gfm-mode org-mode)
-          doom-modeline-checker-simple-format nil)
+  ;; remove, handled by modeline
+  (setq anzu-cons-mode-line-p nil)
 
-    (setq doom-modeline-env-enable-python nil)
+  (setq doom-modeline-bar-width 3
+        doom-modeline-height 25
+        doom-modeline-major-mode-icon t
+        doom-modeline-buffer-file-name-style 'auto
+        doom-modeline-buffer-state-icon t
+        doom-modeline-minor-modes nil
+        doom-modeline-enable-word-count t
+        doom-modeline-modal-icon t
+        doom-modeline-github nil ;; Set to t if you want to show github notifications
+        doom-modeline-gnus nil   ;; Set to t if you want to show gnus notifications
+        doom-modeline-irc nil    ;; Set to t if you want to show irc notifications
+        doom-modeline-lsp t
+        doom-modeline-indent-info nil
+        ;; doom-modeline-enable-word-count t
+        ;; doom-modeline-continuous-word-count-modes '(markdown-mode gfm-mode org-mode)
+        doom-modeline-checker-simple-format nil)
 
-    (setq mu4e-modeline-all-read '("R:" . "🌀"))
+  (setq doom-modeline-env-enable-python nil)
 
-)
+  (setq mu4e-modeline-all-read '("R:" . "🌀"))
+
+  ;; (setq catppuccin-flavor 'macchiato) ;; or 'latte, 'macchiato, or 'mocha
+  ;; (catppuccin-reload)
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
