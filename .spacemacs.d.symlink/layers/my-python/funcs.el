@@ -1,22 +1,3 @@
-
-(defun my-python/python-execute-file (arg)
-  "Execute a python script in a shell."
-  (interactive "P")
-  ;; set compile command to buffer-file-name
-  ;; universal argument put compile buffer in comint mode
-  (let ((universal-argument t)
-        (compile-command (format "%s %s"
-                                 (spacemacs/pyenv-executable-find python-shell-interpreter)
-                                 (shell-quote-argument (file-name-nondirectory buffer-file-name)))))
-
-    (if arg
-      (call-interactively 'compile)
-      (compile compile-command t)
-      (print compile-command)
-      (with-current-buffer (get-buffer "*compilation*")
-        (inferior-python-mode)))
-    ))
-
 (defun my-python/send-region-compilation(start end)
   (interactive "r")
   (let ((cur-window (selected-window)))
@@ -34,6 +15,25 @@
   (evil-insert-state)
   (execute-kbd-macro (read-kbd-macro "DEL"))
   (execute-kbd-macro (read-kbd-macro "RET")))
+
+(defun my-python/python-execute-file ()
+  "Execute a python script in a shell."
+  (interactive)
+  (let* ((universal-argument t)
+         (compile-command (format "%s %s"
+                                  (spacemacs/pyenv-executable-find python-shell-interpreter)
+                                  (shell-quote-argument (file-name-nondirectory buffer-file-name))))
+         (compilation-buffer-name "*compilation*"))
+
+    ;; Ensure a new compilation buffer is created
+    (with-current-buffer (get-buffer-create compilation-buffer-name)
+      (rename-buffer (generate-new-buffer-name compilation-buffer-name)))
+
+    (compile compile-command)
+
+    ;; Switch to the new compilation buffer
+    (with-current-buffer compilation-buffer-name
+      (inferior-python-mode))))
 
 ;; (with-eval-after-load 'compile
 ;;   (add-hook 'compilation-mode-hook
