@@ -148,13 +148,16 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(sqlite3
                                       ripgrep
+                                      modus-themes
                                       exec-path-from-shell)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(material-theme
+                                    vi-tilde-fringe
+                                    )
 
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -321,20 +324,8 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(material
-                         base16-material-palenight
-                         base16-materia
-                         base16-material
-                         ;; base16-material-darker
-                         ;; base16-onedark
-                         ;; base16-spacemacs
-                         base16-3024
-                         base16-eighties
-                         base16-tomorrow-night
-                         hemisu-dark
-                         farmhouse-dark
-                         apropospriate-dark
-                         majapahit-dark
+   dotspacemacs-themes '((atom-one-dark :location "~/.spacemacs.d/atom-one-dark-theme")
+                         (material :location "~/.spacemacs.d/material-theme")
                          spacemacs-dark)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
@@ -345,7 +336,8 @@ It should only modify the values of Spacemacs settings."
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
    ;; dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
-   dotspacemacs-mode-line-theme '(spacemacs)
+   ;; dotspacemacs-mode-line-theme '(spacemacs :separator alternate :separator-scale 0.9)
+   dotspacemacs-mode-line-theme '(doom)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -355,10 +347,10 @@ It should only modify the values of Spacemacs settings."
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
    dotspacemacs-default-font '("Hack Nerd Font Mono"
-                               :size 14
+                               :size 10.0
                                :weight normal
                                :width normal
-                               :powerline-scale 0.5)
+                               :powerline-scale 0.9)
 
    ;; The leader key (default "SPC")
    dotspacemacs-leader-key "SPC"
@@ -671,26 +663,30 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
             (cdr (assoc system-name machines))))
 
     (setq dotspacemacs-default-font '("Hack Nerd Font"
-                                      :size 14
+                                      :size 11.0
                                       :weight normal
-                                      :width normal)
+                                      :width normal
+                                      :powerline-scale 1.0)
+
           browse-url-generic-program "google-chrome")
 
     (when (eq (dotfiles/machine-location) 'work)
       (setq dotspacemacs-default-font '("Hack Nerd Font"
-                                        :size 14
+                                        :size 11.0
                                         :weight normal
-                                        :width normal)
+                                        :width normal
+                                        :powerline-scale 1.0)
 
           browse-url-generic-program "google-chrome"
           org-odt-data-dir "/usr/share/emacs/27.1/etc/org")
       (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
 
     (when (eq (dotfiles/machine-location) 'home)
-      (setq dotspacemacs-default-font '("Hack Nerd Font Mono"
-                                        :size 14
+      (setq dotspacemacs-default-font '("JetBrainsMono Nerd Font"
+                                        :size 11.0
                                         :weight normal
                                         :width normal)
+
             browse-url-generic-program "google-chrome-stable"
             ;; exec-path-from-shell-arguments (list "-i")
             org-odt-data-dir "/usr/share/emacs/27.1/etc/org")
@@ -791,7 +787,7 @@ before packages are loaded."
 
   (setq python-shell-completion-native-enable nil)
 
-  (setq read-process-output-max (* 1024 1024))
+  ;; (setq read-process-output-max (* 1024 1024))
 
   (spacemacs/set-leader-keys
     "fx" 'consult-file-externally
@@ -809,12 +805,34 @@ before packages are loaded."
    (setq evil-undo-system 'undo-redo)
    (evil-set-undo-system 'undo-redo)
 
-   (spacemacs/toggle-mode-line-minor-modes-off)
+   ;; (spacemacs/toggle-mode-line-minor-modes-off)
 
    (setq writeroom-width 120)
    (setq writeroom-fullscreen-effect 'maximized)
+   (setq anzu-cons-mode-line-p nil)
 
-  )
+    (setq doom-modeline-bar-width 3
+          doom-modeline-height 25
+          doom-modeline-major-mode-icon t
+          doom-modeline-buffer-file-name-style 'auto
+          doom-modeline-buffer-state-icon t
+          doom-modeline-minor-modes nil
+          doom-modeline-enable-word-count t
+          doom-modeline-modal-icon t
+          doom-modeline-github nil ;; Set to t if you want to show github notifications
+          doom-modeline-gnus nil   ;; Set to t if you want to show gnus notifications
+          doom-modeline-irc nil    ;; Set to t if you want to show irc notifications
+          doom-modeline-lsp t
+          doom-modeline-indent-info nil
+          ;; doom-modeline-enable-word-count t
+          ;; doom-modeline-continuous-word-count-modes '(markdown-mode gfm-mode org-mode)
+          doom-modeline-checker-simple-format nil)
+
+    (setq doom-modeline-env-enable-python nil)
+
+    (setq mu4e-modeline-all-read '("R:" . "🌀"))
+
+)
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
