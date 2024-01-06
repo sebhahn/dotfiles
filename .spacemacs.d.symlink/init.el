@@ -48,15 +48,17 @@ This function should only modify configuration layer settings."
       auto-completion-use-company-box nil
       auto-completion-enable-sort-by-usage t
       :disabled-for org git)
-     (bibtex :variables
-             bibtex-enable-ebib-support t
-             ebib-preload-bib-files '("~/ownCloud/areas/research/latex/zotero.bib")
-             ebib-file-search-dirs '("~/ownCloud/areas/research/publications/")
-             ebib-file-associations '(("pdf" . "zathura") ("ps" . "gv"))
-             ebib-import-directory "~/ownCloud/areas/research/publications/")
+     (bibtex
+      :variables
+      bibtex-enable-ebib-support t
+      ebib-preload-bib-files '("~/ownCloud/areas/research/latex/zotero.bib")
+      ebib-file-search-dirs '("~/ownCloud/areas/research/publications/")
+      ebib-file-associations '(("pdf" . "zathura") ("ps" . "gv"))
+      ebib-import-directory "~/ownCloud/areas/research/publications/")
      colors
-     (compleseus :variables
-                 compleseus-engine 'vertico)
+     (compleseus
+      :variables
+      compleseus-engine 'vertico)
      csv
      custom-org-config
      (emacs-lisp
@@ -90,8 +92,10 @@ This function should only modify configuration layer settings."
      my-org-roam
      my-python
      (org
-      :packages (not org-roam)
-      :variables org-enable-reveal-js-support t
+      :packages
+      (not org-roam)
+      :variables
+      org-enable-reveal-js-support t
       org-enable-org-journal-support t
       org-enable-org-contacts-support t
       org-enable-epub-support t)
@@ -794,8 +798,6 @@ before packages are loaded."
   (setq evil-undo-system 'undo-redo)
   (evil-set-undo-system 'undo-redo)
 
-  ;; (spacemacs/toggle-mode-line-minor-modes-off)
-
   (setq writeroom-width 120)
   (setq writeroom-fullscreen-effect 'maximized)
 
@@ -820,11 +822,7 @@ before packages are loaded."
         doom-modeline-checker-simple-format nil)
 
   (setq doom-modeline-env-enable-python nil)
-
   (setq mu4e-modeline-all-read '("R:" . "🌀"))
-
-  ;; (setq catppuccin-flavor 'macchiato) ;; or 'latte, 'macchiato, or 'mocha
-  ;; (catppuccin-reload)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
