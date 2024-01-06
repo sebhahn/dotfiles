@@ -50,8 +50,8 @@ set -g mode-style fg=$tmux_orange,bg=$tmux_bg_2
 
 set -g status on
 set -g status-justify "left"
-set -g status-left-length 80
-set -g status-right-length 80
+set -g status-left-length 120
+set -g status-right-length 120
 set -g status-fg $tmux_fg
 set -g status-bg $tmux_bg
 
