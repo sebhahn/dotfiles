@@ -41,7 +41,7 @@ This function should only modify configuration layer settings."
       auto-completion-complete-with-key-sequence "jk"
       auto-completion-complete-with-key-sequence-delay 0.1
       auto-completion-minimum-prefix-length 3
-      auto-completion-idle-delay 0.4
+      auto-completion-idle-delay 0.2
       auto-completion-private-snippets-directory nil
       auto-completion-enable-snippets-in-popup nil
       auto-completion-enable-help-tooltip nil
@@ -85,12 +85,12 @@ This function should only modify configuration layer settings."
      json
      markdown
      multiple-cursors
-     my-eglot
+     ;; my-eglot
+     my-lsp-jedi
      my-mermaid
      my-mu4e
      my-org
      my-org-roam
-     my-python
      (org
       :packages
       (not org-roam)
@@ -106,13 +106,16 @@ This function should only modify configuration layer settings."
       plantuml-default-exec-mode 'jar)
      (python
       :variables
-      python-backend 'anaconda
-      python-formatter 'yapf
+      ;; python-backend 'anaconda
+      python-backend 'lsp
+      ;; python-lsp-server 'pyright
+      python-formatter 'lsp
       ;; python-format-on-save t
       python-auto-set-local-pyenv-version 'on-project-switch
       python-test-runner 'pytest)
+     ;; my-python
      search-engine
-     semantic
+     ;; semantic
      (shell
       :variables
       shell-default-shell 'term
@@ -639,6 +642,7 @@ It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   ;; (setq byte-compile-warnings '(cl-functions))
+
   (setq configuration-layer--elpa-archives '(("melpa" . "melpa.org/packages/")
                                              ("org" . "orgmode.org/elpa/")
                                              ("gnu" . "elpa.gnu.org/packages/")))
@@ -769,22 +773,21 @@ before packages are loaded."
 
   ;; (global-company-mode)
   ;; (add-hook 'python-mode-hook 'anaconda-mode)
-  ;; (add-hook 'python-mode-hook 'company-mode)
-  ;; (add-to-list 'company-backends '(company-jedi company-files))
+  (add-hook 'python-mode-hook 'company-mode)
 
-  (with-eval-after-load 'python
-    (defun spacemacs//python-setup-shell (&rest args)
-      (progn
-        (setq python-shell-interpreter-args "-i")
-        (setq python-shell-interpreter "python"))))
+  ;; (with-eval-after-load 'python
+  ;;   (defun spacemacs//python-setup-shell (&rest args)
+  ;;     (progn
+  ;;       (setq python-shell-interpreter-args "-i")
+  ;;       (setq python-shell-interpreter "python"))))
 
-  (setq python-shell-completion-native-enable nil)
+  ;; ;; (setq python-shell-completion-native-enable nil)
 
-  ;; (setq read-process-output-max (* 1024 1024))
+  ;; ;; (setq read-process-output-max (* 1024 1024))
 
-  (spacemacs/set-leader-keys
-    "fx" 'consult-file-externally
-    "ps" 'projectile-ripgrep)
+  ;; (spacemacs/set-leader-keys
+  ;;   "fx" 'consult-file-externally
+  ;;   "ps" 'projectile-ripgrep)
 
   ;; fix issue with org-roam buffer
   ;; https://github.com/org-roam/org-roam/issues/1732
@@ -823,6 +826,23 @@ before packages are loaded."
 
   (setq doom-modeline-env-enable-python nil)
   (setq mu4e-modeline-all-read '("R:" . "🌀"))
+
+  (defun my/advice-after-pyenv-mode-set (orig-func &rest args)
+    "Advice to restart LSP server after changing Pyenv version."
+    (let ((env-name (pyenv-mode-version)))
+      ;; (apply orig-func args)
+      (when (and env-name (eq major-mode 'python-mode))
+        (message "Pyenv environment switched to %s" env-name)
+        (lsp-restart-workspace)
+        (message "Restarted LSP for Pyenv"))))
+
+  (advice-add 'pyenv-mode-set :after #'my/advice-after-pyenv-mode-set)
+
+  (setq lsp-python-ms-executable (executable-find "pyright-langserver"))
+  ;; (setq lsp-python-ms-executable (executable-find "pyright-langserver"))
+
+  ;; (setq catppuccin-flavor 'macchiato) ;; or 'latte, 'macchiato, or 'mocha
+  ;; (catppuccin-reload)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

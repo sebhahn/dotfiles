@@ -34,14 +34,3 @@
     ;; Switch to the new compilation buffer
     (with-current-buffer compilation-buffer-name
       (inferior-python-mode))))
-
-;; (with-eval-after-load 'compile
-;;   (add-hook 'compilation-mode-hook
-;;     (lambda ()
-;;      (rename-uniquely)
-;;      (setq buffer-read-only nil))))
-
-;; (setq compilation-buffer-name-function
-;;       (lambda (name-of-mode)
-;;         (generate-new-buffer-name
-;;          (concat "*" (downcase name-of-mode) "*"))))
