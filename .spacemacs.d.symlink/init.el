@@ -416,7 +416,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
-   dotspacemacs-which-key-delay 0.4
+   dotspacemacs-which-key-delay 0.8
 
    ;; Which-key frame position. Possible values are `right', `bottom' and
    ;; `right-then-bottom'. right-then-bottom tries to display the frame to the
@@ -838,9 +838,6 @@ before packages are loaded."
 
   (setq lsp-python-ms-executable (executable-find "pyright-langserver"))
   ;; (setq lsp-python-ms-executable (executable-find "pyright-langserver"))
-
-  ;; (setq catppuccin-flavor 'macchiato) ;; or 'latte, 'macchiato, or 'mocha
-  ;; (catppuccin-reload)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
