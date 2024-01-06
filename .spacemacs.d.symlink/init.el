@@ -41,7 +41,7 @@ This function should only modify configuration layer settings."
       auto-completion-complete-with-key-sequence "jk"
       auto-completion-complete-with-key-sequence-delay 0.1
       auto-completion-minimum-prefix-length 3
-      auto-completion-idle-delay 0.2
+      auto-completion-idle-delay 0.6
       auto-completion-private-snippets-directory nil
       auto-completion-enable-snippets-in-popup nil
       auto-completion-enable-help-tooltip nil
