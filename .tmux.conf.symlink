@@ -33,10 +33,10 @@ set -w -g display-panes-time 2000
 set -g set-titles on
 set -g set-titles-string "tmux-session:#S | host:#H | window:#I.#P | app:#W"
 
-tmux_fg="#dcdfe4"
+tmux_fg="#abb2bf"
 tmux_bg="#282c34"
 tmux_bg_2="#202328"
-tmux_blue="#61afef"
+tmux_green="#98c379"
 tmux_red="#e06c75"
 tmux_purple="#c678dd"
 tmux_orange="#d19a66"
@@ -60,23 +60,23 @@ set -w -g window-status-format " #I:#W "
 set -w -g window-status-current-format " #I:#W "
 set -w -g window-status-style fg=$tmux_status_fg,bg=$tmux_bg
 set -w -g window-status-current-style fg=$tmux_fg,bg=$tmux_bg
-set -w -g window-status-activity-style fg=$tmux_blue,bg=$tmux_bg
+set -w -g window-status-activity-style fg=$tmux_green,bg=$tmux_bg
 
 # status format left
 set -g status-left "#[fg=$tmux_fg,bg=$tmux_status_bg,bold] \uE000 #S #[fg=$tmux_status_bg,bg=$tmux_bg,bold]\uE0B0"
 
 # status format right
-set -g status-right "#[fg=$tmux_blue]\uE0B2#[fg=$tmux_bg,bg=$tmux_blue,bold] \uF007 #(whoami) #[fg=$tmux_status_bg,bg=$tmux_blue]\uE0B2#[fg=$tmux_fg,bg=$tmux_status_bg,bold] \uf109  #h #(./dotfiles/uptime.sh) #[fg=$tmux_blue]\ue0b2#[fg=$tmux_bg,bg=$tmux_blue,bold] 󱑁 #(date +'%I:%M %p') #[fg=$tmux_status_bg,bg=$tmux_blue]\uE0B2#[fg=$tmux_fg,bg=$tmux_status_bg,bold] \uF073  #(date +'%Y-%m-%d') "
+set -g status-right "#[fg=$tmux_green]\uE0B2#[fg=$tmux_bg,bg=$tmux_blue,bold] \uF007 #(whoami) #[fg=$tmux_status_bg,bg=$tmux_blue]\uE0B2#[fg=$tmux_fg,bg=$tmux_status_bg,bold] \uf109  #h #(./dotfiles/uptime.sh) #[fg=$tmux_blue]\ue0b2#[fg=$tmux_bg,bg=$tmux_blue,bold] 󱑁 #(date +'%I:%M %p') #[fg=$tmux_status_bg,bg=$tmux_blue]\uE0B2#[fg=$tmux_fg,bg=$tmux_status_bg,bold] \uF073  #(date +'%Y-%m-%d') "
 
 # set clock color
-set -w -g clock-mode-colour $tmux_blue
+set -w -g clock-mode-colour $tmux_green
 set -w -g clock-mode-style 12
 
 # panes
 set -g pane-border-style fg=$tmux_pane_border
-set -g pane-active-border-style fg=$tmux_blue
+set -g pane-active-border-style fg=$tmux_green
 set -g display-panes-active-colour $tmux_fg
-set -g display-panes-colour $tmux_blue
+set -g display-panes-colour $tmux_green
 
 set -w -g monitor-activity on
 set -g visual-activity off
