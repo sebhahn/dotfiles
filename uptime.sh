@@ -8,5 +8,5 @@ uptime | awk -F'( |,|:)+' '{
         }
     }
     {
-        printf("up %03d days %02d hours %02d minutes",d+0,h+0,m+0)
+        printf("up %d days %d hours %d minutes",d+0,h+0,m+0)
     }'
