@@ -106,14 +106,12 @@ This function should only modify configuration layer settings."
       plantuml-default-exec-mode 'jar)
      (python
       :variables
-      ;; python-backend 'anaconda
       python-backend 'lsp
-      ;; python-lsp-server 'pyright
-      python-formatter 'lsp
+      python-formatter 'yapf
       ;; python-format-on-save t
       python-auto-set-local-pyenv-version 'on-project-switch
       python-test-runner 'pytest)
-     ;; my-python
+     my-python
      search-engine
      ;; semantic
      (shell
