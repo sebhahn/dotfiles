@@ -1,5 +1,8 @@
+# reload config binding
+bind r source-file ~/.tmux.conf \; display "reloading tmux config..."
+
 # specify default shell
-set-option -g default-shell /bin/zsh
+set -g default-shell /bin/zsh
 
 # tweak timing between key sequences
 set -sg escape-time 0
@@ -8,25 +11,11 @@ set -sg escape-time 0
 set -g detach-on-destroy off
 
 # this option configures whether programs running inside tmux may use the terminal alternate screen feature
-set-option -w -g alternate-screen off
+set -w -g alternate-screen off
 
+# set the default value for the $TERM environment variable within tmux sessions
 set -g default-terminal "screen.xterm-256color"
-set-option -ga terminal-overrides ",xterm-256color:Tc"
-
-# --> Catppuccin (Macchiato)
-# thm_bg="#24273a"
-# thm_fg="#cad3f5"
-# thm_cyan="#91d7e3"
-# thm_black="#1e2030"
-# thm_gray="#363a4f"
-# thm_magenta="#c6a0f6"
-# thm_pink="#f5bde6"
-# thm_red="#ed8796"
-# thm_green="#a6da95"
-# thm_yellow="#eed49f"
-# thm_blue="#8aadf4"
-# thm_orange="#f5a97f"
-# thm_black4="#5b6078"
+set -ga terminal-overrides ",xterm-256color:Tc"
 
 # start counting window number (base-index) at 1, rather than the default, 0
 set -g base-index 1
@@ -35,63 +24,72 @@ set -g base-index 1
 set -g pane-base-index 1
 
 # set the maximum number of lines held in window history
-set -g history-limit 4096
+set -g history-limit 8192
 
 # display a visible indicator of each pane shown
-set-option -w -g display-panes-time 2000
+set -w -g display-panes-time 2000
 
 # terminal emulator window title
 set -g set-titles on
-set -g set-titles-string '#S@#H | #I.#P #W'
+set -g set-titles-string "tmux-session:#S | host:#H | window:#I.#P | app:#W"
 
-set-option -g status on
-# set-option -g status-bg "#24273a"
-set-option -g status-bg "#232627"
-set-option -g status-justify "left"
-set-option -g status-left-length 100
-set-option -g status-right-length 100
+tmux_fg="#dcdfe4"
+tmux_bg="#282c34"
+tmux_bg_2="#202328"
+tmux_blue="#61afef"
+tmux_red="#e06c75"
+tmux_purple="#c678dd"
+tmux_orange="#d19a66"
+tmux_pane_border="#363a4f"
+tmux_status_fg="#565758"
+tmux_status_bg="#3e4451"
 
-# messages
-#set-option -g message-style "fg=#91d7e3,bg=#363a4f,align=centre"
-#set-option -g message-command-style "fg=#91d7e3,bg=#363a4f,align=centre"
+set -g message-style fg=$tmux_red,bg=$tmux_bg_2
+set -g message-command-style fg=$tmux_purple,bg=$tmux_bg_2
+set -g mode-style fg=$tmux_orange,bg=$tmux_bg_2
+
+set -g status on
+set -g status-justify "left"
+set -g status-left-length 80
+set -g status-right-length 80
+set -g status-fg $tmux_fg
+set -g status-bg $tmux_bg
+
+set -w -g window-status-separator "\uE0B1"
+set -w -g window-status-format " #I:#W "
+set -w -g window-status-current-format " #I:#W "
+set -w -g window-status-style fg=$tmux_status_fg,bg=$tmux_bg
+set -w -g window-status-current-style fg=$tmux_fg,bg=$tmux_bg
+set -w -g window-status-activity-style fg=$tmux_blue,bg=$tmux_bg
+
+# status format left
+set -g status-left "#[fg=$tmux_fg,bg=$tmux_status_bg,bold] \uE000 #S #[fg=$tmux_status_bg,bg=$tmux_bg,bold]\uE0B0"
+
+# status format right
+set -g status-right "#[fg=$tmux_blue]\uE0B2#[fg=$tmux_bg,bg=$tmux_blue,bold] \uF007 #(whoami) #[fg=$tmux_status_bg,bg=$tmux_blue]\uE0B2#[fg=$tmux_fg,bg=$tmux_status_bg,bold] \uf109  #h #(uptime -p) #[fg=$tmux_blue]\ue0b2#[fg=$tmux_bg,bg=$tmux_blue,bold] 󱑁 #(date +'%I:%M %p') #[fg=$tmux_status_bg,bg=$tmux_blue]\uE0B2#[fg=$tmux_fg,bg=$tmux_status_bg,bold] \uF073  #(date +'%Y-%m-%d') "
+
+# set clock color
+set -w -g clock-mode-colour $tmux_blue
+set -w -g clock-mode-style 12
 
 # panes
-set-option -g pane-border-style fg="#363a4f"
-set-option -g pane-active-border-style fg="#8aadf4"
+set -g pane-border-style fg=$tmux_pane_border
+set -g pane-active-border-style fg=$tmux_blue
+set -g display-panes-active-colour $tmux_fg
+set -g display-panes-colour $tmux_blue
 
-# windows
-set-option -w -g window-status-activity-style "fg=#cad3f5,bg=#24273a,none"
-set-option -w -g window-status-separator ""
-set-option -w -g window-status-style "fg=#cad3f5,bg=#24273a,none"
-
-# statusline
-set-option -w -g window-status-format "#[fg=#cad3f5,bg=#24273a] #W #[fg=#24273a,bg=#8aadf4] #I #[fg=#8aadf4,bg=#24273a]#[fg=#cad3f5,bg=#24273a,nobold,nounderscore,noitalics]"
-# set-option -w -g window-status-format "#[fg=#cad3f5,bg=#24273a] #W #[fg=#24273a,bg=#8aadf4] #I#[fg=#8aadf4,bg=#24273a]#[fg=#cad3f5,bg=$thm_bg,nobold,nounderscore,noitalics] "
-
-set-option -w -g window-status-current-format "#[fg=#cad3f5,bg=#363a4f] #W #[fg=#24273a,bg=#f5a97f] #I #[fg=#f5a97f,bg=#24273a]#[fg=#cad3f5,bg=#24273a,nobold,nounderscore,noitalics]"
-# set-option -w -g window-status-current-format "#[fg=#cad3f5,bg=#363a4f] #W #[fg=#24273a,bg=#f5a97f] #I#[fg=#f5a97f,bg=#24273a]#[fg=#cad3f5,bg=#24273a,nobold,nounderscore,noitalics] "
-
-set -g status-left ""
-
-set -g status-right "#[fg=#f5bde6,bg=#24273a,nobold,nounderscore,noitalics]#[fg=#24273a,bg=#f5bde6,nobold,nounderscore,noitalics]  #[fg=#cad3f5,bg=#363a4f] #W #{?client_prefix,#[fg=#ed8796],#[fg=#a6da95]}#[bg=#363a4f]#{?client_prefix,#[bg=#ed8796],#[bg=#a6da95]}#[fg=#24273a]  #[fg=#cad3f5,bg=#363a4f] #S #[fg=#8aadf4,bg=#363a4f]#[fg=#24273a,bg=#8aadf4]  #[fg=#cad3f5,bg=#363a4f] #(whoami) #[fg=#8aadf4,bg=#363a4f]#[fg=#24273a,bg=#8aadf4]  #[fg=#cad3f5,bg=#363a4f] #H #[fg=#8aadf4,bg=#363a4f]#[fg=#24273a,bg=#8aadf4]  #[fg=#cad3f5,bg=#363a4f] #(date +'%I:%M %p')"
-
-# set -g status-right "#[fg=#f5bde6,bg=#24273a,nobold,nounderscore,noitalics]#[fg=#24273a,bg=#f5bde6,nobold,nounderscore,noitalics] #[fg=#cad3f5,bg=#363a4f] #W #{?client_prefix,#[fg=#ed8796],#[fg=#a6da95]}#[bg=#363a4f]#{?client_prefix,#[bg=#ed8796],#[bg=#a6da95]}#[fg=#24273a] #[fg=#cad3f5,bg=#363a4f] #S #[fg=#8aadf4,bg=#363a4f]#[fg=#24273a,bg=#8aadf4] #[fg=#cad3f5,bg=#363a4f] #(whoami) #[fg=#8aadf4,bg=#363a4f]#[fg=#24273a,bg=#8aadf4]A #[fg=#cad3f5,bg=#363a4f] #H #[fg=#8aadf4,bg=#363a4f]#[fg=#24273a,bg=#8aadf4] #[fg=#cad3f5,bg=#363a4f] #(date +'%I:%M %p')"
-
-# modes
-set-option -w -g clock-mode-colour "#8aadf4"
-set-option -w -g mode-style "fg=#f5bde6,bg=#5b6078,bold"
-
-set-option -w -g monitor-activity on
+set -w -g monitor-activity on
 set -g visual-activity off
+set -g visual-bell off
+set -g visual-silence off
 
 # key bindings
-
 # set the prefix to ^A.
 unbind-key C-b
 set -g prefix ^A
 bind-key a send-prefix
 
-# detach ^D d
+# detach ^D
 unbind-key ^D
 bind-key ^D detach
 
@@ -100,14 +98,12 @@ unbind-key *
 bind-key * list-clients
 
 # windows ^W w
-unbind-key ^W
-bind-key ^W list-windows
 unbind-key w
 bind-key w list-windows
 
 # show window list
-unbind-key a
-bind-key a choose-window
+unbind-key k
+bind-key k choose-window
 
 # quit \
 unbind-key \
@@ -121,27 +117,20 @@ bind-key K confirm-before "kill-window"
 unbind-key A
 bind-key A command-prompt "rename-window %%"
 
-# start ssh connection
-bind-key S command-prompt "new-window -n %1 'ssh %1'"
-
-# other ^A
+# last window ^A
 unbind-key ^A
 bind-key ^A last-window
 
 # create window: c
 bind-key c new-window -c '#{pane_current_path}'
 
-# next window: n ^N
+# next window: n
 unbind-key n
 bind-key n next-window
-unbind-key ^N
-bind-key ^N next-window
 
-# prev window: p ^P
+# prev window: p
 unbind-key p
 bind-key p previous-window
-unbind-key ^P
-bind-key ^P previous-window
 
 # pane movement shortcuts (same as vim)
 setw -g mode-keys vi
