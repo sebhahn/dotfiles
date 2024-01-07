@@ -724,7 +724,7 @@ before packages are loaded."
     :binding "r"
     :body
     (progn
-      (find-file "~/ownCloud/org/roam/index.org")
+      (find-file "~/ownCloud/org/roam/areas/private/cheatsheet.org")
       (split-window-right)
       (find-file "~/ownCloud/org/roam/areas/agenda/2024.org")))
 
