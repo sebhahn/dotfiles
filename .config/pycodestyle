@@ -1,0 +1,8 @@
+[pycodestyle]
+count = False
+ignore = E303
+max-line-length = 100
+statistics = True
+
+[pylsp]
+plugins.yapf.enabled: true
