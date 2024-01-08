@@ -718,15 +718,16 @@ before packages are loaded."
       (org-agenda nil "k")
       (delete-other-windows)
       (split-window-right)
-      (find-file "~/ownCloud/org/roam/areas/agenda/2024.org")))
+      (find-file "~/ownCloud/org/roam/areas/agenda/2024.org")
+      (ace-swap-window)))
 
   (spacemacs|define-custom-layout "@org-roam"
     :binding "r"
     :body
     (progn
-      (find-file "~/ownCloud/org/roam/areas/private/cheatsheet.org")
+      (find-file "~/ownCloud/org/roam/areas/agenda/2024.org")
       (split-window-right)
-      (find-file "~/ownCloud/org/roam/areas/agenda/2024.org")))
+      (find-file "~/ownCloud/org/roam/areas/private/cheatsheet.org")))
 
   (setq sp-highlight-pair-overlay nil
         sp-escape-quotes-after-insert nil
@@ -738,6 +739,8 @@ before packages are loaded."
   ;; enable fundamental-mode snippets for all modes
   (add-hook 'yas-minor-mode-hook
             (lambda () (yas-activate-extra-mode 'fundamental-mode)))
+
+  (add-to-list 'yas-snippet-dirs "~/Nextcloud/resources/emacs/snippets")
 
   (global-visual-line-mode t)
 
