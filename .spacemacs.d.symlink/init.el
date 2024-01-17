@@ -841,6 +841,8 @@ before packages are loaded."
 
   (setq lsp-python-ms-executable (executable-find "pyright-langserver"))
   ;; (setq lsp-python-ms-executable (executable-find "pyright-langserver"))
+
+  (setq multi-term-program "/usr/bin/zsh")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
