@@ -162,6 +162,7 @@ which require an initialization must be listed explicitly in the list.")
       ;; (setq org-replace-disputed-keys t)
       (setq org-src-fontify-natively t)
       (setq org-return-follows-link t)
+      (setq org-startup-folded t)
 
       (setq org-ditaa-jar-path "~/ownCloud/org/bin/ditaa.jar")
       (setq org-plantuml-jar-path "~/ownCloud/org/bin/plantuml.jar")
