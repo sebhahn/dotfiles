@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Default values
+height=20
+preview_command='cat {}'
+prompt="Select a file:"
+
+# Parse options
+while getopts ":p:h:" opt; do
+  case $opt in
+    p)
+      preview_command="$OPTARG"
+      ;;
+    h)
+      height="$OPTARG"
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+
+# Shift the options
+shift $((OPTIND-1))
+
+# Check if a folder path is provided
+if [ -z "$1" ]; then
+    echo "Usage: $0 [-p preview_command] [-h height] /path/to/your/folder"
+    exit 1
+fi
+
+folder_path="$1"
+
+# Find files and pass them to fzf
+find "$folder_path" -type f | fzf --preview "$preview_command" --height="$height" --layout=reverse --prompt="$prompt" -e
