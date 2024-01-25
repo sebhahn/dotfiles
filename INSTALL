@@ -7,13 +7,24 @@ ln -sf $DOTFILES_ROOT/.zshenv.symlink $HOME/.zshenv
 ln -sf $DOTFILES_ROOT/.zshrc.symlink $HOME/.zshrc
 ln -sf $DOTFILES_ROOT/.tmux.conf.symlink $HOME/.tmux.conf
 ln -sf $DOTFILES_ROOT/.mbsyncrc.symlink $HOME/.mbsyncrc
-ln -sf $DOTFILES_ROOT/.Xdefaults.symlink $HOME/.Xdefaults
 ln -sf $DOTFILES_ROOT/.latexmkrc.symlink $HOME/.latexmkrc
-ln -sf $DOTFILES_ROOT/.Xresources.symlink $HOME/.Xresources
 ln -sf $DOTFILES_ROOT/.p10k.zsh.symlink $HOME/.p10k.zsh
+
+config_path="$HOME/.config"
+
+if [ ! -d "$config_path" ]; then
+    mkdir -p "$config_path"
+fi
 ln -sf $DOTFILES_ROOT/.config/* $HOME/.config
-ln -sf $DOTFILES_ROOT/bin/* ~/bin
-ln -sf $DOTFILES_ROOT/ranger/ranger.py ~/bin/ranger
+
+bin_path="$HOME/bin"
+
+if [ ! -d "$bin_path" ]; then
+    mkdir -p "$bin_path"
+fi
+
+ln -sf $DOTFILES_ROOT/bin/* $bin_path
+ln -sf $DOTFILES_ROOT/ranger/ranger.py $bin_path/ranger
 
 touch $DOTFILES_ROOT/.spacemacs.d.symlink/custom.el
 
