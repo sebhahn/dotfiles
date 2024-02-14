@@ -460,7 +460,7 @@ which require an initialization must be listed explicitly in the list.")
                 'append)
 
       (setq org-archive-mark-done nil)
-      (setq org-archive-location "~/ownCloud/org/roam/areas/archive/%s_archive::* Archived Tasks")
+      (setq org-archive-location "~/ownCloud/org/roam/areas/agenda/archive/%s_archive::* Archived Tasks")
 
       ;; (setq org-agenda-start-with-log-mode '(clock))
 
