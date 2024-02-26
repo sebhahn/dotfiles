@@ -224,24 +224,7 @@ https://tuwien.at/mg/geo/rs/")
         (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
         ;; set signature based on account
 
-        (defun my-set-signature ()
-          "My settings for signatures."
-          (setq message-signature
-                (cond
-                 ((string-match "sebastian.hahn" user-mail-address) work-sig)
-                 (t ""))))
-
-        ;; handle signatures with message buffer
-        (setq mu4e-compose-signature-auto-include nil)
-        (add-hook 'mu4e-compose-mode-hook
-                  (defun my-do-compose-stuff ()
-                    "My settings for message composition."
-                    (my-set-signature)
-                    (message-insert-signature)
-                    (message-goto-to)
-                    ;; enable signing of emails by default
-                    ;; (mml-secure-message-sign-pgpmime)
-                    ))
+        (setq message-signature work-sig)
 
         ;; save message to Sent Messages
         (setq mu4e-sent-messages-behavior 'sent)
@@ -270,11 +253,6 @@ https://tuwien.at/mg/geo/rs/")
               (:maildir "/TU/Archive" :key ?a)
               (:maildir "/TU/Drafts" :key ?d)
               (:maildir "/TU/Sent Items" :key ?s)))
-
-        ;; something about ourselves
-        (setq mu4e-compose-signature ""
-            mu4e-user-mail-address-list
-            '("sebastian.hahn@geo.tuwien.ac.at"))
 
         ;; don't keep message buffers around
         (setq message-kill-buffer-on-exit t)
