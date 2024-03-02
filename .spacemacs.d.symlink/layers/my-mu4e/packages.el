@@ -346,7 +346,7 @@ https://tuwien.at/mg/geo/rs/")
         ;; (setq mu4e-compose-format-flowed t)
         (setq mu4e-view-show-addresses 't)
 
-        (setq message-citation-line-format "On %a, %d %b %Y at %R, %f wrote:\n"
+        (setq message-citation-line-format "\n\nOn %a, %d %b %Y at %R, %f wrote:\n"
               message-citation-line-function 'message-insert-formatted-citation-line)
 
         (setq mu4e-hide-index-messages t)
