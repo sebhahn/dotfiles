@@ -843,6 +843,7 @@ before packages are loaded."
   ;; (setq lsp-python-ms-executable (executable-find "pyright-langserver"))
 
   (setq multi-term-program "/usr/bin/zsh")
+  (setq persp-kill-foreign-buffer-behaviour nil)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
