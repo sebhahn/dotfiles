@@ -29,10 +29,10 @@ vim.wo.number = true
 -- general keymaps
 keymap.set("i", "jk", "<ESC>") -- exit insert mode with jk 
 keymap.set("i", "ii", "<ESC>") -- exit insert mode with ii
-keymap.set("n", "<leader>wq", ":wq<CR>") -- save and quit
-keymap.set("n", "<leader>qq", ":q!<CR>") -- quit without saving
-keymap.set("n", "<leader>ww", ":w<CR>") -- save
-keymap.set("n", "gx", ":!open <c-r><c-a><CR>") -- open URL under cursor
+keymap.set("n", "<leader>wq", "<cmd>wq<CR>") -- save and quit
+keymap.set("n", "<leader>qq", "<cmd>q!<CR>") -- quit without saving
+keymap.set("n", "<leader>ww", "<cmd>w<CR>") -- save
+keymap.set("n", "gx", "<cmd>!open <c-r><c-a><CR>") -- open URL under cursor
 
 -- split window management
 -- keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
@@ -45,33 +45,35 @@ keymap.set("n", "<leader>sl", "<C-w>>5") -- make split windows width bigger
 keymap.set("n", "<leader>sh", "<C-w><5") -- make split windows width smaller
 
 -- tab management
-keymap.set("n", "<leader>to", ":tabnew<CR>") -- open a new tab
-keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close a tab
-keymap.set("n", "<leader>tn", ":tabn<CR>") -- next tab
-keymap.set("n", "<leader>tp", ":tabp<CR>") -- previous tab
+keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", {desc = "Open new tab" }) -- open a new tab
+keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", {desc = "Close current tab"}) -- close a tab
+keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", {desc = "Go to next tab"}) -- next tab
+keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", {desc = "Go to previous tab"}) -- previous tab
+keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", {desc = "Go to previous tab"}) -- previous tab
 
 -- diff keymaps
-keymap.set("n", "<leader>cc", ":diffput<CR>") -- put diff from current to other during diff
-keymap.set("n", "<leader>cj", ":diffget 1<CR>") -- get diff from left (local) during merge
-keymap.set("n", "<leader>ck", ":diffget 3<CR>") -- get diff from right (remote) during merge
+keymap.set("n", "<leader>cc", "<cmd>diffput<CR>") -- put diff from current to other during diff
+keymap.set("n", "<leader>cj", "<cmd>diffget 1<CR>") -- get diff from left (local) during merge
+keymap.set("n", "<leader>ck", "<cmd>diffget 3<CR>") -- get diff from right (remote) during merge
 keymap.set("n", "<leader>cn", "]c") -- next diff hunk
 keymap.set("n", "<leader>cp", "[c") -- previous diff hunk
 
 -- quickfix keymaps
-keymap.set("n", "<leader>qo", ":copen<CR>") -- open quickfix list
-keymap.set("n", "<leader>qf", ":cfirst<CR>") -- jump to first quickfix list item
-keymap.set("n", "<leader>qn", ":cnext<CR>") -- jump to next quickfix list item
-keymap.set("n", "<leader>qp", ":cprev<CR>") -- jump to prev quickfix list item
-keymap.set("n", "<leader>ql", ":clast<CR>") -- jump to last quickfix list item
-keymap.set("n", "<leader>qc", ":cclose<CR>") -- close quickfix list
+keymap.set("n", "<leader>qo", "<cmd>copen<CR>") -- open quickfix list
+keymap.set("n", "<leader>qf", "<cmd>cfirst<CR>") -- jump to first quickfix list item
+keymap.set("n", "<leader>qn", "<cmd>cnext<CR>") -- jump to next quickfix list item
+keymap.set("n", "<leader>qp", "<cmd>cprev<CR>") -- jump to prev quickfix list item
+keymap.set("n", "<leader>ql", "<cmd>clast<CR>") -- jump to last quickfix list item
+keymap.set("n", "<leader>qc", "<cmd>cclose<CR>") -- close quickfix list
 
 -- vim-maximizer
-keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>") -- toggle maximize tab
+keymap.set("n", "<leader>sm", "<cmd>MaximizerToggle<CR>") -- toggle maximize tab
 
 -- nvim-tree
-keymap.set("n", "<leader>ee", ":NvimTreeToggle<CR>") -- toggle file explorer
-keymap.set("n", "<leader>er", ":NvimTreeFocus<CR>") -- toggle focus to file explorer
-keymap.set("n", "<leader>ef", ":NvimTreeFindFile<CR>") -- find file in file explorer
+keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", {desc = "Toggle file explorer"}) -- toggle file explorer
+keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", {desc = "Toggle file explorer on cursor"})
+keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", {desc = "Collapse file explorer"})
+keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", {desc = "Refresh file explorer"})
 
 -- telescope
 keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, {})

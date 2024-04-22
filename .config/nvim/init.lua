@@ -1,4 +1,4 @@
--- Bootstrap lazy
+-- bootstrap lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -22,6 +22,6 @@ require("lazy").setup("plugins", {
   },
 })
 
--- These modules are not loaded by lazy
+-- these modules are not loaded by lazy
 require("core.options")
 require("core.keymaps")
