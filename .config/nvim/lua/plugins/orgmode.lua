@@ -2,9 +2,6 @@ return {
 	"nvim-orgmode/orgmode",
 	event = "VeryLazy",
 	config = function()
-		-- Load treesitter grammar for org
-		require("orgmode").setup_ts_grammar()
-
 		require("orgmode").setup({
 			org_todo_keywords = { "TODO", "INPR", "WAIT", "HOLD", "|", "DONE", "CNCL" },
 			org_hide_leading_stars = true,
