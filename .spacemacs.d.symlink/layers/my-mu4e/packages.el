@@ -54,7 +54,7 @@ Senior Scientist
 
 Technische Universität Wien
 E120-01 - Forschungsbereich Fernerkundung
-Wiedner Hauptstraße 8-18
+Wiedner Hauptstraße 8-10
 1040 Wien
 
 +43 1 58801 12240
