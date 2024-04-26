@@ -27,8 +27,8 @@ keymap.set("n", "<leader>sx", "<cmd>close<CR>", {desc = "Close current split"})
 vim.wo.number = true
 
 -- general keymaps
-keymap.set("i", "jk", "<ESC>") -- exit insert mode with jk 
-keymap.set("i", "ii", "<ESC>") -- exit insert mode with ii
+-- keymap.set("i", "jk", "<ESC>") -- exit insert mode with jk
+-- keymap.set("i", "ii", "<ESC>") -- exit insert mode with ii
 keymap.set("n", "<leader>wq", "<cmd>wq<CR>") -- save and quit
 keymap.set("n", "<leader>qq", "<cmd>q!<CR>") -- quit without saving
 keymap.set("n", "<leader>ww", "<cmd>w<CR>") -- save
@@ -70,23 +70,30 @@ keymap.set("n", "<leader>qc", "<cmd>cclose<CR>") -- close quickfix list
 keymap.set("n", "<leader>sm", "<cmd>MaximizerToggle<CR>") -- toggle maximize tab
 
 -- nvim-tree
+
+keymap.set("n", "<leader>e", "", {desc = "File explorer"}) -- file explorer
 keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", {desc = "Toggle file explorer"}) -- toggle file explorer
 keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", {desc = "Toggle file explorer on cursor"})
 keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", {desc = "Collapse file explorer"})
 keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", {desc = "Refresh file explorer"})
 
 -- telescope
-keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, {})
-keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, {})
-keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, {})
-keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, {})
-keymap.set('n', '<leader>fs', require('telescope.builtin').current_buffer_fuzzy_find, {})
-keymap.set('n', '<leader>fo', require('telescope.builtin').lsp_document_symbols, {})
-keymap.set('n', '<leader>fi', require('telescope.builtin').lsp_incoming_calls, {})
+local builtin = require('telescope.builtin')
+local utils = require("telescope.utils")
+keymap.set('n', '<leader>ff', builtin.find_files, {desc = "Fuzzy find files in cwd"})
+keymap.set('n', '<leader>fr', "<cmd>Telescope oldfiles<cr>", {desc = "Fuzzy find recent files"})
+keymap.set('n', '<leader>fs', builtin.live_grep, {desc = "Find string in cwd"})
+keymap.set('n', '<leader>fc', "<cmd>Telescope grep_string<cr>", {desc = "Find string under cursor in cwd"})
+keymap.set('n', '<leader>fb', builtin.buffers, {})
+keymap.set('n', '<leader>fz', "<cmd>Telescope current_buffer_fuzzy_find<CR>", {})
+keymap.set('n', '<leader>fh', builtin.help_tags, {})
+keymap.set('n', '<leader>fo', "<cmd>Telescope lsp_document_symbols<CR>", {})
+keymap.set('n', '<leader>fi', "<cmd>Telescope lsp_incoming_calls<CR>", {})
 keymap.set('n', '<leader>fm', function() require('telescope.builtin').treesitter({default_text=":method:"}) end)
+keymap.set("n", '<leader>fd', function() builtin.find_files({ cwd = utils.buffer_dir() }) end, {desc = "Find files in cwd"})
 
 -- git-blame
-keymap.set("n", "<leader>gb", ":GitBlameToggle<CR>") -- toggle git blame
+keymap.set("n", "<leader>gb", "<cmd>GitBlameToggle<CR>") -- toggle git blame
 
 -- harpoon
 -- keymap.set("n", "<leader>ha", require("harpoon.mark").add_file)
@@ -117,7 +124,7 @@ keymap.set('n', '<leader>gl', '<cmd>lua vim.diagnostic.open_float()<CR>')
 keymap.set('n', '<leader>gp', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
 keymap.set('n', '<leader>gn', '<cmd>lua vim.diagnostic.goto_next()<CR>')
 keymap.set('n', '<leader>tr', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
-keymap.set('i', '<C-Space>', '<cmd>lua vim.lsp.buf.completion()<CR>')
+-- keymap.set('i', '<C-Space>', '<cmd>lua vim.lsp.buf.completion()<CR>')
 
 -- debugging
 keymap.set("n", "<leader>bb", "<cmd>lua require'dap'.toggle_breakpoint()<cr>")

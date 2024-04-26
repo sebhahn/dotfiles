@@ -27,12 +27,12 @@ return {
 			}
 
 			dashboard.section.buttons.val = {
-				dashboard.button("f", "  Find file", ":Telescope find_files <cr>"),
-				dashboard.button("e", "  New file", ":ene <BAR> startinsert <cr>"),
-				dashboard.button("r", "  Recently used files", ":Telescope oldfiles <cr>"),
-				dashboard.button("t", "  Find text", ":Telescope live_grep <cr>"),
+				dashboard.button("f", "  Find file", "<cmd>Telescope find_files<CR>"),
+				dashboard.button("e", "  New file", "<cmd>ene <BAR> startinsert<CR>"),
+				dashboard.button("r", "  Recently used files", "<cmd>Telescope oldfiles<CR>"),
+				dashboard.button("t", "  Find text", "<cmd>Telescope live_grep<CR>"),
 				--dashboard.button("c", "  Configuration", ":e ~/.config/nvim/init.vim<CR>"),
-				dashboard.button("q", "  Quit Neovim", ":qa<cr>"),
+				dashboard.button("q", "  Quit", "<cmd>qa<CR>"),
 			}
 
 			local function footer()
