@@ -1,9 +1,3 @@
-[submodule ".spacemacs.d.symlink/org-reveal"]
-	path = .spacemacs.d.symlink/org-reveal
-	url = https://github.com/yjwen/org-reveal.git
-[submodule "z"]
-	path = z
-	url = https://github.com/rupa/z
 [submodule ".pyenv"]
 	path = .pyenv
 	url = git@github.com:sebhahn/pyenv.git
