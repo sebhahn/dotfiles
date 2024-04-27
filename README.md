@@ -1,21 +1,19 @@
-* Installation of dotfiles
+# Installation
 
-** Installation
-Clone repository and run ./INSTALL
+> git clone git@github.com:sebhahn/dotfiles.git
+> cd ~/dotfiles
+> stow .
 
-** zsh
-Z shell forked from [[https://github.com/robbyrussell/oh-my-zsh][oh-my.zsh]]
+# Tools
 
-** Spacemacs
-Emacs + VIM = [[https://github.com/syl20bnr/spacemacs][Spacemacs]]
+## Z shell
+[oh-my.zsh](https://github.com/robbyrussell/oh-my-zsh)
 
-** pyenv
-[[https://github.com/yyuu/pyenv][Simple python version manager]]
+## Spacemacs
+Emacs + VIM = [Spacemacs](https://github.com/syl20bnr/spacemacs)
 
-** Terminal theme
-Install script add base-16-eighties-dark profile to the GNOME Terminal. Thanks
-to https://github.com/chriskempson/base16-gnome-terminal
+## pyenv
+[Simple python version manager](https://github.com/pyenv/pyenv)
 
-** Dotfiles template from [[https://github.com/cpaulik/dotfiles][cpaulik]] (Thanks!)
-
-
+## Neovim
+[Neovim](https://github.com/neovim/neovim)
