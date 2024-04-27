@@ -11,7 +11,7 @@
 	path = ranger
 	url = git@github.com:ranger/ranger.git
 [submodule "ohmyzsh"]
-	path = ohmyzsh
+	path = .ohmyzsh
 	url = git@github.com:sebhahn/ohmyzsh.git
 [submodule ".config/ranger/plugins/devicons"]
 	path = .config/ranger/plugins/devicons
