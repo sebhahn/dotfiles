@@ -8,7 +8,7 @@
 	path = .pyenv
 	url = git@github.com:sebhahn/pyenv.git
 [submodule "ranger"]
-	path = ranger
+	path = modules/ranger
 	url = git@github.com:ranger/ranger.git
 [submodule "ohmyzsh"]
 	path = .ohmyzsh
