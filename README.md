@@ -1,8 +1,8 @@
 # Installation
 
-> git clone git@github.com:sebhahn/dotfiles.git
-> cd ~/dotfiles
-> stow .
+`git clone git@github.com:sebhahn/dotfiles.git`
+`cd ~/dotfiles`
+`stow .`
 
 # Tools
 
