@@ -10,9 +10,8 @@ keymap.set("n", "<c-k>", ":wincmd k<CR>")
 keymap.set("n", "<c-j>", ":wincmd j<CR>")
 keymap.set("n", "<c-h>", ":wincmd h<CR>")
 keymap.set("n", "<c-l>", ":wincmd l<CR>")
-keymap.set("n", "<leader>h", ":nohlsearch<CR>")
-
-keymap.set("n", "<leader>nh", ":nohl<CR>", {desc = "Clear search highlights"})
+-- keymap.set("n", "<leader>h", ":nohlsearch<CR>")
+-- keymap.set("n", "<leader>nh", ":nohl<CR>", {desc = "Clear search highlights"})
 
 -- increment/decrement numbers
 keymap.set("n", "<leader>+", "<C-a>", {desc = "Increment number"})
@@ -70,10 +69,9 @@ keymap.set("n", "<leader>qc", "<cmd>cclose<CR>") -- close quickfix list
 keymap.set("n", "<leader>sm", "<cmd>MaximizerToggle<CR>") -- toggle maximize tab
 
 -- nvim-tree
-
 keymap.set("n", "<leader>e", "", {desc = "File explorer"}) -- file explorer
 keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", {desc = "Toggle file explorer"}) -- toggle file explorer
-keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", {desc = "Toggle file explorer on cursor"})
+keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle!<CR>", {desc = "Toggle file explorer on cursor"})
 keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", {desc = "Collapse file explorer"})
 keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", {desc = "Refresh file explorer"})
 
@@ -91,6 +89,7 @@ keymap.set('n', '<leader>fo', "<cmd>Telescope lsp_document_symbols<CR>", {})
 keymap.set('n', '<leader>fi', "<cmd>Telescope lsp_incoming_calls<CR>", {})
 keymap.set('n', '<leader>fm', function() require('telescope.builtin').treesitter({default_text=":method:"}) end)
 keymap.set("n", '<leader>fd', function() builtin.find_files({ cwd = utils.buffer_dir() }) end, {desc = "Find files in cwd"})
+keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
 
 -- git-blame
 keymap.set("n", "<leader>gb", "<cmd>GitBlameToggle<CR>") -- toggle git blame
@@ -109,21 +108,21 @@ keymap.set("n", "<leader>gb", "<cmd>GitBlameToggle<CR>") -- toggle git blame
 -- keymap.set("n", "<leader>h9", function() require("harpoon.ui").nav_file(9) end)
 
 -- lsp
-keymap.set('n', '<leader>gg', '<cmd>lua vim.lsp.buf.hover()<CR>')
-keymap.set('n', '<leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
-keymap.set('n', '<leader>gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
-keymap.set('n', '<leader>gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-keymap.set('n', '<leader>gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
-keymap.set('n', '<leader>gr', '<cmd>lua vim.lsp.buf.references()<CR>')
-keymap.set('n', '<leader>gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
-keymap.set('n', '<leader>rr', '<cmd>lua vim.lsp.buf.rename()<CR>')
-keymap.set('n', '<leader>gf', '<cmd>lua vim.lsp.buf.format({async = true})<CR>')
-keymap.set('v', '<leader>gf', '<cmd>lua vim.lsp.buf.format({async = true})<CR>')
-keymap.set('n', '<leader>ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-keymap.set('n', '<leader>gl', '<cmd>lua vim.diagnostic.open_float()<CR>')
-keymap.set('n', '<leader>gp', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-keymap.set('n', '<leader>gn', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-keymap.set('n', '<leader>tr', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
+-- keymap.set('n', '<leader>gg', '<cmd>lua vim.lsp.buf.hover()<CR>')
+-- keymap.set('n', '<leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+-- keymap.set('n', '<leader>gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
+-- keymap.set('n', '<leader>gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+-- keymap.set('n', '<leader>gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+-- keymap.set('n', '<leader>gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+-- keymap.set('n', '<leader>gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+-- keymap.set('n', '<leader>rr', '<cmd>lua vim.lsp.buf.rename()<CR>')
+-- keymap.set('n', '<leader>gf', '<cmd>lua vim.lsp.buf.format({async = true})<CR>')
+-- keymap.set('v', '<leader>gf', '<cmd>lua vim.lsp.buf.format({async = true})<CR>')
+-- keymap.set('n', '<leader>ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+-- keymap.set('n', '<leader>gl', '<cmd>lua vim.diagnostic.open_float()<CR>')
+-- keymap.set('n', '<leader>gp', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+-- keymap.set('n', '<leader>gn', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+-- keymap.set('n', '<leader>tr', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
 -- keymap.set('i', '<C-Space>', '<cmd>lua vim.lsp.buf.completion()<CR>')
 
 -- debugging

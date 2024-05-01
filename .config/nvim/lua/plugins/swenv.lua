@@ -1,0 +1,32 @@
+return {
+  "AckslD/swenv.nvim",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+  },
+  event = { "BufReadPre", "BufNewFile" },
+  config = function()
+
+    local swenv = require("swenv")
+    local swenv_api = require('swenv.api')
+
+    swenv.setup({
+        -- Should return a list of tables with a `name` and a `path` entry each.
+        -- Gets the argument `venvs_path` set below.
+        -- By default just lists the entries in `venvs_path`.
+        get_venvs = function(venvs_path)
+          return swenv_api.get_venvs(venvs_path)
+        end,
+        -- Path passed to `get_venvs`.
+        venvs_path = vim.fn.expand('~/.pyenv/versions'),
+        -- Something to do after setting an environment, for example call vim.cmd.LspRestart
+        vim.cmd.LspRestart,
+        post_set_venv = nil,
+    })
+
+    local keymap = vim.keymap -- for conciseness
+
+    keymap.set("n", "ts", swenv_api.pick_venv , { desc = "Set current venv" })
+    keymap.set("n", "tg", swenv_api.get_current_venv , { desc = "Get current venv" })
+
+  end,
+}
