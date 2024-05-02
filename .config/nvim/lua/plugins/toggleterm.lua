@@ -55,5 +55,13 @@ return {
 		function _PYTHON_TOGGLE()
 			python:toggle()
 		end
+
+	-- 		["t"] = "+terminal",
+	-- 		["tt"] = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
+	-- 		["tp"] = { "<cmd>lua _PYTHON_TOGGLE()<cr>", "Python" },
+	-- 		["tf"] = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
+	-- 		["th"] = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" }, -- Horizontal Terminal,
+	-- 		["tv"] = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" }, -- Vertical Terminal
+
 	end,
 }
