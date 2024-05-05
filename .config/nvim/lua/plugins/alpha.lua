@@ -36,7 +36,7 @@ return {
 			}
 
 			local function footer()
-				return "Don't Stop Until You are Proud..."
+				return "Live according to nature..."
 			end
 			dashboard.section.footer.val = footer()
 

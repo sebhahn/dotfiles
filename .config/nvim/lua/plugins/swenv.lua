@@ -19,14 +19,12 @@ return {
         -- Path passed to `get_venvs`.
         venvs_path = vim.fn.expand('~/.pyenv/versions'),
         -- Something to do after setting an environment, for example call vim.cmd.LspRestart
-        vim.cmd.LspRestart,
-        post_set_venv = nil,
+        post_set_venv = vim.cmd.LspRestart,
     })
 
-    local keymap = vim.keymap -- for conciseness
-
-    keymap.set("n", "ts", swenv_api.pick_venv , { desc = "Set current venv" })
-    keymap.set("n", "tg", swenv_api.get_current_venv , { desc = "Get current venv" })
+    -- local keymap = vim.keymap -- for conciseness
+    -- keymap.set("n", "<leader>vs", swenv_api.pick_venv , { desc = "Set env" })
+    -- keymap.set("n", "<leader>vg", swenv_api.get_current_venv , { desc = "Get env" })
 
   end,
 }

@@ -9,12 +9,11 @@ return {
     local lazy_status = require("lazy.status") -- to configure lazy pending updates count
 
     lualine.setup({
-        options = {
-          theme = "catppuccin",
-        },
+        -- options = {
+        --   theme = "catppuccin",
+        -- },
         sections = {
           lualine_x = {
-            -- { 'swenv', icon = '<icon>'},
             {
               "swenv",
               cond = function()
@@ -33,6 +32,6 @@ return {
             { "filetype" },
           },
         },
-                            })
+    })
   end,
 }
