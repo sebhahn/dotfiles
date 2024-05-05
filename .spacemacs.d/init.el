@@ -844,6 +844,10 @@ before packages are loaded."
 
   (setq multi-term-program "/usr/bin/zsh")
   (setq persp-kill-foreign-buffer-behaviour nil)
+
+  ;; (setq vertico-sort-function "Alphabetically")
+  (setq vertico-sort-function 'vertico-sort-alpha)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
