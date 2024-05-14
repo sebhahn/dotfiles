@@ -1,14 +1,12 @@
 #!/usr/bin/zsh
 
-SESSION=$USER
+# Set session name to argument if provided, otherwise use user name
+SESSION="${1:-$USER}"
 
-# Check if the session exists, discarding output
-# We can check $? for the exit status (zero for success, non-zero for failure)
-tmux has-session -t $SESSION 2>/dev/null
-
-if [ $? != 0 ]; then
+# Check if the session exists
+if ! tmux has-session -t "$SESSION" >/dev/null 2>&1; then
     # Create session
-    tmux -2 new-session -d -s $SESSION
+    tmux -2 new-session -d -s "$SESSION"
 
     tmux split-window -v
     tmux split-window -h
@@ -16,20 +14,21 @@ if [ $? != 0 ]; then
     tmux send-keys "htop" C-m
     tmux split-window -h
 
-    tmux new-window -t $SESSION:2 -n 'emacs'
+    tmux new-window -t "$SESSION:2" -n 'emacs'
     tmux send-keys "TERM=xterm-direct emacs -nw" C-m
 
-    tmux new-window -t $SESSION:3 -n 'ranger'
+    tmux new-window -t "$SESSION:3" -n 'ranger'
     tmux send-keys "ranger" C-m
 
-    tmux new-window -t $SESSION:4 -n 'cmd1'
+    tmux new-window -t "$SESSION:4" -n 'cmd1'
 
     tmux split-window -h
-    tmux new-window -t $SESSION:5 -n 'cmd2'
+    tmux new-window -t "$SESSION:5" -n 'cmd2'
 
     # Set default window
-    tmux select-window -t $SESSION:2
+    tmux select-window -t "$SESSION:2"
 fi
 
 # Attach to created session
-tmux -2 attach-session -t $SESSION
+tmux -2 attach-session -t "$SESSION"
+
