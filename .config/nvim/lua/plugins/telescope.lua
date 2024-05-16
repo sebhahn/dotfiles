@@ -28,9 +28,9 @@ return {
               "init.sql",
               "target/.*",
               ".git/.*",
-              "~/mbsync/",
-              "/data-write/",
-              "/data-read/",
+              "mbsync/",
+              "data-write/",
+              "data-read/",
             },
             path_display = {"smart"},
             mappings = {

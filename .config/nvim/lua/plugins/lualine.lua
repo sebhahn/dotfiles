@@ -19,8 +19,8 @@ return {
               cond = function()
                 return vim.bo.filetype == "python"
               end,
-              icon = "xx",
-              color = { fg = "#8fb55e" },
+                icon = "",
+                color = { fg = "#8fb55e" },
             },
             {
               lazy_status.updates,
