@@ -40,7 +40,7 @@ vim.wo.number = true
 -- keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", {desc = "tab??"})
 
 -- diff keymaps
-keymap.set("n", "<leader>cc", "<cmd>diffput<CR>") -- put diff from current to other during diff
+-- keymap.set("n", "<leader>cc", "<cmd>diffput<CR>") -- put diff from current to other during diff
 -- keymap.set("n", "<leader>cj", "<cmd>diffget 1<CR>") -- get diff from left (local) during merge
 -- keymap.set("n", "<leader>ck", "<cmd>diffget 3<CR>") -- get diff from right (remote) during merge
 -- keymap.set("n", "<leader>cn", "]c") -- next diff hunk
