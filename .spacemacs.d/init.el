@@ -736,6 +736,8 @@ before packages are loaded."
   ;; disable all the space-doc stuff
   (setq spacemacs-space-doc-modificators nil)
 
+  (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
+
   ;; enable fundamental-mode snippets for all modes
   (add-hook 'yas-minor-mode-hook
             (lambda () (yas-activate-extra-mode 'fundamental-mode)))
@@ -846,7 +848,7 @@ before packages are loaded."
   (setq persp-kill-foreign-buffer-behaviour nil)
 
   ;; (setq vertico-sort-function "Alphabetically")
-  (setq vertico-sort-function 'vertico-sort-alpha)
+  ;; (setq vertico-sort-function 'vertico-sort-alpha)
 
   )
 
