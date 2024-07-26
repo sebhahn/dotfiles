@@ -321,7 +321,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-themes '((atom-one-dark :location "~/.spacemacs.d/atom-one-dark-theme")
                          catppuccin
                          modus-vivendi
-                         (material :location "~/.spacemacs.d/material-theme")
+                         (material :location "~/.spacemacs.d/emacs-material-theme")
                          spacemacs-dark)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
