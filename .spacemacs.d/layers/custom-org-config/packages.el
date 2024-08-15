@@ -39,7 +39,7 @@ which require an initialization must be listed explicitly in the list.")
 
 
 (defun custom-org-config/pre-init-org ()
-;;   "Initialize my package"
+  ;;   "Initialize my package"
   (use-package org
     :defer t
     :commands (org-mode
@@ -159,6 +159,17 @@ which require an initialization must be listed explicitly in the list.")
         (let ((org-insert-heading-respect-content t))
           (org-insert-subheading t)))
 
+      (setq org-tag-alist
+            '(;;places
+              ("PRJ" . ?p)
+              ("@read" . ?r)
+              ("@remind" . ?m)
+              ("@email" . ?e)
+              ("@idea" . ?i)
+              ("@book" . ?b)
+              ("@code" . ?c)
+              ))
+
       ;; (setq org-replace-disputed-keys t)
       (setq org-src-fontify-natively t)
       (setq org-return-follows-link t)
@@ -171,8 +182,8 @@ which require an initialization must be listed explicitly in the list.")
 
       (setq org-journal-dir "~/ownCloud/org/roam/areas/agenda")
       (setq org-journal-date-prefix "* ")
-      (setq org-journal-file-type 'yearly)
-      (setq org-journal-file-format "%Y.org")
+      (setq org-journal-file-type 'monthly)
+      (setq org-journal-file-format "%Y%m.org")
       (setq org-journal-date-format "%a, %d %b %Y")
       (setq org-journal-time-format "%Y-%m-%d %I:%M %p")
 
@@ -231,8 +242,8 @@ which require an initialization must be listed explicitly in the list.")
 
       ;; Enable display of the time grid so we can see the marker for the current time
       (setq org-agenda-time-grid '((daily today)
-                                  (800 1000 1200 1400 1600 1800 2000)
-                                  "......" "----------------"))
+                                   (800 1000 1200 1400 1600 1800 2000)
+                                   "......" "----------------"))
 
       ;; Display tags farther right
       (setq org-agenda-tags-column -102)
@@ -256,9 +267,9 @@ which require an initialization must be listed explicitly in the list.")
 
       ;; any headline with level <= 2 is a target
       (setq org-refile-targets '((nil :maxlevel . 5)
-                                      ; all top-level headlines in the
-                                      ; current buffer are used (first) as a
-                                      ; refile target
+                                        ; all top-level headlines in the
+                                        ; current buffer are used (first) as a
+                                        ; refile target
                                  (org-agenda-files :maxlevel . 5)))
 
       ;; provide refile targets as paths, including the file name
@@ -279,9 +290,9 @@ which require an initialization must be listed explicitly in the list.")
 
       ;; setup minted to have frame, small text and line numbers
       (setq org-latex-minted-options
-                 '(("frame" "lines")
-                   ("fontsize" "\\scriptsize")
-                   ("linenos" "")))
+            '(("frame" "lines")
+              ("fontsize" "\\scriptsize")
+              ("linenos" "")))
 
       ;; setup org-cdlatex minor mode
       (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
@@ -311,22 +322,22 @@ which require an initialization must be listed explicitly in the list.")
       ;;              `("", "fontspec" nil) t)
 
       (add-to-list 'org-latex-classes
-        '("koma-article"
-          "\\documentclass{scrartcl}"
-          ("\\section{%s}" . "\\section*{%s}")
-          ("\\subsection{%s}" . "\\subsection*{%s}")
-          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-          ("\\paragraph{%s}" . "\\paragraph*{%s}")
-          ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+                   '("koma-article"
+                     "\\documentclass{scrartcl}"
+                     ("\\section{%s}" . "\\section*{%s}")
+                     ("\\subsection{%s}" . "\\subsection*{%s}")
+                     ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                     ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                     ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
       (add-to-list 'org-latex-classes
-        '("koma-report"
-          "\\documentclass{scrreprt}"
-          ("\\section{%s}" . "\\section*{%s}")
-          ("\\subsection{%s}" . "\\subsection*{%s}")
-          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-          ("\\paragraph{%s}" . "\\paragraph*{%s}")
-          ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+                   '("koma-report"
+                     "\\documentclass{scrreprt}"
+                     ("\\section{%s}" . "\\section*{%s}")
+                     ("\\subsection{%s}" . "\\subsection*{%s}")
+                     ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                     ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                     ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
       (org-babel-do-load-languages
        'org-babel-load-languages
@@ -407,7 +418,7 @@ which require an initialization must be listed explicitly in the list.")
                   (insert (format "%s\n" month-heading))))
             (goto-char (point-max))
             (insert (format "%s\n%s\n" journal-heading month-heading)))
-        (re-search-backward month-heading nil t))
+          (re-search-backward month-heading nil t))
         (point))
 
       (setq org-capture-templates
@@ -500,25 +511,25 @@ which require an initialization must be listed explicitly in the list.")
                       (org-agenda-entry-types '(:deadline))))
 
                     ("e" "Eisenhower matrix"
-                      ((agenda ""
-                          ((org-agenda-show-log t)
-                           (org-agenda-log-mode-items '(clock closed state))))
+                     ((agenda ""
+                              ((org-agenda-show-log t)
+                               (org-agenda-log-mode-items '(clock closed state))))
                       (tags "+PRJ+PRIORITY=\"A\"-TODO=\"DONE\""
-                          ((org-agenda-overriding-header "Urgent and Important (kitchen fire)")
-                           (org-agenda-todo-list-sublevels nil)
-                           (org-agenda-sorting-strategy '(category-keep))))
+                            ((org-agenda-overriding-header "Urgent and Important (kitchen fire)")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-sorting-strategy '(category-keep))))
                       (tags "+PRJ+PRIORITY=\"B\"-TODO=\"DONE\""
-                          ((org-agenda-overriding-header "Important (find date, personally)")
-                           (org-agenda-todo-list-sublevels nil)
-                           (org-agenda-sorting-strategy '(category-keep))))
+                            ((org-agenda-overriding-header "Important (find date, personally)")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-sorting-strategy '(category-keep))))
                       (tags "+PRJ+PRIORITY=\"C\"-TODO=\"DONE\""
-                          ((org-agenda-overriding-header "Urgent (interruptions, delegate)")
-                           (org-agenda-todo-list-sublevels nil)
-                           (org-agenda-sorting-strategy '(category-keep))))
+                            ((org-agenda-overriding-header "Urgent (interruptions, delegate)")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-sorting-strategy '(category-keep))))
                       (tags "+PRJ+PRIORITY=\"D\"-TODO=\"DONE\""
-                          ((org-agenda-overriding-header "Time waster")
-                           (org-agenda-todo-list-sublevels nil)
-                           (org-agenda-sorting-strategy '(category-keep))))))
+                            ((org-agenda-overriding-header "Time waster")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-sorting-strategy '(category-keep))))))
 
                     ("h" "Habits" tags-todo ""
                      ((org-agenda-overriding-header "Habits")
@@ -527,80 +538,80 @@ which require an initialization must be listed explicitly in the list.")
 
                     ("t" "Kanban agenda (tasks only)"
                      ((agenda ""
-                        ((org-agenda-show-log t)
-                         (org-agenda-log-mode-items '(clock closed state))))
+                              ((org-agenda-show-log t)
+                               (org-agenda-log-mode-items '(clock closed state))))
                       (tags "REFILE"
-                        ((org-agenda-overriding-header "Stuff to refile")
-                         (org-tags-match-list-sublevels nil)))
+                            ((org-agenda-overriding-header "Stuff to refile")
+                             (org-tags-match-list-sublevels nil)))
                       (tags "-PRJ/TODO"
-                        ((org-agenda-overriding-header "Todo")
-                         (org-agenda-todo-list-sublevels nil)
-                         (org-agenda-sorting-strategy '(priority-down))))
+                            ((org-agenda-overriding-header "Todo")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-sorting-strategy '(priority-down))))
                       (tags "-PRJ/INPR"
-                        ((org-agenda-overriding-header "In progress")
-                         (org-agenda-todo-list-sublevels nil)
-                         (org-agenda-sorting-strategy '(priority-down))))
+                            ((org-agenda-overriding-header "In progress")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-sorting-strategy '(priority-down))))
                       (tags "-PRJ/WAIT"
-                        ((org-agenda-overriding-header "Waiting")
-                          (org-agenda-todo-list-sublevels nil)
-                          (org-agenda-sorting-strategy '(priority-down)))
-                      (tags "-PRJ/HOLD"
-                        ((org-agenda-overriding-header "On hold")
-                         (org-agenda-todo-list-sublevels nil)
-                         (org-agenda-sorting-strategy '(priority-down)))))))
+                            ((org-agenda-overriding-header "Waiting")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-sorting-strategy '(priority-down)))
+                            (tags "-PRJ/HOLD"
+                                  ((org-agenda-overriding-header "On hold")
+                                   (org-agenda-todo-list-sublevels nil)
+                                   (org-agenda-sorting-strategy '(priority-down)))))))
 
                     ("k" "Kanban agenda (projects only)"
                      ((agenda ""
-                        ((org-agenda-show-log t)
-                         (org-agenda-log-mode-items '(clock))))
+                              ((org-agenda-show-log t)
+                               (org-agenda-log-mode-items '(clock))))
                       (tags "REFILE"
-                        ((org-agenda-overriding-header "Stuff to refile")
-                         (org-agenda-prefix-format "  %?-12t% s")
-                         (org-tags-match-list-sublevels nil)))
+                            ((org-agenda-overriding-header "Stuff to refile")
+                             (org-agenda-prefix-format "  %?-12t% s")
+                             (org-tags-match-list-sublevels nil)))
                       (tags "PRJ/TODO"
-                        ((org-agenda-overriding-header "Todo")
-                         (org-agenda-todo-list-sublevels nil)
-                         (org-agenda-prefix-format "  %?-12t% s")
-                         (org-agenda-sorting-strategy '(priority-down))))
+                            ((org-agenda-overriding-header "Todo")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-prefix-format "  %?-12t% s")
+                             (org-agenda-sorting-strategy '(priority-down))))
                       (tags "PRJ/INPR"
-                        ((org-agenda-overriding-header "In progress")
-                         (org-agenda-todo-list-sublevels nil)
-                         (org-agenda-prefix-format "  %?-12t% s")
-                         (org-agenda-sorting-strategy '(priority-down))))
+                            ((org-agenda-overriding-header "In progress")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-prefix-format "  %?-12t% s")
+                             (org-agenda-sorting-strategy '(priority-down))))
                       (tags "PRJ/WAIT"
-                        ((org-agenda-overriding-header "Waiting")
-                         (org-agenda-todo-list-sublevels nil)
-                         (org-agenda-prefix-format "  %?-12t% s")
-                         (org-agenda-sorting-strategy '(priority-down))))
+                            ((org-agenda-overriding-header "Waiting")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-prefix-format "  %?-12t% s")
+                             (org-agenda-sorting-strategy '(priority-down))))
                       (tags "PRJ/HOLD"
-                          ((org-agenda-overriding-header "On hold")
-                          (org-agenda-todo-list-sublevels nil)
-                          (org-agenda-prefix-format "  %?-12t% s")
-                          (org-agenda-sorting-strategy '(priority-down))))))
+                            ((org-agenda-overriding-header "On hold")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-prefix-format "  %?-12t% s")
+                             (org-agenda-sorting-strategy '(priority-down))))))
 
                     ("K" "Kanban agenda (projects + tasks)"
                      ((agenda ""
-                        ((org-agenda-show-log t)
-                         (org-agenda-log-mode-items '(clock closed state))))
+                              ((org-agenda-show-log t)
+                               (org-agenda-log-mode-items '(clock closed state))))
                       (tags "REFILE"
-                        ((org-agenda-overriding-header "Stuff to Refile")
-                         (org-tags-match-list-sublevels nil)))
+                            ((org-agenda-overriding-header "Stuff to Refile")
+                             (org-tags-match-list-sublevels nil)))
                       (todo "TODO"
-                        ((org-agenda-overriding-header "Todo")
-                         (org-agenda-todo-list-sublevels nil)
-                         (org-agenda-sorting-strategy '(priority-down))))
+                            ((org-agenda-overriding-header "Todo")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-sorting-strategy '(priority-down))))
                       (todo "INPR"
-                        ((org-agenda-overriding-header "In progress")
-                         (org-agenda-todo-list-sublevels nil)
-                         (org-agenda-sorting-strategy '(priority-down))))
+                            ((org-agenda-overriding-header "In progress")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-sorting-strategy '(priority-down))))
                       (todo "WAIT"
-                        ((org-agenda-overriding-header "Waiting")
-                         (org-agenda-todo-list-sublevels nil)
-                         (org-agenda-sorting-strategy '(priority-down))))
+                            ((org-agenda-overriding-header "Waiting")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-sorting-strategy '(priority-down))))
                       (todo "HOLD"
-                          ((org-agenda-overriding-header "On hold")
-                          (org-agenda-todo-list-sublevels nil)
-                          (org-agenda-sorting-strategy '(priority-down))))))
+                            ((org-agenda-overriding-header "On hold")
+                             (org-agenda-todo-list-sublevels nil)
+                             (org-agenda-sorting-strategy '(priority-down))))))
                     )))
 
       ;; Resume clocking task when emacs is restarted
@@ -643,11 +654,11 @@ which require an initialization must be listed explicitly in the list.")
 
       (setq org-agenda-clock-consistency-checks
             (quote (:max-duration "1:00"
-                    :min-duration 0
-                    :max-gap 0
-                    :gap-ok-around ("1:00"))))
+                                  :min-duration 0
+                                  :max-gap 0
+                                  :gap-ok-around ("1:00"))))
 
       ;; Agenda clock report parameters
       (setq org-agenda-clockreport-parameter-plist
             (quote (:link t :maxlevel 5 :fileskip0 t :compact t :narrow 80)))
-    )))
+      )))
