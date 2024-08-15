@@ -69,6 +69,7 @@ This function should only modify configuration layer settings."
       rmh-elfeed-org-files (list "~/ownCloud/org/elfeed/elfeed.org")
       elfeed-db-directory "~/ownCloud/org/elfeed/db"
       elfeed-goodies/entry-pane-position 'bottom)
+     ess
      (git
       :variables
       git-gutter-use-fringe t)
@@ -91,6 +92,7 @@ This function should only modify configuration layer settings."
      my-mu4e
      my-org
      my-org-roam
+     my-quarto
      (org
       :packages
       (not org-roam)
