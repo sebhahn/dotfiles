@@ -7,8 +7,8 @@ local config = wezterm.config_builder()
 config.font = wezterm.font('JetBrainsMono Nerd Font', { weight = 'Regular' })
 config.font_size = 11.0
 
-config.color_scheme = "OneHalfDark"
-config.term = 'xterm-256color'
+config.color_scheme = 'OneDark (base16)'
+-- config.color_scheme = 'Ollie (Gogh)'
 
 config.window_background_opacity = 0.93
 
