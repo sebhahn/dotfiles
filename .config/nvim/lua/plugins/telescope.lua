@@ -15,23 +15,10 @@ return {
 
       local telescope = require("telescope")
       local actions = require("telescope.actions")
-      -- local sorters = require("telescope.sorters")
+      local sorters = require("telescope.sorters")
 
       telescope.setup({
           defaults = {
-            file_ignore_patterns = {
-              "node_modules/.*",
-              "%.env",
-              "yarn.lock",
-              "package%-lock.json",
-              "lazy%-lock.json",
-              "init.sql",
-              "target/.*",
-              ".git/.*",
-              "mbsync/",
-              "data-write/",
-              "data-read/",
-            },
             path_display = {"smart"},
             mappings = {
               i = {
@@ -41,11 +28,8 @@ return {
               },
             },
           },
-          -- file_sorter = sorters.get_fuzzy_file,
-          -- generic_sorter = sorters.get_generic_fuzzy_sorter,
-          -- extensions = {
-          --   ["ui-select"] = { require("telescope.themes").get_dropdown({}) },
-          -- },
+          file_sorter = sorters.get_fuzzy_file,
+          generic_sorter = sorters.get_generic_fuzzy_sorter,
       })
 
       telescope.load_extension("fzf")
