@@ -76,8 +76,8 @@ which require an initialization must be listed explicitly in the list.")
 
       (spacemacs/declare-prefix "oj" "org-journal")
       (spacemacs/set-leader-keys
-        "ojk" 'org-journal-new-entry
-        "oje" 'org-journal-new-scheduled-entry
+        "ojj" 'org-journal-new-entry
+        "ojk" 'org-journal-new-scheduled-entry
         "ojs" 'org-journal-search
         "ojn" 'org-journal-next-entry
         "ojd" 'org-journal-display-entry
@@ -136,8 +136,8 @@ which require an initialization must be listed explicitly in the list.")
 
       (spacemacs/declare-prefix-for-mode 'org-mode "j" "org-journal")
       (spacemacs/set-leader-keys
-        "jk" 'org-journal-new-entry
-        "je" 'org-journal-new-scheduled-entry
+        "jj" 'org-journal-new-entry
+        "jk" 'org-journal-new-scheduled-entry
         "js" 'org-journal-search
         "jn" 'org-journal-next-entry
         "jd" 'org-journal-display-entry
