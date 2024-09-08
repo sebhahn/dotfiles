@@ -181,11 +181,14 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-contacts-files (list "~/ownCloud/org/roam/areas/agenda/contacts.org"))
 
       (setq org-journal-dir "~/ownCloud/org/roam/areas/agenda")
-      (setq org-journal-date-prefix "* ")
       (setq org-journal-file-type 'monthly)
       (setq org-journal-file-format "%Y%m.org")
+
+      (setq org-journal-date-prefix "* ")
       (setq org-journal-date-format "%a, %d %b %Y")
-      (setq org-journal-time-format "%Y-%m-%d %I:%M %p")
+
+      (setq org-journal-time-prefix "** ")
+      (setq org-journal-time-format "%I:%M %p")
 
       (setq org-default-notes-file "~/ownCloud/org/roam/areas/agenda/refile.org")
       (setq org-directory "~/ownCloud/org/roam")
