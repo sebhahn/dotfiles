@@ -73,7 +73,7 @@
         "orc" 'org-roam-capture
         "orra" 'org-roam-ref-add
         "orrf" 'org-roam-ref-find
-        "orrr" 'org-roam-ref-remove
+        "orrd" 'org-roam-ref-remove
         "orta" 'org-roam-tag-add
         "ortd" 'org-roam-tag-remove
         "oraa" 'org-roam-alias-add
@@ -99,7 +99,7 @@
         "rrf" 'org-roam-ref-find
         "rrr" 'org-roam-ref-remove
         "rta" 'org-roam-tag-add
-        "rtr" 'org-roam-tag-remove
+        "rtd" 'org-roam-tag-remove
         "raa" 'org-roam-alias-add
         "rar" 'org-roam-alias-remove))
     :custom
@@ -110,7 +110,7 @@
       (spacemacs|hide-lighter org-roam-mode)
       (when org-enable-roam-protocol
         (add-hook 'org-roam-mode-hook (lambda ()
-                                       (require 'org-roam-protocol))))
+                                        (require 'org-roam-protocol))))
 
       (evilified-state-evilify-map org-roam-mode-map
         :mode org-roam-mode
@@ -130,15 +130,15 @@
           (lambda () (not (member "ATTACH" (org-get-tags)))))
 
     (setq org-roam-capture-templates
-      '(("d" "default" plain "%?"
-          :if-new (file+head "${slug}.org" "#+title: ${title}\n")
-          :unnarrowed t)
-        ("n" "literature note" plain "%?"
-          :target
-          (file+head "~/ownCloud/org/roam/resources/publications/${citar-citekey}.org" "#+title: ${title}\n\n")
-          :unnarrowed t)))
+          '(("d" "default" plain "%?"
+             :if-new (file+head "${slug}.org" "#+title: ${title}\n")
+             :unnarrowed t)
+            ("n" "literature note" plain "%?"
+             :target
+             (file+head "~/ownCloud/org/roam/resources/publications/${citar-citekey}.org" "#+title: ${title}\n\n")
+             :unnarrowed t)))
     (org-roam-db-autosync-mode)
- ))
+    ))
 
 (defun my-org-roam/init-org-roam-bibtex ()
   (use-package org-roam-bibtex
@@ -179,12 +179,27 @@
     (spacemacs/set-leader-keys
       "obo" 'citar-open
       "obi" 'citar-insert-citation
+      "obb" 'citar-insert-bibtex
+      "obe" 'citar-insert-edit
       "obc" 'citar-create-note
+      "obn" 'citar-open-notes
+      "obN" 'citar-open-note
+      "obf" 'citar-open-files
+      "obr" 'citar-org-roam-cited
+      "oba" 'citar-org-roam-ref-add
+
       "obd" 'citar-dwim)
     (spacemacs/set-leader-keys-for-major-mode 'org-mode
       "rbo" 'citar-open
       "rbi" 'citar-insert-citation
+      "rbb" 'citar-insert-bibtex
+      "rbe" 'citar-insert-edit
       "rbc" 'citar-create-note
+      "rbn" 'citar-open-notes
+      "rbN" 'citar-open-note
+      "rbf" 'citar-open-files
+      "rbr" 'citar-org-roam-cited
+      "rba" 'citar-org-roam-ref-add
       "rbd" 'citar-dwim)
     (add-to-list 'citar-file-open-functions '("pdf" . (lambda (fpath) (start-process "zathura" "*zathura*" "/usr/bin/zathura" fpath))))))
 
