@@ -143,7 +143,6 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(sqlite3
                                       ripgrep
-                                      catppuccin-theme
                                       modus-themes
                                       exec-path-from-shell)
 
@@ -321,7 +320,6 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '((atom-one-dark :location "~/.spacemacs.d/atom-one-dark-theme")
-                         catppuccin
                          modus-vivendi
                          (material :location "~/.spacemacs.d/emacs-material-theme")
                          spacemacs-dark)
