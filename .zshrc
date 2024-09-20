@@ -226,6 +226,15 @@ _fzf_comprun() {
   esac
 }
 
+locatefzf() {
+    if [ -z "$1" ]; then
+        echo "Usage: locatefzf <search-term>"
+        return 1
+    fi
+
+    locate --existing "$1" | fzf --preview 'cat {}' | xargs xdg-open
+}
+
 fg="#CBE0F0"
 bg="#011628"
 bg_highlight="#143652"
