@@ -21,7 +21,7 @@ config.window_padding = {
 
 config.enable_scroll_bar = false
 config.hide_tab_bar_if_only_one_tab = true
-config.window_decorations = "RESIZE"
+-- config.window_decorations = "RESIZE"
 
 config.default_prog = { 'zsh', '-l' }
 
