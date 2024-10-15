@@ -13,6 +13,7 @@
     (org :location built-in)
     (org-ac :location built-in)
     cdlatex
+    org-noter
     ;; package custom-org-configs go here
     )
   "List of all packages to install and/or initialize. Built-in packages
@@ -37,6 +38,11 @@ which require an initialization must be listed explicitly in the list.")
     (progn
       (org-ac/config-default))))
 
+(defun custom-org-config/init-org-noter()
+  (use-package org-noter
+    :defer t
+    :config
+    ))
 
 (defun custom-org-config/pre-init-org ()
   ;;   "Initialize my package"
