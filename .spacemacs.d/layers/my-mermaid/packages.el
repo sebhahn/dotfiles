@@ -51,4 +51,4 @@
 (defun my-mermaid/init-ob-mermaid ()
   (use-package ob-mermaid
     :config
-    (setq ob-mermaid-cli-path "~/node_modules/.bin/mmdc")))
+    (setq ob-mermaid-cli-path "~/bin/mmdc")))
