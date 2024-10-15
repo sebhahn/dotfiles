@@ -265,8 +265,11 @@ which require an initialization must be listed explicitly in the list.")
       (require 'ox-odt)
       (require 'ox-texinfo)
       (require 'ox-beamer)
+      (require 'ox-extra)
       (require 'ox-html)
       (require 'ox-md)
+
+      (ox-extras-activate '(ignore-headlines))
 
       ;; If idle for more than 15 minutes, resolve the things by asking what to do  with the clock time
       (setq org-clock-idle-time 90)
