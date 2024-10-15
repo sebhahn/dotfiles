@@ -144,6 +144,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-additional-packages '(sqlite3
                                       ripgrep
                                       modus-themes
+                                      pdf-tools
                                       exec-path-from-shell)
 
    ;; A list of packages that cannot be updated.
