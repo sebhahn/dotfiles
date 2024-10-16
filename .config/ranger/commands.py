@@ -395,10 +395,12 @@ class fzf_locate(Command):
     def execute(self):
         if self.quantifier:
             # command = "locate home | fzf -e -i"
-            command = "locate pattern | grep -E '^(/home|/data|/data2)' | fzf -e -i"
+            # command = "locate pattern | grep -E '^(/home|/data|/data2)' | fzf -e -i"
+            command = " locate --regex '^/home|^/data|^/data2' | fzf -e -i"
         else:
             # command = "locate home | fzf -e -i"
-            command = "locate pattern | grep -E '^(/home|/data|/data2)' | fzf -e -i"
+            # command = "locate pattern | grep -E '^(/home|/data|/data2)' | fzf -e -i"
+            command = " locate --regex '^/home|^/data|^/data2' | fzf -e -i"
         fzf = self.fm.execute_command(command, stdout=subprocess.PIPE)
         stdout, stderr = fzf.communicate()
         if fzf.returncode == 0:
