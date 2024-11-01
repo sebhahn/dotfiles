@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+#name : plot_circle
+#key : plot_circle
+# --
+kwargs = {"marker": "o", "ls": "none", "fillstyle": "none"}

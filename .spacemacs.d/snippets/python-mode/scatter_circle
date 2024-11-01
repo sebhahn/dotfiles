@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+#name : scatter_circle
+#key : scatter_circle
+# --
+kwargs = {"marker": "o", "fc": "none", "ec": "k"}
