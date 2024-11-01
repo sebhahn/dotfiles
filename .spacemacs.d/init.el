@@ -87,6 +87,7 @@ This function should only modify configuration layer settings."
      markdown
      multiple-cursors
      ;; my-eglot
+     my-chatgpt
      my-lsp-jedi
      my-mermaid
      my-mu4e
