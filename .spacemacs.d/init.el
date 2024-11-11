@@ -313,9 +313,8 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '((atom-one-dark :location "~/.spacemacs.d/atom-one-dark-theme")
-                         modus-vivendi
-                         (material :location "~/.spacemacs.d/emacs-material-theme")
+   dotspacemacs-themes '(atom-one-dark
+                         material
                          spacemacs-dark)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
@@ -655,6 +654,8 @@ It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   ;; (setq byte-compile-warnings '(cl-functions))
+  (add-to-list 'custom-theme-load-path "~/.spacemacs.d/emacs-material-theme")
+  (add-to-list 'custom-theme-load-path "~/.spacemacs.d/atom-one-dark-theme")
 
   (setq configuration-layer--elpa-archives '(("melpa" . "melpa.org/packages/")
                                              ("org" . "orgmode.org/elpa/")
