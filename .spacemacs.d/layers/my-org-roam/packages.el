@@ -135,7 +135,7 @@
              :unnarrowed t)
             ("n" "literature note" plain "%?"
              :target
-             (file+head "~/ownCloud/org/roam/resources/publications/${citar-citekey}.org" "#+title: ${title}\n\n")
+             (file+head "~/ownCloud/org/roam/resources/zettelkasten/bibliography/${citar-citekey}.org" "#+title: ${title}\n\n")
              :unnarrowed t)))
     (org-roam-db-autosync-mode)
     ))
