@@ -48,7 +48,7 @@
   (use-package org-ref
     :defer t
     :init
-   (progn
+    (progn
       (spacemacs/set-leader-keys "on" 'org-ref-open-notes-at-point)
       ;; (spacemacs/set-leader-keys-for-major-mode 'org-mode "rN" 'org-ref-open-notes-at-point)
       )
@@ -61,33 +61,33 @@
 
     (setq bibtex-completion-bibliography '("~/ownCloud/areas/research/latex/zotero.bib")
           bibtex-completion-library-path '("~/ownCloud/areas/research/publications/")
-          bibtex-completion-notes-path "~/ownCloud/org/roam/resources/publications/"
+          bibtex-completion-notes-path "~/ownCloud/org/roam/resources/zettelkasten/bibliography/"
           bibtex-completion-notes-template-multiple-files (format ":properties:\n:id: ${=key=}\n:roam_aliases: ${=key=}\n:roam_refs: cite:${=key=}\n:end:\n#+title: ${title}\n#+author: ${author-abbrev}\n\n")
           bibtex-completion-additional-search-fields '(keywords)
           bibtex-completion-display-formats
-	        '((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
-	          (inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
-	          (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
-	          (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
-	          (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
+          '((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
+            (inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
+            (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+            (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+            (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
           bibtex-completion-pdf-open-function (lambda (fpath)
-            (start-process "zathura" "*zathura*" "/usr/bin/zathura" fpath)))
+                                                (start-process "zathura" "*zathura*" "/usr/bin/zathura" fpath)))
 
     (setq org-ref-open-pdf-function
           (lambda (fpath)
             (start-process "zathura" "*zathura*" "/usr/bin/zathura" fpath)))
 
     (setq bibtex-autokey-year-length 4
-	        bibtex-autokey-name-year-separator "-"
-	        bibtex-autokey-year-title-separator "-"
-	        bibtex-autokey-titleword-separator "-"
-	        bibtex-autokey-titlewords 2
-	        bibtex-autokey-titlewords-stretch 1
-	        bibtex-autokey-titleword-length 5)
+          bibtex-autokey-name-year-separator "-"
+          bibtex-autokey-year-title-separator "-"
+          bibtex-autokey-titleword-separator "-"
+          bibtex-autokey-titlewords 2
+          bibtex-autokey-titlewords-stretch 1
+          bibtex-autokey-titleword-length 5)
 
     (define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
     (define-key org-mode-map (kbd "C-c ]") 'org-ref-insert-link)
     (define-key org-mode-map (kbd "s-[") 'org-ref-insert-link-hydra/body)
 
     (setq reftex-default-bibliography '("~/ownCloud/areas/research/latex/zotero.bib")))
-)
+  )
