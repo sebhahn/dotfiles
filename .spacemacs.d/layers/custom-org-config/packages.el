@@ -166,14 +166,10 @@ which require an initialization must be listed explicitly in the list.")
           (org-insert-subheading t)))
 
       (setq org-tag-alist
-            '(;;places
-              ("PRJ" . ?p)
-              ("@read" . ?r)
-              ("@remind" . ?m)
-              ("@email" . ?e)
-              ("@idea" . ?i)
-              ("@book" . ?b)
-              ("@code" . ?c)
+            '(("PRJ" . ?p)
+              ("NOTE" . ?n)
+              ("BIBNOTE" . ?b)
+              ("REMEMBER" . ?r)
               ))
 
       ;; (setq org-replace-disputed-keys t)
