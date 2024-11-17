@@ -741,9 +741,11 @@ before packages are loaded."
     :binding "r"
     :body
     (progn
-      (find-file "~/ownCloud/org/roam/areas/agenda/2024.org")
+      (find-file "~/ownCloud/org/roam/areas/agenda/refile.org")
       (split-window-right)
-      (find-file "~/ownCloud/org/roam/areas/private/cheatsheet.org")))
+      (find-file "~/ownCloud/org/roam/areas/agenda/2024.org")
+      (split-window-below)
+      (find-file "~/ownCloud/org/roam/areas/agenda/geo.org")))
 
   (setq sp-highlight-pair-overlay nil
         sp-escape-quotes-after-insert nil
