@@ -8,6 +8,10 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+if [ -d "/usr/local/texlive/2024/bin/x86_64-linux" ] ; then
+    PATH="/usr/local/texlive/2024/bin/x86_64-linux:$PATH"
+fi
+
 export GIT_INTERNAL_GETTEXT_TEST_FALLBACKS=1
 
 export LANGUAGE="en_US.UTF-8"
