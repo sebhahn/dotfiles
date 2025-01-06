@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+#name : path
+#key : path
+# --
+${1:path}.mkdir(parents=True, exist_ok=True)
