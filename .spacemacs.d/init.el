@@ -734,7 +734,7 @@ before packages are loaded."
       (org-agenda nil "k")
       (delete-other-windows)
       (split-window-right)
-      (find-file "~/ownCloud/org/roam/areas/agenda/2024.org")
+      (find-file "~/ownCloud/org/roam/areas/agenda/2025.org")
       (ace-swap-window)))
 
   (spacemacs|define-custom-layout "@org-roam"
@@ -743,9 +743,15 @@ before packages are loaded."
     (progn
       (find-file "~/ownCloud/org/roam/areas/agenda/refile.org")
       (split-window-right)
-      (find-file "~/ownCloud/org/roam/areas/agenda/2024.org")
-      (split-window-below)
-      (find-file "~/ownCloud/org/roam/areas/agenda/geo.org")))
+      (find-file "~/ownCloud/org/roam/areas/agenda/2025.org")))
+
+  (spacemacs|define-custom-layout "@article"
+    :binding "p"
+    :body
+    (progn
+      (find-file "~/Nextcloud/projects/202308_ascat_625_article/overleaf/notes.org")
+      (split-window-right)
+      (find-file "~/Nextcloud/projects/202308_ascat_625_article/overleaf/article.tex")))
 
   (setq sp-highlight-pair-overlay nil
         sp-escape-quotes-after-insert nil
@@ -859,6 +865,8 @@ before packages are loaded."
 
   (setq multi-term-program "/usr/bin/zsh")
   (setq persp-kill-foreign-buffer-behaviour nil)
+
+  ;; (setq-default indent-tabs-mode nil)
 
   ;; (setq vertico-sort-function "Alphabetically")
   ;; (setq vertico-sort-function 'vertico-sort-alpha)
