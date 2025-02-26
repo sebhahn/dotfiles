@@ -686,7 +686,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                                       :weight Medium
                                       :width normal)
 
-          browse-url-generic-program "google-chrome"
+          browse-url-generic-program "~/bin/zen-browser"
           org-odt-data-dir "/usr/share/emacs/27.1/etc/org")
     (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
 
@@ -696,7 +696,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                                       :weight Medium
                                       :width normal)
 
-          browse-url-generic-program "google-chrome-stable"
+          browse-url-generic-program "~/bin/zen-browser"
           ;; exec-path-from-shell-arguments (list "-i")
           org-odt-data-dir "/usr/share/emacs/27.1/etc/org")
 
