@@ -24,7 +24,7 @@ return {
       -- list of servers for mason to install
       ensure_installed = {
         "lua_ls",
-        "ruff_lsp",
+        -- "ruff_lsp",
         "ltex",
         "yamlls",
         "ansiblels",
