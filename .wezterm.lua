@@ -31,4 +31,6 @@ config.skip_close_confirmation_for_processes_named = { 'bash', 'sh', 'zsh', 'fis
 config.initial_rows = 42
 config.initial_cols = 120
 
+config.warn_about_missing_glyphs = false
+
 return config
