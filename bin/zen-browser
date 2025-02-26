@@ -1,0 +1,2 @@
+#!/bin/bash
+flatpak run --branch=stable --command=launch-script.sh app.zen_browser.zen "$@"
