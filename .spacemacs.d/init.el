@@ -254,7 +254,7 @@ It should only modify the values of Spacemacs settings."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'random
+   dotspacemacs-startup-banner 'official
 
    ;; Scale factor controls the scaling (size) of the startup banner. Default
    ;; value is `auto' for scaling the logo automatically to fit all buffer
@@ -286,7 +286,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-startup-buffer-multi-digit-delay 0.4
 
    ;; If non-nil, show file icons for entries and headings on Spacemacs home buffer.
-   ;; This has no effect in terminal or if "all-the-icons" package or the font
+   ;; This has no effect in terminal or if "nerd-icons" package or the font
    ;; is not installed. (default nil)
    dotspacemacs-startup-buffer-show-icons nil
 
@@ -362,10 +362,10 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-major-mode-leader-key ","
 
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
-   ;; (default "C-M-m" for terminal mode, "<M-return>" for GUI mode).
+   ;; (default "C-M-m" for terminal mode, "M-<return>" for GUI mode).
    ;; Thus M-RET should work as leader key in both GUI and terminal modes.
    ;; C-M-m also should work in terminal mode, but not in GUI mode.
-   dotspacemacs-major-mode-emacs-leader-key (if window-system "<M-return>" "C-M-m")
+   dotspacemacs-major-mode-emacs-leader-key (if window-system "M-<return>" "C-M-m")
 
    ;; These variables control whether separate commands are bound in the GUI to
    ;; the key pairs `C-i', `TAB' and `C-m', `RET'.
@@ -434,6 +434,17 @@ It should only modify the values of Spacemacs settings."
    ;; are kept or minimized by `spacemacs/toggle-maximize-window' (SPC w m).
    ;; (default t)
    dotspacemacs-maximize-window-keep-side-windows t
+
+   ;; If nil, no load-hints enabled. If t, enable the `load-hints' which will
+   ;; put the most likely path on the top of `load-path' to reduce walking
+   ;; through the whole `load-path'. It's an experimental feature to speedup
+   ;; Spacemacs on Windows. Refer the FAQ.org "load-hints" session for details.
+   dotspacemacs-enable-load-hints nil
+
+   ;; If t, enable the `package-quickstart' feature to avoid full package
+   ;; loading, otherwise no `package-quickstart' attemption (default nil).
+   ;; Refer the FAQ.org "package-quickstart" section for details.
+   dotspacemacs-enable-package-quickstart nil
 
    ;; If non-nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
@@ -709,14 +720,6 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (load custom-file)
   )
 
-(defun dotspacemacs/user-load ()
-  "Library to load while dumping.
-This function is called only while dumping Spacemacs configuration. You can
-`require' or `load' the libraries of your choice that will be included in the
-dump."
-  )
-
-
 (defun dotspacemacs/user-config ()
   "Configuration for user code:
 This function is called at the very end of Spacemacs startup, after layer
@@ -816,10 +819,6 @@ before packages are loaded."
   ;;   "fx" 'consult-file-externally
   ;;   "ps" 'projectile-ripgrep)
 
-  ;; fix issue with org-roam buffer
-  ;; https://github.com/org-roam/org-roam/issues/1732
-  (global-page-break-lines-mode 0)
-
   ;; remove windmove-mode, shadows org bindings
   (windmove-mode 0)
 
@@ -866,12 +865,14 @@ before packages are loaded."
   (setq multi-term-program "/usr/bin/zsh")
   (setq persp-kill-foreign-buffer-behaviour nil)
 
+
   ;; (setq-default indent-tabs-mode nil)
 
   ;; (setq vertico-sort-function "Alphabetically")
   ;; (setq vertico-sort-function 'vertico-sort-alpha)
 
   )
+
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
