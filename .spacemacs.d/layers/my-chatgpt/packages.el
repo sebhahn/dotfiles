@@ -46,5 +46,49 @@
 (defun my-chatgpt/init-chatgpt-shell ()
   (use-package chatgpt-shell
     :ensure t
-    :config
-    (setq chatgpt-shell-openai-key (getenv "OPENAI_API_KEY"))))
+    :custom
+    ((chatgpt-shell-openai-key (getenv "AQUEDUCT_API_KEY"))
+     (chatgpt-shell-api-url-base "https://aqueduct.ai.datalab.tuwien.ac.at")))
+
+  (with-eval-after-load 'chatgpt-shell
+    (defvar my-chatgpt-shell-extra-openai-models
+      (list
+       (chatgpt-shell-openai-make-model
+        :version "glm-4.5-106b"
+        :function-calling t
+        :token-width 3
+        :context-window 400000)
+       (chatgpt-shell-openai-make-model
+        :version "e5-mistral-7b"
+        :function-calling t
+        :token-width 3
+        :context-window 400000)
+       (chatgpt-shell-openai-make-model
+        :version "glm-4.6-355b"
+        :function-calling t
+        :token-width 3
+        :context-window 400000))
+      "Extra models to append to `chatgpt-shell-openai-models'.")
+
+    (defun my-chatgpt-shell--append-custom-models (models)
+      (nconc (copy-sequence models) my-chatgpt-shell-extra-openai-models))
+
+    (advice-add 'chatgpt-shell-openai-models :filter-return
+                #'my-chatgpt-shell--append-custom-models))
+
+  ;; Flag to ensure we only reload once
+  (defvar my-chatgpt-shell--models-loaded nil
+    "Whether ChatGPT models have been reloaded once after startup.")
+
+  (defun my-chatgpt-shell--reload-once ()
+    "Reload default and custom models the first time a ChatGPT shell is opened."
+    (unless my-chatgpt-shell--models-loaded
+      (setq my-chatgpt-shell--models-loaded t)
+      (chatgpt-shell-reload-default-models)
+      ;; (setq chatgpt-shell-model "glm-4.5-355b")
+      (setq chatgpt-shell-model-version "glm-4.5-106b")
+      (setq chatgpt-shell-model "glm-4.5-106b")
+      (message "[my-chatgpt] Reloaded ChatGPT models (including custom ones).")))
+
+  ;; Hook into shell open
+  (add-hook 'chatgpt-shell-mode-hook #'my-chatgpt-shell--reload-once))
