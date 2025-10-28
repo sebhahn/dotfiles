@@ -111,8 +111,7 @@ This function should only modify configuration layer settings."
       :variables
       python-backend 'lsp
       python-formatter 'yapf
-      ;; python-format-on-save t
-      python-auto-set-local-pyenv-version 'on-project-switch
+      ;; python-virtualenv-management 'pyvenv
       python-test-runner 'pytest)
      my-python
      search-engine
@@ -143,6 +142,9 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(sqlite3
+                                      toml
+                                      yaml
+                                      tomlparse
                                       ripgrep
                                       transient
                                       modus-themes
@@ -679,8 +681,9 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                                       :width normal)
 
           browse-url-generic-program "~/bin/zen-browser"
-          org-odt-data-dir "/usr/share/emacs/27.1/etc/org")
-    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
+          org-odt-data-dir "/usr/share/emacs/29.3/etc/org")
+    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
+    (setq exec-path-from-shell-arguments '("-i")))
 
   (when (eq (dotfiles/machine-location) 'home)
     (setq dotspacemacs-default-font '("JetBrainsMono Nerd Font"
@@ -689,10 +692,9 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                                       :width normal)
 
           browse-url-generic-program "~/bin/zen-browser"
-          ;; exec-path-from-shell-arguments (list "-i")
-          org-odt-data-dir "/usr/share/emacs/27.1/etc/org")
-
-    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
+          org-odt-data-dir "/usr/share/emacs/29.3/etc/org")
+    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
+    (setq exec-path-from-shell-arguments '("-i")))
 
   (add-to-list 'load-path "~/.spacemacs.d" t)
 
