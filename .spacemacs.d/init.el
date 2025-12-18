@@ -731,13 +731,13 @@ before packages are loaded."
       (split-window-right)
       (find-file "~/ownCloud/org/roam/areas/agenda/2025.org")))
 
-  (spacemacs|define-custom-layout "@article"
+  (spacemacs|define-custom-layout "@phd"
     :binding "p"
     :body
     (progn
-      (find-file "~/Nextcloud/projects/202308_ascat_625_article/overleaf/notes.org")
+      (find-file "~/Nextcloud/projects/phd/notes/notes.org")
       (split-window-right)
-      (find-file "~/Nextcloud/projects/202308_ascat_625_article/overleaf/article.tex")))
+      (find-file "~/Nextcloud/projects/phd/latex/phd_shahn.tex")))
 
   (setq sp-highlight-pair-overlay nil
         sp-escape-quotes-after-insert nil

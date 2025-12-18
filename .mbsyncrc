@@ -35,7 +35,7 @@ SubFolders Legacy
 Channel tu-inbox
 Far :tu-remote:
 Near :tu-local:
-Patterns * 
+Patterns *
 Create Both
 Expunge Both
 SyncState *
@@ -43,24 +43,24 @@ SyncState *
 Group tu
 Channel tu-inbox
 
-IMAPAccount TU-Git
+# IMAPAccount TU-Git
 # Address to connect to
-Host mail.intern.tuwien.ac.at
-User intern/shahn/E120.Git
-PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/tu.gpg"
-AuthMechs LOGIN
-SSLType IMAPS
-SSLVersions TLSv1.2
-CertificateFile /etc/ssl/certs/ca-certificates.crt
+# Host mail.intern.tuwien.ac.at
+# User intern/shahn/E120.Git
+# PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/tu.gpg"
+# AuthMechs LOGIN
+# SSLType IMAPS
+# SSLVersions TLSv1.2
+# CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 # REMOTE STORAGE (USE THE IMAP ACCOUNT SPECIFIED ABOVE)
-IMAPStore tu-git-remote
-Account TU-Git
+# IMAPStore tu-git-remote
+# Account TU-Git
 
 # LOCAL STORAGE (CREATE DIRECTORIES with mkdir -p Maildir/gmail)
-MaildirStore tu-git-local
-Path ~/mbsync/TU-Git/
-Inbox ~/mbsync/TU-Git/INBOX
+# MaildirStore tu-git-local
+# Path ~/mbsync/TU-Git/
+# Inbox ~/mbsync/TU-Git/INBOX
 
 # CONNECTIONS SPECIFY LINKS BETWEEN REMOTE AND LOCAL FOLDERS
 #
@@ -71,13 +71,13 @@ Inbox ~/mbsync/TU-Git/INBOX
 # 2 "!DIR" TO EXCLUDE "DIR"
 # 3 "DIR" TO MATCH DIR
 
-Channel tu-git-inbox
-Far :tu-git-remote:
-Near :tu-git-local:
-Patterns * 
-Create Both
-Expunge Both
-SyncState *
+# Channel tu-git-inbox
+# Far :tu-git-remote:
+# Near :tu-git-local:
+# Patterns *
+# Create Both
+# Expunge Both
+# SyncState *
 
-Group tu-git
-Channel tu-git-inbox
+# Group tu-git
+# Channel tu-git-inbox
