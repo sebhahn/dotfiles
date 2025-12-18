@@ -60,8 +60,8 @@
         :context-window 400000)
        (chatgpt-shell-openai-make-model
         :version "e5-mistral-7b"
-        :function-calling t
         :token-width 3
+        :function-calling t
         :context-window 400000)
        (chatgpt-shell-openai-make-model
         :version "glm-4.6-355b"
@@ -85,10 +85,19 @@
     (unless my-chatgpt-shell--models-loaded
       (setq my-chatgpt-shell--models-loaded t)
       (chatgpt-shell-reload-default-models)
-      ;; (setq chatgpt-shell-model "glm-4.5-355b")
-      (setq chatgpt-shell-model-version "glm-4.5-106b")
-      (setq chatgpt-shell-model "glm-4.5-106b")
+      ;; (setq chatgpt-shell-model "glm-4.6-355b")
+      (setq chatgpt-shell-model-version "glm-4.6-355b")
       (message "[my-chatgpt] Reloaded ChatGPT models (including custom ones).")))
+
+  ;; (defun my-chatgpt-shell--reload-once ()
+  ;;   "Reload default and custom models once when a ChatGPT shell is opened."
+  ;;   (unless my-chatgpt-shell--models-loaded
+  ;;     (setq my-chatgpt-shell--models-loaded t)
+  ;;     (when (fboundp 'chatgpt-shell-reload-default-models)
+  ;;       (chatgpt-shell-reload-default-models))
+  ;;     (chatgpt-shell-swap-model "glm-4.6-355b")
+  ;;     (message "[my-chatgpt] Models reloaded and active model set to %s"
+  ;;              chatgpt-shell-model)))
 
   ;; Hook into shell open
   (add-hook 'chatgpt-shell-mode-hook #'my-chatgpt-shell--reload-once))
