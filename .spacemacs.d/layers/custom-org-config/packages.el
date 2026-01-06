@@ -446,7 +446,14 @@ which require an initialization must be listed explicitly in the list.")
                      "* %?\n%U\n")
                     ("d" "all day journal" entry (file+olp+datetree "~/ownCloud/org/roam/areas/agenda/diary.org")
                      "* %?\n%t\n")
-                    ("y" "yearly-journal" entry (file+function "~/ownCloud/org/roam/areas/agenda/2024.org" my/org-capture-journal-find-month)
+                    ("y" "yearly-journal"
+                     entry
+                     (file+function
+                      (lambda ()
+                        (expand-file-name
+                         (format "%s.org" (format-time-string "%Y"))
+                         "~/ownCloud/org/roam/areas/agenda/"))
+                      my/org-capture-journal-find-month)
                      "** %U\n %?")
                     ("b" "bibliographic note" entry (file "~/ownCloud/org/roam/areas/agenda/refile.org")
                      "* %? :BIBNOTE:\n%U\n%a\n")
