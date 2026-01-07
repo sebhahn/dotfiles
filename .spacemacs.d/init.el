@@ -720,7 +720,7 @@ before packages are loaded."
       (org-agenda nil "k")
       (delete-other-windows)
       (split-window-right)
-      (find-file "~/ownCloud/org/roam/areas/agenda/2025.org")
+      (find-file "~/ownCloud/org/roam/areas/agenda/2026.org")
       (ace-swap-window)))
 
   (spacemacs|define-custom-layout "@org-roam"
@@ -729,7 +729,7 @@ before packages are loaded."
     (progn
       (find-file "~/ownCloud/org/roam/areas/agenda/refile.org")
       (split-window-right)
-      (find-file "~/ownCloud/org/roam/areas/agenda/2025.org")))
+      (find-file "~/ownCloud/org/roam/areas/agenda/2026.org")))
 
   (spacemacs|define-custom-layout "@phd"
     :binding "p"
