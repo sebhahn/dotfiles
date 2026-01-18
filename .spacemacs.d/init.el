@@ -111,7 +111,7 @@ This function should only modify configuration layer settings."
       :variables
       python-backend 'lsp
       python-formatter 'yapf
-      ;; python-virtualenv-management 'pyvenv
+      ;; python-enable-tools '(uv)
       python-test-runner 'pytest)
      my-python
      search-engine

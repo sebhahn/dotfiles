@@ -181,16 +181,14 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-plantuml-jar-path "~/ownCloud/org/bin/plantuml.jar")
 
       (setq org-contacts-files (list "~/ownCloud/org/roam/areas/agenda/contacts.org"))
-
       (setq org-journal-dir "~/ownCloud/org/roam/areas/agenda")
-      (setq org-journal-file-type 'monthly)
-      (setq org-journal-file-format "%Y%m.org")
-
+      (setq org-journal-file-type 'weekly)
+      (setq org-journal-file-format "%Y-W%V.org")
       (setq org-journal-date-prefix "* ")
-      (setq org-journal-date-format "%a, %d %b %Y")
-
+      (setq org-journal-date-format "%A, %d %B %Y")
       (setq org-journal-time-prefix "** ")
       (setq org-journal-time-format "%I:%M %p")
+      (setq org-journal-file-header #'my/org-journal-weekly-header)
 
       (setq org-default-notes-file "~/ownCloud/org/roam/areas/agenda/refile.org")
       (setq org-directory "~/ownCloud/org/roam")
@@ -247,7 +245,7 @@ which require an initialization must be listed explicitly in the list.")
 
       ;; Enable display of the time grid so we can see the marker for the current time
       (setq org-agenda-time-grid '((daily today)
-                                   (800 1000 1200 1400 1600 1800 2000)
+                                   (0800 1000 1200 1400 1600 1800 2000)
                                    "......" "----------------"))
 
       ;; Display tags farther right
@@ -525,6 +523,10 @@ which require an initialization must be listed explicitly in the list.")
                       (org-agenda-time-grid nil)
                       (org-deadline-warning-days 0)
                       (org-agenda-entry-types '(:deadline))))
+
+                    ("w" "Weekly Review"
+                     ((org-agenda-span 7)
+                      (org-deadline-warning-days 0)))
 
                     ("e" "Eisenhower matrix"
                      ((agenda ""
