@@ -145,7 +145,7 @@ https://tuwien.at/mg/geo/rs/")
             mu4e-use-fancy-chars 't
             mu4e-view-show-images 't
             message-kill-buffer-on-exit 't
-            mu4e-org-support nil)
+            mu4e-org-support t)
       (let ((dir "~/Downloads"))
         (when (file-directory-p dir)
           (setq mu4e-attachment-dir dir))))
