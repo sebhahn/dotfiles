@@ -78,7 +78,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(extract git wd rsync zsh-syntax-highlighting fzf zoxide)
+plugins=(extract git wd rsync zsh-syntax-highlighting fzf uv zoxide)
 
 # set full color terminal
 if [[ -n "$INSIDE_EMACS" ]]; then
