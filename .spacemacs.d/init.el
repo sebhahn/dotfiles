@@ -75,7 +75,7 @@ This function should only modify configuration layer settings."
       git-gutter-use-fringe t)
      fasd
      html
-     ipython-notebook
+     ;; ipython-notebook
      (latex
       :variables
       font-latex-fontify-script nil
@@ -110,10 +110,10 @@ This function should only modify configuration layer settings."
      (python
       :variables
       python-backend 'lsp
-      python-formatter 'yapf
-      ;; python-enable-tools '(uv)
+      python-formatter 'ruff
+      python-linter 'ruff
       python-test-runner 'pytest)
-     my-python
+     ;; my-python
      search-engine
      ;; semantic
      (shell
@@ -125,6 +125,7 @@ This function should only modify configuration layer settings."
      (syntax-checking
       :variables
       syntax-checking-enable-tooltips nil)
+     toml
      tmux
      (version-control
       :variables
@@ -142,9 +143,7 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(sqlite3
-                                      toml
                                       yaml
-                                      tomlparse
                                       ripgrep
                                       transient
                                       modus-themes
@@ -665,6 +664,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                       ("project10" . work)
                       ("project12" . work)
                       ("project14" . work)
+                      ("radar01" . work)
                       ("shahn-7490" . home))))
       (cdr (assoc system-name machines))))
 
@@ -720,7 +720,10 @@ before packages are loaded."
       (org-agenda nil "k")
       (delete-other-windows)
       (split-window-right)
-      (find-file "~/ownCloud/org/roam/areas/agenda/2026.org")
+      (find-file
+       (expand-file-name
+        (format-time-string "%G-W%V.org")
+        "~/ownCloud/org/roam/areas/agenda/"))
       (ace-swap-window)))
 
   (spacemacs|define-custom-layout "@org-roam"
@@ -729,7 +732,10 @@ before packages are loaded."
     (progn
       (find-file "~/ownCloud/org/roam/areas/agenda/refile.org")
       (split-window-right)
-      (find-file "~/ownCloud/org/roam/areas/agenda/2026.org")))
+      (find-file
+       (expand-file-name
+        (format-time-string "%G-W%V.org")
+        "~/ownCloud/org/roam/areas/agenda/"))))
 
   (spacemacs|define-custom-layout "@phd"
     :binding "p"
@@ -781,26 +787,7 @@ before packages are loaded."
 
   ;; set default browser
   (setq browse-url-browser-function 'browse-url-generic)
-
   (setq-default persp-auto-save-opt 0)
-
-  ;; (global-company-mode)
-  ;; (add-hook 'python-mode-hook 'anaconda-mode)
-  (add-hook 'python-mode-hook 'company-mode)
-
-  ;; (with-eval-after-load 'python
-  ;;   (defun spacemacs//python-setup-shell (&rest args)
-  ;;     (progn
-  ;;       (setq python-shell-interpreter-args "-i")
-  ;;       (setq python-shell-interpreter "python"))))
-
-  ;; ;; (setq python-shell-completion-native-enable nil)
-
-  ;; ;; (setq read-process-output-max (* 1024 1024))
-
-  ;; (spacemacs/set-leader-keys
-  ;;   "fx" 'consult-file-externally
-  ;;   "ps" 'projectile-ripgrep)
 
   ;; remove windmove-mode, shadows org bindings
   (windmove-mode 0)
@@ -842,17 +829,16 @@ before packages are loaded."
 
   (advice-add 'pyenv-mode-set :after #'my/advice-after-pyenv-mode-set)
 
-  (setq lsp-python-ms-executable (executable-find "pyright-langserver"))
-  ;; (setq lsp-python-ms-executable (executable-find "pyright-langserver"))
-
   (setq multi-term-program "/usr/bin/zsh")
   (setq persp-kill-foreign-buffer-behaviour nil)
 
+  (defun my-python-disable-ipython-preference ()
+    "Force python-shell-interpreter to python3 after python-mode loads."
+    (setq python-shell-interpreter "python3"
+          python-shell-interpreter-args "-i"))
 
-  ;; (setq-default indent-tabs-mode nil)
+  (add-hook 'python-mode-hook #'my-python-disable-ipython-preference)
 
-  ;; (setq vertico-sort-function "Alphabetically")
-  ;; (setq vertico-sort-function 'vertico-sort-alpha)
 
   )
 
