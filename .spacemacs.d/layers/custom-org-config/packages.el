@@ -181,13 +181,14 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-plantuml-jar-path "~/ownCloud/org/bin/plantuml.jar")
 
       (setq org-contacts-files (list "~/ownCloud/org/roam/areas/agenda/contacts.org"))
+
       (setq org-journal-dir "~/ownCloud/org/roam/areas/agenda")
       (setq org-journal-file-type 'weekly)
       (setq org-journal-file-format "%Y-W%V.org")
       (setq org-journal-date-prefix "* ")
       (setq org-journal-date-format "%A, %d %B %Y")
-      (setq org-journal-time-prefix "** ")
-      (setq org-journal-time-format "%I:%M %p")
+      (setq org-journal-time-prefix "")
+      (setq org-journal-time-format "")
       (setq org-journal-file-header #'my/org-journal-weekly-header)
 
       (setq org-default-notes-file "~/ownCloud/org/roam/areas/agenda/refile.org")
@@ -295,10 +296,10 @@ which require an initialization must be listed explicitly in the list.")
       (setq org-latex-listings 'minted)
 
       ;; setup minted to have frame, small text and line numbers
-      (setq org-latex-minted-options
-            '(("frame" "lines")
-              ("fontsize" "\\scriptsize")
-              ("linenos" "")))
+      ;; (setq org-latex-minted-options
+      ;;       '(("frame" "lines")
+      ;;         ("fontsize" "\\scriptsize")
+      ;;         ("linenos" "")))
 
       ;; setup org-cdlatex minor mode
       (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
