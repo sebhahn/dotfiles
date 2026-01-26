@@ -88,7 +88,7 @@ This function should only modify configuration layer settings."
      multiple-cursors
      ;; my-eglot
      my-chatgpt
-     my-lsp-jedi
+     ;; my-lsp-jedi
      my-mermaid
      my-mu4e
      my-org
@@ -113,7 +113,7 @@ This function should only modify configuration layer settings."
       python-formatter 'ruff
       python-linter 'ruff
       python-test-runner 'pytest)
-     ;; my-python
+     my-python
      search-engine
      ;; semantic
      (shell
@@ -816,7 +816,7 @@ before packages are loaded."
         doom-modeline-checker-simple-format nil)
 
   (setq doom-modeline-env-enable-python nil)
-  (setq mu4e-modeline-all-read '("R:" . "🌀"))
+  (setq mu4e-modeline-all-read '("R:" . "🌀 "))
 
   (defun my/advice-after-pyenv-mode-set (orig-func &rest args)
     "Advice to restart LSP server after changing Pyenv version."
@@ -836,10 +836,7 @@ before packages are loaded."
     "Force python-shell-interpreter to python3 after python-mode loads."
     (setq python-shell-interpreter "python3"
           python-shell-interpreter-args "-i"))
-
   (add-hook 'python-mode-hook #'my-python-disable-ipython-preference)
-
-
   )
 
 
