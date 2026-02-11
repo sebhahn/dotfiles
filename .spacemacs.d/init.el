@@ -75,7 +75,6 @@ This function should only modify configuration layer settings."
       git-gutter-use-fringe t)
      fasd
      html
-     ;; ipython-notebook
      (latex
       :variables
       font-latex-fontify-script nil
@@ -86,10 +85,7 @@ This function should only modify configuration layer settings."
      json
      markdown
      multiple-cursors
-     ;; my-eglot
      my-chatgpt
-     ;; my-lsp-jedi
-     my-mermaid
      my-mu4e
      my-org
      my-org-roam
