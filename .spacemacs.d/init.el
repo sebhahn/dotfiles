@@ -108,6 +108,7 @@ This function should only modify configuration layer settings."
       python-backend 'lsp
       python-formatter 'ruff
       python-linter 'ruff
+      python-virtualenv-management 'pet
       python-test-runner 'pytest)
      my-python
      search-engine
