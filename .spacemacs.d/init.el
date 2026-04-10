@@ -55,6 +55,7 @@ This function should only modify configuration layer settings."
       ebib-file-search-dirs '("~/ownCloud/areas/research/publications/")
       ebib-file-associations '(("pdf" . "zathura") ("ps" . "gv"))
       ebib-import-directory "~/ownCloud/areas/research/publications/")
+     claude-code
      colors
      (compleseus
       :variables
@@ -84,8 +85,9 @@ This function should only modify configuration layer settings."
      lua
      json
      markdown
+     mermaid
      multiple-cursors
-     my-chatgpt
+     ;; my-chatgpt
      my-mu4e
      my-org
      my-org-roam
@@ -145,6 +147,7 @@ This function should only modify configuration layer settings."
                                       transient
                                       modus-themes
                                       pdf-tools
+                                      ob-mermaid
                                       exec-path-from-shell)
 
    ;; A list of packages that cannot be updated.
@@ -834,6 +837,7 @@ before packages are loaded."
     (setq python-shell-interpreter "python3"
           python-shell-interpreter-args "-i"))
   (add-hook 'python-mode-hook #'my-python-disable-ipython-preference)
+
   )
 
 
