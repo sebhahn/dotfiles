@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: spdx-header
+# key: spdx
+# --
+# SPDX-License-Identifier: ${1:`(yas-choose-value '(
+"MIT"
+"Apache-2.0"
+"BSD-2-Clause"
+"BSD-3-Clause"
+"GPL-3.0-or-later"
+"LGPL-3.0-or-later"
+"MPL-2.0"
+"CC0-1.0"
+"NONE"
+))`}
+# SPDX-FileCopyrightText: Copyright (c) `(format-time-string "%Y")` TU Wien
+# SPDX-FileCopyrightText: For a full list of authors, see the AUTHORS file.
