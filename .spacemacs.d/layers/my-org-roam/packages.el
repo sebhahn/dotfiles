@@ -53,7 +53,8 @@
     :init
     (progn
       (spacemacs/declare-prefix "or" "org-roam")
-      (spacemacs/declare-prefix "org" "org-roam-dailies-goto")
+      (spacemacs/declare-prefix "ord" "org-roam-dailies")
+      (spacemacs/declare-prefix "orG" "org-roam-goto")
       (spacemacs/declare-prefix "orr" "org-roam-refs")
       (spacemacs/set-leader-keys
         "orl" 'org-roam-buffer-toggle
@@ -61,9 +62,9 @@
         "ordp" 'org-roam-dailies-goto-yesterday
         "ord." 'org-roam-dailies-goto-today
         "ordn" 'org-roam-dailies-goto-tomorrow
-        "orgd" 'org-roam-dailies-goto-date
-        "orgp" 'org-roam-dailies-goto-previous-note
-        "orgn" 'org-roam-dailies-goto-next-note
+        "orGd" 'org-roam-dailies-goto-date
+        "orGp" 'org-roam-dailies-goto-previous-note
+        "orGn" 'org-roam-dailies-goto-next-note
         "orf" 'org-roam-node-find
         "ori" 'org-roam-node-insert
         "orI" 'orb-insert-link
@@ -79,15 +80,17 @@
         "orad" 'org-roam-alias-remove)
 
       (spacemacs/declare-prefix-for-mode 'org-mode "r" "org-roam")
+      (spacemacs/declare-prefix-for-mode 'org-mode "rd" "org-roam-dailies")
+      (spacemacs/declare-prefix-for-mode 'org-mode "rG" "org-roam-goto")
       (spacemacs/set-leader-keys-for-major-mode 'org-mode
         "rl" 'org-roam-buffer-toggle
         "rdc" 'org-roam-dailies-capture-today
         "rdp" 'org-roam-dailies-goto-yesterday
         "rd." 'org-roam-dailies-goto-today
         "rdn" 'org-roam-dailies-goto-tomorrow
-        "rgd" 'org-roam-dailies-goto-date
-        "rgp" 'org-roam-dailies-goto-previous-note
-        "rgn" 'org-roam-dailies-goto-next-note
+        "rGd" 'org-roam-dailies-goto-date
+        "rGp" 'org-roam-dailies-goto-previous-note
+        "rGn" 'org-roam-dailies-goto-next-note
         "rf" 'org-roam-node-find
         "ri" 'org-roam-node-insert
         "rI" 'orb-insert-link
