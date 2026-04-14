@@ -51,7 +51,6 @@
   (use-package org-roam
     :after (org)
     :init
-    (setq org-roam-v2-ack t)
     (progn
       (spacemacs/declare-prefix "or" "org-roam")
       (spacemacs/declare-prefix "org" "org-roam-dailies-goto")
@@ -161,7 +160,7 @@
     (citar-bibliography org-cite-global-bibliography)
     (citar-notes-paths '("~/ownCloud/org/roam/resources/publications/"))
     (citar-library-paths '("~/ownCloud/areas/research/publications/"))
-    (citar-file-note-extension '("org"))
+    (citar-file-note-extensions '("org"))
     (citar-at-point-function 'embark-act)
     (citar-indicators (list citar-indicator-files ; plain text
                             citar-indicator-notes-icons))

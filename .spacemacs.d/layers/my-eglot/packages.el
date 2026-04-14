@@ -47,7 +47,7 @@
   (use-package eglot
     :defer t
     :init
-    (spacemacs/declare-prefix-for-mode 'org-mode "e" "eglot")
+    (spacemacs/declare-prefix-for-mode 'python-mode "e" "eglot")
     (spacemacs/set-leader-keys-for-major-mode 'python-mode
       "ee" 'eglot
       "eo" 'eglot-code-action-organize-imports
