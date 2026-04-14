@@ -22,11 +22,8 @@ return {
     mason_lspconfig.setup({
       ensure_installed = {
         "lua_ls",
-        "ltex",
         "yamlls",
-        "ansiblels",
         "pyright",
-        -- add any others you want
       },
     })
 
@@ -34,11 +31,7 @@ return {
       ensure_installed = {
         "stylua",
         "prettier",
-        "isort",
-        "black",
         "ruff",
-        "yapf",
-        "pylint",
         "eslint_d",
       },
     })

@@ -1,6 +1,7 @@
 return {
   "CRAG666/code_runner.nvim",
   config = function()
+    local preview_cmd = "zathura" -- change to your PDF viewer (evince, okular, …)
     local code_runner = require("code_runner")
     code_runner.setup({
         focus = false,
@@ -10,7 +11,7 @@ return {
             "javac $fileName &&",
             "java $fileNameWithoutExt"
           },
-          python = "python3 -u",
+          python = "uv run python3 -u",
           typescript = "deno run",
           rust = {
             "cd $dir &&",
@@ -18,7 +19,7 @@ return {
             "$dir/$fileNameWithoutExt"
           },
           c = function(...)
-            c_base = {
+            local c_base = {
               "cd $dir &&",
               "gcc $fileName -o",
               "/tmp/$fileNameWithoutExt",

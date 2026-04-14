@@ -14,11 +14,17 @@ return {
       sections = {
         lualine_x = {
           {
-            "swenv",
+            function()
+              local ok, venv_selector = pcall(require, "venv-selector")
+              if not ok then return "" end
+              local venv = venv_selector.venv()
+              if not venv then return "" end
+              return venv:match("[^/]+$") or venv
+            end,
             cond = function()
               return vim.bo.filetype == "python"
             end,
-            icon = "",
+            icon = "",
             color = { fg = "#8fb55e" },
           },
           {
