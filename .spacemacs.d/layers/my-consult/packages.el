@@ -41,23 +41,8 @@
 ;;; Code:
 
 (defconst my-consult-packages
-  '(ripgrep
-    rg
-    consult-ag
-    consult-company
-    consult-eglot
-    consult-org-roam
-    consult-flycheck
-    consult-flyspell))
-
-(defun my-consult/init-ripgrep()
-  )
-
-(defun my-consult/init-rg()
-  )
-
-(defun my-consult/init-consult-ag()
-  )
+  '(consult-company
+    consult-org-roam))
 
 (defun my-consult/init-consult-company()
   (use-package consult-company
@@ -65,9 +50,6 @@
     :config
     (define-key company-mode-map [remap completion-at-point] #'consult-company)
     ))
-
-(defun my-consult/init-consult-eglot()
-  )
 
 (defun my-consult/init-consult-org-roam()
   (use-package consult-org-roam
@@ -94,8 +76,3 @@
      :preview-key (kbd "M-.")))
   )
 
-(defun my-consult/init-consult-flycheck()
-  )
-
-(defun my-consult/init-consult-flyspell()
-  )

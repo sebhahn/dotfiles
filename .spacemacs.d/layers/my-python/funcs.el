@@ -21,7 +21,7 @@
   (interactive)
   (let* ((universal-argument t)
          (compile-command (format "%s %s"
-                                  (spacemacs/pyenv-executable-find python-shell-interpreter)
+                                  (executable-find python-shell-interpreter)
                                   (shell-quote-argument (file-name-nondirectory buffer-file-name))))
          (compilation-buffer-name "*compilation*"))
 

@@ -160,7 +160,7 @@ which require an initialization must be listed explicitly in the list.")
     :post-config
     (progn
 
-      (defun org-insert-subheading-respect-content (&optional)
+      (defun org-insert-subheading-respect-content ()
         (interactive)
         (let ((org-insert-heading-respect-content t))
           (org-insert-subheading t)))
@@ -493,7 +493,6 @@ which require an initialization must be listed explicitly in the list.")
 
       ;; Priority settings: A, B, C, D
       (setq org-highest-priority ?A)
-      (setq org-lowerst-priority ?D)
       (setq org-lowest-priority ?D)
       (setq org-default-priority ?D)
 

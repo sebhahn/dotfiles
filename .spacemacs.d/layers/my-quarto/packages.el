@@ -46,4 +46,5 @@
 (defun my-quarto/init-quarto-mode ()
   (use-package quarto-mode
     :config
-    :mode (("\\.Rmd" . poly-quarto-mode))))
+    :mode (("\\.Rmd\\'" . poly-quarto-mode)
+           ("\\.qmd\\'" . poly-quarto-mode))))

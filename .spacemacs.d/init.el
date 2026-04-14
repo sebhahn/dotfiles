@@ -89,7 +89,6 @@ This function should only modify configuration layer settings."
      multiple-cursors
      my-chatgpt
      my-mu4e
-     my-org
      my-org-roam
      my-quarto
      (org
@@ -99,7 +98,8 @@ This function should only modify configuration layer settings."
       org-enable-reveal-js-support t
       org-enable-org-journal-support t
       org-enable-org-contacts-support t
-      org-enable-epub-support t)
+      org-enable-epub-support t
+      org-enable-roam-protocol t)
      pandoc
      (plantuml
       :variables
@@ -293,7 +293,6 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(atom-one-dark
-                         material
                          spacemacs-dark)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
@@ -316,11 +315,10 @@ It should only modify the values of Spacemacs settings."
    ;; fixed-pitch faces. The `:size' can be specified as
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
-   dotspacemacs-default-font '("Hack Nerd Font Mono"
-                               :size 10.0
-                               :weight normal
-                               :width normal
-                               :powerline-scale 0.9)
+   dotspacemacs-default-font '("JetBrainsMono Nerd Font"
+                               :size 11.0
+                               :weight Medium
+                               :width normal)
 
    ;; Default icons font, it can be `all-the-icons' or `nerd-icons'.
    dotspacemacs-default-icons-font 'nerd-icons
@@ -668,33 +666,10 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                       ("shahn-7490" . home))))
       (cdr (assoc system-name machines))))
 
-  (setq dotspacemacs-default-font '("JetBrainsMono Nerd Font"
-                                    :size 11.0
-                                    :weight Medium
-                                    :width normal)
-        browse-url-generic-program "google-chrome")
-
-  (when (eq (dotfiles/machine-location) 'work)
-    (setq dotspacemacs-default-font '("JetBrainsMono Nerd Font"
-                                      :size 11.0
-                                      :weight Medium
-                                      :width normal)
-
-          browse-url-generic-program "~/bin/zen-browser"
-          org-odt-data-dir "/usr/share/emacs/29.3/etc/org")
-    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
-    (setq exec-path-from-shell-arguments '("-i")))
-
-  (when (eq (dotfiles/machine-location) 'home)
-    (setq dotspacemacs-default-font '("JetBrainsMono Nerd Font"
-                                      :size 11.0
-                                      :weight Medium
-                                      :width normal)
-
-          browse-url-generic-program "~/bin/zen-browser"
-          org-odt-data-dir "/usr/share/emacs/29.3/etc/org")
-    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
-    (setq exec-path-from-shell-arguments '("-i")))
+  (setq browse-url-generic-program "~/bin/zen-browser"
+        org-odt-data-dir (format "/usr/share/emacs/%s/etc/org" emacs-version))
+  (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
+  (setq exec-path-from-shell-arguments '("-i"))
 
   (add-to-list 'load-path "~/.spacemacs.d" t)
 
@@ -763,13 +738,13 @@ before packages are loaded."
   (global-visual-line-mode t)
 
   ;; fancy git icon
-  (defadvice vc-mode-line (after strip-backend () activate)
-    (when (stringp vc-mode)
-      (let ((gitlogo (replace-regexp-in-string "^ Git." " Ⱶ " vc-mode)))
-        (setq vc-mode gitlogo))))
+  (advice-add 'vc-mode-line :after
+              (lambda (&rest _)
+                (when (stringp vc-mode)
+                  (let ((gitlogo (replace-regexp-in-string "^ Git." " Ⱶ " vc-mode)))
+                    (setq vc-mode gitlogo)))))
 
   (setq dired-listing-switches "-alhk")
-  (setq dired-listings-switches "-alhk")
   (setq delete-by-moving-to-trash nil)
   (setq wdired-allow-to-change-permissions t)
   (setq compilation-finish-function nil)
@@ -818,16 +793,10 @@ before packages are loaded."
   (setq doom-modeline-env-enable-python nil)
   (setq mu4e-modeline-all-read '("R:" . "🌀 "))
 
-  (defun my/advice-after-pyenv-mode-set (orig-func &rest args)
-    "Advice to restart LSP server after changing Pyenv version."
-    (let ((env-name (pyenv-mode-version)))
-      ;; (apply orig-func args)
-      (when (and env-name (eq major-mode 'python-mode))
-        (message "Pyenv environment switched to %s" env-name)
-        (lsp-restart-workspace)
-        (message "Restarted LSP for Pyenv"))))
-
-  (advice-add 'pyenv-mode-set :after #'my/advice-after-pyenv-mode-set)
+  ;; org-agenda-kill can't be auto-evilified from C-k (conflicts with evil)
+  (with-eval-after-load 'org-agenda
+    (evil-define-key 'evilified org-agenda-mode-map
+      (kbd "K") 'org-agenda-kill))
 
   (setq multi-term-program "/usr/bin/zsh")
   (setq persp-kill-foreign-buffer-behaviour nil)
