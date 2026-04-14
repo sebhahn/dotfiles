@@ -26,10 +26,10 @@ return {
       { "<leader>bp", "<cmd>bprevious<CR>", desc = "Previous buffer", nowait = true, remap = false },
 
       { "<leader>e", group = "explorer", nowait = true, remap = false },
-      { "<leader>ec", "<cmd>NvimTreeCollapse<CR>", desc = "Neotree collapse", nowait = true, remap = false },
-      { "<leader>ee", "<cmd>NvimTreeToggle<CR>", desc = "Neotree", nowait = true, remap = false },
-      { "<leader>ef", "<cmd>NvimTreeFindFileToggle!<CR>", desc = "Neotree file", nowait = true, remap = false },
-      { "<leader>er", "<cmd>NvimTreeRefresh<CR>", desc = "Neotree refresh", nowait = true, remap = false },
+      { "<leader>ec", "<cmd>Neotree close<CR>", desc = "Neo-tree close", nowait = true, remap = false },
+      { "<leader>ee", "<cmd>Neotree toggle<CR>", desc = "Neo-tree toggle", nowait = true, remap = false },
+      { "<leader>ef", "<cmd>Neotree reveal<CR>", desc = "Neo-tree reveal file", nowait = true, remap = false },
+      { "<leader>eg", "<cmd>Neotree git_status<CR>", desc = "Neo-tree git status", nowait = true, remap = false },
 
       { "<leader>f", group = "files", nowait = true, remap = false },
       {
@@ -80,8 +80,9 @@ return {
       },
 
       { "<leader>g", group = "git/version-control", nowait = true, remap = false },
-      { "<leader>gb", "<cmd>GitBlameToggle<CR>", desc = "git blame", nowait = true, remap = false },
-      { "<leader>gg", "<cmd>LazyGit<CR>", desc = "lazygit", nowait = true, remap = false },
+      { "<leader>gb", desc = "Blame line (gitsigns)", nowait = true, remap = false },
+      { "<leader>gB", desc = "Toggle line blame (gitsigns)", nowait = true, remap = false },
+      { "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", desc = "lazygit", nowait = true, remap = false },
       { "<leader>gm", "<cmd>Telescope git_commits<CR>", desc = "git commits", nowait = true, remap = false },
       { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "git status", nowait = true, remap = false },
 
@@ -220,8 +221,11 @@ return {
       { "<leader>t", group = "terminal", nowait = true, remap = false },
       { "<leader>tf", "<cmd>ToggleTerm direction=float<CR>", desc = "Float", nowait = true, remap = false },
       { "<leader>tc", "<cmd>lua _NCDU_TOGGLE()<CR>", desc = "ncdu", nowait = true, remap = false },
+      { "<leader>ti", "<cmd>lua _IPYTHON_TOGGLE()<CR>", desc = "ipython", nowait = true, remap = false },
       { "<leader>tp", "<cmd>lua _PYTHON_TOGGLE()<CR>", desc = "Python", nowait = true, remap = false },
-      { "<leader>tt", "<cmd>lua _HTOP_TOGGLE()<CR>", desc = "htop", nowait = true, remap = false },
+      { "<leader>ts", "<cmd>lua _SHELL_TOGGLE()<CR>", desc = "shell", nowait = true, remap = false },
+      { "<leader>tg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", desc = "lazygit", nowait = true, remap = false },
+      { "<leader>tt", "<cmd>lua _HTOP_TOGGLE()<CR>", desc = "btop", nowait = true, remap = false },
       {
         "<leader>th",
         "<cmd>ToggleTerm size=10 direction=horizontal<CR>",
@@ -243,20 +247,8 @@ return {
       { "<leader>Tr", "<cmd>set rnu!<CR>", desc = "toggle-relative-number", nowait = true, remap = false },
 
       { "<leader>v", group = "venv", nowait = true, remap = false },
-      {
-        "<leader>vg",
-        "<cmd>lua require('swenv.api').get_current_venv()<CR>",
-        desc = "Get venv",
-        nowait = true,
-        remap = false,
-      },
-      {
-        "<leader>vv",
-        "<cmd>lua require('swenv.api').pick_venv()<CR>",
-        desc = "Select venv",
-        nowait = true,
-        remap = false,
-      },
+      { "<leader>vv", "<cmd>VenvSelect<CR>", desc = "Select venv", nowait = true, remap = false },
+      { "<leader>va", "<cmd>VenvSelectCached<CR>", desc = "Activate cached venv", nowait = true, remap = false },
 
       { "<leader>w", group = "windows", nowait = true, remap = false },
       { "<leader>wR", "<C-w>r", desc = "Rotate window backward", nowait = true, remap = false },
@@ -273,36 +265,36 @@ return {
       { "<leader>ww", "<C-w>w", desc = "Other window", nowait = true, remap = false },
 
       { "<leader>x", group = "trouble", nowait = true, remap = false },
-      { "<leader>xx", "<cmd>TroubleToggle<CR>", desc = "Open/close trouble list", nowait = true, remap = false },
+      { "<leader>xx", "<cmd>Trouble diagnostics toggle<CR>", desc = "Open/close trouble list", nowait = true, remap = false },
       {
         "<leader>xw",
-        "<cmd>TroubleToggle workspace_diagnostics<CR>",
+        "<cmd>Trouble lsp_workspace_diagnostics toggle<CR>",
         desc = "Open trouble workspace diagnostics",
         nowait = true,
         remap = false,
       },
       {
         "<leader>xd",
-        "<cmd>TroubleToggle document_diagnostics<CR>",
+        "<cmd>Trouble lsp_document_diagnostics toggle<CR>",
         desc = "Open trouble document diagnostics",
         nowait = true,
         remap = false,
       },
       {
         "<leader>xq",
-        "<cmd>TroubleToggle quickfix<CR>",
+        "<cmd>Trouble qflist toggle<CR>",
         desc = "Open trouble quickfix list",
         nowait = true,
         remap = false,
       },
       {
         "<leader>xl",
-        "<cmd>TroubleToggle loclist<CR>",
+        "<cmd>Trouble loclist toggle<CR>",
         desc = "Open trouble location list",
         nowait = true,
         remap = false,
       },
-      { "<leader>xt", "<cmd>TodoTrouble<CR>", desc = "Open todos in trouble", nowait = true, remap = false },
+      { "<leader>xt", "<cmd>Trouble todo<CR>", desc = "Open todos in trouble", nowait = true, remap = false },
     })
 
     ---@class wk.Opts

@@ -4,46 +4,40 @@ return {
     event = { "BufReadPre", "BufNewFile" },
 		build = ":TSUpdate",
     dependencies = {
-      "windwp/nvim-ts-autotag",
+      {
+        "windwp/nvim-ts-autotag",
+        opts = {},
+      },
     },
 
 		config = function()
-			local treesitter = require("nvim-treesitter.configs")
-
-      -- configure treesitter
-			treesitter.setup({
-				ensure_installed = {
+      require("nvim-treesitter").setup({
+        ensure_installed = {
           "bash",
           "dockerfile",
           "gitignore",
           "json",
-					"python",
-					"lua",
+          "python",
+          "lua",
           "markdown",
           "markdown_inline",
-					"org",
-					"vim",
-					"yaml",
-				},
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = "<C-space>",
-            node_incremental = "<C-space>",
-            scope_incremental = false,
-            node_decremental = "<bs>",
-          },
+          "org",
+          "vim",
+          "yaml",
         },
-				auto_install = true,
-				highlight = {
-					enable = true,
-					additional_vim_regex_highlighting = { "org" },
-				},
-        -- enable indentation
-				indent = { enable = true },
-        -- enable autotagging
-				autotag = { enable = true },
-			})
+        auto_install = true,
+      })
+
+      -- Activate treesitter highlighting for every buffer whose parser is available
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(ev)
+          local ok = pcall(vim.treesitter.start, ev.buf)
+          if not ok then return end
+          if vim.bo[ev.buf].filetype == "org" then
+            vim.bo[ev.buf].syntax = "on"
+          end
+        end,
+      })
 		end,
 	},
 }
