@@ -87,7 +87,7 @@ This function should only modify configuration layer settings."
      markdown
      mermaid
      multiple-cursors
-     ;; my-chatgpt
+     my-chatgpt
      my-mu4e
      my-org
      my-org-roam
