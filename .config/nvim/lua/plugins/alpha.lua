@@ -1,6 +1,10 @@
 return {
 	{
 		"goolord/alpha-nvim",
+    dependencies = {
+      'nvim-mini/mini.icons',
+      'nvim-lua/plenary.nvim'
+    },
 		config = function()
 			local alpha = require("alpha")
 			local dashboard = require("alpha.themes.dashboard")
@@ -36,7 +40,7 @@ return {
 			}
 
 			local function footer()
-				return "Live according to nature..."
+				return "Befriend your shadows - Follow meaning not pleasure - Become whole not perfect"
 			end
 			dashboard.section.footer.val = footer()
 
