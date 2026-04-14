@@ -117,8 +117,8 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # set default editor
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export VISUAL=nvim
 export ALTERNATE_EDITOR=""
 
 # smart history search after typing and pressing up-down keys
@@ -158,7 +158,7 @@ alias bell="echo -n $'\x7'"
 
 alias getpass="openssl rand -base64 20"
 alias ping='ping -c 5'
-alias www='python -m SimpleHTTPServer 8000'
+alias www='python3 -m http.server 8000'
 
 alias a='fasd -a'        # any
 alias s='fasd -si'       # show / search / select
@@ -246,7 +246,6 @@ export FZF_DEFAULT_OPTS="--color=fg:${fg},bg:${bg},hl:${purple},fg+:${fg},bg+:${
 
 alias ls="eza --color=always --long --git --icons=always"
 
-eval "$(zoxide init zsh)"
 
 alias rgf='rg --files | rg'
 
