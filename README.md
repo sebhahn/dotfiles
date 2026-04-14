@@ -7,7 +7,10 @@
 # Tools
 
 ## Z shell
-[oh-my.zsh](https://github.com/robbyrussell/oh-my-zsh)
+[oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)
+
+## Neovim
+[Neovim](https://github.com/neovim/neovim)
 
 ## Spacemacs
 Emacs + VIM = [Spacemacs](https://github.com/syl20bnr/spacemacs)
@@ -15,5 +18,17 @@ Emacs + VIM = [Spacemacs](https://github.com/syl20bnr/spacemacs)
 ## pyenv
 [Simple python version manager](https://github.com/pyenv/pyenv)
 
-## Neovim
-[Neovim](https://github.com/neovim/neovim)
+## Ranger
+[Ranger file manager](https://github.com/ranger/ranger)
+
+## WezTerm
+[WezTerm terminal emulator](https://wezfurlong.org/wezterm/)
+
+## btop
+[btop resource monitor](https://github.com/aristocratos/btop)
+
+## rofi
+[rofi window switcher/launcher](https://github.com/davatorium/rofi)
+
+## zathura
+[zathura document viewer](https://pwmt.org/projects/zathura/)
