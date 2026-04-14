@@ -48,4 +48,4 @@ opt.iskeyword:append("-")
 -- folding
 opt.foldlevel = 20
 opt.foldmethod = "expr"
-opt.foldexpr = "nvim_treesitter#foldexpr()" -- utilize treesitter folds
+-- opt.foldexpr = "nvim_treesitter#foldexpr()" -- utilize treesitter folds
