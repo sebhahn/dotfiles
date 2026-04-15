@@ -19,16 +19,13 @@ return {
       },
     })
 
-    mason_lspconfig.setup({
-      ensure_installed = {
-        "lua_ls",
-        "yamlls",
-        "pyright",
-      },
-    })
+    mason_lspconfig.setup()
 
     mason_tool_installer.setup({
       ensure_installed = {
+        "lua-language-server",
+        "yaml-language-server",
+        "pyright",
         "stylua",
         "prettier",
         "ruff",
