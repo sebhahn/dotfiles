@@ -1,0 +1,55 @@
+---
+- name: Install latest Neovim AppImage to ~/bin
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  vars:
+    nvim_bin_dir: "{{ ansible_env.HOME }}/bin"
+    nvim_dest: "{{ nvim_bin_dir }}/nvim"
+    github_api_url: "https://api.github.com/repos/neovim/neovim/releases/latest"
+
+  tasks:
+    - name: Ensure ~/bin directory exists
+      ansible.builtin.file:
+        path: "{{ nvim_bin_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Fetch latest Neovim release metadata from GitHub
+      ansible.builtin.uri:
+        url: "{{ github_api_url }}"
+        return_content: true
+        headers:
+          Accept: "application/vnd.github+json"
+      register: github_release
+
+    - name: Extract AppImage download URL
+      ansible.builtin.set_fact:
+        nvim_appimage_url: >-
+          {{ github_release.json.assets
+             | selectattr('name', 'equalto', 'nvim-linux-x86_64.appimage')
+             | map(attribute='browser_download_url')
+             | first }}
+        nvim_version: "{{ github_release.json.tag_name }}"
+
+    - name: Show version being installed
+      ansible.builtin.debug:
+        msg: "Installing Neovim {{ nvim_version }} from {{ nvim_appimage_url }}"
+
+    - name: Download Neovim AppImage
+      ansible.builtin.get_url:
+        url: "{{ nvim_appimage_url }}"
+        dest: "{{ nvim_dest }}"
+        mode: "0755"
+        force: true
+
+    - name: Verify nvim is executable
+      ansible.builtin.command:
+        cmd: "{{ nvim_dest }} --version"
+      register: nvim_version_output
+      changed_when: false
+
+    - name: Show installed version
+      ansible.builtin.debug:
+        msg: "{{ nvim_version_output.stdout_lines[0] }}"

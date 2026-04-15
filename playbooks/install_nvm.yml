@@ -1,0 +1,29 @@
+---
+- name: Install nvm and Node.js
+  hosts: localhost
+  connection: local
+  vars:
+    nvm_version: "v0.40.3"
+    node_version: "lts/*"
+    nvm_dir: "{{ ansible_env.HOME }}/.nvm"
+
+  tasks:
+    - name: Check if nvm is already installed
+      stat:
+        path: "{{ nvm_dir }}/nvm.sh"
+      register: nvm_installed
+
+    - name: Download and install nvm
+      shell: |
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/{{ nvm_version }}/install.sh | bash
+      environment:
+        NVM_DIR: "{{ nvm_dir }}"
+      when: not nvm_installed.stat.exists
+
+    - name: Install Node.js
+      shell: |
+        source {{ nvm_dir }}/nvm.sh && nvm install {{ node_version }}
+      args:
+        executable: /bin/bash
+      register: node_install
+      changed_when: "'already installed' not in node_install.stdout"
