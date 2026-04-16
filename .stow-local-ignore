@@ -1,4 +1,6 @@
 .git
 scripts
 modules
+bin
 README.md
+install.sh

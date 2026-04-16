@@ -163,12 +163,12 @@ https://tuwien.at/mg/geo/rs/")
     ;; also, make sure the gnutls command line utils are installed
     ;; package 'gnutls-bin' in Debian/Ubuntu
 
-    (require 'smtpmail-async)
-    (setq send-mail-function 'async-smtpmail-send-it
-          message-send-mail-function 'async-smtpmail-send-it)
+    ;; (require 'smtpmail-async)
+    ;; (setq send-mail-function 'async-smtpmail-send-it
+    ;;       message-send-mail-function 'async-smtpmail-send-it)
 
-    ;; (setq send-mail-function 'smtpmail-send-it
-    ;;       message-send-mail-function 'smtpmail-send-it)
+    (setq send-mail-function 'smtpmail-send-it
+          message-send-mail-function 'smtpmail-send-it)
 
     (setq mu4e-maildir "~/mbsync")
     ;; setup main account
