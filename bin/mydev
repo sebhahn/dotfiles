@@ -6,13 +6,12 @@ SESSION="${1:-$USER}"
 # Check if the session exists
 if ! tmux has-session -t "$SESSION" >/dev/null 2>&1; then
     # Create session
-    tmux -2 new-session -d -s "$SESSION"
+    tmux -2 new-session -d -s "$SESSION" -c "$HOME"
 
-    # tmux split-window -v
-    tmux split-window -h
-    tmux split-window -v
+    tmux split-window -h -c "$HOME"
+    tmux split-window -v -c "$HOME"
 
-    tmux select-pane -t 1
+    tmux select-pane -t "$SESSION:1.1"
     tmux send-keys "btop" C-m
 
     tmux new-window -t "$SESSION:2" -n 'emacs'

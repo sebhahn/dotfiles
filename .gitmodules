@@ -8,11 +8,11 @@
 	path = .ohmyzsh
 	url = git@github.com:sebhahn/ohmyzsh.git
 [submodule ".config/ranger/plugins/devicons"]
-	path = .config/ranger/plugins/devicons
+	path = config/.config/ranger/plugins/devicons
 	url = https://github.com/alexanderjeurissen/ranger_devicons
 [submodule ".spacemacs.d/atom-one-dark-theme"]
-	path = .spacemacs.d/atom-one-dark-theme
+	path = spacemacs/.spacemacs.d/atom-one-dark-theme
 	url = git@github.com:sebhahn/atom-one-dark-theme.git
 [submodule ".spacemacs.d/emacs-material-theme"]
-	path = .spacemacs.d/emacs-material-theme
+	path = spacemacs/.spacemacs.d/emacs-material-theme
 	url = git@github.com:sebhahn/emacs-material-theme.git
