@@ -2,7 +2,7 @@
 
 - `git clone git@github.com:sebhahn/dotfiles.git`
 - `cd ~/dotfiles`
-- `stow .`
+- `./install.sh`
 
 # Tools
 
@@ -20,6 +20,9 @@ Emacs + VIM = [Spacemacs](https://github.com/syl20bnr/spacemacs)
 
 ## Ranger
 [Ranger file manager](https://github.com/ranger/ranger)
+
+## tmux
+[tmux terminal multiplexer](https://github.com/tmux/tmux)
 
 ## WezTerm
 [WezTerm terminal emulator](https://wezfurlong.org/wezterm/)
