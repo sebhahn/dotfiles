@@ -1,6 +1,7 @@
 import re
 import os
 import os.path
+import shlex
 import subprocess
 from collections import deque
 
@@ -45,40 +46,36 @@ class extracthere(Command):
 
 class fasd_dir(Command):
     """
-    Pull a list of fasd history, present and narrow the directories with fzf, change directory on selection.
+    Pull a list of zoxide history, present and narrow the directories with fzf, change directory on selection.
     """
 
     def execute(self):
         fzf = self.fm.execute_command(
-            "fasd -dl | grep -iv cache | fzf 2>/dev/tty",
+            "zoxide query -l | fzf 2>/dev/tty",
             universal_newlines=True,
             stdout=subprocess.PIPE)
         stdout, stderr = fzf.communicate()
         if fzf.returncode == 0:
             fzf_file = os.path.abspath(stdout.rstrip('\n'))
-            print(fzf_file)
             if os.path.isdir(fzf_file):
                 self.fm.cd(fzf_file)
             else:
                 self.fm.select_file(fzf_file)
 
 
-# fzf_fasd - Fasd + Fzf + Ranger (Interactive Style)
+# fzf_fasd - Zoxide + Fzf + Ranger (Interactive Style)
 class fzf_fasd(Command):
     """
     :fzf_fasd
 
-    Jump to a file or folder using Fasd and fzf
+    Jump to a directory using zoxide and fzf
 
-    URL: https://github.com/clvv/fasd
+    URL: https://github.com/ajeetdsouza/zoxide
     URL: https://github.com/junegunn/fzf
     """
 
     def execute(self):
-        if self.quantifier:
-            command = "fasd | fzf -e -i --tac --no-sort | awk '{ print substr($0, index($0,$2)) }'"
-        else:
-            command = "fasd | fzf -e -i --tac --no-sort | awk '{ print substr($0, index($0,$2)) }'"
+        command = "zoxide query -l | fzf -e -i --tac --no-sort"
         fzf = self.fm.execute_command(command, stdout=subprocess.PIPE)
         stdout, stderr = fzf.communicate()
         if fzf.returncode == 0:
@@ -89,21 +86,21 @@ class fzf_fasd(Command):
                 self.fm.select_file(fzf_file)
 
 
-# Fasd with ranger (Command Line Style)
+# Zoxide with ranger (Command Line Style)
 # https://github.com/ranger/ranger/wiki/Commands
 class cmd_fasd(Command):
     """
-    :fasd
+    :cmd_fasd
 
-    Jump to directory using fasd
-    URL: https://github.com/clvv/fasd
+    Jump to directory using zoxide
+    URL: https://github.com/ajeetdsouza/zoxide
     """
 
     def execute(self):
         arg = self.rest(1)
         if arg:
             directory = subprocess.check_output(
-                ["fasd", "-d"] + arg.split(), universal_newlines=True).strip()
+                ["zoxide", "query"] + arg.split(), universal_newlines=True).strip()
             self.fm.cd(directory)
 
 
@@ -127,7 +124,7 @@ class toggle_flat(Command):
 
 class fasd(Command):
     """
-    This command uses fasd to jump to a frequently visited directory with a given substring of its path.
+    This command uses zoxide to jump to a frequently visited directory with a given substring of its path.
     """
 
     def execute(self):
@@ -137,7 +134,7 @@ class fasd(Command):
             if directories:
                 self.fm.cd(directories[0])
             else:
-                self.fm.notify("No results from fasd", bad=True)
+                self.fm.notify("No results from zoxide", bad=True)
 
     def tab(self, tabnum):
         start, current = self.start(1), self.rest(1)
@@ -146,10 +143,10 @@ class fasd(Command):
 
     @staticmethod
     def _get_directories(*args):
-        output = subprocess.check_output(["fasd", "-dl"] + list(args),
+        output = subprocess.check_output(["zoxide", "query", "--list"] + list(args),
                                          universal_newlines=True)
         dirs = output.strip().split("\n")
-        dirs.sort(reverse=True)  # Listed in ascending frecency
+        dirs.sort(reverse=True)
         return dirs
 
 
@@ -324,7 +321,7 @@ class fzf_rga_documents_search(Command):
                            bad=True)
             return
 
-        command = "rga '%s' . --rga-adapters=pandoc,poppler | fzf +m | awk -F':' '{print $1}'" % search_string
+        command = "rga %s . --rga-adapters=pandoc,poppler | fzf +m | awk -F':' '{print $1}'" % shlex.quote(search_string)
         fzf = self.fm.execute_command(command,
                                       universal_newlines=True,
                                       stdout=subprocess.PIPE)
@@ -393,14 +390,7 @@ class fzf_locate(Command):
     """
 
     def execute(self):
-        if self.quantifier:
-            # command = "locate home | fzf -e -i"
-            # command = "locate pattern | grep -E '^(/home|/data|/data2)' | fzf -e -i"
-            command = " locate --regex '^/home|^/data|^/data2' | fzf -e -i"
-        else:
-            # command = "locate home | fzf -e -i"
-            # command = "locate pattern | grep -E '^(/home|/data|/data2)' | fzf -e -i"
-            command = " locate --regex '^/home|^/data|^/data2' | fzf -e -i"
+        command = "locate --regex '^/home|^/data|^/data2' | fzf -e -i"
         fzf = self.fm.execute_command(command, stdout=subprocess.PIPE)
         stdout, stderr = fzf.communicate()
         if fzf.returncode == 0:
@@ -409,3 +399,113 @@ class fzf_locate(Command):
                 self.fm.cd(fzf_file)
             else:
                 self.fm.select_file(fzf_file)
+
+
+def _rsync_task(fm, source_paths, dest, flags, descr):
+    def refresh(_):
+        fm.get_directory(dest.rstrip('/')).load_content()
+    obj = CommandLoader(args=['rsync'] + flags + source_paths + [dest], descr=descr)
+    obj.signal_bind('after', refresh)
+    fm.loader.add(obj)
+
+
+def _next_tab(fm):
+    keys = sorted(fm.tabs.keys())
+    if len(keys) < 2:
+        return None
+    idx = keys.index(fm.current_tab)
+    return fm.tabs[keys[(idx + 1) % len(keys)]]
+
+
+def _rsync_confirm_popup(fm, src_dir, dest_dir, n):
+    label = f"{n} file{'s' if n != 1 else ''}"
+    msg = f"  From: {src_dir}\n  To:   {dest_dir}"
+    fm.ui.suspend()
+    try:
+        for tool in ('whiptail', 'dialog'):
+            try:
+                result = subprocess.run(
+                    [tool, '--title', f'rsync {label}', '--yesno', msg, '10', '72'],
+                )
+                return result.returncode == 0
+            except FileNotFoundError:
+                continue
+        fm.notify("Install whiptail or dialog for confirmation popups.", bad=True)
+        return False
+    finally:
+        fm.ui.initialize()
+
+
+class rsync_paste_newer(Command):
+    """Paste copy buffer to current dir (skip if dest is newer). Tracked task."""
+
+    def execute(self):
+        copied = list(self.fm.copy_buffer)
+        if not copied:
+            self.fm.notify("Copy buffer is empty.", bad=True)
+            return
+        dest = self.fm.thisdir.path
+        src_dir = os.path.dirname(copied[0].path)
+        if not _rsync_confirm_popup(self.fm, src_dir, dest, len(copied)):
+            return
+        self.fm.copy_buffer.clear()
+        self.fm.cut_buffer = False
+        _rsync_task(self.fm, [f.path for f in copied], dest,
+                    ['-rult'], "rsync → " + dest)
+
+
+class rsync_sync_to_tab(Command):
+    """Sync selected files to the next tab's directory. Tracked task."""
+
+    def execute(self):
+        tab = _next_tab(self.fm)
+        if tab is None:
+            self.fm.notify("No other tab open.", bad=True)
+            return
+        sources = self.fm.thisdir.get_selection()
+        if not sources:
+            self.fm.notify("No files selected.", bad=True)
+            return
+        dest = tab.thisdir.path
+        if not _rsync_confirm_popup(self.fm, self.fm.thisdir.path, dest, len(sources)):
+            return
+        _rsync_task(self.fm, [f.path for f in sources], dest,
+                    ['-rulth', '--info=progress2'], "rsync → " + dest)
+
+
+class rsync_sync_from_tab(Command):
+    """Sync selected files from the next tab into current directory. Tracked task."""
+
+    def execute(self):
+        tab = _next_tab(self.fm)
+        if tab is None:
+            self.fm.notify("No other tab open.", bad=True)
+            return
+        sources = tab.thisdir.get_selection()
+        if not sources:
+            self.fm.notify("No files selected in other tab.", bad=True)
+            return
+        dest = self.fm.thisdir.path
+        if not _rsync_confirm_popup(self.fm, tab.thisdir.path, dest, len(sources)):
+            return
+        _rsync_task(self.fm, [f.path for f in sources], dest,
+                    ['-rulth', '--info=progress2'], "rsync → " + dest)
+
+
+class rsync_move_into(Command):
+    """Sync selected files into the highlighted directory. Tracked task."""
+
+    def execute(self):
+        target = self.fm.thisfile
+        if target is None or not target.is_directory:
+            self.fm.notify("Highlight a directory first.", bad=True)
+            return
+        sources = self.fm.thisdir.get_selection()
+        if not sources:
+            self.fm.notify("No files selected.", bad=True)
+            return
+        dest = target.path + '/'
+        if not _rsync_confirm_popup(self.fm, self.fm.thisdir.path, dest, len(sources)):
+            return
+        _rsync_task(self.fm, [f.path for f in sources], dest,
+                    ['-rut'], "rsync → " + dest)

@@ -8,9 +8,10 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-if [ -d "/usr/local/texlive/2025/bin/x86_64-linux" ] ; then
-    PATH="/usr/local/texlive/2025/bin/x86_64-linux:$PATH"
-fi
+for _texlive_bin in "$HOME"/.local/texlive/*/bin/x86_64-linux(N/); do
+    PATH="$_texlive_bin:$PATH"
+done
+unset _texlive_bin
 
 export GIT_INTERNAL_GETTEXT_TEST_FALLBACKS=1
 
@@ -20,4 +21,3 @@ export GPG_TTY=$(tty)
 
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - zsh)"

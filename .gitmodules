@@ -1,9 +1,6 @@
 [submodule ".pyenv"]
 	path = .pyenv
 	url = git@github.com:sebhahn/pyenv.git
-[submodule "ranger"]
-	path = modules/ranger
-	url = git@github.com:ranger/ranger.git
 [submodule "ohmyzsh"]
 	path = .ohmyzsh
 	url = git@github.com:sebhahn/ohmyzsh.git
