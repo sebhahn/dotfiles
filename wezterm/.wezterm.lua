@@ -23,10 +23,9 @@ config.enable_scroll_bar = false
 config.hide_tab_bar_if_only_one_tab = true
 -- config.window_decorations = "RESIZE"
 
-config.default_prog = { 'zsh', '-l' }
+config.default_prog = { 'zsh' }
 
 config.window_close_confirmation = 'NeverPrompt'
-config.skip_close_confirmation_for_processes_named = { 'bash', 'sh', 'zsh', 'fish', 'tmux' }
 
 config.initial_rows = 42
 config.initial_cols = 120

@@ -1,0 +1,92 @@
+---
+- name: Install latest TeX Live
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  vars:
+    texlive_year: "{{ ansible_date_time.year }}"
+    texlive_dir: "{{ ansible_env.HOME }}/.local/texlive/{{ texlive_year }}"
+    texlive_bin: "{{ texlive_dir }}/bin/x86_64-linux"
+    installer_url: "https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz"
+    tmp_dir: "/tmp/texlive-install"
+
+  tasks:
+    - name: Check if TeX Live {{ texlive_year }} is already installed
+      ansible.builtin.stat:
+        path: "{{ texlive_bin }}/tex"
+      register: texlive_installed
+
+    - name: Skip if already installed
+      ansible.builtin.debug:
+        msg: "TeX Live {{ texlive_year }} already installed at {{ texlive_dir }}"
+      when: texlive_installed.stat.exists
+
+    - name: Ensure tmp dir exists
+      ansible.builtin.file:
+        path: "{{ tmp_dir }}"
+        state: directory
+        mode: "0755"
+      when: not texlive_installed.stat.exists
+
+    - name: Download TeX Live installer
+      ansible.builtin.get_url:
+        url: "{{ installer_url }}"
+        dest: "{{ tmp_dir }}/install-tl-unx.tar.gz"
+        mode: "0644"
+      when: not texlive_installed.stat.exists
+
+    - name: Extract installer
+      ansible.builtin.unarchive:
+        src: "{{ tmp_dir }}/install-tl-unx.tar.gz"
+        dest: "{{ tmp_dir }}"
+        extra_opts: ["--strip-components=1"]
+      when: not texlive_installed.stat.exists
+
+    - name: Write install profile
+      ansible.builtin.copy:
+        dest: "{{ tmp_dir }}/texlive.profile"
+        mode: "0644"
+        content: |
+          selected_scheme scheme-full
+          TEXDIR {{ texlive_dir }}
+          TEXMFCONFIG ~/.texlive{{ texlive_year }}/texmf-config
+          TEXMFHOME ~/texmf
+          TEXMFLOCAL {{ ansible_env.HOME }}/.local/texlive/texmf-local
+          TEXMFSYSCONFIG {{ texlive_dir }}/texmf-config
+          TEXMFSYSVAR {{ texlive_dir }}/texmf-var
+          TEXMFVAR ~/.texlive{{ texlive_year }}/texmf-var
+          binary_x86_64-linux 1
+          instopt_adjustpath 0
+          instopt_letter 0
+          instopt_portable 0
+          instopt_write18_restricted 1
+          tlpdbopt_autobackup 1
+          tlpdbopt_backupdir tlpkg/backups
+          tlpdbopt_create_formats 1
+          tlpdbopt_install_docfiles 1
+          tlpdbopt_install_srcfiles 1
+      when: not texlive_installed.stat.exists
+
+    - name: Run TeX Live installer (this takes a while)
+      ansible.builtin.command:
+        cmd: "{{ tmp_dir }}/install-tl -profile {{ tmp_dir }}/texlive.profile"
+      when: not texlive_installed.stat.exists
+      async: 3600
+      poll: 30
+
+    - name: Clean up tmp dir
+      ansible.builtin.file:
+        path: "{{ tmp_dir }}"
+        state: absent
+      when: not texlive_installed.stat.exists
+
+    - name: Verify tex is executable
+      ansible.builtin.command:
+        cmd: "{{ texlive_bin }}/tex --version"
+      register: tex_version_output
+      changed_when: false
+
+    - name: Show installed version
+      ansible.builtin.debug:
+        msg: "{{ tex_version_output.stdout_lines[0] }}"
