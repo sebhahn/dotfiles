@@ -13,3 +13,6 @@
 [submodule ".spacemacs.d/emacs-material-theme"]
 	path = spacemacs/.spacemacs.d/emacs-material-theme
 	url = git@github.com:sebhahn/emacs-material-theme.git
+[submodule "modules/ranger"]
+	path = modules/ranger
+	url = https://github.com/ranger/ranger.git

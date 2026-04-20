@@ -9,11 +9,6 @@ if [[ ! -d ~/.emacs.d ]]; then
     git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 fi
 
-# setup ranger
-if [[ ! -d ~/.local/lib/ranger ]]; then
-    git clone https://github.com/ranger/ranger.git ~/.local/lib/ranger
-fi
-
 # setup submodules
 git -C "$DOTFILES_ROOT" submodule init
 git -C "$DOTFILES_ROOT" submodule update
@@ -23,8 +18,12 @@ mkdir -p ~/bin
 ln -sf "$DOTFILES_ROOT/bin/"* ~/bin/
 
 # install nvim and nvm via ansible
-ansible-playbook "$DOTFILES_ROOT/playbooks/install_nvm.yml"
-ansible-playbook "$DOTFILES_ROOT/playbooks/install_nvim.yml"
+if [[ ! -f ~/.nvm/nvm.sh ]]; then
+    ansible-playbook "$DOTFILES_ROOT/playbooks/install_nvm.yml"
+fi
+if [[ ! -x ~/bin/nvim ]]; then
+    ansible-playbook "$DOTFILES_ROOT/playbooks/install_nvim.yml"
+fi
 
 # stow packages
 cd "$DOTFILES_ROOT"
