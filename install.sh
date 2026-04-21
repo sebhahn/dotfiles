@@ -27,6 +27,8 @@ fi
 
 # stow packages
 cd "$DOTFILES_ROOT"
+stow pyenv
+stow ohmyzsh
 stow zshenv
 stow zprofile
 stow zshrc

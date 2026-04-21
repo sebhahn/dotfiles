@@ -1,8 +1,8 @@
 [submodule ".pyenv"]
-	path = .pyenv
+	path = pyenv/.pyenv
 	url = git@github.com:sebhahn/pyenv.git
 [submodule "ohmyzsh"]
-	path = .ohmyzsh
+	path = ohmyzsh/.ohmyzsh
 	url = git@github.com:sebhahn/ohmyzsh.git
 [submodule ".config/ranger/plugins/devicons"]
 	path = config/.config/ranger/plugins/devicons
