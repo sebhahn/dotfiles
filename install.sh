@@ -29,6 +29,7 @@ fi
 cd "$DOTFILES_ROOT"
 stow pyenv
 stow ohmyzsh
+stow local
 stow zshenv
 stow zprofile
 stow zshrc
