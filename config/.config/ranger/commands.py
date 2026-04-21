@@ -17,9 +17,19 @@ class trash(Command):
         selection = self.fm.thisdir.get_selection()
         if not selection:
             return
+        names = ', '.join(f.relative_path for f in selection)
+        self.fm.ui.console.ask(
+            "Trash: %s (y/N)" % names,
+            self._question_callback,
+            ('n', 'N', 'y', 'Y'),
+        )
+
+    def _question_callback(self, answer):
+        if answer.lower() != 'y':
+            return
+        selection = self.fm.thisdir.get_selection()
         self.fm.execute_command(
             ["gio", "trash"] + [f.path for f in selection],
-            flags="w",
         )
         self.fm.thisdir.load_content()
 
