@@ -25,11 +25,6 @@ source $ZSH/oh-my-zsh.sh
 
 eval "$(pyenv init - zsh)"
 
-# set default editor
-export EDITOR=nvim
-export VISUAL=nvim
-export ALTERNATE_EDITOR=""
-
 # smart history search after typing and pressing up-down keys
 autoload -Uz up-line-or-beginning-search
 autoload -Uz down-line-or-beginning-search
