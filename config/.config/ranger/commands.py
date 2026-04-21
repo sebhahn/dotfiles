@@ -10,6 +10,20 @@ from ranger.core.loader import CommandLoader
 from ranger.api.commands import *
 from ranger.ext.get_executables import get_executables
 
+class trash(Command):
+    """Move selected files to the system trash via gio."""
+
+    def execute(self):
+        selection = self.fm.thisdir.get_selection()
+        if not selection:
+            return
+        self.fm.execute_command(
+            ["gio", "trash"] + [f.path for f in selection],
+            flags="w",
+        )
+        self.fm.thisdir.load_content()
+
+
 class extracthere(Command):
 
     def execute(self):

@@ -14,6 +14,7 @@
     (org-ac :location built-in)
     cdlatex
     org-noter
+    ox-typst
     ;; package custom-org-configs go here
     )
   "List of all packages to install and/or initialize. Built-in packages
@@ -37,6 +38,12 @@ which require an initialization must be listed explicitly in the list.")
     :config
     (progn
       (org-ac/config-default))))
+
+(defun custom-org-config/init-ox-typst ()
+  (use-package ox-typst
+    :defer t
+    :config
+    (setq org-typst-process "/home/shahn/.cargo/bin/typst c \"%s\"")))
 
 (defun custom-org-config/init-org-noter()
   (use-package org-noter
@@ -263,6 +270,7 @@ which require an initialization must be listed explicitly in the list.")
       (require 'ox-extra)
       (require 'ox-html)
       (require 'ox-md)
+      (require 'ox-typst)
 
       (ox-extras-activate '(ignore-headlines))
 
