@@ -41,15 +41,19 @@
 ;;; Code:
 
 (defconst my-python-packages
-  '(flycheck-pyflakes)
-  ;; jedi
-  ;; company-anaconda
-  ;; company-jedi)
+  '(flycheck-pyflakes python)
   )
 
 (defun my-python/init-flycheck-pyflakes()
   (use-package flycheck-pyflakes)
   )
+
+(defun my-python/post-init-python ()
+  (advice-add 'python-shell-completion-at-point :around
+              (lambda (orig-fun &rest args)
+                (condition-case nil
+                    (apply orig-fun args)
+                  (json-parse-error nil)))))
 
 ;; (defun my-python/init-company-jedi()
 ;;   (use-package company-jedi)
