@@ -801,11 +801,14 @@ before packages are loaded."
   (setq multi-term-program "/usr/bin/zsh")
   (setq persp-kill-foreign-buffer-behaviour nil)
 
-  (defun my-python-disable-ipython-preference ()
-    "Force python-shell-interpreter to python3 after python-mode loads."
+  (setq python-shell-prompt-detect-enabled nil
+        python-shell-prompt-regexp ">>> "
+        python-shell-prompt-block-regexp "\\.\\.\\. "
+        python-shell-prompt-output-regexp "")
+  (defun my-python-set-interpreter ()
     (setq python-shell-interpreter "python3"
           python-shell-interpreter-args "-i"))
-  (add-hook 'python-mode-hook #'my-python-disable-ipython-preference)
+  (add-hook 'python-mode-hook #'my-python-set-interpreter)
 
   )
 
