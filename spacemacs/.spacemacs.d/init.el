@@ -733,7 +733,8 @@ before packages are loaded."
   (add-hook 'yas-minor-mode-hook
             (lambda () (yas-activate-extra-mode 'fundamental-mode)))
 
-  (add-to-list 'yas-snippet-dirs "~/Nextcloud/resources/emacs/snippets")
+  (when (file-directory-p "~/Nextcloud/resources/emacs/snippets")
+    (add-to-list 'yas-snippet-dirs "~/Nextcloud/resources/emacs/snippets"))
 
   (global-visual-line-mode t)
 
