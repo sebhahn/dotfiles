@@ -53,7 +53,15 @@
               (lambda (orig-fun &rest args)
                 (condition-case nil
                     (apply orig-fun args)
-                  (json-parse-error nil)))))
+                  (json-parse-error nil))))
+  ;; Emacs bug: compilation-handle-exit uses compilation--start-time without
+  ;; guarding against nil, crashing for comint buffers not launched via
+  ;; compilation-start. Record the real start time when the process launches.
+  (with-eval-after-load 'comint
+    (advice-add 'comint-exec :after
+                (lambda (buffer &rest _)
+                  (with-current-buffer buffer
+                    (setq compilation--start-time (float-time)))))))
 
 ;; (defun my-python/init-company-jedi()
 ;;   (use-package company-jedi)
