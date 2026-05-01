@@ -78,7 +78,7 @@ https://tuwien.at/mg/geo/rs/")
         ;; used to simply read: (require 'mu4e-meta).  We now attempt to load
         ;; mu4e-config.  If this fails, load mu4e-meta.
         (unless (ignore-errors (require 'mu4e-config))
-          (require 'mu4e-meta))
+          (ignore-errors (require 'mu4e-meta)))
         (if (version<= mu4e-mu-version "1.3.5")
             (require 'org-mu4e)
           (require 'mu4e-org))
