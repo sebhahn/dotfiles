@@ -139,7 +139,8 @@
              :target
              (file+head "~/ownCloud/org/roam/resources/zettelkasten/bibliography/${citar-citekey}.org" "#+title: ${title}\n\n")
              :unnarrowed t)))
-    (org-roam-db-autosync-mode)
+    (when (file-directory-p org-roam-directory)
+      (org-roam-db-autosync-mode))
     ))
 
 (defun my-org-roam/init-org-roam-bibtex ()
