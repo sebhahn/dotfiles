@@ -56,12 +56,12 @@
                   (json-parse-error nil))))
   ;; Emacs bug: compilation-handle-exit uses compilation--start-time without
   ;; guarding against nil, crashing for comint buffers not launched via
-  ;; compilation-start. Record the real start time when the process launches.
-  (with-eval-after-load 'comint
-    (advice-add 'comint-exec :after
-                (lambda (buffer &rest _)
-                  (with-current-buffer buffer
-                    (setq compilation--start-time (float-time)))))))
+  ;; compilation-start. Guard at the call site so it can't race with
+  ;; compilation-shell-minor-mode enabling after comint-exec.
+  (advice-add 'compilation-handle-exit :before
+              (lambda (&rest _)
+                (unless compilation--start-time
+                  (setq compilation--start-time (float-time))))))
 
 ;; (defun my-python/init-company-jedi()
 ;;   (use-package company-jedi)
