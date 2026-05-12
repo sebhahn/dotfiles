@@ -190,8 +190,8 @@ https://tuwien.at/mg/geo/rs/")
                   "\\`\\(mail-header-format-function\\|smtpmail-address-buffer\\|mail-mode-abbrev-table\\)")
                 (run-hooks 'async-smtpmail-before-send-hook)
                 (smtpmail-send-it)))
-           (lambda (&optional _ignore)
-             (message "Delivering message to %s...done" to))))))
+           `(lambda (&optional _ignore)
+              (message "Delivering message to %s...done" ,to))))))
 
     ;; (setq send-mail-function 'smtpmail-send-it
     ;;       message-send-mail-function 'smtpmail-send-it)
