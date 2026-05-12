@@ -163,12 +163,38 @@ https://tuwien.at/mg/geo/rs/")
     ;; also, make sure the gnutls command line utils are installed
     ;; package 'gnutls-bin' in Debian/Ubuntu
 
-    ;; (require 'smtpmail-async)
-    ;; (setq send-mail-function 'async-smtpmail-send-it
-    ;;       message-send-mail-function 'async-smtpmail-send-it)
+    (require 'smtpmail-async)
+    (setq send-mail-function 'async-smtpmail-send-it
+          message-send-mail-function 'async-smtpmail-send-it)
+    ;; The default async-smtpmail-send-it injects all smtpmail/epg/nsm variables,
+    ;; some of which (EPG context objects, NSM TLS state) are unreadable (#<...>)
+    ;; and crash the child process.  Override it with a predicate that skips
+    ;; variables whose printed representation contains unreadable objects.
+    (with-eval-after-load 'smtpmail-async
+      (defun async-smtpmail-send-it ()
+        (let ((to          (message-field-value "To"))
+              (buf-content (buffer-substring-no-properties
+                            (point-min) (point-max))))
+          (message "Delivering message to %s..." to)
+          (async-start
+           `(lambda ()
+              (require 'smtpmail)
+              (with-temp-buffer
+                (insert ,buf-content)
+                (set-buffer-multibyte nil)
+                ,(async-inject-variables
+                  "\\`\\(smtpmail\\|async-smtpmail\\|\\(user-\\)?mail\\)-\\|auth-sources\\|epg\\|nsm"
+                  (lambda (sym)
+                    (not (string-match-p "#<"
+                           (prin1-to-string (symbol-value sym)))))
+                  "\\`\\(mail-header-format-function\\|smtpmail-address-buffer\\|mail-mode-abbrev-table\\)")
+                (run-hooks 'async-smtpmail-before-send-hook)
+                (smtpmail-send-it)))
+           (lambda (&optional _ignore)
+             (message "Delivering message to %s...done" to))))))
 
-    (setq send-mail-function 'smtpmail-send-it
-          message-send-mail-function 'smtpmail-send-it)
+    ;; (setq send-mail-function 'smtpmail-send-it
+    ;;       message-send-mail-function 'smtpmail-send-it)
 
     (setq mu4e-maildir "~/mbsync")
     ;; setup main account
