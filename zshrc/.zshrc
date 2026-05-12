@@ -61,7 +61,7 @@ alias getpass="openssl rand -base64 20"
 alias ping='ping -c 5'
 alias www='python3 -m http.server 8000'
 
-alias fd='fd --exclude "$HOME/share"'
+alias fd='fd --exclude "$HOME/shares"'
 
 alias update='sudo apt-get update && sudo apt-get upgrade -y'
 alias cpr='rsync --progress -avz --ignore-existing'
