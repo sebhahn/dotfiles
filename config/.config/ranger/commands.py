@@ -373,6 +373,26 @@ def navigate_path(fm, selected):
         return
 
 
+class tv_select(Command):
+    """
+    :tv_select
+    Find a file using television (tv).
+    """
+
+    def execute(self):
+        fm = self.fm
+        fm.ui.suspend()
+        try:
+            proc = subprocess.Popen(['tv', 'files'], stdout=subprocess.PIPE, text=True)
+            stdout, _ = proc.communicate()
+            if proc.returncode not in [0, 130]:
+                show_error_in_console(f"tv exited with code {proc.returncode}", fm)
+                return
+        finally:
+            fm.ui.initialize()
+        navigate_path(fm, stdout.strip())
+
+
 def select_with_fzf(fzf_cmd, input, fm):
     fm.ui.suspend()
     try:
