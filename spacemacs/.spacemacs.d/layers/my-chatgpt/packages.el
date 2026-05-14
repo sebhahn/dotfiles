@@ -46,5 +46,6 @@
 (defun my-chatgpt/init-chatgpt-shell ()
   (use-package chatgpt-shell
     :ensure t
+    :defer t
     :custom
     (chatgpt-shell-anthropic-key (getenv "CLAUDE_API_KEY"))))
