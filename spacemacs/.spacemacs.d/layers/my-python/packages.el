@@ -41,14 +41,13 @@
 ;;; Code:
 
 (defconst my-python-packages
-  '(flycheck-pyflakes python)
-  )
-
-(defun my-python/init-flycheck-pyflakes()
-  (use-package flycheck-pyflakes)
-  )
+  '(python))
 
 (defun my-python/post-init-python ()
+  (defun my-python-set-interpreter ()
+    (setq python-shell-interpreter "python3"
+          python-shell-interpreter-args "-i"))
+  (add-hook 'python-mode-hook #'my-python-set-interpreter)
   (advice-add 'python-shell-completion-at-point :around
               (lambda (orig-fun &rest args)
                 (condition-case nil
