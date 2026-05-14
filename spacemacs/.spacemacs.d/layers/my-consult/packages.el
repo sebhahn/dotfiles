@@ -41,8 +41,13 @@
 ;;; Code:
 
 (defconst my-consult-packages
-  '(consult-company
+  '(consult
+    consult-company
     consult-org-roam))
+
+(defun my-consult/post-init-consult()
+  (spacemacs/set-leader-keys
+    "fd" 'consult-fd))
 
 (defun my-consult/init-consult-company()
   (use-package consult-company
