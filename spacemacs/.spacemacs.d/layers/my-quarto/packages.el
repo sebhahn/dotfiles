@@ -43,8 +43,20 @@
 (defconst my-quarto-packages
   '(quarto-mode))
 
+(defun my-quarto/render-pdf ()
+  (interactive)
+  (compile (concat "quarto render " (shell-quote-argument buffer-file-name) " --to pdf")))
+
+(defun my-quarto/render-html ()
+  (interactive)
+  (compile (concat "quarto render " (shell-quote-argument buffer-file-name) " --to html")))
+
 (defun my-quarto/init-quarto-mode ()
   (use-package quarto-mode
     :mode (("\\.Rmd\\'" . poly-quarto-mode)
            ("\\.qmd\\'" . poly-quarto-mode))
-    :config))
+    :config
+    (spacemacs/declare-prefix-for-mode 'markdown-mode "mr" "render")
+    (spacemacs/set-leader-keys-for-major-mode 'markdown-mode
+      "rp" #'my-quarto/render-pdf
+      "rh" #'my-quarto/render-html)))
