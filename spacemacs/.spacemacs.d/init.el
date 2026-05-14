@@ -88,6 +88,7 @@ This function should only modify configuration layer settings."
      mermaid
      multiple-cursors
      my-chatgpt
+     my-consult
      my-mu4e
      my-org-roam
      my-quarto

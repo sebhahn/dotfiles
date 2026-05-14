@@ -43,11 +43,25 @@
 (defconst my-consult-packages
   '(consult
     consult-company
-    consult-org-roam))
+    consult-org-roam
+    consult-dir
+    embark))
 
 (defun my-consult/post-init-consult()
   (spacemacs/set-leader-keys
     "fd" 'consult-fd))
+
+(defun my-consult/init-consult-dir ()
+  (use-package consult-dir
+    :ensure t
+    :bind (:map vertico-map
+           ("C-x C-d" . consult-dir)
+           ("C-x C-j" . consult-dir-jump-file)))
+  )
+
+(defun my-consult/post-init-embark ()
+  (global-set-key (kbd "C-.") 'embark-act)
+  (spacemacs/set-leader-keys "oe" 'embark-act))
 
 (defun my-consult/init-consult-company()
   (use-package consult-company
@@ -59,25 +73,17 @@
 (defun my-consult/init-consult-org-roam()
   (use-package consult-org-roam
     :ensure t
-    :init
-    (require 'consult-org-roam)
-    ;; Activate the minor-mode
-    (consult-org-roam-mode 1)
+    :after org-roam
     :custom
     (consult-org-roam-grep-func #'consult-ripgrep)
     :config
-    (progn
-      (spacemacs/set-leader-keys
-        "orF" 'consult-org-roam-file-find
-        "orb" 'consult-org-roam-backlinks
-        "or/" 'consult-org-roam-search)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode
-        "rF" 'consult-org-roam-file-find
-        "rb" 'consult-org-roam-backlinks
-        "r/" 'consult-org-roam-search))
-    ;; Eventually suppress previewing for certain functions
-    (consult-customize
-     consult-org-roam-forward-links
-     :preview-key (kbd "M-.")))
-  )
+    (consult-org-roam-mode 1)
+    (spacemacs/set-leader-keys
+      "orF" 'consult-org-roam-file-find
+      "orb" 'consult-org-roam-backlinks
+      "or/" 'consult-org-roam-search)
+    (spacemacs/set-leader-keys-for-major-mode 'org-mode
+      "rF" 'consult-org-roam-file-find
+      "rB" 'consult-org-roam-backlinks
+      "r/" 'consult-org-roam-search)))
 
