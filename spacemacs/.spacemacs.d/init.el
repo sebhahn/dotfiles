@@ -670,7 +670,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (setq browse-url-generic-program "~/bin/zen-browser"
         org-odt-data-dir (format "/usr/share/emacs/%s/etc/org" emacs-version))
   (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
-  (setq exec-path-from-shell-arguments '("-i"))
+  (setq exec-path-from-shell-arguments '("-l"))
 
   (add-to-list 'load-path "~/.spacemacs.d" t)
 
