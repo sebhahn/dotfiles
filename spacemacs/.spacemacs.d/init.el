@@ -807,26 +807,11 @@ before packages are loaded."
         python-shell-prompt-regexp ">>> "
         python-shell-prompt-block-regexp "\\.\\.\\. "
         python-shell-prompt-output-regexp "")
-  (defun my-python-set-interpreter ()
-    (setq python-shell-interpreter "python3"
-          python-shell-interpreter-args "-i"))
-  (add-hook 'python-mode-hook #'my-python-set-interpreter)
-
-  (defun my-quarto/render-pdf ()
-    (interactive)
-    (compile (concat "quarto render " (shell-quote-argument buffer-file-name) " --to pdf")))
-
-  (defun my-quarto/render-html ()
-    (interactive)
-    (compile (concat "quarto render " (shell-quote-argument buffer-file-name) " --to html")))
-
   (with-eval-after-load 'markdown-mode
     (setq markdown-fontify-code-blocks-natively t
-          markdown-enable-math t)
-    (spacemacs/declare-prefix-for-mode 'markdown-mode "mr" "render")
-    (spacemacs/set-leader-keys-for-major-mode 'markdown-mode
-      "rp" #'my-quarto/render-pdf
-      "rh" #'my-quarto/render-html))
+          markdown-enable-math t))
+
+  (spacemacs/set-leader-keys "jd" 'consult-dir)
 
   )
 

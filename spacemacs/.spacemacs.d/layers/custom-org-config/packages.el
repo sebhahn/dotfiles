@@ -153,7 +153,6 @@ which require an initialization must be listed explicitly in the list.")
         "jk" 'org-journal-new-scheduled-entry
         "js" 'org-journal-search
         "jn" 'org-journal-next-entry
-        "jd" 'org-journal-display-entry
         "jp" 'org-journal-previous-entry
         "jf" 'org-journal-open-current-journal-file)
 
