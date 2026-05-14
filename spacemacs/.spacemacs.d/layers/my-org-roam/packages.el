@@ -108,17 +108,10 @@
     (org-roam-directory "~/ownCloud/org/roam/")
     (org-roam-dailies-directory "~/ownCloud/org/roam/areas/daily/")
     :config
-    (progn
-      (spacemacs|hide-lighter org-roam-mode)
-      (when org-enable-roam-protocol
-        (add-hook 'org-roam-mode-hook (lambda ()
-                                        (require 'org-roam-protocol))))
-
-      (evilified-state-evilify-map org-roam-mode-map
-        :mode org-roam-mode
-        :bindings
-        "o" 'link-hint-open-link
-        "r" 'org-roam-buffer-refresh))
+    (spacemacs|hide-lighter org-roam-mode)
+    (when org-enable-roam-protocol
+      (add-hook 'org-roam-mode-hook (lambda ()
+                                      (require 'org-roam-protocol))))
 
     (setq org-roam-mode-section-functions
           (list #'org-roam-backlinks-section
@@ -140,7 +133,7 @@
              (file+head "~/ownCloud/org/roam/resources/zettelkasten/bibliography/${citar-citekey}.org" "#+title: ${title}\n\n")
              :unnarrowed t)))
     (when (file-directory-p org-roam-directory)
-      (org-roam-db-autosync-mode))
+      (run-with-idle-timer 3 nil #'org-roam-db-autosync-mode))
     ))
 
 (defun my-org-roam/init-org-roam-bibtex ()
