@@ -86,6 +86,7 @@ This function should only modify configuration layer settings."
      json
      markdown
      mermaid
+     my-mermaid
      multiple-cursors
      my-chatgpt
      my-consult
