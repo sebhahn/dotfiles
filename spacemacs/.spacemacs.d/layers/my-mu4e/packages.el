@@ -49,17 +49,6 @@
     window-purpose)
   )
 
-(defvar work-sig "Dipl.-Ing. Sebastian Hahn
-Senior Scientist
-
-Technische Universität Wien
-E120-01 - Forschungsbereich Fernerkundung
-Wiedner Hauptstraße 8-10
-1040 Wien
-
-+43 1 58801 12240
-sebastian.hahn@geo.tuwien.ac.at
-https://tuwien.at/mg/geo/rs/")
 
 (defun my-mu4e/init-mml2015 ()
   (use-package mml2015
@@ -120,7 +109,7 @@ https://tuwien.at/mg/geo/rs/")
       (call-interactively 'mu4e)
       ;; (call-interactively 'mu4e-update-index)
 
-      (define-advice mu4e~stop (:after nil kill-mu4e-layout-after-mu4e~stop)
+      (define-advice mu4e--stop (:after nil kill-mu4e-layout-after-mu4e--stop)
         (when mu4e-spacemacs-kill-layout-on-exit
           (persp-kill mu4e-spacemacs-layout-name))))))
 
@@ -140,23 +129,8 @@ https://tuwien.at/mg/geo/rs/")
     :init
     (progn
       (spacemacs/set-leader-keys "om" 'mu4e)
-      (global-set-key (kbd "C-x m") 'mu4e-compose-new)
-      (setq mu4e-completing-read-function 'completing-read
-            mu4e-use-fancy-chars 't
-            mu4e-view-show-images 't
-            message-kill-buffer-on-exit 't
-            mu4e-org-support t)
-      (let ((dir "~/Downloads"))
-        (when (file-directory-p dir)
-          (setq mu4e-attachment-dir dir))))
+      (global-set-key (kbd "C-x m") 'mu4e-compose-new))
     :config
-    (setq mu4e-view-show-images t)
-
-    ;; use imagemagick if available
-    (when (fboundp 'imagemagick-register-types)
-      (imagemagick-register-types))
-
-    (setq mu4e-html2text-command "lynx -dump -width 100 -stdin --display_charset=utf-8")
     (setq mu4e-change-filenames-when-moving t)
     ;; default
     ;; sending mail -- replace USERNAME with your gmail username
@@ -196,7 +170,6 @@ https://tuwien.at/mg/geo/rs/")
     ;; (setq send-mail-function 'smtpmail-send-it
     ;;       message-send-mail-function 'smtpmail-send-it)
 
-    (setq mu4e-maildir "~/mbsync")
     ;; setup main account
     (setq mu4e-sent-folder "/TU/Sent Items"
           mu4e-drafts-folder "/TU/Drafts"
@@ -250,7 +223,8 @@ https://tuwien.at/mg/geo/rs/")
     (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
     ;; set signature based on account
 
-    (setq message-signature work-sig)
+    (setq message-signature-file "~/.signature"
+          message-signature t)
 
     ;; save message to Sent Messages
     (setq mu4e-sent-messages-behavior 'sent)
@@ -289,7 +263,7 @@ https://tuwien.at/mg/geo/rs/")
           mu4e-headers-unseen-mark    '("u" . " ")  ; unseen
           ;; mu4e-headers-seen-mark      '("S" . " ")  ; seen
           mu4e-headers-personal-mark  '("p" . " ")   ; personal
-          mu4e-headers-list-mark      '("s" . " ")  ; list
+          mu4e-headers-list-mark      '("l" . " ")  ; list
           mu4e-headers-seen-mark      '("S" . "")  ; seen
           mu4e-headers-attach-mark    '("A" . " ")  ; attach
           mu4e-headers-flagged-mark   '("F" . " ")  ; flagged
@@ -324,13 +298,14 @@ https://tuwien.at/mg/geo/rs/")
     ;; update every 5 minutes
     (setq mu4e-update-interval (* 10 60))
     (setq mu4e-index-update-in-background t)
-    (setq mu4e-compose-dont-reply-to-self t)
     ;; (setq org-mu4e-link-query-in-headers-mode t)
 
     (setq mu4e-attachment-dir "~/Downloads")
 
     ;; enable snippets in messages
     (add-hook 'mu4e-compose-mode-hook 'spacemacs/load-yasnippet)
+    (add-hook 'mu4e-compose-mode-hook
+              (lambda () (setq-local show-trailing-whitespace nil)))
     (add-hook 'mu4e-view-rendered-hook 'visual-line-mode)
 
     ;; send mail from address that received it
@@ -357,7 +332,7 @@ https://tuwien.at/mg/geo/rs/")
                                :help "Number of recipients for this message" ;; tooltip
                                :function
                                (lambda (msg)
-                                 (subseq (mu4e-message-field msg :body-txt) 0 5)
+                                 (cl-subseq (mu4e-message-field msg :body-txt) 0 5)
                                  ))))
 
     ;; set fields to show in headers view
@@ -370,7 +345,6 @@ https://tuwien.at/mg/geo/rs/")
 
 
     ;; (setq mu4e-compose-format-flowed t)
-    (setq mu4e-view-show-addresses 't)
 
     (setq message-citation-line-format "\n\nOn %a, %d %b %Y at %R, %f wrote:\n"
           message-citation-line-function 'message-insert-formatted-citation-line)
@@ -413,8 +387,8 @@ https://tuwien.at/mg/geo/rs/")
     (mu4e~headers-defun-mark-for gtag)
     (mu4e~headers-defun-mark-for rtag)
     ;; (mu4e~headers-defun-mark-for archive)
-    (define-key mu4e-headers-mode-map (kbd "g") 'mu4e-headers-mark-for-tag)
-    (define-key mu4e-headers-mode-map (kbd "e") 'mu4e-headers-mark-for-tag)
+    (define-key mu4e-headers-mode-map (kbd "g") 'mu4e-headers-mark-for-gtag)
+    (define-key mu4e-headers-mode-map (kbd "e") 'mu4e-headers-mark-for-rtag)
     ;; (define-key mu4e-headers-mode-map (kbd "A") 'mu4e-headers-mark-for-archive)
 
     ;; (defun org-mu4e-store-link ()
@@ -482,9 +456,6 @@ https://tuwien.at/mg/geo/rs/")
     (setq gnus-dired-mail-mode 'mu4e-user-agent)
     (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 
-    ;; store all attachments of an email into the same folder
-    (setq mu4e-save-multiple-attachments-without-asking t)
-
     ;; set mu4e as default
     (setq mail-user-agent 'mu4e-user-agent)
 
@@ -506,27 +477,17 @@ https://tuwien.at/mg/geo/rs/")
                   (interactive)
                   (mu4e-headers-mark-thread nil '(read))))
 
-    (evilified-state-evilify-map
-      mu4e-headers-mode-map
-      :mode mu4e-headers-mode
-      :bindings
-      (kbd "C-j") 'mu4e-headers-next
-      (kbd "C-k") 'mu4e-headers-prev
-      (kbd "J") (lambda ()
-                  (interactive)
-                  (mu4e-headers-mark-thread nil '(read))))
-
     (evilified-state-evilify-map mu4e-view-mode-map
       :mode mu4e-view-mode
       :bindings
       (kbd "J") (lambda ()
                   (interactive)
-                  (mu4e-view-mark-thread '(read)))
+                  (mu4e-headers-mark-thread nil '(read)))
       (kbd "gu") 'mu4e-view-go-to-url
       (kbd "RET") 'browse-url-at-point
       (kbd "x") 'mu4e-mark-execute-all
-      (kbd "C-j") 'mu4e-view-headers-next
-      (kbd "C-k") 'mu4e-view-headers-prev)
+      (kbd "C-j") 'mu4e-headers-next
+      (kbd "C-k") 'mu4e-headers-prev)
 
     (spacemacs/set-leader-keys-for-major-mode 'mu4e-compose-mode
       "t" 'message-goto-to
@@ -549,7 +510,7 @@ https://tuwien.at/mg/geo/rs/")
 
     (setq gnus-unbuttonized-mime-types nil)
 
-    (setq mu4e-headers-include-related nil)
+    (setq mu4e-search-include-related nil)
 
     (setq mu4e-read-option-use-builtin nil
           mu4e-completing-read-function 'completing-read)
