@@ -61,7 +61,7 @@ This function should only modify configuration layer settings."
       :variables
       compleseus-engine 'vertico)
      csv
-     custom-org-config
+     my-org
      (emacs-lisp
       :variables
       emacs-lisp-enable-flycheck t)
