@@ -99,8 +99,7 @@ This function should only modify configuration layer settings."
       org-enable-reveal-js-support t
       org-enable-org-journal-support t
       org-enable-org-contacts-support t
-      org-enable-epub-support t
-      org-enable-roam-protocol t)
+      org-enable-epub-support t)
      pandoc
      (plantuml
       :variables
@@ -143,7 +142,6 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(sqlite3
-                                      yaml
                                       ripgrep
                                       transient
                                       modus-themes
@@ -649,9 +647,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (add-to-list 'custom-theme-load-path "~/.spacemacs.d/emacs-material-theme")
   (add-to-list 'custom-theme-load-path "~/.spacemacs.d/atom-one-dark-theme")
 
-  (setq configuration-layer--elpa-archives '(("melpa" . "melpa.org/packages/")
-                                             ("org" . "orgmode.org/elpa/")
-                                             ("gnu" . "elpa.gnu.org/packages/")))
+  (setq org-enable-roam-protocol t)
 
   (defun dotfiles/machine-location ()
     "Get the machine location. Either returns home or work at the moment"
@@ -800,7 +796,6 @@ before packages are loaded."
     (evil-define-key 'evilified org-agenda-mode-map
       (kbd "K") 'org-agenda-kill))
 
-  (setq multi-term-program "/usr/bin/zsh")
   (setq persp-kill-foreign-buffer-behaviour nil)
 
   (setq python-shell-prompt-detect-enabled nil
