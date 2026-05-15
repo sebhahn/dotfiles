@@ -9,14 +9,9 @@
 ;;; License: GPLv3
 
 (defvar custom-org-config-packages
-  '(org-plus-contrib
-    (org :location built-in)
-    (org-ac :location built-in)
-    cdlatex
+  '((org :location built-in)
     org-noter
-    ox-typst
-    ;; package custom-org-configs go here
-    )
+    ox-typst))
   "List of all packages to install and/or initialize. Built-in packages
 which require an initialization must be listed explicitly in the list.")
 
@@ -25,19 +20,6 @@ which require an initialization must be listed explicitly in the list.")
 
 ;; For each package, define a function custom-org-config/init-<package-custom-org-config>
 ;;
-
-(defun custom-org-config/post-init-org-plus-contrib ()
-  )
-
-(defun custom-org-config/init-cdlatex()
-  )
-
-(defun custom-org-config/init-org-ac()
-  (use-package org-ac
-    :defer t
-    :config
-    (progn
-      (org-ac/config-default))))
 
 (defun custom-org-config/init-ox-typst ()
   (use-package ox-typst
@@ -61,7 +43,6 @@ which require an initialization must be listed explicitly in the list.")
                org-capture
                org-toggle-latex-fragment
                org-store-link
-               org-iswitchb
                org-clock-goto
                org-clock-in))
 
@@ -111,7 +92,7 @@ which require an initialization must be listed explicitly in the list.")
 
       (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
         "r" 'org-agenda-clockreport-mode
-        "t" 'spacemacs/org-agenda/transient-state/body
+        "t" 'spacemacs/org-agenda-transient-state/body
         "k" 'org-agenda-show-clocking-issues)
 
       (spacemacs/declare-prefix "ok" "org-clock")
@@ -269,7 +250,6 @@ which require an initialization must be listed explicitly in the list.")
       (require 'ox-extra)
       (require 'ox-html)
       (require 'ox-md)
-      (require 'ox-typst)
 
       (ox-extras-activate '(ignore-headlines))
 
@@ -485,7 +465,6 @@ which require an initialization must be listed explicitly in the list.")
 
       (require 'org-habit)
 
-      (setq org-show-entry-below (quote ((default))))
 
 
       ;; Always highlight the current agenda line
@@ -510,8 +489,6 @@ which require an initialization must be listed explicitly in the list.")
       ;;     (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
 
       ;; (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
-
-      (setq org-tags-exclude-from-inheritance (quote ("PRJ")))
 
       ;; Custom agenda command definitions
       (setq org-agenda-custom-commands
@@ -651,9 +628,6 @@ which require an initialization must be listed explicitly in the list.")
 
       ;; Change tasks to "in progress" when clocking in
       ;; (setq org-clock-in-switch-to-state "INPR")
-
-      ;; Separate drawers for clocking and logs
-      (setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
 
       ;; Save clock data and state changes and notes in the LOGBOOK drawer
       (setq org-clock-into-drawer t)

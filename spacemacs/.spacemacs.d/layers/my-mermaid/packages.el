@@ -20,35 +20,12 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-;;; Commentary:
-
-;; See the Spacemacs documentation and FAQs for instructions on how to implement
-;; a new layer:
-;;
-;;   SPC h SPC layers RET
-;;
-;;
-;; Briefly, each package to be installed or configured by this layer should be
-;; added to `my-mermaid-packages'. Then, for each package PACKAGE:
-;;
-;; - If PACKAGE is not referenced by any other Spacemacs layer, define a
-;;   function `my-mermaid/init-PACKAGE' to load and initialize the package.
-
-;; - Otherwise, PACKAGE is already referenced by another Spacemacs layer, so
-;;   define the functions `my-mermaid/pre-init-PACKAGE' and/or
-;;   `my-mermaid/post-init-PACKAGE' to customize the package as it is loaded.
-
 ;;; Code:
 
 (defconst my-mermaid-packages
-  '(org
-    ob-mermaid))
+  '(org))
 
 (defun my-mermaid/post-init-org ()
-  (spacemacs|use-package-add-hook org
-    :post-config (add-to-list 'org-babel-load-languages '((mermaid . t) (scheme . t)))))
-
-(defun my-mermaid/init-ob-mermaid ()
-  (use-package ob-mermaid
-    :config
+  ;; ob-mermaid is installed via additional-packages; set CLI path when it loads
+  (with-eval-after-load 'ob-mermaid
     (setq ob-mermaid-cli-path "~/bin/mmdc")))
