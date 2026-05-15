@@ -43,6 +43,7 @@
 (defconst my-org-roam-packages
   '(org-roam
     org-roam-bibtex
+    biblio
     citar
     citar-embark
     citar-org-roam))
@@ -144,6 +145,29 @@
     (org-roam-bibtex-mode 1)
     (setq orb-insert-link-description "citation")
     ))
+
+(defun my-org-roam/init-biblio ()
+  (use-package biblio
+    :defer t
+    :config
+    (defun my/biblio-doi-to-zotero (doi)
+      "Fetch BibTeX for DOI and append to zotero.bib, opening the file at the new entry."
+      (interactive "sDOI: ")
+      (biblio-doi-forward-bibtex
+       doi
+       (lambda (bibtex)
+         (let ((bib-file (expand-file-name "~/ownCloud/areas/research/latex/zotero.bib")))
+           (with-current-buffer (find-file-noselect bib-file)
+             (goto-char (point-max))
+             (insert "\n" bibtex)
+             (save-buffer))
+           (find-file bib-file)
+           (goto-char (point-max))
+           (search-backward "@" nil t)
+           (message "Entry appended — adjust citekey to authorYYYY, then M-x citar-refresh")))))
+    (spacemacs/declare-prefix "obD" "doi")
+    (spacemacs/set-leader-keys
+      "obD" #'my/biblio-doi-to-zotero)))
 
 (defun my-org-roam/init-citar ()
   (use-package citar
