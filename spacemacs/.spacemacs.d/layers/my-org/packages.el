@@ -24,8 +24,12 @@
 
 (defconst my-org-packages
   '((org :location built-in)
+    cdlatex
     org-noter
     ox-typst))
+
+(defun my-org/post-init-cdlatex ()
+  (add-hook 'org-mode-hook 'turn-on-org-cdlatex))
 
 (defun my-org/init-ox-typst ()
   (use-package ox-typst
@@ -235,7 +239,6 @@
 
       (require 'ox-latex)
       (setq org-latex-listings 'minted)
-      (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
       (setq org-latex-pdf-process
             '("latexmk -pdflatex='%latex -shell-escape -interaction nonstopmode' -pdf -output-directory=%o %f"))
