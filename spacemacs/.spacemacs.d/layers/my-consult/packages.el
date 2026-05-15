@@ -66,9 +66,9 @@
 (defun my-consult/init-consult-company()
   (use-package consult-company
     :ensure t
+    :defer t
     :config
-    (define-key company-mode-map [remap completion-at-point] #'consult-company)
-    ))
+    (define-key company-mode-map [remap completion-at-point] #'consult-company)))
 
 (defun my-consult/init-consult-org-roam()
   (use-package consult-org-roam
