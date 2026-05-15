@@ -429,6 +429,7 @@
     (require 'org-contacts)
 
     (setq mu4e-org-contacts-file "~/ownCloud/org/roam/areas/agenda/contacts.org")
+    (setq org-contacts-files (list mu4e-org-contacts-file))
     (add-to-list 'mu4e-headers-actions
                  '("org-contact-add" . mu4e-action-add-org-contact) t)
     (add-to-list 'mu4e-view-actions
@@ -513,6 +514,8 @@
     (setq mu4e-search-include-related nil)
 
     (setq mu4e-read-option-use-builtin nil
-          mu4e-completing-read-function 'completing-read)
+          mu4e-completing-read-function 'completing-read
+          mu4e-compose-complete-only-personal t
+          mu4e-compose-complete-only-after "2024-01-01")
     )
   )
