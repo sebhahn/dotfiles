@@ -110,10 +110,9 @@
     :config
     (spacemacs|hide-lighter org-roam-mode)
     (when org-enable-roam-protocol
-      (add-hook 'org-roam-mode-hook (lambda ()
-                                      (require 'org-roam-protocol))))
+      (require 'org-roam-protocol))
 
-    (setq org-roam-mode-section-functions
+    (setq org-roam-mode-sections
           (list #'org-roam-backlinks-section
                 #'org-roam-reflinks-section
                 ;; #'org-roam-unlinked-references-section
@@ -139,10 +138,10 @@
 (defun my-org-roam/init-org-roam-bibtex ()
   (use-package org-roam-bibtex
     :after org-roam
-    :hook (org-roam-mode . org-roam-bibtex-mode)
     :bind (:map org-mode-map
                 (("C-c n a" . orb-note-actions)))
     :config
+    (org-roam-bibtex-mode 1)
     (setq orb-insert-link-description "citation")
     ))
 
@@ -159,8 +158,8 @@
     (citar-library-paths '("~/ownCloud/areas/research/publications/"))
     (citar-file-note-extensions '("org"))
     (citar-at-point-function 'embark-act)
-    (citar-indicators (list citar-indicator-files ; plain text
-                            citar-indicator-notes-icons))
+    (citar-indicators (list citar-indicator-files
+                            citar-indicator-notes))
     ;; optional: org-cite-insert is also bound to C-c C-x C-@
     :bind
     (:map org-mode-map
