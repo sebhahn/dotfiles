@@ -154,7 +154,7 @@
     (org-cite-follow-processor 'citar)
     (org-cite-activate-processor 'citar)
     (citar-bibliography org-cite-global-bibliography)
-    (citar-notes-paths '("~/ownCloud/org/roam/resources/publications/"))
+    (citar-notes-paths '("~/ownCloud/org/roam/resources/zettelkasten/bibliography/"))
     (citar-library-paths '("~/ownCloud/areas/research/publications/"))
     (citar-file-note-extensions '("org"))
     (citar-at-point-function 'embark-act)
