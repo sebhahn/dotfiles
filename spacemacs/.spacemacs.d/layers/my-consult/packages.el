@@ -43,6 +43,7 @@
 (defconst my-consult-packages
   '(consult
     consult-company
+    consult-notes
     consult-org-roam
     consult-dir
     embark))
@@ -69,6 +70,13 @@
     :defer t
     :config
     (define-key company-mode-map [remap completion-at-point] #'consult-company)))
+
+(defun my-consult/init-consult-notes ()
+  (use-package consult-notes
+    :after org-roam
+    :config
+    (consult-notes-org-roam-mode 1)
+    (spacemacs/set-leader-keys "on" #'consult-notes)))
 
 (defun my-consult/init-consult-org-roam()
   (use-package consult-org-roam
