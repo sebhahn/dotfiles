@@ -11,7 +11,16 @@ return {
             "javac $fileName &&",
             "java $fileNameWithoutExt"
           },
-          python = "uv run python3 -u",
+          python = function()
+            if vim.fn.filereadable("pyproject.toml") == 1 or vim.fn.filereadable("uv.lock") == 1 then
+              return "uv run python3 -u $fileName"
+            end
+            local venv = vim.env.VIRTUAL_ENV
+            if venv then
+              return venv .. "/bin/python3 -u $fileName"
+            end
+            return "cd $dir && python3 -u $fileName"
+          end,
           typescript = "deno run",
           rust = {
             "cd $dir &&",

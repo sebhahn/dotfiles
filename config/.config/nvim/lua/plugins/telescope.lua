@@ -1,7 +1,7 @@
 return {
 	{
 		"nvim-telescope/telescope-ui-select.nvim",
-		"nvim-telescope/telescope-project.nvim",
+		"nvim-telescope/telescope-file-browser.nvim",
 	},
 	{
 		"nvim-telescope/telescope.nvim",
@@ -9,12 +9,19 @@ return {
       "nvim-lua/plenary.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       "nvim-tree/nvim-web-devicons",
+      "ahmedkhalf/project.nvim",
     },
 		config = function()
 
+      require("project_nvim").setup({
+        detection_methods = { "pattern", "lsp" },
+        patterns = { ".git", ".projectile", "pyproject.toml", "setup.py", "Makefile", ".svn", ".hg" },
+        silent_chdir = true,
+        show_hidden = false,
+      })
+
       local telescope = require("telescope")
       local actions = require("telescope.actions")
-      local sorters = require("telescope.sorters")
 
       telescope.setup({
           defaults = {
@@ -24,19 +31,18 @@ return {
             },
             mappings = {
               i = {
-                ["<C-k>"] = actions.move_selection_previous, -- move to prev result
-                ["<C-j>"] = actions.move_selection_next, -- move to next result
+                ["<C-k>"] = actions.move_selection_previous,
+                ["<C-j>"] = actions.move_selection_next,
                 ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
               },
             },
           },
-          file_sorter = sorters.get_fuzzy_file,
-          generic_sorter = sorters.get_generic_fuzzy_sorter,
       })
 
       telescope.load_extension("fzf")
       telescope.load_extension("ui-select")
-      telescope.load_extension("project")
+      telescope.load_extension("projects")
+      telescope.load_extension("file_browser")
     end,
 	},
 }
