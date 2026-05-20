@@ -68,6 +68,7 @@ return {
         remap = false,
       },
 
+      { "<leader>fF", "<cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>", desc = "File browser", nowait = true, remap = false },
       { "<leader>fr", "<cmd>Telescope oldfiles<CR>", desc = "Recent files", nowait = true, remap = false },
       { "<leader>fs", "<cmd>w!<CR>", desc = "Save", nowait = true, remap = false },
 
@@ -139,16 +140,25 @@ return {
       { "<leader>Hm", "<cmd>Telescope man_pages<CR>", desc = "Man pages", nowait = true, remap = false },
       { "<leader>Hr", "<cmd>Telescope registers<CR>", desc = "Registers", nowait = true, remap = false },
 
-      -- ["l"] = "+lsp",
-      -- 		["lf"] = { "<cmd>lua vim.lsp.buf.format({async=true})<cr>", "code format" },
-      -- 		["la"] = { "<cmd>lua vim.lsp.buf.rename()<cr>", "rename" },
-      -- 		["lk"] = { "<cmd>lua vim.lsp.buf.hover()<cr>", "hover" },
-      -- 		["ld"] = { "<cmd>lua vim.lsp.buf.definition()<cr>", "definition" },
-      -- 		["lr"] = { "<cmd>lua vim.lsp.buf.references()<cr>", "references" },
-      -- 		["lc"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "code action" },
-      -- 		["ll"] = { "<cmd>lua vim.lsp.buf.codelens.run()<cr>", "codelens action" },
-      -- 		["ls"] = { "<cmd>Telescope lsp_document_symbols<cr>", "document symbols" },
-      -- 		["lS"] = { "<cmd>Telescope lsp_dynamic_document_symbols<cr>", "workspace symbols" },
+      { "<leader>l", group = "lsp", nowait = true, remap = false },
+      { "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "code action", nowait = true, remap = false },
+      { "<leader>ld", "<cmd>lua vim.lsp.buf.definition()<cr>", desc = "definition", nowait = true, remap = false },
+      { "<leader>lf", "<cmd>lua vim.lsp.buf.format({async=true})<cr>", desc = "format", nowait = true, remap = false },
+      { "<leader>lk", "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "hover", nowait = true, remap = false },
+      { "<leader>lr", "<cmd>lua vim.lsp.buf.references()<cr>", desc = "references", nowait = true, remap = false },
+      { "<leader>ln", "<cmd>lua vim.lsp.buf.rename()<cr>", desc = "rename", nowait = true, remap = false },
+      { "<leader>ls", "<cmd>Telescope lsp_document_symbols<cr>", desc = "document symbols", nowait = true, remap = false },
+      { "<leader>lS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", desc = "workspace symbols", nowait = true, remap = false },
+      { "<leader>lh", "<cmd>lua vim.lsp.buf.signature_help()<cr>", desc = "signature help", nowait = true, remap = false },
+
+      { "<leader>n", group = "neotest", nowait = true, remap = false },
+      { "<leader>nr", "<cmd>lua require('neotest').run.run()<CR>", desc = "run nearest", nowait = true, remap = false },
+      { "<leader>nf", "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", desc = "run file", nowait = true, remap = false },
+      { "<leader>nl", "<cmd>lua require('neotest').run.run_last()<CR>", desc = "run last", nowait = true, remap = false },
+      { "<leader>ns", "<cmd>lua require('neotest').run.run({ suite = true })<CR>", desc = "run suite", nowait = true, remap = false },
+      { "<leader>no", "<cmd>lua require('neotest').output.open({ enter = true })<CR>", desc = "output", nowait = true, remap = false },
+      { "<leader>nS", "<cmd>lua require('neotest').summary.toggle()<CR>", desc = "summary", nowait = true, remap = false },
+      { "<leader>nw", "<cmd>lua require('neotest').watch.toggle(vim.fn.expand('%'))<CR>", desc = "watch file", nowait = true, remap = false },
 
       { "<leader>o", group = "org", nowait = true, remap = false },
       {
@@ -169,7 +179,7 @@ return {
       { "<leader>p", group = "project", nowait = true, remap = false },
       {
         "<leader>pp",
-        "<cmd>lua require('telescope').extensions.project.project{}<CR>",
+        "<cmd>lua require('telescope').extensions.projects.projects{}<CR>",
         desc = "display",
         nowait = true,
         remap = false,
