@@ -138,6 +138,11 @@ export FZF_DEFAULT_OPTS="--color=fg:${fg},bg:${bg},hl:${purple},fg+:${fg},bg+:${
 alias ls="eza --color=always --long --git --icons=always"
 alias rgf='rg --files | rg'
 
+tvr() {
+  local file
+  file=$(tv) && [ -n "$file" ] && ranger --selectfile="$file"
+}
+
 function y() {
 	  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	  yazi "$@" --cwd-file="$tmp"
