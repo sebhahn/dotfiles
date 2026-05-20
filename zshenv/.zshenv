@@ -8,6 +8,10 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+if [ -d "$HOME/.opencode/bin" ] ; then
+    PATH="$HOME/.opencode/bin:$PATH"
+fi
+
 for _texlive_bin in "$HOME"/.local/texlive/*/bin/x86_64-linux(N/); do
     PATH="$_texlive_bin:$PATH"
 done
