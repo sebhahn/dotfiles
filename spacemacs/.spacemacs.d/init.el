@@ -686,6 +686,11 @@ before packages are loaded."
   (setq user-full-name "Sebastian Hahn"
         user-mail-address "sebastian.hahn@geo.tuwien.ac.at")
 
+  ;; dasel v3 changed its CLI; update pet's arguments to match
+  (with-eval-after-load 'pet
+    (setq pet-toml-to-json-program-arguments '("-i" "toml" "-o" "json")
+          pet-yaml-to-json-program-arguments '("-i" "yaml" "-o" "json")))
+
   (spacemacs|define-custom-layout "@agenda"
     :binding "s"
     :body
