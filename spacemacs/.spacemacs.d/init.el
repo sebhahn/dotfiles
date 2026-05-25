@@ -91,6 +91,7 @@ This function should only modify configuration layer settings."
      my-chatgpt
      my-consult
      my-mu4e
+     my-television
      my-org-roam
      my-quarto
      (org
