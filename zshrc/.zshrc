@@ -161,3 +161,25 @@ nvm() { unfunction nvm node npm npx; _load_nvm; nvm "$@"; }
 node() { unfunction nvm node npm npx; _load_nvm; node "$@"; }
 npm() { unfunction nvm node npm npx; _load_nvm; npm "$@"; }
 npx() { unfunction nvm node npm npx; _load_nvm; npx "$@"; }
+
+muf() {
+    local query="${*:-date:2w..}"
+    mu find "$query" \
+        --fields "d f s l" \
+        --sortfield=date \
+        --reverse \
+        2>/dev/null \
+    | awk '{
+        split($4,t,":")
+        m=(index("JanFebMarAprMayJunJulAugSepOctNovDec",$2)+2)/3
+        printf "%s-%02d-%02d %s:%s  ", $5, m, $3, t[1], t[2]
+        for(i=6;i<=NF;i++) printf "%s%s",(i>6?" ":""),$i
+        print ""
+    }' \
+    | fzf \
+        --no-sort \
+        --prompt "mu> " \
+        --preview 'mu view {-1}' \
+        --preview-window 'right:55%:wrap' \
+        --bind 'enter:execute(mu view {-1} | less)'
+}
