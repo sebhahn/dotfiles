@@ -702,7 +702,7 @@ before packages are loaded."
       (find-file
        (expand-file-name
         (format-time-string "%G-W%V.org")
-        "~/ownCloud/org/roam/areas/agenda/"))
+        "~/ownCloud/org/roam/areas/agenda/journal/"))
       (ace-swap-window)))
 
   (spacemacs|define-custom-layout "@org-roam"
@@ -714,7 +714,7 @@ before packages are loaded."
       (find-file
        (expand-file-name
         (format-time-string "%G-W%V.org")
-        "~/ownCloud/org/roam/areas/agenda/"))))
+        "~/ownCloud/org/roam/areas/agenda/journal/"))))
 
   (spacemacs|define-custom-layout "@phd"
     :binding "p"
