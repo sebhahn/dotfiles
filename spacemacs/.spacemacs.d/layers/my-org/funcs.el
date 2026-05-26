@@ -20,3 +20,11 @@
          (end   (format-time-string "%Y-%m-%d" (my/week-end time))))
     (format "#+TITLE: Weekly Journal %s-W%s (%s to %s)\n\n"
             year week start end)))
+
+(defun my/org-journal-ensure-title (&rest _)
+  "Insert #+TITLE if missing in the current org-journal buffer."
+  (save-excursion
+    (goto-char (point-min))
+    (unless (re-search-forward "^#\\+TITLE:" nil t)
+      (goto-char (point-min))
+      (insert (my/org-journal-weekly-header (current-time))))))

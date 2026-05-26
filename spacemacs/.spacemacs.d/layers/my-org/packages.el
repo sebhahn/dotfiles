@@ -35,7 +35,7 @@
   (use-package ox-typst
     :defer t
     :config
-    (setq org-typst-process "/home/shahn/.cargo/bin/typst c \"%s\"")))
+    (setq org-typst-process "~/.cargo/bin/typst c \"%s\"")))
 
 (defun my-org/init-org-noter ()
   (use-package org-noter
@@ -171,10 +171,9 @@
 
       (setq org-ditaa-jar-path "~/ownCloud/org/bin/ditaa.jar")
       (setq org-plantuml-jar-path "~/ownCloud/org/bin/plantuml.jar")
-
       (setq org-contacts-files (list "~/ownCloud/org/roam/areas/agenda/contacts.org"))
 
-      (setq org-journal-dir "~/ownCloud/org/roam/areas/agenda")
+      (setq org-journal-dir "~/ownCloud/org/roam/areas/agenda/journal")
       (setq org-journal-file-type 'weekly)
       (setq org-journal-file-format "%Y-W%V.org")
       (setq org-journal-date-prefix "* ")
@@ -518,6 +517,8 @@
                        (org-agenda-todo-list-sublevels nil)
                        (org-agenda-sorting-strategy '(priority-down))))))))
 
+      (advice-add 'org-journal-new-entry :after #'my/org-journal-ensure-title)
+
       (org-clock-persistence-insinuate)
       (setq org-clock-history-length 23)
       (setq org-clock-in-resume t)
@@ -531,8 +532,8 @@
       (setq org-time-stamp-rounding-minutes '(1 1))
       (setq org-agenda-clock-consistency-checks
             '(:max-duration "1:00"
-              :min-duration 0
-              :max-gap 0
-              :gap-ok-around ("1:00")))
+                            :min-duration 0
+                            :max-gap 0
+                            :gap-ok-around ("1:00")))
       (setq org-agenda-clockreport-parameter-plist
             '(:link t :maxlevel 5 :fileskip0 t :compact t :narrow 80)))))
