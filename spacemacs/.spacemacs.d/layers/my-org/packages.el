@@ -222,6 +222,7 @@
       (require 'ox-extra)
       (require 'ox-html)
       (require 'ox-md)
+      (require 'ox-typst)
 
       (ox-extras-activate '(ignore-headlines))
 
