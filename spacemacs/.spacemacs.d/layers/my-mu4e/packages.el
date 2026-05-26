@@ -490,6 +490,18 @@
       (kbd "C-j") 'mu4e-headers-next
       (kbd "C-k") 'mu4e-headers-prev)
 
+    (defun my/mu4e-insert-org-contacts-group ()
+      "Prompt for an org-contacts group (g:-prefixed heading) and insert its addresses."
+      (interactive)
+      (let* ((all (org-contacts-db))
+             (groups (cl-remove-if-not
+                      (lambda (c) (string-prefix-p "g:" (car c)))
+                      all))
+             (name (completing-read "Group: " (mapcar #'car groups)))
+             (entry (assoc name groups))
+             (emails (cdr (assoc-string org-contacts-email-property (caddr entry)))))
+        (when emails (insert emails))))
+
     (spacemacs/set-leader-keys-for-major-mode 'mu4e-compose-mode
       "t" 'message-goto-to
       "m" 'message-goto-body
@@ -501,7 +513,8 @@
       "x" 'message-send-and-exit
       "f" 'mml-attach-file
       "e" 'mml-secure-message-encrypt-pgpmime
-      "s" 'mml-secure-message-sign-pgpmime)
+      "s" 'mml-secure-message-sign-pgpmime
+      "g" 'my/mu4e-insert-org-contacts-group)
 
     (with-eval-after-load "mm-decode"
       (add-to-list 'mm-discouraged-alternatives "text/html")
