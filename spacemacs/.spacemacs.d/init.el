@@ -94,6 +94,7 @@ This function should only modify configuration layer settings."
      my-television
      my-org-roam
      my-quarto
+     my-typst
      (org
       :packages
       (not org-roam)
