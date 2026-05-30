@@ -28,6 +28,10 @@
 (defun my-typst/init-typst-ts-mode ()
   (use-package typst-ts-mode
     :mode "\\.typ\\'"
+    :init
+    (require 'treesit nil t)
+    (add-to-list 'treesit-language-source-alist
+                 '(typst "https://github.com/uben0/tree-sitter-typst"))
     :config
     (setq typst-ts-math-script-display '(nil . nil))
     (setq typst-ts-preview-function
