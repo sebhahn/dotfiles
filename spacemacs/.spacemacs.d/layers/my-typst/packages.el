@@ -29,12 +29,22 @@
   (use-package typst-ts-mode
     :mode "\\.typ\\'"
     :config
+    (setq typst-ts-math-script-display '(nil . nil))
     (setq typst-ts-preview-function
           (lambda (pdf)
-            (shell-command (concat "xdg-open " (shell-quote-argument (expand-file-name pdf))))))
+            (start-process "typst-preview" nil "xreader" (expand-file-name pdf))))
+    (defun my-typst-toggle-script-display ()
+      "Toggle raised/lowered rendering of math super/subscripts."
+      (interactive)
+      (setq typst-ts-math-script-display
+            (if (car typst-ts-math-script-display)
+                '(nil . nil)
+              '((raise -0.5) . (raise 0.5))))
+      (font-lock-flush))
     (spacemacs/declare-prefix-for-mode 'typst-ts-mode "mc" "compile")
     (spacemacs/set-leader-keys-for-major-mode 'typst-ts-mode
       "cc" #'typst-ts-compile
       "cp" #'typst-ts-compile-and-preview
       "w"  #'typst-ts-watch-mode
-      "p"  #'typst-ts-preview)))
+      "p"  #'typst-ts-preview
+      "ts" #'my-typst-toggle-script-display)))
