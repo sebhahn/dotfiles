@@ -53,14 +53,22 @@
                 (condition-case nil
                     (apply orig-fun args)
                   (json-parse-error nil))))
-  ;; Emacs bug: compilation-handle-exit uses compilation--start-time without
-  ;; guarding against nil, crashing for comint buffers not launched via
-  ;; compilation-start. Guard at the call site so it can't race with
-  ;; compilation-shell-minor-mode enabling after comint-exec.
+  ;; compilation-start-hook fires inside compilation-start, in the compilation
+  ;; buffer, after compilation--start-time is set but before compile returns.
+  ;; Save to a plain global so kill-all-local-variables (called by
+  ;; inferior-python-mode immediately after compile in spacemacs/python-execute-file)
+  ;; cannot wipe it.
+  (defun my-python--save-start-time (_proc)
+    (setq my-python--last-compile-start-time compilation--start-time))
+  (add-hook 'compilation-start-hook #'my-python--save-start-time)
+
+  ;; Named advice: restore the real start time when it was wiped.
+  (defun my-python--guard-nil-start-time (&rest _)
+    (unless compilation--start-time
+      (setq compilation--start-time
+            (or my-python--last-compile-start-time (float-time)))))
   (advice-add 'compilation-handle-exit :before
-              (lambda (&rest _)
-                (unless compilation--start-time
-                  (setq compilation--start-time (float-time))))))
+              #'my-python--guard-nil-start-time))
 
 ;; (defun my-python/init-company-jedi()
 ;;   (use-package company-jedi)
