@@ -68,7 +68,7 @@ return {
         remap = false,
       },
 
-      { "<leader>fF", "<cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>", desc = "File browser", nowait = true, remap = false },
+      { "<leader>fF", "<cmd>Telescope file_browser path=%:p:h select_buffer=true hidden=true<CR>", desc = "File browser", nowait = true, remap = false },
       { "<leader>fr", "<cmd>Telescope oldfiles<CR>", desc = "Recent files", nowait = true, remap = false },
       { "<leader>fs", "<cmd>w!<CR>", desc = "Save", nowait = true, remap = false },
 
