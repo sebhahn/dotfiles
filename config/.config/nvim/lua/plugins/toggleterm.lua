@@ -68,6 +68,24 @@ return {
 			ipython:toggle()
 		end
 
+		-- Run the current file in the persistent ipython REPL (Spyder-style
+		-- "Run File"), keeping the namespace alive between runs.
+		function _RUN_FILE_IN_REPL()
+			local file = vim.fn.expand("%:p")
+			local was_open = ipython:is_open()
+			if not was_open then
+				ipython:open()
+			end
+			ipython:send('%run "' .. file .. '"', was_open)
+		end
+
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "python",
+			callback = function()
+				vim.keymap.set("n", "<localleader>cr", "<cmd>lua _RUN_FILE_IN_REPL()<CR>", { buffer = true, desc = "Run file in REPL" })
+			end,
+		})
+
 		local shell = Terminal:new({ cmd = "zsh", hidden = true, direction = "float" })
 
 		function _SHELL_TOGGLE()
