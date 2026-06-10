@@ -17,7 +17,7 @@ return {
             end
             local venv = vim.env.VIRTUAL_ENV
             if venv then
-              return venv .. "/bin/python3 -u $fileName"
+              return "cd $dir && " .. venv .. "/bin/python3 -u $fileName"
             end
             return "cd $dir && python3 -u $fileName"
           end,
@@ -93,6 +93,13 @@ return {
                                                    }
           end,
         },
+    })
+
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "python",
+      callback = function()
+        vim.keymap.set("n", "<localleader>cc", "<cmd>RunFile<CR>", { buffer = true, desc = "Run file" })
+      end,
     })
   end,
 }
