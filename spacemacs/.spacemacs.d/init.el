@@ -685,6 +685,12 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+  ;; match the terminal's environment in desktop-launched GUI Emacs
+  (when (require 'exec-path-from-shell nil t)
+    (when (executable-find "zsh")
+      (setq exec-path-from-shell-shell-name (executable-find "zsh")))
+    (exec-path-from-shell-initialize))
+
   (setq user-full-name "Sebastian Hahn"
         user-mail-address "sebastian.hahn@geo.tuwien.ac.at")
 
@@ -820,7 +826,7 @@ before packages are loaded."
             (lambda () (select-frame-set-input-focus (selected-frame))))
 
 
-)
+  )
 
 
 ;; Do not write anything past this comment. This is where Emacs will
