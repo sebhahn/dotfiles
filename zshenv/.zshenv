@@ -21,6 +21,8 @@ export GIT_INTERNAL_GETTEXT_TEST_FALLBACKS=1
 
 export LANGUAGE="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
