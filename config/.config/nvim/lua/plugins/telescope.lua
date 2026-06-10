@@ -17,7 +17,7 @@ return {
         detection_methods = { "pattern", "lsp" },
         patterns = { ".git", ".projectile", "pyproject.toml", "setup.py", "Makefile", ".svn", ".hg" },
         silent_chdir = true,
-        show_hidden = false,
+        show_hidden = true,
       })
 
       local telescope = require("telescope")
