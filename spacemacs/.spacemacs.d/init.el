@@ -825,6 +825,10 @@ before packages are loaded."
   (add-hook 'spacemacs-post-user-config-hook
             (lambda () (select-frame-set-input-focus (selected-frame))))
 
+  (advice-add 'evil-goto-line :after (lambda (&rest _) (recenter)))
+
+  (with-eval-after-load 'vertico
+    (setq vertico-sort-function #'vertico-sort-alpha))
 
   )
 
