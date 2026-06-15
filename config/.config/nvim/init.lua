@@ -30,4 +30,5 @@ require("lazy").setup("plugins", {
 
 -- these modules are not loaded by lazy
 require("core.options")
+require("core.fabric")
 -- require("core.python")
