@@ -305,7 +305,9 @@
     ;; enable snippets in messages
     (add-hook 'mu4e-compose-mode-hook 'spacemacs/load-yasnippet)
     (add-hook 'mu4e-compose-mode-hook
-              (lambda () (setq-local show-trailing-whitespace nil)))
+              (lambda ()
+                (local-set-key (kbd "<C-tab>") 'yas-expand)
+                (setq-local show-trailing-whitespace nil)))
     (add-hook 'mu4e-view-rendered-hook 'visual-line-mode)
 
     ;; send mail from address that received it
