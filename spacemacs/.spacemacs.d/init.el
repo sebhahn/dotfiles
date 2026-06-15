@@ -95,6 +95,7 @@ This function should only modify configuration layer settings."
      my-org-roam
      my-quarto
      my-typst
+     my-fabric
      (org
       :packages
       (not org-roam)
