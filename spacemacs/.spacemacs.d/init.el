@@ -829,7 +829,11 @@ before packages are loaded."
   (advice-add 'evil-goto-line :after (lambda (&rest _) (recenter)))
 
   (with-eval-after-load 'vertico
-    (setq vertico-sort-function #'vertico-sort-alpha))
+    (setq vertico-sort-function #'vertico-sort-alpha)
+    (require 'vertico-multiform)
+    (vertico-multiform-mode)
+    (setq vertico-multiform-categories
+          '((command (vertico-sort-function . vertico-sort-history-alpha)))))
 
   )
 
