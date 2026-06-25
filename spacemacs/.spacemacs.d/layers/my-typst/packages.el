@@ -51,4 +51,5 @@
       "cp" #'typst-ts-compile-and-preview
       "w"  #'typst-ts-watch-mode
       "p"  #'typst-ts-preview
+      "v"  #'typst-ts-preview
       "ts" #'my-typst-toggle-script-display)))
