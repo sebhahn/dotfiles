@@ -15,9 +15,6 @@
 ## Spacemacs
 Emacs + VIM = [Spacemacs](https://github.com/syl20bnr/spacemacs)
 
-## pyenv
-[Simple python version manager](https://github.com/pyenv/pyenv)
-
 ## Ranger
 [Ranger file manager](https://github.com/ranger/ranger)
 
