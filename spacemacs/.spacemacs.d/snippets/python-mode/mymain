@@ -5,7 +5,7 @@
 # --
 # SPDX-License-Identifier: NONE
 # SPDX-FileCopyrightText: Copyright (c) `(format-time-string "%Y")` TU Wien
-# SPDX-FileCopyrightText: For a full list of authors, see the AUTHORS file.
+# SPDX-FileContributor: For a full list of authors, see the AUTHORS file.
 
 """Module docstring."""
 
