@@ -712,6 +712,21 @@ before packages are loaded."
     (setq pet-toml-to-json-program-arguments '("-i" "toml" "-o" "json")
           pet-yaml-to-json-program-arguments '("-i" "yaml" "-o" "json")))
 
+  ;; The spacemacs python layer forces `python-shell-interpreter' to an absolute
+  ;; system ipython3 (its :config runs `python-setup-shell' whenever the value
+  ;; equals the standard value, which is "python3" in Emacs 30 -- so seeding the
+  ;; default cannot win). pet honors absolute paths as-is, so the venv is never
+  ;; used. Pin the interpreter from pet's detected venv root *last*, on
+  ;; `python-mode-local-vars-hook', so it survives both pet and the layer.
+  (defun my/python-use-venv-interpreter ()
+    "Point `python-shell-interpreter' at the pet-detected venv python."
+    (when (bound-and-true-p python-shell-virtualenv-root)
+      (let ((py (expand-file-name "bin/python" python-shell-virtualenv-root)))
+        (when (file-executable-p py)
+          (setq-local python-shell-interpreter py
+                      python-shell-interpreter-args "-i")))))
+  (add-hook 'python-mode-local-vars-hook #'my/python-use-venv-interpreter 90)
+
   (spacemacs|define-custom-layout "@agenda"
     :binding "s"
     :body

@@ -44,10 +44,8 @@
   '(python))
 
 (defun my-python/post-init-python ()
-  (defun my-python-set-interpreter ()
-    (setq python-shell-interpreter "python3"
-          python-shell-interpreter-args "-i"))
-  (add-hook 'python-mode-hook #'my-python-set-interpreter)
+  ;; Interpreter selection is handled by pet (it sets `python-shell-interpreter'
+  ;; to the project venv on `python-base-mode-hook'). Do not override it here.
   (advice-add 'python-shell-completion-at-point :around
               (lambda (orig-fun &rest args)
                 (condition-case nil
