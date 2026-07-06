@@ -44,8 +44,11 @@
   '(python))
 
 (defun my-python/post-init-python ()
-  ;; Interpreter selection is handled by pet (it sets `python-shell-interpreter'
-  ;; to the project venv on `python-base-mode-hook'). Do not override it here.
+  ;; NOTE: pet sets `python-shell-interpreter' to the project venv, but the
+  ;; spacemacs python layer forces it back to an absolute system ipython3, so
+  ;; pet alone does not win. The interpreter is pinned last in
+  ;; `dotspacemacs/user-config' via `my/python-use-venv-interpreter' on
+  ;; `python-mode-local-vars-hook'. Do not set the interpreter here.
   (advice-add 'python-shell-completion-at-point :around
               (lambda (orig-fun &rest args)
                 (condition-case nil

@@ -148,7 +148,6 @@ This function should only modify configuration layer settings."
    dotspacemacs-additional-packages '(sqlite3
                                       ripgrep
                                       transient
-                                      modus-themes
                                       pdf-tools
                                       ob-mermaid
                                       exec-path-from-shell)
@@ -157,8 +156,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(material-theme
-                                    vi-tilde-fringe
+   dotspacemacs-excluded-packages '(vi-tilde-fringe
                                     )
 
    ;; Defines the behaviour of Spacemacs when installing packages.
@@ -660,7 +658,6 @@ It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   ;; (setq byte-compile-warnings '(cl-functions))
-  (add-to-list 'custom-theme-load-path "~/.spacemacs.d/emacs-material-theme")
   (add-to-list 'custom-theme-load-path "~/.spacemacs.d/atom-one-dark-theme")
 
   (setq org-enable-roam-protocol t)
