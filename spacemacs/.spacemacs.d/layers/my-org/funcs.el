@@ -21,6 +21,23 @@
     (format "#+TITLE: Weekly Journal %s-W%s (%s to %s)\n\n"
             year week start end)))
 
+(defun my/org-insert-timestamp-below-heading (&optional active)
+  "Insert a timestamp with the current date and time on a new line
+directly below the current heading, after any planning lines and
+property drawers.  The timestamp is inactive by default; with a
+prefix argument (or when ACTIVE is non-nil) insert an active one."
+  (interactive "P")
+  (org-back-to-heading t)
+  (org-end-of-meta-data t)
+  (unless (bolp) (insert "\n"))
+  (insert (format-time-string (if active "<%Y-%m-%d %a %H:%M>\n"
+                                 "[%Y-%m-%d %a %H:%M]\n"))))
+
+(defun my/org-insert-active-timestamp-below-heading ()
+  "Like `my/org-insert-timestamp-below-heading' but active."
+  (interactive)
+  (my/org-insert-timestamp-below-heading t))
+
 (defun my/org-journal-ensure-title (&rest _)
   "Insert #+TITLE if missing in the current org-journal buffer."
   (save-excursion

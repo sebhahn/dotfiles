@@ -119,8 +119,11 @@
         "okl" 'org-clock-in-last)
 
       (spacemacs/declare-prefix-for-mode 'org-mode "k" "org-clock")
+      (spacemacs/declare-prefix-for-mode 'org-mode "i" "insert")
       (spacemacs/set-leader-keys-for-major-mode 'org-mode
         "is" 'org-insert-subheading-respect-content
+        "it" 'my/org-insert-timestamp-below-heading
+        "iT" 'my/org-insert-active-timestamp-below-heading
         "ki" 'org-clock-in
         "ko" 'org-clock-out
         "kc" 'org-clock-cancel
