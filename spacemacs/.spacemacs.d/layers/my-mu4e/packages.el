@@ -144,12 +144,71 @@
     ;; some of which (EPG context objects, NSM TLS state) are unreadable (#<...>)
     ;; and crash the child process.  Override it with a predicate that skips
     ;; variables whose printed representation contains unreadable objects.
+    ;; The NSM (network-security-manager) prompt to accept a changed TLS
+    ;; certificate/key cannot be answered inside the headless async child
+    ;; (`emacs -batch' is `noninteractive', and `nsm-query' then says "no"
+    ;; to everything), so the send fails with "Unable to contact server"
+    ;; whenever the server's key is renewed and the pinned fingerprint in
+    ;; `network-security.data' no longer matches (the `:same-cert' check).
+    ;; Worse, accepting the new key "for this session" only records it in
+    ;; `nsm-temporary-host-settings' (in memory); it is never written to
+    ;; the settings file, so a fresh child process can't see it either.
+    ;;
+    ;; Fix: before dispatching, open a throwaway STARTTLS connection in
+    ;; *this* (interactive) Emacs.  Any NSM prompt appears here, where it
+    ;; can be answered.  On success we then PROMOTE whatever acceptance NSM
+    ;; recorded for this host (temporary or permanent) into the permanent
+    ;; settings file, so the child reads a matching entry and connects
+    ;; silently.  (`nsm-save-host' with `fingerprint' does NOT update an
+    ;; existing pin -- NSM uses the `:conditions' exception mechanism --
+    ;; which is why we persist the whole host setting instead.)
+    (require 'nsm)
+    (defun my/smtpmail-nsm-persist-host (host port)
+      "Persist NSM's current acceptance for HOST:PORT into the settings file."
+      (let ((setting (nsm-host-settings (nsm-id host port))))
+        (when setting
+          (nsm-remove-permanent-setting (nsm-id host port))
+          (push setting nsm-permanent-host-settings)
+          (nsm-write-settings))))
+    (defun my/smtpmail-nsm-warmup ()
+      "Vet the SMTP server's TLS key here, then persist it for the async child."
+      (let ((buf (generate-new-buffer " *smtp-nsm-warmup*")))
+        (unwind-protect
+            ;; Use the same open-network-stream parameters smtpmail itself
+            ;; uses (`:type nil' + `:use-starttls-if-possible t'); forcing
+            ;; `:type 'starttls' takes a different code path that errors out
+            ;; against this server.
+            (let ((proc (ignore-errors
+                          (open-network-stream
+                           "smtp-nsm-warmup" buf
+                           smtpmail-smtp-server smtpmail-smtp-service
+                           :type nil
+                           :use-starttls-if-possible t
+                           :always-query-capabilities t
+                           :capability-command (format "EHLO %s\r\n"
+                                                        (smtpmail-fqdn))
+                           :end-of-command "^[0-9]+ .*\r\n"
+                           :success "^2.*\n"
+                           :starttls-function
+                           (lambda (capabilities)
+                             (and (string-match "[ -]STARTTLS" capabilities)
+                                  "STARTTLS\r\n"))))))
+              ;; Only persist if we actually got a live (accepted) connection.
+              (when (and (processp proc) (process-live-p proc))
+                (my/smtpmail-nsm-persist-host
+                 smtpmail-smtp-server smtpmail-smtp-service)
+                (delete-process proc)))
+          (when (buffer-live-p buf) (kill-buffer buf)))))
+
     (with-eval-after-load 'smtpmail-async
       (defun async-smtpmail-send-it ()
         (let ((to          (message-field-value "To"))
               (buf-content (buffer-substring-no-properties
                             (point-min) (point-max))))
           (message "Delivering message to %s..." to)
+          ;; Trigger any NSM key-acceptance prompt in the parent Emacs
+          ;; before handing delivery to the (non-interactive) child.
+          (my/smtpmail-nsm-warmup)
           (async-start
            `(lambda ()
               (require 'smtpmail)
