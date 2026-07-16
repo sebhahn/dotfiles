@@ -156,22 +156,30 @@
     ;;
     ;; Fix: before dispatching, open a throwaway STARTTLS connection in
     ;; *this* (interactive) Emacs.  Any NSM prompt appears here, where it
-    ;; can be answered.  On success we then PROMOTE whatever acceptance NSM
-    ;; recorded for this host (temporary or permanent) into the permanent
-    ;; settings file, so the child reads a matching entry and connects
-    ;; silently.  (`nsm-save-host' with `fingerprint' does NOT update an
-    ;; existing pin -- NSM uses the `:conditions' exception mechanism --
-    ;; which is why we persist the whole host setting instead.)
+    ;; can be answered.  On success we pin ONLY the current certificate
+    ;; fingerprint (permanently, in the settings file) so the child reads a
+    ;; matching entry and connects silently.
+    ;;
+    ;; Deliberately strict: we store just the current fingerprint and NOT
+    ;; NSM's `:same-cert' exception.  Persisting the exception (or keeping
+    ;; a history of past fingerprints) would make NSM silently accept ANY
+    ;; future certificate change for this host.  By pinning only the one
+    ;; fingerprint we vetted, the next time the key actually changes the
+    ;; pin no longer matches, the warm-up re-triggers the accept prompt
+    ;; here, and we re-pin the new key.  So a real key change always asks
+    ;; again -- while the child still refuses a cert we never vetted.
     (require 'nsm)
-    (defun my/smtpmail-nsm-persist-host (host port)
-      "Persist NSM's current acceptance for HOST:PORT into the settings file."
-      (let ((setting (nsm-host-settings (nsm-id host port))))
-        (when setting
-          (nsm-remove-permanent-setting (nsm-id host port))
-          (push setting nsm-permanent-host-settings)
-          (nsm-write-settings))))
+    (defun my/smtpmail-nsm-persist-host (host port fingerprint)
+      "Pin FINGERPRINT for HOST:PORT permanently, replacing any prior pin.
+Stores only the fingerprint (no `:same-cert' exception, no history), so a
+later certificate change re-triggers the acceptance prompt."
+      (when fingerprint
+        (nsm-remove-permanent-setting (nsm-id host port))
+        (push (list :id (nsm-id host port) :fingerprints (list fingerprint))
+              nsm-permanent-host-settings)
+        (nsm-write-settings)))
     (defun my/smtpmail-nsm-warmup ()
-      "Vet the SMTP server's TLS key here, then persist it for the async child."
+      "Vet the SMTP server's TLS key here, then pin it for the async child."
       (let ((buf (generate-new-buffer " *smtp-nsm-warmup*")))
         (unwind-protect
             ;; Use the same open-network-stream parameters smtpmail itself
@@ -195,8 +203,10 @@
                                   "STARTTLS\r\n"))))))
               ;; Only persist if we actually got a live (accepted) connection.
               (when (and (processp proc) (process-live-p proc))
-                (my/smtpmail-nsm-persist-host
-                 smtpmail-smtp-server smtpmail-smtp-service)
+                (let* ((status (gnutls-peer-status proc))
+                       (fingerprint (and status (nsm-fingerprint status))))
+                  (my/smtpmail-nsm-persist-host
+                   smtpmail-smtp-server smtpmail-smtp-service fingerprint))
                 (delete-process proc)))
           (when (buffer-live-p buf) (kill-buffer buf)))))
 
