@@ -34,6 +34,10 @@
                  '(typst "https://github.com/uben0/tree-sitter-typst"))
     :config
     (setq typst-ts-math-script-display '(nil . nil))
+    ;; sub/superscript faces ship at :height 0.85, shrinking the glyphs
+    ;; independently of the raise above; keep them the same size as math text
+    (set-face-attribute 'typst-ts-subscript-face nil :height 1.0)
+    (set-face-attribute 'typst-ts-superscript-face nil :height 1.0)
     (setq typst-ts-preview-function
           (lambda (pdf)
             (start-process "typst-preview" nil "xreader" (expand-file-name pdf))))

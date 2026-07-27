@@ -859,6 +859,10 @@ before packages are loaded."
     (setq vertico-multiform-categories
           '((file (vertico-sort-function . vertico-sort-alpha)))))
 
+  ;; SPC c c: prompt for a per-project compile command (make, task, anything)
+  ;; and remember it per project. SPC c r (recompile) re-runs the last one.
+  (spacemacs/set-leader-keys "cc" #'projectile-compile-project)
+
   )
 
 
