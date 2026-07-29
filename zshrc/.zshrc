@@ -19,6 +19,9 @@ else
   export TERM="xterm-256color"
 fi
 
+# generated completions (herdr); must precede oh-my-zsh's compinit
+fpath=(~/.zfunc $fpath)
+
 source $ZSH/oh-my-zsh.sh
 
 # smart history search after typing and pressing up-down keys
@@ -59,6 +62,11 @@ alias avg_fs='find ./ -type f -ls | awk "{sum += \$7; n++;} END {print sum/n;}"'
 alias tn='tmux new -s'
 alias ta="tmux attach -t"
 alias tl='tmux list-sessions'
+alias hn='myherdr'
+alias ha='herdr --session'
+alias hl='herdr session list'
+alias hs='herdr session stop'
+alias hk='function _hk() { herdr session stop "$1" 2>/dev/null; herdr session delete "$1"; }; _hk'
 
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

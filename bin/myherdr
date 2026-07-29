@@ -1,0 +1,50 @@
+#!/usr/bin/zsh
+
+# Set session name to argument if provided, otherwise use user name
+SESSION="${1:-$USER}"
+export HERDR_SESSION="$SESSION"
+
+# Create a tab in the workspace and print "<tab_id> <pane_id>"
+new_tab() {
+    herdr tab create --workspace "$WSID" --cwd "$HOME" --label "$1" --no-focus |
+        jq -r '.result | "\(.tab.tab_id) \(.root_pane.pane_id)"'
+}
+
+# Check if the session exists, running or saved
+if ! herdr session list | awk 'NR>1 {print $1}' | grep -qx "$SESSION"; then
+    # Start the headless server for this session, then wait for its socket API
+    setsid herdr server >/dev/null 2>&1 &
+
+    for i in {1..40}; do
+        herdr tab list >/dev/null 2>&1 && break
+        sleep 0.25
+    done
+
+    # A new session is empty: the workspace brings its own tab and root pane
+    WS=$(herdr workspace create --cwd "$HOME" --label "$SESSION" --focus)
+    WSID=$(print -r -- "$WS" | jq -r '.result.workspace.workspace_id')
+    PANE=$(print -r -- "$WS" | jq -r '.result.root_pane.pane_id')
+
+    RIGHT=$(herdr pane split "$PANE" --direction right --cwd "$HOME" --no-focus |
+        jq -r '.result.pane.pane_id')
+    herdr pane split "$RIGHT" --direction down --cwd "$HOME" --no-focus >/dev/null
+
+    herdr pane run "$PANE" btop
+
+    read EMACS_TAB EMACS_PANE <<< "$(new_tab 'emacs')"
+    herdr pane run "$EMACS_PANE" TERM=xterm-direct emacs -nw
+
+    read RANGER_TAB RANGER_PANE <<< "$(new_tab 'ranger')"
+    herdr pane run "$RANGER_PANE" ranger
+
+    read CMD1_TAB CMD1_PANE <<< "$(new_tab 'cmd1')"
+    herdr pane split "$CMD1_PANE" --direction right --cwd "$HOME" --no-focus >/dev/null
+
+    new_tab 'cmd2' >/dev/null
+
+    # Set default tab
+    herdr tab focus "$EMACS_TAB" >/dev/null
+fi
+
+# Attach to created session
+exec herdr --session "$SESSION"

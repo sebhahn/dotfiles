@@ -1,0 +1,68 @@
+# herdr config — keybindings mirror ~/dotfiles/tmux/.tmux.conf
+# docs: https://herdr.dev/docs/configuration/
+# validate: herdr config check      reload: herdr server reload-config
+
+[theme]
+# matches the tmux status/pane palette (#282c34, #abb2bf, #98c379, #e06c75)
+name = "one-dark"
+
+[terminal]
+# set -g default-shell /bin/zsh (login shell is bash, so this must be explicit)
+default_shell = "/bin/zsh"
+
+[keys]
+# set -g prefix ^A
+prefix = "ctrl+a"
+
+# session
+# bind r source-file ~/.tmux.conf
+reload_config = "prefix+r"
+# bind ^D detach
+detach = "prefix+ctrl+d"
+
+# tabs (tmux windows)
+# bind . new-window (right-hand key for split keyboard)
+new_tab = "prefix+."
+# bind A command-prompt "rename-window %%"
+rename_tab = "prefix+shift+a"
+# bind K confirm-before "kill-window"
+close_tab = "prefix+shift+k"
+# bind n next-window / bind -r C-l select-window -t :+
+next_tab = ["prefix+n", "prefix+ctrl+l"]
+# bind p previous-window / bind -r C-h select-window -t :-
+previous_tab = ["prefix+p", "prefix+ctrl+h"]
+# tmux default: prefix+<n> selects window n
+switch_tab = "prefix+1..9"
+
+# pickers
+# bind w list-windows
+workspace_picker = "prefix+w"
+# bind y choose-window
+goto = "prefix+y"
+
+# panes
+# bind h/j/k/l select-pane, plus bind -n C-h/C-j/C-k/C-l
+# unconditional here: herdr has no equivalent of the tmux vim/emacs passthrough,
+# so emacs C-h/C-k/C-l and the zsh ^j/^k history bindings are swallowed
+focus_pane_left = ["prefix+h", "ctrl+h"]
+focus_pane_down = ["prefix+j", "ctrl+j"]
+focus_pane_up = ["prefix+k", "ctrl+k"]
+focus_pane_right = ["prefix+l", "ctrl+l"]
+# bind i split-window -h — side-by-side (herdr splits "right")
+split_vertical = "prefix+i"
+# bind u split-window -v — stacked (herdr splits "down")
+split_horizontal = "prefix+u"
+# bind o kill-pane
+close_pane = "prefix+o"
+# no tmux equivalent; moved off prefix+o so close_pane can have it
+open_notification_target = "prefix+shift+o"
+# bind m resize-pane -Z
+zoom = "prefix+m"
+# bind -/_/=/+/9/(/0/) resize-pane — herdr resizes in a mode instead
+resize_mode = "prefix+minus"
+
+# setw -g mode-keys vi
+navigate_pane_left = "h"
+navigate_pane_down = "j"
+navigate_pane_up = "k"
+navigate_pane_right = "l"
