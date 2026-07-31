@@ -181,6 +181,7 @@ zoxide_support = true
 #   pdf = "zathura"
 #   conf = "nvim"
 [open_with]
+png = "feh"
 pdf = "zathura"
 epub = "zathura"
 mp4 = "celluloid"
