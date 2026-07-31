@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: labeled equation
+# key: eq
+# --
+$ ${1:f(x) = x} $ <eq:${2:label}>
+$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: link
+# key: link
+# --
+#link("${1:https://example.com}")[${2:text}]$0

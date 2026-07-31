@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: cite
+# key: cite
+# --
+#cite(<${1:key}>, form: "${2:$$(yas-choose-value '("prose" "normal" "full" "author" "year"))}")$0

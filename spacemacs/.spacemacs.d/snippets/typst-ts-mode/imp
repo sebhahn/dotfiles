@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: import
+# key: imp
+# --
+#import "${1:@preview/cetz:0.3.4}": ${2:*}
+$0

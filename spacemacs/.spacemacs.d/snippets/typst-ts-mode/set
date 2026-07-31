@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: set rule
+# key: set
+# --
+#set ${1:text}(${2:size: 11pt})
+$0

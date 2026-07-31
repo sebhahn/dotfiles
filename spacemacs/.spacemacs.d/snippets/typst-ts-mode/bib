@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: bibliography
+# key: bib
+# --
+#bibliography("${1:refs.bib}", style: "${2:ieee}")
+$0

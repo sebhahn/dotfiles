@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: show rule
+# key: show
+# --
+#show ${1:heading}: ${2:it => it}
+$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: prose citation
+# key: pcite
+# --
+#cite(<${1:key}>, form: "prose")$0
