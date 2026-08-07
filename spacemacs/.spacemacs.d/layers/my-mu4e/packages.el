@@ -506,6 +506,30 @@ later certificate change re-triggers the acceptance prompt."
     (add-to-list 'mu4e-view-actions
                  '("org-contact-add" . mu4e-action-add-org-contact) t)
 
+    ;; mu4e and org-contacts both install an *exclusive* capf, so whichever
+    ;; comes first wins outright and the other is never consulted.  Merge them
+    ;; into one table instead: org-contacts entries first, then mu4e's.
+    (defun my/mu4e-compose-complete-contact-field ()
+      "Complete addresses from `org-contacts' and mu4e's contacts."
+      (when-let* ((res (mu4e--compose-complete-contact-field)))
+        (list (nth 0 res) (nth 1 res)
+              (completion-table-merge
+               (completion-table-dynamic
+                (lambda (str)
+                  (run-hook-with-args-until-success
+                   'org-contacts-complete-functions str)))
+               (nth 2 res)))))
+
+    ;; runs after `message-mode-hook', i.e. after org-contacts installed itself
+    (add-hook 'mu4e-compose-mode-hook
+              (lambda ()
+                (remove-hook 'completion-at-point-functions
+                             #'mu4e--compose-complete-contact-field t)
+                (remove-hook 'completion-at-point-functions
+                             #'org-contacts-message-complete-function t)
+                (add-hook 'completion-at-point-functions
+                          #'my/mu4e-compose-complete-contact-field -10 t)))
+
     ;; use helm for navigation
     ;; (setq  mu4e-completing-read-function 'completing-read)
 
