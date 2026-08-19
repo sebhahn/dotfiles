@@ -863,6 +863,73 @@ before packages are loaded."
   ;; and remember it per project. SPC c r (recompile) re-runs the last one.
   (spacemacs/set-leader-keys "cc" #'projectile-compile-project)
 
+  ;; Centered writing layout: larger font, centered text, fixed visible width.
+  ;; SPC w c w is scale 2 / 80 columns, SPC w c W scale 1 / 100; add further
+  ;; presets by wrapping `my/writing-layout-toggle' in a command of its own.
+  ;;
+  ;; `visual-fill-column-adjust-for-text-scale' has to be off here: on Emacs 29+
+  ;; `window-width' already reports remapped columns, so leaving it on applies
+  ;; the text scale a second time and the visible width drifts with the frame
+  ;; (61 columns in a 120-column frame, 98 in a 300-column one). With it off,
+  ;; WIDTH is exactly the visible column count.
+  (defvar-local my/writing-layout--saved nil
+    "Pre-toggle state to restore, or nil when the writing layout is off.")
+
+  (defvar-local my/writing-layout--active nil
+    "(SCALE . WIDTH) currently applied by `my/writing-layout-toggle'.")
+
+  (defun my/writing-layout-toggle (scale width &optional force)
+    "Toggle a centered writing layout in the current buffer.
+SCALE is a `text-scale-set' amount, WIDTH the visible column count.
+Called again with the same SCALE and WIDTH this turns the layout off;
+called with different ones it switches preset, still restoring the
+original buffer state when eventually turned off.  Non-nil FORCE always
+turns it on."
+    (require 'face-remap)              ; defines `text-scale-mode-amount'
+    (require 'visual-fill-column)      ; its vars must be buffer-local before setq
+    (if (and my/writing-layout--saved
+             (not force)
+             (equal my/writing-layout--active (cons scale width)))
+        (let ((state my/writing-layout--saved))
+          (setq my/writing-layout--saved nil
+                my/writing-layout--active nil)
+          (text-scale-set (nth 0 state))
+          (setq visual-fill-column-width (nth 1 state)
+                visual-fill-column-center-text (nth 2 state))
+          (kill-local-variable 'visual-fill-column-adjust-for-text-scale)
+          (visual-fill-column-mode (if (nth 3 state) 1 -1))
+          (visual-line-mode (if (nth 4 state) 1 -1)))
+      (unless my/writing-layout--saved  ; keep the pre-toggle state across re-runs
+        (setq my/writing-layout--saved
+              (list text-scale-mode-amount
+                    visual-fill-column-width
+                    visual-fill-column-center-text
+                    (bound-and-true-p visual-fill-column-mode)
+                    (bound-and-true-p visual-line-mode))))
+      (setq my/writing-layout--active (cons scale width))
+      (text-scale-set scale)
+      (setq-local visual-fill-column-adjust-for-text-scale nil)
+      (setq visual-fill-column-width width
+            visual-fill-column-center-text t)
+      (visual-line-mode 1)
+      (visual-fill-column-mode 1)))
+
+  (defun my/writing-layout (&optional arg)
+    "Toggle the centered writing layout at text scale 2 and 80 columns.
+With prefix ARG, force it on."
+    (interactive "P")
+    (my/writing-layout-toggle 2 80 arg))
+
+  (defun my/writing-layout-wide (&optional arg)
+    "Toggle the centered writing layout at text scale 1 and 100 columns.
+With prefix ARG, force it on."
+    (interactive "P")
+    (my/writing-layout-toggle 1 100 arg))
+
+  (spacemacs/set-leader-keys
+    "wcw" #'my/writing-layout
+    "wcW" #'my/writing-layout-wide)
+
   )
 
 
