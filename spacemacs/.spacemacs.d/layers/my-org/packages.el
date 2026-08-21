@@ -1,4 +1,4 @@
-;;; packages.el --- my-org layer packages file for Spacemacs.
+;;; packages.el --- my-org layer packages file for Spacemacs.  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2012-2021 Sylvain Benner & Contributors
 ;;
@@ -33,9 +33,7 @@
 
 (defun my-org/init-ox-typst ()
   (use-package ox-typst
-    :defer t
-    :config
-    (setq org-typst-process "~/.cargo/bin/typst c \"%s\"")))
+    :defer t))
 
 (defun my-org/init-org-noter ()
   (use-package org-noter
