@@ -1,4 +1,4 @@
-;;; packages.el --- my-mermaid layer packages file for Spacemacs.
+;;; packages.el --- my-mermaid layer packages file for Spacemacs.  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2012-2021 Sylvain Benner & Contributors
 ;;
@@ -26,6 +26,9 @@
   '(org))
 
 (defun my-mermaid/post-init-org ()
-  ;; ob-mermaid is installed via additional-packages; set CLI path when it loads
+  ;; ob-mermaid is installed via additional-packages; resolve the CLI when it
+  ;; loads.  Hard-coding a path breaks whenever the node install moves; nil
+  ;; would also work (ob-mermaid falls back to `executable-find' itself), but
+  ;; resolving here keeps the failure visible in this file.
   (with-eval-after-load 'ob-mermaid
-    (setq ob-mermaid-cli-path "~/bin/mmdc")))
+    (setq ob-mermaid-cli-path (executable-find "mmdc"))))
