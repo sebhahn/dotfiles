@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 (defun my/week-start (time)
   "Return TIME of Monday of the ISO week containing TIME."
   (let* ((date (calendar-gregorian-from-absolute

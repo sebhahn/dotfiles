@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 (defun my-python/send-region-compilation(start end)
   (interactive "r")
   (let ((cur-window (selected-window)))

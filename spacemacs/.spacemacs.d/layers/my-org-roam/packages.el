@@ -1,4 +1,4 @@
-;;; packages.el --- my-org-roam layer packages file for Spacemacs.
+;;; packages.el --- my-org-roam layer packages file for Spacemacs.  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2012-2021 Sylvain Benner & Contributors
 ;;

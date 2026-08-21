@@ -1,4 +1,4 @@
-;;; config.el --- mu4e Layer configuration File for Spacemacs
+;;; config.el --- mu4e Layer configuration File for Spacemacs  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2012-2021 Sylvain Benner & Contributors
 ;;

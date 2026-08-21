@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 (defconst my-fabric-patterns-directory
   (expand-file-name "fabric/patterns"
                      (or (getenv "XDG_CONFIG_HOME") "~/.config")))

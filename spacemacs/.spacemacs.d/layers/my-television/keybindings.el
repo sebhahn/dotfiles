@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 (spacemacs/declare-prefix "ot" "television")
 (spacemacs/set-leader-keys
   "otf" #'my-television-find-file

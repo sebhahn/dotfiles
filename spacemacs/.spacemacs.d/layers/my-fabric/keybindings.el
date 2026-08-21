@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 (spacemacs/declare-prefix "of" "fabric")
 (spacemacs/set-leader-keys
   "ofr" #'my-fabric/run-on-region
