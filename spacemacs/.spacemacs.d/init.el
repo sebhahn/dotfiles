@@ -150,7 +150,8 @@ This function should only modify configuration layer settings."
                                       transient
                                       pdf-tools
                                       ob-mermaid
-                                      exec-path-from-shell)
+                                      exec-path-from-shell
+                                      visual-fill-column)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -674,7 +675,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                       ("project14" . work)
                       ("radar01" . work)
                       ("shahn-7490" . home))))
-      (cdr (assoc system-name machines))))
+      (cdr (assoc (system-name) machines))))
 
   (setq browse-url-generic-program "~/bin/zen-browser"
         org-odt-data-dir (format "/usr/share/emacs/%s/etc/org" emacs-version))
@@ -784,7 +785,39 @@ before packages are loaded."
   (setq dired-listing-switches "-alhk")
   (setq delete-by-moving-to-trash nil)
   (setq wdired-allow-to-change-permissions t)
-  (setq compilation-finish-function nil)
+
+  ;; Show the compilation buffer only briefly: bury its window a second after a
+  ;; successful run, keep it around on failure so the errors stay visible.
+  ;; Covers `SPC p c', `M-x compile' and `, c c' (typst-ts-compilation-mode
+  ;; derives from compilation-mode).
+  (defvar my/compilation-auto-close t
+    "When non-nil, bury the compilation window after a successful run.
+Toggle with `SPC t q'.")
+
+  (spacemacs|add-toggle compilation-auto-close
+    :status my/compilation-auto-close
+    :on (setq my/compilation-auto-close t)
+    :off (setq my/compilation-auto-close nil)
+    :documentation "Bury the compilation window after a successful run."
+    :evil-leader "tq")
+
+  (defun my/close-compilation-window-on-success (buffer msg)
+    "Bury BUFFER's window shortly after a successful compilation.
+MSG is the exit message.  Does nothing when `my/compilation-auto-close'
+is nil.  Grep-like buffers are left alone."
+    (when (and my/compilation-auto-close
+               (string-prefix-p "finished" msg)
+               (buffer-live-p buffer)
+               (with-current-buffer buffer (not (derived-mode-p 'grep-mode))))
+      (run-at-time
+       1 nil
+       (lambda (buf)
+         (when (buffer-live-p buf)
+           (when-let* ((win (get-buffer-window buf t)))
+             (quit-window nil win))))
+       buffer)))
+  (add-hook 'compilation-finish-functions
+            #'my/close-compilation-window-on-success)
 
   ;; Make evil-mode up/down operate in screen lines instead of logical lines
   (define-key evil-normal-state-map "j" 'evil-next-visual-line)
