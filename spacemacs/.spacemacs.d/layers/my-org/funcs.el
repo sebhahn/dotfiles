@@ -51,3 +51,27 @@ prefix argument (or when ACTIVE is non-nil) insert an active one."
   "Return the deadline date of the entry at point as an agenda prefix."
   (let ((deadline (org-entry-get nil "DEADLINE")))
     (if deadline (format "%s: " (substring deadline 1 11)) "")))
+
+(defun my/org-agenda-ia-timestamp (&optional entry)
+  "Return the inactive timestamp of the entry at point.
+With agenda line ENTRY, return the timestamp of the entry it points to.
+Return the empty string when there is none."
+  (let ((marker (and entry (get-text-property 0 'org-marker entry))))
+    (or (if marker
+            (org-with-point-at marker (org-entry-get nil "TIMESTAMP_IA"))
+          (org-entry-get nil "TIMESTAMP_IA"))
+        "")))
+
+(defun my/org-agenda-ia-timestamp-prefix ()
+  "Return the inactive timestamp of the entry at point as an agenda prefix."
+  (let ((timestamp (my/org-agenda-ia-timestamp)))
+    (if (equal timestamp "") "            "
+      (format "%s: " (substring timestamp 1 11)))))
+
+(defun my/org-agenda-cmp-ia-timestamp (a b)
+  "Compare agenda entries A and B by their inactive timestamps.
+`ts-up' only sorts active timestamps, so reminders need this."
+  (let ((ta (my/org-agenda-ia-timestamp a))
+        (tb (my/org-agenda-ia-timestamp b)))
+    (cond ((string< ta tb) -1)
+          ((string< tb ta) +1))))

@@ -403,44 +403,44 @@
       (setq org-default-priority ?D)
 
       (setq org-agenda-custom-commands
-            '(("N" "Notes" tags ""
+            '(("N" "Notes" tags "NOTE"
                ((org-agenda-overriding-header "Notes")
                 (org-tags-match-list-sublevels t)))
-              ("r" "Reminders" tags "+RMD"
-               ((org-agenda-view-columns-initially t)
-                (org-agenda-overriding-header "")
-                (org-overriding-columns-format "%80ITEM 20%TIMESTAMP_IA")
-                (org-tags-match-list-sublevels t)))
-              ("d" "Upcoming deadlines" agenda ""
+              ("r" "Reminders" tags "+REMEMBER"
+               ((org-agenda-overriding-header "Reminders")
+                (org-agenda-prefix-format "  %(my/org-agenda-ia-timestamp-prefix)")
+                (org-tags-match-list-sublevels t)
+                (org-agenda-cmp-user-defined #'my/org-agenda-cmp-ia-timestamp)
+                (org-agenda-sorting-strategy '(user-defined-up))))
+              ("d" "Upcoming deadlines" tags-todo "DEADLINE<=\"<+1m>\""
                ((org-agenda-overriding-header "Upcoming deadlines")
-                (org-agenda-span 'month)
-                (org-agenda-time-grid nil)
-                (org-deadline-warning-days 0)
-                (org-agenda-entry-types '(:deadline))))
-              ("w" "Weekly Review"
+                (org-agenda-todo-list-sublevels nil)
+                (org-agenda-prefix-format "  %(my/org-agenda-deadline-prefix)")
+                (org-agenda-sorting-strategy '(deadline-up))))
+              ("w" "Weekly Review" agenda ""
                ((org-agenda-span 7)
                 (org-deadline-warning-days 0)))
               ("e" "Eisenhower matrix"
                ((agenda ""
                         ((org-agenda-show-log t)
                          (org-agenda-log-mode-items '(clock closed state))))
-                (tags "+PRJ+PRIORITY=\"A\"-TODO=\"DONE\""
-                      ((org-agenda-overriding-header "Urgent and Important (kitchen fire)")
-                       (org-agenda-todo-list-sublevels nil)
-                       (org-agenda-sorting-strategy '(category-keep))))
-                (tags "+PRJ+PRIORITY=\"B\"-TODO=\"DONE\""
-                      ((org-agenda-overriding-header "Important (find date, personally)")
-                       (org-agenda-todo-list-sublevels nil)
-                       (org-agenda-sorting-strategy '(category-keep))))
-                (tags "+PRJ+PRIORITY=\"C\"-TODO=\"DONE\""
-                      ((org-agenda-overriding-header "Urgent (interruptions, delegate)")
-                       (org-agenda-todo-list-sublevels nil)
-                       (org-agenda-sorting-strategy '(category-keep))))
-                (tags "+PRJ+PRIORITY=\"D\"-TODO=\"DONE\""
-                      ((org-agenda-overriding-header "Time waster")
-                       (org-agenda-todo-list-sublevels nil)
-                       (org-agenda-sorting-strategy '(category-keep))))))
-              ("h" "Habits" tags-todo ""
+                (tags-todo "+PRJ+PRIORITY=\"A\""
+                           ((org-agenda-overriding-header "Urgent and Important (kitchen fire)")
+                            (org-agenda-todo-list-sublevels nil)
+                            (org-agenda-sorting-strategy '(category-keep))))
+                (tags-todo "+PRJ+PRIORITY=\"B\""
+                           ((org-agenda-overriding-header "Important (find date, personally)")
+                            (org-agenda-todo-list-sublevels nil)
+                            (org-agenda-sorting-strategy '(category-keep))))
+                (tags-todo "+PRJ+PRIORITY=\"C\""
+                           ((org-agenda-overriding-header "Urgent (interruptions, delegate)")
+                            (org-agenda-todo-list-sublevels nil)
+                            (org-agenda-sorting-strategy '(category-keep))))
+                (tags-todo "+PRJ+PRIORITY=\"D\""
+                           ((org-agenda-overriding-header "Time waster")
+                            (org-agenda-todo-list-sublevels nil)
+                            (org-agenda-sorting-strategy '(category-keep))))))
+              ("h" "Habits" tags-todo "STYLE=\"habit\""
                ((org-agenda-overriding-header "Habits")
                 (org-agenda-sorting-strategy '(todo-state-down effort-up category-keep))))
               ("t" "Kanban agenda (tasks only)"
@@ -471,10 +471,10 @@
                         ((org-agenda-show-log t)
                          (org-agenda-log-mode-items '(clock))))
                 (tags-todo "DEADLINE<=\"<+90d>\""
-                      ((org-agenda-overriding-header "Deadlines (next 3 months)")
-                       (org-agenda-todo-list-sublevels nil)
-                       (org-agenda-prefix-format "  %(my/org-agenda-deadline-prefix)")
-                       (org-agenda-sorting-strategy '(deadline-up))))
+                           ((org-agenda-overriding-header "Deadlines (next 3 months)")
+                            (org-agenda-todo-list-sublevels nil)
+                            (org-agenda-prefix-format "  %(my/org-agenda-deadline-prefix)")
+                            (org-agenda-sorting-strategy '(deadline-up))))
                 (tags "REFILE"
                       ((org-agenda-overriding-header "Stuff to refile")
                        (org-agenda-prefix-format "  %?-12t% s")
