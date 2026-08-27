@@ -46,3 +46,8 @@ prefix argument (or when ACTIVE is non-nil) insert an active one."
     (unless (re-search-forward "^#\\+TITLE:" nil t)
       (goto-char (point-min))
       (insert (my/org-journal-weekly-header (current-time))))))
+
+(defun my/org-agenda-deadline-prefix ()
+  "Return the deadline date of the entry at point as an agenda prefix."
+  (let ((deadline (org-entry-get nil "DEADLINE")))
+    (if deadline (format "%s: " (substring deadline 1 11)) "")))

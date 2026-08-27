@@ -470,6 +470,11 @@
                ((agenda ""
                         ((org-agenda-show-log t)
                          (org-agenda-log-mode-items '(clock))))
+                (tags-todo "DEADLINE<=\"<+90d>\""
+                      ((org-agenda-overriding-header "Deadlines (next 3 months)")
+                       (org-agenda-todo-list-sublevels nil)
+                       (org-agenda-prefix-format "  %(my/org-agenda-deadline-prefix)")
+                       (org-agenda-sorting-strategy '(deadline-up))))
                 (tags "REFILE"
                       ((org-agenda-overriding-header "Stuff to refile")
                        (org-agenda-prefix-format "  %?-12t% s")
