@@ -509,16 +509,26 @@ later certificate change re-triggers the acceptance prompt."
     ;; mu4e and org-contacts both install an *exclusive* capf, so whichever
     ;; comes first wins outright and the other is never consulted.  Merge them
     ;; into one table instead: org-contacts entries first, then mu4e's.
+    ;;
+    ;; org-contacts' own table is a *function* that pre-filters on the string it
+    ;; was handed and then returns that list as-is, ignoring
+    ;; `completion-regexp-list'.  Styles that narrow through that variable --
+    ;; orderless, which compleseus uses -- therefore never filter it.  Hand over
+    ;; a plain list instead, which the completion machinery filters itself.
+    (defun my/org-contacts-addresses ()
+      "Return all `org-contacts' addresses as plain \"Name <email>\" strings."
+      (let ((completion-regexp-list nil))
+        (mapcar #'substring-no-properties
+                ;; the empty prefix matches everything; reuses org-contacts'
+                ;; ignore-property/link handling instead of re-deriving it.
+                (all-completions "" (org-contacts-complete-name "")))))
+
     (defun my/mu4e-compose-complete-contact-field ()
       "Complete addresses from `org-contacts' and mu4e's contacts."
       (when-let* ((res (mu4e--compose-complete-contact-field)))
         (list (nth 0 res) (nth 1 res)
-              (completion-table-merge
-               (completion-table-dynamic
-                (lambda (str)
-                  (run-hook-with-args-until-success
-                   'org-contacts-complete-functions str)))
-               (nth 2 res)))))
+              (completion-table-merge (my/org-contacts-addresses)
+                                      (nth 2 res)))))
 
     ;; runs after `message-mode-hook', i.e. after org-contacts installed itself
     (add-hook 'mu4e-compose-mode-hook
