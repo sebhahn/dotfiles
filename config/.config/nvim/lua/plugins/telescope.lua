@@ -13,6 +13,12 @@ return {
     },
 		config = function()
 
+      -- project.nvim calls the deprecated vim.lsp.buf_get_clients();
+      -- replace it with the documented equivalent to silence the warning.
+      vim.lsp.buf_get_clients = function()
+        return vim.lsp.get_clients({ bufnr = 0 })
+      end
+
       require("project_nvim").setup({
         detection_methods = { "pattern", "lsp" },
         patterns = { ".git", ".projectile", "pyproject.toml", "setup.py", "Makefile", ".svn", ".hg" },
