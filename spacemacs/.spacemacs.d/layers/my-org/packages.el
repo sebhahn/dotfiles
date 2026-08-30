@@ -307,7 +307,7 @@
       (setq org-use-fast-todo-selection t)
       (setq org-treat-S-cursor-todo-selection-as-state-change nil)
       (setq org-tags-exclude-from-inheritance '("PRJ"))
-      (setq org-stuck-projects '("+PRJ/-DONE-CNCL" ("TODO" "WAIT" "HOLD") ()))
+      (setq org-stuck-projects '("+PRJ/-DONE-CNCL" ("TODO" "INPR" "WAIT" "HOLD") ()))
 
       (require 'holidays)
       (setq holiday-austria-holidays
@@ -531,6 +531,7 @@
       (setq org-clock-into-drawer t)
       (setq org-clock-out-remove-zero-time-clocks t)
       (setq org-clock-out-when-done t)
+      (setq org-clock-in-switch-to-state #'my/org-clock-in-switch-to-inpr)
       (setq org-clock-persist t)
       (setq org-clock-persist-query-resume nil)
       (setq org-clock-auto-clock-resolution 'when-no-clock-is-running)
