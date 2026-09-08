@@ -40,7 +40,8 @@
     (set-face-attribute 'typst-ts-superscript-face nil :height 1.0)
     (setq typst-ts-preview-function
           (lambda (pdf)
-            (start-process "typst-preview" nil "xreader" (expand-file-name pdf))))
+            (when pdf
+              (start-process "evince" nil "evince" pdf))))
     (defun my-typst-toggle-script-display ()
       "Toggle raised/lowered rendering of math super/subscripts."
       (interactive)
