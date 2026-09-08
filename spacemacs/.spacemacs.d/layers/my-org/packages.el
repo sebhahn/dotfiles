@@ -304,6 +304,9 @@
               ("HOLD" :foreground "#70c2be" :weight bold)
               ("CNCL" :foreground "#8fb573" :weight bold)))
 
+      (setq org-superstar-headline-bullets-list '(?● ?◉ ?○ ?◌))
+      (setq org-superstar-cycle-headline-bullets nil)
+
       (setq org-use-fast-todo-selection t)
       (setq org-treat-S-cursor-todo-selection-as-state-change nil)
       (setq org-tags-exclude-from-inheritance '("PRJ"))
@@ -386,7 +389,6 @@
                           org-id
                           ol-info
                           org-habit
-                          org-inlinetask
                           org-protocol))
 
       (require 'org-habit)
