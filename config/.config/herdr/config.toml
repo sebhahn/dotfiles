@@ -1,23 +1,14 @@
-# herdr config — keybindings mirror ~/dotfiles/tmux/.tmux.conf
-# docs: https://herdr.dev/docs/configuration/
-# validate: herdr config check      reload: herdr server reload-config
-
 [theme]
-# matches the tmux status/pane palette (#282c34, #abb2bf, #98c379, #e06c75)
 name = "one-dark"
 
 [terminal]
-# set -g default-shell /bin/zsh (login shell is bash, so this must be explicit)
 default_shell = "/bin/zsh"
 
 [keys]
 # set -g prefix ^A
 prefix = "ctrl+a"
 
-# session
-# bind r source-file ~/.tmux.conf
 reload_config = "prefix+r"
-# bind ^D detach
 detach = "prefix+ctrl+d"
 
 # tabs (tmux windows)
@@ -41,19 +32,26 @@ workspace_picker = "prefix+w"
 goto = "prefix+y"
 
 # panes
-# bind h/j/k/l select-pane, plus bind -n C-h/C-j/C-k/C-l
-# unconditional here: herdr has no equivalent of the tmux vim/emacs passthrough,
-# so emacs C-h/C-k/C-l and the zsh ^j/^k history bindings are swallowed
-focus_pane_left = ["prefix+h", "ctrl+h"]
-focus_pane_down = ["prefix+j", "ctrl+j"]
-focus_pane_up = ["prefix+k", "ctrl+k"]
-focus_pane_right = ["prefix+l", "ctrl+l"]
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+
+# swap with the pane in a direction (tmux: bind ^s display-panes + swap-pane).
+# prefix+ctrl+alt+h/j/k/l avoids prefix+ctrl+h/l (tab cycle) and prefix+shift+k (close tab)
+swap_pane_left = "prefix+ctrl+alt+h"
+swap_pane_down = "prefix+ctrl+alt+j"
+swap_pane_up = "prefix+ctrl+alt+k"
+swap_pane_right = "prefix+ctrl+alt+l"
+
 # bind i split-window -h — side-by-side (herdr splits "right")
 split_vertical = "prefix+i"
 # bind u split-window -v — stacked (herdr splits "down")
 split_horizontal = "prefix+u"
+
 # bind o kill-pane
 close_pane = "prefix+o"
+
 # no tmux equivalent; moved off prefix+o so close_pane can have it
 open_notification_target = "prefix+shift+o"
 # bind m resize-pane -Z
@@ -66,3 +64,6 @@ navigate_pane_left = "h"
 navigate_pane_down = "j"
 navigate_pane_up = "k"
 navigate_pane_right = "l"
+
+[ui]
+status_indicators = "symbols"
