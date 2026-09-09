@@ -113,4 +113,16 @@ the case unless you sent from a point above earlier turns."
     (setq gptel-magit-backend
           (my-gptel//geoforge-backend "geoforge-nothink"
                                       :request-params '(:reasoning_effort "none")))
+    (advice-add 'gptel-magit--generate :around
+                #'my-gptel//guard-empty-staging)
     (gptel-magit-install)))
+
+(defun my-gptel//guard-empty-staging (orig-fn callback)
+  "Abort commit generation if the staging area is empty.
+gptel-magit summaries the staged diff (`--cached'); with nothing
+staged it sends an empty prompt, gets a 400 from the gateway, and
+then crashes on the nil response.  Guard it with a clear message
+instead."
+  (if (string-empty-p (magit-git-output "diff" "--cached"))
+      (user-error "No staged changes - stage files first (magit: s)")
+    (funcall orig-fn callback)))
