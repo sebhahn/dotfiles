@@ -81,6 +81,10 @@ This function should only modify configuration layer settings."
       font-latex-fontify-script nil
       latex-enable-auto-fill nil
       latex-enable-folding t)
+     (llm-client :variables
+                 llm-client-enable-gptel t
+                 llm-client-enable-gptel-agent nil
+                 llm-client-enable-ellama nil)
      lsp
      lua
      json
@@ -90,6 +94,7 @@ This function should only modify configuration layer settings."
      multiple-cursors
      my-chatgpt
      my-consult
+     my-gptel
      my-mu4e
      my-television
      my-org-roam
