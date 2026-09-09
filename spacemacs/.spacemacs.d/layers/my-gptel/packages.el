@@ -52,6 +52,18 @@ Now write a Commit message in the following template with no additional commenta
 [label]:[one line of summary]
 ")
 
+(defun my-gptel//datalab-backend (name &rest params)
+  "Register the datalab Open WebUI endpoint as NAME, with extra PARAMS."
+  (apply #'gptel-make-openai name
+         :host "aqueduct.ai.datalab.tuwien.ac.at"
+         :endpoint "/v1/chat/completions"
+         :stream t
+         :models '(deepseek-v4-flash-284b coding)
+         :key (lambda ()
+                (or (auth-source-pick-first-password :host "datalab")
+                    (user-error "No auth-source entry for host \"datalab\"")))
+         params))
+
 (defun my-gptel//geoforge-backend (name &rest params)
   "Register the geoforge Open WebUI endpoint as NAME, with extra PARAMS."
   (apply #'gptel-make-openai name
@@ -73,12 +85,24 @@ Models are left to gptel's own maintained list."
            (or (auth-source-pick-first-password :host "anthropic")
                (user-error "No auth-source entry for host \"anthropic\"")))))
 
+(defun my-gptel//goto-prompt-after-response (_beg _end)
+  "Move point to the fresh prompt line after a response is inserted.
+gptel inserts responses at a marker inside `save-excursion', so point
+normally stays put -- right for `gptel-send' on a region in code or a
+commit message, but not for a chat buffer.  Hence the `gptel-mode'
+guard.  Assumes the conversation is at the end of the buffer, which is
+the case unless you sent from a point above earlier turns."
+  (when (bound-and-true-p gptel-mode)
+    (goto-char (point-max))))
+
 (defun my-gptel/post-init-gptel ()
   (with-eval-after-load 'gptel
-    ;; Registering the backend is enough to put it in `gptel-menu''s switcher;
-    ;; geoforge stays the default for new sessions.
     (my-gptel//anthropic-backend)
-    (setq gptel-backend (my-gptel//geoforge-backend "geoforge")
+    (my-gptel//datalab-backend "datalab")
+    (add-hook 'gptel-post-response-functions
+              #'my-gptel//goto-prompt-after-response)
+    (setq gptel-include-reasoning nil
+          gptel-backend (my-gptel//geoforge-backend "geoforge")
           gptel-model 'qwen)))
 
 (defun my-gptel/init-gptel-magit ()
