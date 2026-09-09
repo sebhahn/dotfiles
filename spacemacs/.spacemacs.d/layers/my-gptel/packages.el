@@ -64,8 +64,20 @@ Now write a Commit message in the following template with no additional commenta
                     (user-error "No auth-source entry for host \"geoforge\"")))
          params))
 
+(defun my-gptel//anthropic-backend ()
+  "Register the Anthropic API as a gptel backend, keyed from auth-source.
+Models are left to gptel's own maintained list."
+  (gptel-make-anthropic "anthropic"
+    :stream t
+    :key (lambda ()
+           (or (auth-source-pick-first-password :host "anthropic")
+               (user-error "No auth-source entry for host \"anthropic\"")))))
+
 (defun my-gptel/post-init-gptel ()
   (with-eval-after-load 'gptel
+    ;; Registering the backend is enough to put it in `gptel-menu''s switcher;
+    ;; geoforge stays the default for new sessions.
+    (my-gptel//anthropic-backend)
     (setq gptel-backend (my-gptel//geoforge-backend "geoforge")
           gptel-model 'qwen)))
 

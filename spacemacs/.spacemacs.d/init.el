@@ -92,7 +92,6 @@ This function should only modify configuration layer settings."
      mermaid
      my-mermaid
      multiple-cursors
-     my-chatgpt
      my-consult
      my-gptel
      my-mu4e

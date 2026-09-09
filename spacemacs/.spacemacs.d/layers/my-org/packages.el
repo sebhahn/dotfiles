@@ -137,7 +137,7 @@
         "kl" 'org-clock-in-last)
 
       (spacemacs/declare-prefix-for-mode 'org-mode "j" "org-journal")
-      (spacemacs/set-leader-keys
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode
         "jj" 'org-journal-new-entry
         "jk" 'org-journal-new-scheduled-entry
         "js" 'org-journal-search
