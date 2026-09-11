@@ -109,34 +109,57 @@ task itself, only the projects above it."
             (org-back-to-heading t)
             (point)))))
 
-(defun my/org-child-todo-states ()
-  "Return the todo keywords of the direct children of the entry at point."
-  (let ((states nil))
+(defun my/org-subtree-todo-states ()
+  "Return the todo keywords below the entry at point.
+The whole subtree is scanned, not just the direct children, so a task
+buried under a plain heading still counts as work on the project."
+  (let ((states nil)
+        (end (save-excursion (org-end-of-subtree t t) (point))))
     (save-excursion
-      (when (org-goto-first-child)
-        (push (org-get-todo-state) states)
-        (while (org-get-next-sibling)
-          (push (org-get-todo-state) states))))
+      (org-back-to-heading t)
+      (while (and (outline-next-heading) (< (point) end))
+        (push (org-get-todo-state) states)))
     (delq nil states)))
 
 (defun my/org-park-blocked-projects ()
   "Park a project when none of its subtasks can be worked on.
 A project with a WAIT subtask left is set to WAIT, one whose subtasks
-are all DONE or CNCL is set to HOLD.  Only active projects are
-switched, and a project being clocked right now is left alone.  The
-note prompt these states normally trigger is suppressed, so closing a
-subtask never interrupts."
+are all DONE or CNCL is set to HOLD, so a project that ran out of work
+while waiting for someone is parked once that wait ends too.  Only
+active projects are switched, and a project being clocked right now is
+left alone.  The note prompt these states normally trigger is
+suppressed, so closing a subtask never interrupts."
   (save-excursion
     (while (org-up-heading-safe)
       (when (and (member "PRJ" (org-get-tags nil t))
-                 (member (org-get-todo-state) '("TODO" "INPR"))
+                 (member (org-get-todo-state) '("TODO" "INPR" "WAIT"))
                  (not (my/org-clocking-entry-p)))
-        (let ((states (my/org-child-todo-states)))
+        (let ((states (my/org-subtree-todo-states)))
           (when (and states
                      (not (seq-some (lambda (state)
                                       (member state '("TODO" "INPR")))
                                     states)))
-            (let ((org-inhibit-logging 'note))
-              (org-todo (if (member "WAIT" states) "WAIT" "HOLD")))))))))
+            (let ((target (if (member "WAIT" states) "WAIT" "HOLD"))
+                  (org-inhibit-logging 'note))
+              (unless (equal target (org-get-todo-state))
+                (org-todo target)))))))))
 
 (add-hook 'org-after-todo-state-change-hook #'my/org-park-blocked-projects)
+
+(defun my/org-unpark-revived-projects ()
+  "Bring a parked project back when it has work to do again.
+Every HOLD or WAIT project above the entry at point is set to INPR when
+one of its subtasks is being worked on and to TODO when one is merely
+actionable, so reopening a task revives the project the way clocking one
+in does.  Projects finished by hand are left alone, and the note prompt
+leaving these states normally triggers is suppressed."
+  (save-excursion
+    (while (org-up-heading-safe)
+      (when (and (member "PRJ" (org-get-tags nil t))
+                 (member (org-get-todo-state) '("WAIT" "HOLD")))
+        (let ((states (my/org-subtree-todo-states))
+              (org-inhibit-logging 'note))
+          (cond ((member "INPR" states) (org-todo "INPR"))
+                ((member "TODO" states) (org-todo "TODO"))))))))
+
+(add-hook 'org-after-todo-state-change-hook #'my/org-unpark-revived-projects)
