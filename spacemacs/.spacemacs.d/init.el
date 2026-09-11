@@ -967,6 +967,27 @@ With prefix ARG, force it on."
     "wcw" #'my/writing-layout
     "wcW" #'my/writing-layout-wide)
 
+  ;; `SPC s j' (consult-jump-in-buffer → consult-imenu) builds an imenu index
+  ;; from an LSP buffer via `lsp--imenu-create-index'.  The categorized LSP index
+  ;; nests every item one level deeper than the built-in Python parser, and
+  ;; Emacs 30.2's native `imenu--truncate-items' runs `(length (car item))' on
+  ;; each item without a `stringp' guard, so it errors with
+  ;; `wrong-type-argument listp <pos>' as soon as an LSP server is active.
+  ;; Override it with a guarded version.
+  (defun my/imenu--truncate-items (menulist)
+    "Truncate item strings in MENULIST to `imenu-max-item-length'.
+Skips items whose car is not a string (the nested entries LSP imenu
+produces) to avoid `wrong-type-argument listp <pos>'."
+    (dolist (item menulist)
+      (when (and (stringp (car item))
+                 (numberp imenu-max-item-length)
+                 (> (length (car item)) imenu-max-item-length))
+        (setcar item (substring (car item) 0 imenu-max-item-length)))
+      (when (imenu--subalist-p item)
+        (my/imenu--truncate-items (cdr item))))
+    menulist)
+  (defalias 'imenu--truncate-items #'my/imenu--truncate-items)
+
   )
 
 
