@@ -753,13 +753,10 @@ before packages are loaded."
         (format-time-string "%G-W%V.org")
         "~/ownCloud/org/roam/areas/agenda/journal/"))))
 
-  (spacemacs|define-custom-layout "@phd"
-    :binding "p"
-    :body
-    (progn
-      (find-file "~/Nextcloud/projects/phd/notes/notes.org")
-      (split-window-right)
-      (find-file "~/Nextcloud/projects/phd/latex/phd_shahn.tex")))
+  ;; machine-local layouts & paths (not in version control)
+  (let ((local (expand-file-name "local.el" "~/.spacemacs.d/")))
+    (when (file-exists-p local)
+      (load local)))
 
   (setq sp-highlight-pair-overlay nil
         sp-escape-quotes-after-insert nil
