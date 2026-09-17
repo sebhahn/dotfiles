@@ -169,6 +169,7 @@
       (setq org-src-fontify-natively t)
       (setq org-return-follows-link t)
       (setq org-startup-folded t)
+      (setq org-hide-leading-stars t)
 
       (setq org-ditaa-jar-path "~/ownCloud/org/bin/ditaa.jar")
       (setq org-plantuml-jar-path "~/ownCloud/org/bin/plantuml.jar")
