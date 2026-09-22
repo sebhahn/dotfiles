@@ -10,15 +10,65 @@ new_tab() {
         jq -r '.result | "\(.tab.tab_id) \(.root_pane.pane_id)"'
 }
 
-# Check if the session exists, running or saved
-if ! herdr session list | awk 'NR>1 {print $1}' | grep -qx "$SESSION"; then
-    # Start the headless server for this session, then wait for its socket API
+# Make sure this session's server is up and its socket API answers
+ensure_server() {
+    local i
+    herdr tab list >/dev/null 2>&1 && return 0
     setsid herdr server >/dev/null 2>&1 &
-
     for i in {1..40}; do
-        herdr tab list >/dev/null 2>&1 && break
+        herdr tab list >/dev/null 2>&1 && return 0
         sleep 0.25
     done
+    print -u2 "myherdr: session $SESSION did not come up"
+    return 1
+}
+
+# Print the first pane of the tab with the given label or number
+pane_in_tab() {
+    local tab
+    tab=$(herdr tab list |
+        jq -r --arg l "$1" 'first(.result.tabs[] |
+            select(.label == $l or (.number | tostring) == $l) | .tab_id) // ""')
+    [[ -n $tab ]] || return 1
+    herdr pane list |
+        jq -r --arg t "$tab" 'first(.result.panes[] |
+            select(.tab_id == $t) | .pane_id) // ""'
+}
+
+# Is the pane's foreground process the given program?
+pane_runs() {
+    herdr pane process-info --pane "$1" 2>/dev/null |
+        jq -e --arg p "$2" '.result.process_info.foreground_processes[] |
+            select(.name == $p or ((.cmdline // "") | test($p)))' >/dev/null
+}
+
+# Run "$@" in the tab labelled $1 unless the program $2 is already running
+# there.  A session keeps its layout when the server restarts but not the
+# programs inside it, so this has to run on every launch, not just when the
+# session is created.
+start_in_tab() {
+    local label="$1" proc="$2"
+    shift 2
+    local pane attempt poll
+    pane=$(pane_in_tab "$label") || {
+        print -u2 "myherdr: no tab labelled $label"
+        return 1
+    }
+    for attempt in 1 2 3; do
+        pane_runs "$pane" "$proc" && return 0
+        herdr pane run "$pane" "$@" >/dev/null 2>&1
+        for poll in {1..10}; do
+            sleep 0.3
+            pane_runs "$pane" "$proc" && return 0
+        done
+    done
+    print -u2 "myherdr: could not start $proc in pane $pane"
+    return 1
+}
+
+# Check if the session exists, running or saved
+if ! herdr session list | awk 'NR>1 {print $1}' | grep -qx "$SESSION"; then
+    ensure_server || exit 1
 
     # A new session is empty: the workspace brings its own tab and root pane
     WS=$(herdr workspace create --cwd "$HOME" --label "$SESSION" --focus)
@@ -29,13 +79,9 @@ if ! herdr session list | awk 'NR>1 {print $1}' | grep -qx "$SESSION"; then
         jq -r '.result.pane.pane_id')
     herdr pane split "$RIGHT" --direction down --cwd "$HOME" --no-focus >/dev/null
 
-    herdr pane run "$PANE" btop
-
     read EMACS_TAB EMACS_PANE <<< "$(new_tab 'emacs')"
-    herdr pane run "$EMACS_PANE" TERM=xterm-direct emacs -nw
 
     read RANGER_TAB RANGER_PANE <<< "$(new_tab 'ranger')"
-    herdr pane run "$RANGER_PANE" ranger
 
     read CMD1_TAB CMD1_PANE <<< "$(new_tab 'cmd1')"
     herdr pane split "$CMD1_PANE" --direction right --cwd "$HOME" --no-focus >/dev/null
@@ -44,7 +90,15 @@ if ! herdr session list | awk 'NR>1 {print $1}' | grep -qx "$SESSION"; then
 
     # Set default tab
     herdr tab focus "$EMACS_TAB" >/dev/null
+else
+    # The session exists but its server may be stopped: bring it back up
+    ensure_server || exit 1
 fi
+
+# Start the programs, whether the session is new or was restored empty
+start_in_tab 1 btop btop
+start_in_tab emacs emacs TERM=xterm-direct emacs -nw
+start_in_tab ranger ranger ranger
 
 # Attach to created session
 exec herdr --session "$SESSION"
