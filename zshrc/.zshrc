@@ -115,6 +115,7 @@ cyan="#2CF9ED"
 
 export FZF_DEFAULT_OPTS="--color=fg:${fg},bg:${bg},hl:${purple},fg+:${fg},bg+:${bg_highlight},hl+:${purple},info:${blue},prompt:${cyan},pointer:${cyan},marker:${cyan},spinner:${cyan},header:${cyan}"
 
+export EZA_COLORS="reset"  # let ~/.config/eza/theme.yml override LS_COLORS
 alias ls="eza --color=always --long --git --icons=always"
 alias rgf='rg --files | rg'
 
