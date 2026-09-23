@@ -11,26 +11,25 @@ return {
     },
 
 		config = function()
-      require("nvim-treesitter").setup({
-        ensure_installed = {
-          "bash",
-          "css",
-          "dockerfile",
-          "gitignore",
-          "html",
-          "javascript",
-          "json",
-          "lua",
-          "markdown",
-          "markdown_inline",
-          "org",
-          "python",
-          "tsx",
-          "typescript",
-          "vim",
-          "yaml",
-        },
-        auto_install = true,
+      -- On the main branch setup() only takes install_dir: parsers are
+      -- installed with install(), which skips the ones already present.
+      require("nvim-treesitter").install({
+        "bash",
+        "css",
+        "dockerfile",
+        "gitignore",
+        "html",
+        "javascript",
+        "json",
+        "lua",
+        "markdown",
+        "markdown_inline",
+        -- no "org": that grammar comes from nvim-orgmode, not this registry
+        "python",
+        "tsx",
+        "typescript",
+        "vim",
+        "yaml",
       })
 
       -- Activate treesitter highlighting for every buffer whose parser is available
