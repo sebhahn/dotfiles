@@ -665,6 +665,15 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;; (setq byte-compile-warnings '(cl-functions))
   (add-to-list 'custom-theme-load-path "~/.spacemacs.d/atom-one-dark-theme")
 
+  ;; org-contacts 20260915 marks `(when org-contacts-capf-completing ...)' with
+  ;; an `;;;###autoload' cookie, but its defcustom sits further down the same
+  ;; file.  The generated autoloads file therefore reads the variable before it
+  ;; exists and startup reports "Error loading autoloads: (void-variable
+  ;; org-contacts-capf-completing)".  Defining it here, before package
+  ;; autoloads are loaded, keeps the form harmless.  Set to t to let
+  ;; org-contacts add its completion-at-point function to org-mode.
+  (defvar org-contacts-capf-completing nil)
+
   (setq org-enable-roam-protocol t)
 
   (defun dotfiles/machine-location ()
