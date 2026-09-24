@@ -40,9 +40,17 @@ bindkey '^j' down-history
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+export GPG_TTY=$TTY
+
 alias zs="source ~/.zshrc"
 alias df='df -h'
-alias du='du -h -d 2'
+du() {
+  if [[ "$*" == *-s* || "$*" == *-d* || "$*" == *--summarize* || "$*" == *--max-depth* ]]; then
+    command du -h "$@"
+  else
+    command du -h -d 2 "$@"
+  fi
+}
 alias grep='grep --color=auto'
 alias lsg='ls | grep'
 alias lt='eza --sort=size --long'

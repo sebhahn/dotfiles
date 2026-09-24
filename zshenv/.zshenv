@@ -1,3 +1,6 @@
+# Keep PATH free of duplicates
+typeset -U path PATH
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
@@ -17,10 +20,8 @@ for _texlive_bin in "$HOME"/.local/texlive/*/bin/x86_64-linux(N/); do
 done
 unset _texlive_bin
 
-export GIT_INTERNAL_GETTEXT_TEST_FALLBACKS=1
-
 export LANGUAGE="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 export EDITOR="nvim"
 export VISUAL="nvim"
-export GPG_TTY=$(tty)
+export ALTERNATE_EDITOR=""
