@@ -15,7 +15,7 @@ plugins=(git zsh-syntax-highlighting fzf uv zoxide)
 
 if [[ -n "$INSIDE_EMACS" ]]; then
   DISABLE_LS_COLORS="true"
-else
+elif [[ -z "$TMUX" ]]; then
   export TERM="xterm-256color"
 fi
 
