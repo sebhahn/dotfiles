@@ -699,7 +699,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   ;; make sure customize stuff is written into different file
   (setq custom-file "~/.spacemacs.d/custom.el")
-  (load custom-file)
+  (load custom-file 'noerror)
   )
 
 (defun dotspacemacs/user-config ()
