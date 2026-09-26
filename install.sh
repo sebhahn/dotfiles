@@ -10,8 +10,7 @@ if [[ ! -d ~/.emacs.d ]]; then
 fi
 
 # setup submodules
-git -C "$DOTFILES_ROOT" submodule init
-git -C "$DOTFILES_ROOT" submodule update
+git -C "$DOTFILES_ROOT" submodule update --init --recursive
 
 # symlink bin folder
 mkdir -p ~/bin
