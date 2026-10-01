@@ -3,6 +3,7 @@ import os
 import os.path
 import shlex
 import subprocess
+import mimetypes
 from collections import deque
 
 from ranger.container.file import File
@@ -553,3 +554,44 @@ class rsync_move_into(Command):
             return
         _rsync_task(self.fm, [f.path for f in sources], dest,
                     ['-rut'], "rsync → " + dest)
+
+
+class copy_to_clipboard(Command):
+    """:copy_to_clipboard
+    Copy the currently highlighted image file's raw data into the X clipboard,
+    so it can be pasted (e.g. Ctrl+V) into Word or other image-aware apps.
+    """
+
+    def execute(self):
+        fm = self.fm
+        f = fm.thisfile
+        if not f or not f.is_file:
+            fm.notify("No file selected", bad=True)
+            return
+        # Determine the MIME type from the file's actual content.
+        # Note: ranger's File object has no get_mimetype() in this version,
+        # so probe it with the `file` utility (falls back to the extension).
+        mime = None
+        try:
+            probe = subprocess.run(
+                ["file", "--brief", "--mime-type", f.path],
+                capture_output=True, text=True, check=True)
+            mime = probe.stdout.strip()
+        except Exception:  # pylint: disable=broad-except
+            mime = mimetypes.guess_type(f.path)[0]
+        if not mime or not mime.startswith("image/"):
+            fm.notify("Selected file is not an image: %s" % f.basename, bad=True)
+            return
+        executables = get_executables()
+        if "xclip" in executables:
+            cmd = ["xclip", "-selection", "clipboard", "-t", mime, "-i", f.path]
+        elif "wl-copy" in executables:
+            cmd = ["wl-copy", "-t", mime, "-i", f.path]
+        else:
+            fm.notify("Need xclip or wl-copy installed.", bad=True)
+            return
+        try:
+            subprocess.run(cmd, check=True)
+            fm.notify("Copied image to clipboard: %s" % f.basename)
+        except Exception as exc:  # pylint: disable=broad-except
+            fm.notify("Copy failed: %s" % exc, bad=True)
