@@ -709,6 +709,12 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+  ;; Allow quicktile / tiling WMs to resize this frame to exact pixel sizes.
+  ;; Without this, Emacs advertises a 9x21 pixel resize increment to the WM,
+  ;; which snaps the frame (e.g. 1146px -> 1141px) and leaves a visible gap
+  ;; between tiled windows.
+  (setq frame-resize-pixelwise t)
+
   ;; match the terminal's environment in desktop-launched GUI Emacs
   (when (require 'exec-path-from-shell nil t)
     (when (executable-find "zsh")
