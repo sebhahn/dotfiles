@@ -32,6 +32,8 @@
     (require 'treesit nil t)
     (add-to-list 'treesit-language-source-alist
                  '(typst "https://github.com/uben0/tree-sitter-typst"))
+    ;; tinymist language server (lsp-mode ships the client in lsp-typst.el)
+    (add-hook 'typst-ts-mode-local-vars-hook #'lsp-deferred)
     :config
     (setq typst-ts-math-script-display '(nil . nil))
     ;; sub/superscript faces ship at :height 0.85, shrinking the glyphs

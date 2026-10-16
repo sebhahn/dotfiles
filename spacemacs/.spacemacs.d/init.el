@@ -57,9 +57,7 @@ This function should only modify configuration layer settings."
       ebib-import-directory "~/ownCloud/areas/research/publications/")
      claude-code
      colors
-     (compleseus
-      :variables
-      compleseus-engine 'vertico)
+     compleseus
      csv
      my-org
      (emacs-lisp
@@ -71,9 +69,7 @@ This function should only modify configuration layer settings."
       elfeed-db-directory "~/ownCloud/org/elfeed/db"
       elfeed-goodies/entry-pane-position 'bottom)
      ess
-     (git
-      :variables
-      git-gutter-use-fringe t)
+     git
      fasd
      html
      (latex
@@ -100,6 +96,7 @@ This function should only modify configuration layer settings."
      my-quarto
      my-typst
      my-fabric
+     my-pi
      (org
       :packages
       (not org-roam)
@@ -116,8 +113,8 @@ This function should only modify configuration layer settings."
      (python
       :variables
       python-backend 'lsp
+      python-lsp-server 'ty
       python-formatter 'ruff
-      python-linter 'ruff
       python-virtualenv-management 'pet
       python-test-runner 'pytest)
      my-python
@@ -125,7 +122,7 @@ This function should only modify configuration layer settings."
      ;; semantic
      (shell
       :variables
-      shell-default-shell 'term
+      shell-default-shell 'vterm
       shell-default-term-shell "/bin/zsh")
      shell-scripts
      spell-checking
@@ -149,9 +146,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(sqlite3
-                                      ripgrep
-                                      transient
+   dotspacemacs-additional-packages '(transient
                                       pdf-tools
                                       ob-mermaid
                                       exec-path-from-shell
@@ -715,6 +710,21 @@ before packages are loaded."
   ;; between tiled windows.
   (setq frame-resize-pixelwise t)
 
+  ;; vterm: work around emacs-libvterm's broken icrnl detection with zsh.
+  ;; `vterm-send-return' inspects `vterm--get-icrnl', which reports ICRNL as
+  ;; on for zsh, so it sends LF -- but zsh only submits a line on CR.  Badly,
+  ;; the physical Enter key and C-m can arrive as different events, so instead
+  ;; of rebinding keys we override `vterm-send-return' itself: every binding
+  ;; (RET, <return>, normal/insert state) eventually calls it.  Always send CR.
+  (with-eval-after-load 'vterm
+    (defun shahn/vterm-send-return-cr (&rest _)
+      "Send Enter (CR) to libvterm, ignoring the icrnl branch."
+      (interactive)
+      (deactivate-mark)
+      (when (and vterm--term vterm--process (process-live-p vterm--process))
+        (process-send-string vterm--process "\C-m")))
+    (advice-add 'vterm-send-return :override #'shahn/vterm-send-return-cr))
+
   ;; match the terminal's environment in desktop-launched GUI Emacs
   (when (require 'exec-path-from-shell nil t)
     (when (executable-find "zsh")
@@ -743,6 +753,14 @@ before packages are loaded."
           (setq-local python-shell-interpreter py
                       python-shell-interpreter-args "-i")))))
   (add-hook 'python-mode-local-vars-hook #'my/python-use-venv-interpreter 90)
+
+  ;; Pin the python lsp servers: pylsp and ty-ls both register with priority
+  ;; -1, so without pinning the choice between them is arbitrary.  ty-ls is the
+  ;; main server (type checking, completions, hover); ruff runs as add-on
+  ;; server for linting/formatting.
+  (add-hook 'python-mode-local-vars-hook
+            (lambda ()
+              (setq-local lsp-enabled-clients '(ty-ls ruff))))
 
   (spacemacs|define-custom-layout "@agenda"
     :binding "s"
@@ -867,13 +885,11 @@ is nil.  Grep-like buffers are left alone."
         doom-modeline-minor-modes nil
         doom-modeline-enable-word-count t
         doom-modeline-modal-icon t
-        doom-modeline-github nil ;; Set to t if you want to show github notifications
-        doom-modeline-gnus nil   ;; Set to t if you want to show gnus notifications
-        doom-modeline-irc nil    ;; Set to t if you want to show irc notifications
+        doom-modeline-github nil
+        doom-modeline-gnus nil
+        doom-modeline-irc nil
         doom-modeline-lsp t
         doom-modeline-indent-info nil
-        ;; doom-modeline-enable-word-count t
-        ;; doom-modeline-continuous-word-count-modes '(markdown-mode gfm-mode org-mode)
         doom-modeline-checker-simple-format nil)
 
   (setq doom-modeline-env-enable-python nil)
