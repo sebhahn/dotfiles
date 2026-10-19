@@ -36,10 +36,18 @@
   "$pm" 'pi-select-model              ; pick the active model
   "$pM" 'pi-cycle-model               ; cycle active model
   "$pt" 'pi-set-thinking-level        ; pick the thinking level
+  "$pT" 'pi-toggle-thinking           ; show/hide thinking text
   "$pp" 'pi-bash                      ; run a bash command through pi
   "$pg" 'pi-refresh                   ; refresh session state
   "$pb" 'pi-switch-to-buffer          ; switch between pi sessions
   "$pq" 'pi-quit                      ; quit current pi session
+  "$pr" 'pi-resume-session            ; resume a saved session
+  "$pf" 'pi-fork-session              ; fork from an earlier prompt
+  "$pR" 'pi-rename-session            ; name the session
+  "$pe" 'pi-export-html               ; export session to HTML
+  "$px" 'pi-insert-region             ; put region into the pi prompt
+  "$pX" 'pi-insert-file               ; put a file reference into the prompt
+  "$pi" 'pi-attach-image              ; attach an image to the next prompt
 )
 
 ;; Major-mode bindings inside a pi session buffer (`,' in normal state).
@@ -51,9 +59,17 @@
   "m" 'pi-select-model
   "M" 'pi-cycle-model
   "t" 'pi-set-thinking-level
+  "T" 'pi-toggle-thinking
   "p" 'pi-bash
   "g" 'pi-refresh
   "b" 'pi-switch-to-buffer
-  "q" 'pi-quit)
+  "q" 'pi-quit
+  "F" 'pi-send-follow-up              ; queue prompt until pi finishes
+  "r" 'pi-resume-session
+  "f" 'pi-fork-session
+  "R" 'pi-rename-session
+  "e" 'pi-export-html
+  "X" 'pi-insert-file
+  "i" 'pi-attach-image)
 
 ;;; keybindings.el ends here

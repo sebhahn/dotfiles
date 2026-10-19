@@ -15,8 +15,18 @@ transcript buffer and streams assistant output into it.
 - A pi-style ```❯ ``` prompt at the bottom of the session buffer: type a
   prompt after it, press RET to send, and streamed assistant output appears
   above as a read-only transcript.
-- Sentinels for errors and process exit; a header-line shows model, session
-  id, and status.
+- Sentinels for errors and process exit; a header-line shows model,
+  thinking level, status, context usage, cost and session name.
+- Tool calls show as one line with their arguments; RET/TAB/click on the
+  line shows or hides the output.
+- Prompts sent while pi is working are queued: RET steers (delivered after
+  the current tool calls), ~C-c C-f~ / ~, F~ queues a follow-up (delivered
+  when pi finishes).
+- Extension dialogs (select, confirm, input, editor) are answered in the
+  minibuffer (~C-g~ cancels); notifications go to the echo area.
+- Sessions are saved; resume, fork, rename and export them.
+- Send context from other buffers: region (with file and line numbers),
+  file references and images.
 - Native JSON via Emacs 30's `json-parse-string` / `json-serialize`; no
   third-party packages.
 - Session commands (`abort`, `new_session`, `compact`, `cycle_model`,
@@ -37,13 +47,23 @@ To use this configuration layer, add `my-pi` to your
 The layer reads these variables from your config:
 
 - `pi-executable`: name/path of the pi CLI (default `"pi"`).
-- `pi-rpc-args`: extra CLI args (default `("--mode" "rpc" "--no-session")`).
+- `pi-rpc-args`: extra CLI args (default `("--mode" "rpc")`; add
+  `"--no-session"` for sessions that are not saved).
+- `pi-session-directory`: where pi saves sessions (default
+  `"~/.pi/agent/sessions/"`).
+- `pi-busy-send-behavior`: `"steer"` (default) or `"followUp"` for RET
+  while pi is working.
+- `pi-fontify-markdown`: highlight Markdown in finished replies, with code
+  blocks in their language's colors (default t; needs `markdown-mode`).
+- `pi-show-thinking`: show thinking text in new sessions (default nil;
+  toggle per buffer with `pi-toggle-thinking`).
+- `pi-tool-output-max-lines`: tool output lines kept (default 200).
 - `pi-buffer-name`: session buffer prefix (default `"pi"`).
 
 For example:
 
 #+BEGIN_SRC emacs-lisp
-  (setq pi-rpc-args '("--mode" "rpc" "--no-session" "--name" "my-agent"))
+  (setq pi-rpc-args '("--mode" "rpc" "--name" "my-agent"))
 #+END_SRC
 
 * Key bindings
@@ -57,10 +77,18 @@ For example:
   SPC $ p m   pi-select-model        pick the active model
   SPC $ p M   pi-cycle-model         cycle the active model
   SPC $ p t   pi-set-thinking-level  pick the thinking level
+  SPC $ p T   pi-toggle-thinking     show/hide thinking text
   SPC $ p p   pi-bash              run a shell command through pi
   SPC $ p g   pi-refresh           refresh session state
   SPC $ p b   pi-switch-to-buffer  switch between pi sessions
   SPC $ p q   pi-quit              stop the current pi session
+  SPC $ p r   pi-resume-session    resume a saved session (this directory)
+  SPC $ p f   pi-fork-session      fork from an earlier prompt
+  SPC $ p R   pi-rename-session    name the session
+  SPC $ p e   pi-export-html       export the session to HTML
+  SPC $ p x   pi-insert-region     put the region into the pi prompt
+  SPC $ p X   pi-insert-file       put a file reference into the prompt
+  SPC $ p i   pi-attach-image      attach an image (C-u clears)
 #+END_SRC
 
 * In a pi session buffer
@@ -69,13 +97,17 @@ Type a prompt at the bottom; press RET (or ~C-c C-c~) to send it.  ~C-j~
 inserts a newline for multiline prompts.  Other commands:
 
 #+BEGIN_SRC text
-  RET / C-c C-c   pi-send            send the bottom prompt
+  RET / C-c C-c   pi-send            send the bottom prompt (steers if busy)
+  C-c C-f         pi-send-follow-up  queue the prompt until pi finishes
+  M-p / M-n       pi-previous-input  recall earlier / later prompts
+  RET / TAB       pi-toggle-tool-output  on a tool line: show/hide output
   C-j             pi-newline-input   insert a newline in the prompt
   TAB             completion-at-point  complete a /command (skills, extensions)
   C-c C-a         pi-abort           abort the current run
   C-c C-n         pi-new-session     start a fresh session
   C-c C-m         pi-select-model        pick the active model
   C-c C-t         pi-set-thinking-level  pick the thinking level
+  C-c C-h         pi-toggle-thinking     show/hide thinking text
   C-c C-b         pi-bash            run a shell command through pi
   C-c C-g         pi-refresh         refresh session state
   C-c C-q         pi-quit            stop the session
@@ -91,10 +123,18 @@ inserts a newline for multiline prompts.  Other commands:
   , m   pi-select-model        pick the active model
   , M   pi-cycle-model         cycle the active model
   , t   pi-set-thinking-level  pick the thinking level
+  , T   pi-toggle-thinking     show/hide thinking text
   , p   pi-bash                run a shell command through pi
   , g   pi-refresh             refresh session state
   , b   pi-switch-to-buffer    switch between pi sessions
   , q   pi-quit                stop the session
+  , F   pi-send-follow-up      queue the prompt until pi finishes
+  , r   pi-resume-session      resume a saved session
+  , f   pi-fork-session        fork from an earlier prompt
+  , R   pi-rename-session      name the session
+  , e   pi-export-html         export the session to HTML
+  , X   pi-insert-file         put a file reference into the prompt
+  , i   pi-attach-image        attach an image (C-u clears)
 #+END_SRC
 
 * Notes
@@ -105,8 +145,6 @@ inserts a newline for multiline prompts.  Other commands:
 - The transcript region of the buffer is read-only; only the prompt line at
   the bottom is editable.  The leader ~SPC $ p s~ still offers a minibuffer
   prompt for when you are not in the session buffer.
-- Evil-aware: the session buffer starts in Evil's Emacs state so typing in
-  the prompt inserts directly (no ~i~-to-insert needed).
-- If pi is already streaming, a new `prompt` returns an error unless it
-  carries a `streamingBehavior`; use `pi-abort` first if a run is active.
+- Evil-aware: the session buffer starts in insert state so typing in the
+  prompt inserts directly; ESC switches to normal state for ~,~ bindings.
 - Session state is cached via `get_state` and refreshed with `pi-refresh`.
