@@ -34,6 +34,26 @@
                  '(typst "https://github.com/uben0/tree-sitter-typst"))
     ;; tinymist language server (lsp-mode ships the client in lsp-typst.el)
     (add-hook 'typst-ts-mode-local-vars-hook #'lsp-deferred)
+    ;; Pin tinymist to the project's main file, so included files see the
+    ;; bibliography and bindings of the root document. Set per project in
+    ;; .dir-locals.el: ((typst-ts-mode . ((my-typst-main-file . "main.typ"))))
+    ;; (projectResolution "lockDatabase" does not work: lsp-mode's config push
+    ;; after startup makes tinymist drop it.)
+    (defvar-local my-typst-main-file nil
+      "Main Typst file, relative to the .dir-locals.el that sets it.")
+    (put 'my-typst-main-file 'safe-local-variable #'stringp)
+    (defun my-typst--main-file ()
+      "Absolute path of `my-typst-main-file', or nil if unset."
+      (when-let* ((main my-typst-main-file)
+                  (dir (locate-dominating-file default-directory ".dir-locals.el")))
+        (expand-file-name main dir)))
+    (defun my-typst-pin-main ()
+      "Pin tinymist to `my-typst-main-file'."
+      (interactive)
+      (when-let* ((main (my-typst--main-file)))
+        (lsp-send-execute-command "tinymist.pinMain" (vector main))))
+    (add-hook 'lsp-after-open-hook
+              (lambda () (when (derived-mode-p 'typst-ts-mode) (my-typst-pin-main))))
     :config
     (setq typst-ts-math-script-display '(nil . nil))
     ;; sub/superscript faces ship at :height 0.85, shrinking the glyphs
@@ -52,11 +72,46 @@
                 '(nil . nil)
               '((raise -0.5) . (raise 0.5))))
       (font-lock-flush))
+    (defun my-typst-compile-main ()
+      "Compile `my-typst-main-file' instead of the current file."
+      (interactive)
+      (if-let* ((main (my-typst--main-file)))
+          (with-current-buffer (find-file-noselect main)
+            (typst-ts-compile))
+        (user-error "`my-typst-main-file' is not set for this project")))
+    (defun my-typst--target-buffer ()
+      "Buffer of the main file if set, else the current buffer."
+      (if-let* ((main (my-typst--main-file)))
+          (find-file-noselect main)
+        (current-buffer)))
+    (defun my-typst-preview ()
+      "Preview the main file's PDF, or the current file's if no main is set."
+      (interactive)
+      ;; run from the target buffer: the PDF path is relative to its directory
+      (with-current-buffer (my-typst--target-buffer)
+        (typst-ts-preview)))
+    (defun my-typst-compile-and-preview ()
+      "Compile and preview the main file, or the current file if no main is set."
+      (interactive)
+      (with-current-buffer (my-typst--target-buffer)
+        (typst-ts-compile t)))
+    (defun my-typst-watch ()
+      "Toggle watching the main file, or the current file if no main is set."
+      (interactive)
+      (with-current-buffer (my-typst--target-buffer)
+        (typst-ts-watch-mode 'toggle)))
     (spacemacs/declare-prefix-for-mode 'typst-ts-mode "mc" "compile")
+    (spacemacs/declare-prefix-for-mode 'typst-ts-mode "ms" "search")
     (spacemacs/set-leader-keys-for-major-mode 'typst-ts-mode
+      "cm" #'my-typst-compile-main
+      "o"  #'typst-ts-mc-open-at-point
+      "'"  #'typst-ts-edit-indirect
+      "ss" #'typst-ts-mc-search-typst-symbol
+      "sp" #'typst-ts-mc-search-package
+      "P"  #'my-typst-pin-main
       "cc" #'typst-ts-compile
-      "cp" #'typst-ts-compile-and-preview
-      "w"  #'typst-ts-watch-mode
-      "p"  #'typst-ts-preview
-      "v"  #'typst-ts-preview
+      "cp" #'my-typst-compile-and-preview
+      "w"  #'my-typst-watch
+      "p"  #'my-typst-preview
+      "v"  #'my-typst-preview
       "ts" #'my-typst-toggle-script-display)))
