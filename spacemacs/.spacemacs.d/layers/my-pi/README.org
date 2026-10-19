@@ -1,0 +1,112 @@
+#+TITLE: my-pi layer
+
+#+TAGS: ai|layer
+
+* Description
+
+Layer for [[https://pi.dev][pi]], the coding-agent harness, driven over its
+[[https://github.com/earendil-works/pi/blob/main/docs/rpc.md][RPC mode]] from inside
+Spacemacs.  pi runs as a long-lived child process; this layer opens a party
+transcript buffer and streams assistant output into it.
+
+** Features
+
+- Start a pi session with `pi-start` (leader: ~SPC $ p j~).
+- A pi-style ```❯ ``` prompt at the bottom of the session buffer: type a
+  prompt after it, press RET to send, and streamed assistant output appears
+  above as a read-only transcript.
+- Sentinels for errors and process exit; a header-line shows model, session
+  id, and status.
+- Native JSON via Emacs 30's `json-parse-string` / `json-serialize`; no
+  third-party packages.
+- Session commands (`abort`, `new_session`, `compact`, `cycle_model`,
+  `bash`, `get_state`) over the RPC protocol.
+
+* Install
+
+To use this configuration layer, add `my-pi` to your
+`dotspacemacs-configuration-layers` in `~/.spacemacs.d/init.el`:
+
+#+BEGIN_SRC emacs-lisp
+  (setq dotspacemacs-configuration-layers
+        '(my-pi))
+#+END_SRC
+
+** Configuration
+
+The layer reads these variables from your config:
+
+- `pi-executable`: name/path of the pi CLI (default `"pi"`).
+- `pi-rpc-args`: extra CLI args (default `("--mode" "rpc" "--no-session")`).
+- `pi-buffer-name`: session buffer prefix (default `"pi"`).
+
+For example:
+
+#+BEGIN_SRC emacs-lisp
+  (setq pi-rpc-args '("--mode" "rpc" "--no-session" "--name" "my-agent"))
+#+END_SRC
+
+* Key bindings
+
+#+BEGIN_SRC text
+  SPC $ p j   pi-start             start a new pi RPC session
+  SPC $ p s   pi-send-prompt       send a prompt (minibuffer)
+  SPC $ p a   pi-abort             abort the current run
+  SPC $ p n   pi-new-session       start a fresh pi session
+  SPC $ p c   pi-compact           compact context
+  SPC $ p m   pi-select-model        pick the active model
+  SPC $ p M   pi-cycle-model         cycle the active model
+  SPC $ p t   pi-set-thinking-level  pick the thinking level
+  SPC $ p p   pi-bash              run a shell command through pi
+  SPC $ p g   pi-refresh           refresh session state
+  SPC $ p b   pi-switch-to-buffer  switch between pi sessions
+  SPC $ p q   pi-quit              stop the current pi session
+#+END_SRC
+
+* In a pi session buffer
+
+Type a prompt at the bottom; press RET (or ~C-c C-c~) to send it.  ~C-j~
+inserts a newline for multiline prompts.  Other commands:
+
+#+BEGIN_SRC text
+  RET / C-c C-c   pi-send            send the bottom prompt
+  C-j             pi-newline-input   insert a newline in the prompt
+  TAB             completion-at-point  complete a /command (skills, extensions)
+  C-c C-a         pi-abort           abort the current run
+  C-c C-n         pi-new-session     start a fresh session
+  C-c C-m         pi-select-model        pick the active model
+  C-c C-t         pi-set-thinking-level  pick the thinking level
+  C-c C-b         pi-bash            run a shell command through pi
+  C-c C-g         pi-refresh         refresh session state
+  C-c C-q         pi-quit            stop the session
+#+END_SRC
+
+* Major-mode bindings (~,~ in normal state)
+
+#+BEGIN_SRC text
+  , ,   pi-send                send the bottom prompt
+  , a   pi-abort               abort the current run
+  , n   pi-new-session         start a fresh session
+  , c   pi-compact             compact context
+  , m   pi-select-model        pick the active model
+  , M   pi-cycle-model         cycle the active model
+  , t   pi-set-thinking-level  pick the thinking level
+  , p   pi-bash                run a shell command through pi
+  , g   pi-refresh             refresh session state
+  , b   pi-switch-to-buffer    switch between pi sessions
+  , q   pi-quit                stop the session
+#+END_SRC
+
+* Notes
+
+- pi is a Node CLI.  The layer resolves its path (falling back to standard
+  install dirs) and prepends the Node bin to the child's PATH so `env` can
+  find `node` even when the nvm bin is not on a GUI Emacs's PATH.
+- The transcript region of the buffer is read-only; only the prompt line at
+  the bottom is editable.  The leader ~SPC $ p s~ still offers a minibuffer
+  prompt for when you are not in the session buffer.
+- Evil-aware: the session buffer starts in Evil's Emacs state so typing in
+  the prompt inserts directly (no ~i~-to-insert needed).
+- If pi is already streaming, a new `prompt` returns an error unless it
+  carries a `streamingBehavior`; use `pi-abort` first if a run is active.
+- Session state is cached via `get_state` and refreshed with `pi-refresh`.
