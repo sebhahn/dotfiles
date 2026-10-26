@@ -15,13 +15,8 @@ if [ -d "$HOME/.opencode/bin" ] ; then
     PATH="$HOME/.opencode/bin:$PATH"
 fi
 
-for _texlive_bin in "$HOME"/.local/texlive/*/bin/x86_64-linux(N/); do
-    PATH="$_texlive_bin:$PATH"
-done
-unset _texlive_bin
-
 export LANGUAGE="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 export EDITOR="nvim"
 export VISUAL="nvim"
-export ALTERNATE_EDITOR=""
+export ALTERNATE_EDITOR="nvim"

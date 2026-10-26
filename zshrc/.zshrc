@@ -22,7 +22,17 @@ fi
 # generated completions (herdr); must precede oh-my-zsh's compinit
 fpath=(~/.zfunc $fpath)
 
+# texlive binaries (interactive only; kept out of .zshenv to avoid the
+# glob running on every zsh invocation, incl. scripts)
+for _texlive_bin in "$HOME"/.local/texlive/*/bin/x86_64-linux(N/); do
+    PATH="$_texlive_bin:$PATH"
+done
+unset _texlive_bin
+
 source $ZSH/oh-my-zsh.sh
+
+# direnv: auto-load per-directory .envrc (installed at ~/bin/direnv)
+eval "$(direnv hook zsh)"
 
 # smart history search after typing and pressing up-down keys
 autoload -Uz up-line-or-beginning-search
@@ -38,19 +48,18 @@ bindkey '\e[B' down-line-or-beginning-search
 bindkey '^k' up-history
 bindkey '^j' down-history
 
+# don't record commands that start with a space (e.g. secrets)
+setopt HIST_IGNORE_SPACE
+
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export GPG_TTY=$TTY
 
 alias zs="source ~/.zshrc"
-alias df='df -h'
-du() {
-  if [[ "$*" == *-s* || "$*" == *-d* || "$*" == *--summarize* || "$*" == *--max-depth* ]]; then
-    command du -h "$@"
-  else
-    command du -h -d 2 "$@"
-  fi
-}
+# Human-readable sizes by default; pass through everything else.
+# `command df` / `command du` bypass these (useful in scripts).
+df() { command df -h "$@"; }
+du() { command du -h "$@"; }
 alias grep='grep --color=auto'
 alias lsg='ls | grep'
 alias lt='eza --sort=size --long'
