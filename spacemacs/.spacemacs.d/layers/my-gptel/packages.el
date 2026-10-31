@@ -25,17 +25,19 @@
 (defconst my-gptel-packages
   '(gptel gptel-magit))
 
-(defconst my-gptel-commit-prompt
+;; Fallback default. The prompt actually used is set via the layer's
+;; `:variables' in .spacemacs: (my-gptel :variables my-gptel-commit-prompt ...)
+(defconst my-gptel--default-commit-prompt
   "You are an expert programmer writing a commit message.
 You went over every file diff that was changed in it.
 
 First Determine the best label for the diffs.
 
-Here are the labels you can choose from:
-- feat: a commit of the type feat introduces a new feature to the codebase (a new feature for the user, not a new feature for build script)
+Here are the [label]s you can choose from:
+- feat: A commit of the type feat introduces a new feature to the codebase (a new feature for the user, not a new feature for build script)
 - fix: A commit of the type fix patches a bug in your codebase (a bug fix for the user, not a fix to a build script)
 - docs: Changes to the documentation
-- style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+- style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc.)
 - refactor: A code change that neither fixes a bug nor adds a feature, eg. renaming a variable
 - perf: A code change that improves performance
 - test: Adding missing tests, correcting or refactoring existing tests
@@ -48,8 +50,8 @@ Remember to write in only one line, no more than 50 characters.
 Write your response using the imperative tense following the kernel git commit style guide.
 Write a high level title.
 
-Now write a Commit message in the following template with no additional commentary or formatting:
-[label]:[one line of summary]
+Now write a commit message in the following template with no additional commentary or formatting:
+[label]: [one line of summary]
 ")
 
 (defun my-gptel//datalab-backend (name &rest params)
@@ -106,6 +108,9 @@ the case unless you sent from a point above earlier turns."
           gptel-model 'qwen)))
 
 (defun my-gptel/init-gptel-magit ()
+  (defvar my-gptel-commit-prompt my-gptel--default-commit-prompt
+    "Prompt used by gptel-magit to generate commit messages.
+Override via the `:variables' of the my-gptel layer in .spacemacs.")
   (use-package gptel-magit
     :after magit
     :config
