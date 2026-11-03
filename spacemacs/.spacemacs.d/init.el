@@ -710,6 +710,11 @@ before packages are loaded."
   ;; between tiled windows.
   (setq frame-resize-pixelwise t)
 
+  ;; Emacs 31+ warns about missing lexical-binding cookies in .el files, but
+  ;; company-statistics regenerates its cache file without one on every save,
+  ;; so the warning can never be permanently fixed for that file.  Silence it.
+  (add-to-list 'warning-suppress-types '(files missing-lexbind-cookie))
+
   ;; vterm: work around emacs-libvterm's broken icrnl detection with zsh.
   ;; `vterm-send-return' inspects `vterm--get-icrnl', which reports ICRNL as
   ;; on for zsh, so it sends LF -- but zsh only submits a line on CR.  Badly,
