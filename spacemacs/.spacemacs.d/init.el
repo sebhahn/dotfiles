@@ -900,6 +900,66 @@ is nil.  Grep-like buffers are left alone."
   (setq doom-modeline-env-enable-python nil)
   (setq mu4e-modeline-all-read '("R:" . "🌀 "))
 
+  ;; modeline shortcuts
+  ;; swap the defaults: SPC t m t toggles the modeline, SPC t m T the clock
+  (spacemacs/set-leader-keys
+    "tmt" #'spacemacs/toggle-mode-line
+    "tmT" #'spacemacs/toggle-display-time)
+
+  ;; SPC t m o: reduce the modeline to the time only, toggle again to restore.
+  ;; Own segment (no icon, no load average), rendered via
+  ;; `format-time-string' so it does not depend on `display-time-string'.
+  (doom-modeline-def-segment my-time-only
+    "Time-only modeline segment, e.g. 10:45 PM."
+    (when (doom-modeline--segment-visible 'my-time-only)
+      (propertize (format-time-string "%I:%M %p")
+                  'face (doom-modeline-face 'doom-modeline-time))))
+  ;; keep it visible in inactive windows (it is a break clock after all)
+  (add-to-list 'doom-modeline-always-visible-segments 'my-time-only)
+  ;; the " " on the left is required: with an empty left side the format
+  ;; list starts with nil and `format-mode-line' drops the right-align
+  ;; padding doom-modeline inserts, so the time would render on the left;
+  ;; the trailing spaces on the right are the margin to the window edge
+  (doom-modeline-def-modeline 'time-only
+    '(" ")
+    '(my-time-only "  "))
+
+  (defvar my/time-only-modeline-active nil
+    "Non-nil while the modeline shows the time only.")
+  (defvar my/time-only--saved-alist nil
+    "Saved `doom-modeline-mode-alist' while the time-only modeline is on.")
+  (defvar my/time-only--display-time nil
+    "Previous state of `display-time-mode' while the time-only modeline is on.")
+
+  (defun my/toggle-time-only-modeline ()
+    "Show only the time in the modeline; toggle back to the full modeline."
+    (interactive)
+    (if my/time-only-modeline-active
+        (progn
+          (setq doom-modeline-mode-alist my/time-only--saved-alist)
+          (display-time-mode my/time-only--display-time)
+          (doom-modeline-set-modeline 'main t)
+          (dolist (buf (buffer-list))
+            (with-current-buffer buf
+              (or (doom-modeline-auto-set-modeline)
+                  (doom-modeline-set-modeline 'main))))
+          (setq my/time-only-modeline-active nil))
+      (setq my/time-only--saved-alist doom-modeline-mode-alist
+            my/time-only--display-time (bound-and-true-p display-time-mode))
+      ;; without this, switching major mode (magit, pdf, ...) would set the
+      ;; buffer back to its special modeline while the time-only one is on
+      (setq doom-modeline-mode-alist nil)
+      ;; `display-time-mode' forces a modeline refresh every second, which
+      ;; keeps the clock ticking; restore its previous state on toggle off
+      (display-time-mode 1)
+      (doom-modeline-set-modeline 'time-only t)
+      (dolist (buf (buffer-list))
+        (with-current-buffer buf
+          (doom-modeline-set-modeline 'time-only)))
+      (setq my/time-only-modeline-active t)))
+
+  (spacemacs/set-leader-keys "tmo" #'my/toggle-time-only-modeline)
+
   ;; org-agenda-kill can't be auto-evilified from C-k (conflicts with evil)
   (with-eval-after-load 'org-agenda
     (evil-define-key 'evilified org-agenda-mode-map
