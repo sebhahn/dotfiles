@@ -710,10 +710,25 @@ before packages are loaded."
   ;; between tiled windows.
   (setq frame-resize-pixelwise t)
 
-  ;; Emacs 31+ warns about missing lexical-binding cookies in .el files, but
-  ;; company-statistics regenerates its cache file without one on every save,
-  ;; so the warning can never be permanently fixed for that file.  Silence it.
-  (add-to-list 'warning-suppress-types '(files missing-lexbind-cookie))
+  ;; Emacs 31+ warns when loading .el files that lack a lexical-binding cookie,
+  ;; and company-statistics rewrites its cache file without one on every save,
+  ;; so any cookie added by hand is lost.  Fix it at the source: re-insert the
+  ;; cookie after each save so the warning never fires (instead of masking it
+  ;; with `warning-suppress-types', which would hide other such warnings too).
+  (with-eval-after-load 'company-statistics
+    (defun my/company-statistics--add-lexbind-cookie ()
+      "Prepend a `lexical-binding' cookie to the statistics cache file."
+      (when (file-exists-p company-statistics-file)
+        (with-temp-buffer
+          (set-buffer-multibyte nil)
+          (insert-file-contents company-statistics-file)
+          (goto-char (point-min))
+          (unless (re-search-forward "lexical-binding" nil t)
+            (insert ";;; -*- lexical-binding: t -*-\n")
+            (let ((coding-system-for-write 'binary))
+              (write-region (point-min) (point-max) company-statistics-file))))))
+    (advice-add 'company-statistics--save :after
+                #'my/company-statistics--add-lexbind-cookie))
 
   ;; vterm: work around emacs-libvterm's broken icrnl detection with zsh.
   ;; `vterm-send-return' inspects `vterm--get-icrnl', which reports ICRNL as
