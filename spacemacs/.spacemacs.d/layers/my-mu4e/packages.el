@@ -194,7 +194,7 @@ later certificate change re-triggers the acceptance prompt."
                            :use-starttls-if-possible t
                            :always-query-capabilities t
                            :capability-command (format "EHLO %s\r\n"
-                                                        (smtpmail-fqdn))
+                                                       (smtpmail-fqdn))
                            :end-of-command "^[0-9]+ .*\r\n"
                            :success "^2.*\n"
                            :starttls-function
@@ -229,7 +229,7 @@ later certificate change re-triggers the acceptance prompt."
                   "\\`\\(smtpmail\\|async-smtpmail\\|\\(user-\\)?mail\\)-\\|auth-sources\\|epg\\|nsm"
                   (lambda (sym)
                     (not (string-match-p "#<"
-                           (prin1-to-string (symbol-value sym)))))
+                                         (prin1-to-string (symbol-value sym)))))
                   "\\`\\(mail-header-format-function\\|smtpmail-address-buffer\\|mail-mode-abbrev-table\\)")
                 (run-hooks 'async-smtpmail-before-send-hook)
                 (smtpmail-send-it)))
@@ -515,24 +515,51 @@ later certificate change re-triggers the acceptance prompt."
     ;; `completion-regexp-list'.  Styles that narrow through that variable --
     ;; orderless, which compleseus uses -- therefore never filter it.  Hand over
     ;; a plain list instead, which the completion machinery filters itself.
+    (defun my/mu4e--display-name (addr)
+      "Extract the display name from ADDR, a \"Name <email>\" or \"email\" string."
+      (let* ((email-pos (string-match "<[^>]*>\\'" addr))
+             (name (if email-pos (string-trim (substring addr 0 email-pos)) addr)))
+        (if (and (> (length name) 1)
+                 (eq ?\" (aref name 0))
+                 (eq ?\" (aref name (1- (length name)))))
+            (substring name 1 (1- (length name)))
+          name)))
+
     (defun my/org-contacts-addresses ()
-      "Return all `org-contacts' addresses as plain \"Name <email>\" strings."
+      "Return all `org-contacts' addresses as plain \"Name <email>\" strings.
+
+Excludes group contacts (names starting with `g:'), since those are
+meant to be inserted by `my/mu4e-insert-org-contacts-group' rather than
+addressed individually (a group such as `g:scat' lists several emails, so
+it would otherwise pollute completion)."
       (let ((completion-regexp-list nil))
-        (mapcar #'substring-no-properties
-                ;; the empty prefix matches everything; reuses org-contacts'
-                ;; ignore-property/link handling instead of re-deriving it.
-                (all-completions "" (org-contacts-complete-name "")))))
+        (seq-remove
+         (lambda (a) (string-prefix-p "g:" (my/mu4e--display-name a)))
+         (mapcar #'substring-no-properties
+                 ;; the empty prefix matches everything; reuses org-contacts'
+                 ;; ignore-property/link handling instead of re-deriving it.
+                 (all-completions "" (org-contacts-complete-name ""))))))
 
     (defun my/mu4e-compose-complete-contact-field ()
       "Complete addresses from `org-contacts' and mu4e's contacts."
+
       (when-let* ((res (mu4e--compose-complete-contact-field)))
-        (list (nth 0 res) (nth 1 res)
-              (completion-table-merge (my/org-contacts-addresses)
-                                      (nth 2 res)))))
+        (let* ((start (nth 0 res))
+               (end (nth 1 res))
+               (prefix (buffer-substring-no-properties start (point)))
+               (org (my/org-contacts-addresses))
+               (org-names (mapcar #'downcase (mapcar #'my/mu4e--display-name org)))
+               (extra (seq-remove
+                       (lambda (c)
+                         (member (downcase (my/mu4e--display-name c)) org-names))
+                       (all-completions prefix (nth 2 res)))))
+          (list start end (append org extra)))))
 
     ;; runs after `message-mode-hook', i.e. after org-contacts installed itself
     (add-hook 'mu4e-compose-mode-hook
               (lambda ()
+                (setq-local completion-styles
+                            (remove 'substring completion-styles))
                 (remove-hook 'completion-at-point-functions
                              #'mu4e--compose-complete-contact-field t)
                 (remove-hook 'completion-at-point-functions
