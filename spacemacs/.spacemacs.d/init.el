@@ -97,6 +97,7 @@ This function should only modify configuration layer settings."
      my-typst
      my-fabric
      my-pi
+     my-writing-coach
      (org
       :packages
       (not org-roam)
