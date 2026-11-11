@@ -4,7 +4,8 @@
 
 ;; Records the paragraph at point (one paragraph per line) to
 ;; <root>/.writing/trace.jsonl when Emacs is idle, for the writing-coach
-;; Claude skill.  <root> is the nearest parent folder with a .writing/ dir.
+;; Claude skill, and mirrors the whole buffer to <root>/.writing/mirror/.
+;; <root> is the nearest parent folder with a .writing/ dir.
 
 ;;; Code:
 
@@ -42,7 +43,14 @@ Set it as a file-local or dir-local variable to opt files or folders out.")
                  (not (equal text writing-coach--last-text)))
         (setq writing-coach--last-tick tick
               writing-coach--last-text text)
-        (let ((create-lockfiles nil))
+        (let ((create-lockfiles nil)
+              (mirror (expand-file-name
+                       (concat ".writing/mirror/"
+                               (file-relative-name buffer-file-name root))
+                       root)))
+          ;; Unsaved buffer state, so the coach can read the whole section.
+          (make-directory (file-name-directory mirror) t)
+          (write-region nil nil mirror nil 'silent)
           (write-region
            (concat (json-encode
                     `((time . ,(format-time-string "%FT%T"))
