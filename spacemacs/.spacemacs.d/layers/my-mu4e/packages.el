@@ -85,9 +85,9 @@
 (defun my-mu4e/post-init-window-purpose ()
   (let ((modes))
     (dolist (mode mu4e-list-modes)
-      (add-to-list 'modes (cons mode 'mail)))
+      (push (cons mode 'mail) modes))
     (dolist (mode mu4e-view-modes)
-      (add-to-list 'modes (cons mode 'mail-view)))
+      (push (cons mode 'mail-view) modes))
     (purpose-set-extension-configuration
      :mu4e-layer
      (purpose-conf :mode-purposes modes))))
@@ -107,7 +107,6 @@
                                 mu4e-view-rendered-hook
                                 mu4e-compose-mode-hook))
       (call-interactively 'mu4e)
-      ;; (call-interactively 'mu4e-update-index)
 
       (define-advice mu4e--stop (:after nil kill-mu4e-layout-after-mu4e--stop)
         (when mu4e-spacemacs-kill-layout-on-exit
@@ -132,121 +131,49 @@
       (global-set-key (kbd "C-x m") 'mu4e-compose-new))
     :config
     (setq mu4e-change-filenames-when-moving t)
-    ;; default
-    ;; sending mail -- replace USERNAME with your gmail username
-    ;; also, make sure the gnutls command line utils are installed
-    ;; package 'gnutls-bin' in Debian/Ubuntu
 
-    (require 'smtpmail-async)
-    (setq send-mail-function 'async-smtpmail-send-it
-          message-send-mail-function 'async-smtpmail-send-it)
-    ;; The default async-smtpmail-send-it injects all smtpmail/epg/nsm variables,
-    ;; some of which (EPG context objects, NSM TLS state) are unreadable (#<...>)
-    ;; and crash the child process.  Override it with a predicate that skips
-    ;; variables whose printed representation contains unreadable objects.
-    ;; The NSM (network-security-manager) prompt to accept a changed TLS
-    ;; certificate/key cannot be answered inside the headless async child
-    ;; (`emacs -batch' is `noninteractive', and `nsm-query' then says "no"
-    ;; to everything), so the send fails with "Unable to contact server"
-    ;; whenever the server's key is renewed and the pinned fingerprint in
-    ;; `network-security.data' no longer matches (the `:same-cert' check).
-    ;; Worse, accepting the new key "for this session" only records it in
-    ;; `nsm-temporary-host-settings' (in memory); it is never written to
-    ;; the settings file, so a fresh child process can't see it either.
-    ;;
-    ;; Fix: before dispatching, open a throwaway STARTTLS connection in
-    ;; *this* (interactive) Emacs.  Any NSM prompt appears here, where it
-    ;; can be answered.  On success we pin ONLY the current certificate
-    ;; fingerprint (permanently, in the settings file) so the child reads a
-    ;; matching entry and connects silently.
-    ;;
-    ;; Deliberately strict: we store just the current fingerprint and NOT
-    ;; NSM's `:same-cert' exception.  Persisting the exception (or keeping
-    ;; a history of past fingerprints) would make NSM silently accept ANY
-    ;; future certificate change for this host.  By pinning only the one
-    ;; fingerprint we vetted, the next time the key actually changes the
-    ;; pin no longer matches, the warm-up re-triggers the accept prompt
-    ;; here, and we re-pin the new key.  So a real key change always asks
-    ;; again -- while the child still refuses a cert we never vetted.
-    (require 'nsm)
-    (defun my/smtpmail-nsm-persist-host (host port fingerprint)
-      "Pin FINGERPRINT for HOST:PORT permanently, replacing any prior pin.
-Stores only the fingerprint (no `:same-cert' exception, no history), so a
-later certificate change re-triggers the acceptance prompt."
-      (when fingerprint
-        (nsm-remove-permanent-setting (nsm-id host port))
-        (push (list :id (nsm-id host port) :fingerprints (list fingerprint))
-              nsm-permanent-host-settings)
-        (nsm-write-settings)))
-    (defun my/smtpmail-nsm-warmup ()
-      "Vet the SMTP server's TLS key here, then pin it for the async child."
-      (let ((buf (generate-new-buffer " *smtp-nsm-warmup*")))
-        (unwind-protect
-            ;; Use the same open-network-stream parameters smtpmail itself
-            ;; uses (`:type nil' + `:use-starttls-if-possible t'); forcing
-            ;; `:type 'starttls' takes a different code path that errors out
-            ;; against this server.
-            (let ((proc (ignore-errors
-                          (open-network-stream
-                           "smtp-nsm-warmup" buf
-                           smtpmail-smtp-server smtpmail-smtp-service
-                           :type nil
-                           :use-starttls-if-possible t
-                           :always-query-capabilities t
-                           :capability-command (format "EHLO %s\r\n"
-                                                       (smtpmail-fqdn))
-                           :end-of-command "^[0-9]+ .*\r\n"
-                           :success "^2.*\n"
-                           :starttls-function
-                           (lambda (capabilities)
-                             (and (string-match "[ -]STARTTLS" capabilities)
-                                  "STARTTLS\r\n"))))))
-              ;; Only persist if we actually got a live (accepted) connection.
-              (when (and (processp proc) (process-live-p proc))
-                (let* ((status (gnutls-peer-status proc))
-                       (fingerprint (and status (nsm-fingerprint status))))
-                  (my/smtpmail-nsm-persist-host
-                   smtpmail-smtp-server smtpmail-smtp-service fingerprint))
-                (delete-process proc)))
-          (when (buffer-live-p buf) (kill-buffer buf)))))
-
-    (with-eval-after-load 'smtpmail-async
-      (defun async-smtpmail-send-it ()
-        (let ((to          (message-field-value "To"))
-              (buf-content (buffer-substring-no-properties
-                            (point-min) (point-max))))
-          (message "Delivering message to %s..." to)
-          ;; Trigger any NSM key-acceptance prompt in the parent Emacs
-          ;; before handing delivery to the (non-interactive) child.
-          (my/smtpmail-nsm-warmup)
-          (async-start
-           `(lambda ()
-              (require 'smtpmail)
-              (with-temp-buffer
-                (insert ,buf-content)
-                (set-buffer-multibyte nil)
-                ,(async-inject-variables
-                  "\\`\\(smtpmail\\|async-smtpmail\\|\\(user-\\)?mail\\)-\\|auth-sources\\|epg\\|nsm"
-                  (lambda (sym)
-                    (not (string-match-p "#<"
-                                         (prin1-to-string (symbol-value sym)))))
-                  "\\`\\(mail-header-format-function\\|smtpmail-address-buffer\\|mail-mode-abbrev-table\\)")
-                (run-hooks 'async-smtpmail-before-send-hook)
-                (smtpmail-send-it)))
-           `(lambda (&optional _ignore)
-              (message "Delivering message to %s...done" ,to))))))
-
-    ;; (setq send-mail-function 'smtpmail-send-it
-    ;;       message-send-mail-function 'smtpmail-send-it)
+    ;; Send via msmtp: an external SMTP client that does TLS itself.  It validates
+    ;; the server cert against the system CA bundle (not a pinned fingerprint), so
+    ;; a cert renewal from the same CA is accepted automatically -- no per-send
+    ;; warm-up or manual cert-acceptance prompt.
+    ;; The account comes from `account default : tu' in ~/.msmtprc, and the
+    ;; password from ~/.authinfo.gpg via the `passwordeval' helper.  Sending is
+    ;; asynchronous: the message body is handed to a child Emacs which runs msmtp,
+    ;; so the UI does not block.  A child error (e.g. msmtp failing) is re-signaled
+    ;; in this Emacs by the async package, so it shows up as a message.
+    (defun my/mu4e-send-using-msmtp ()
+      "Send the current message via msmtp asynchronously."
+      (interactive)
+      (let ((to          (message-field-value "To"))
+            (buf-content (buffer-substring-no-properties
+                          (point-min) (point-max))))
+        (message "Sending via msmtp to %s..." to)
+        (async-start
+         `(lambda ()
+            (with-temp-buffer
+              (insert ,buf-content)
+              (set-buffer-multibyte nil)
+              (let ((errbuf (generate-new-buffer " *msmtp-errors*")))
+                (unwind-protect
+                    (let ((exit (call-process-region
+                                 (point-min) (point-max)
+                                 "/usr/bin/msmtp"
+                                 nil errbuf nil
+                                 "-t")))
+                      (unless (eq exit 0)
+                        (error "msmtp failed: %s"
+                               (string-trim (with-current-buffer errbuf
+                                              (buffer-string))))))
+                  (kill-buffer errbuf)))))
+         `(lambda (&optional _ignore)
+            (message "Sending via msmtp to %s...done" ,to)))))
+    (setq send-mail-function 'my/mu4e-send-using-msmtp
+          message-send-mail-function 'my/mu4e-send-using-msmtp)
 
     ;; setup main account
     (setq mu4e-sent-folder "/TU/Sent Items"
           mu4e-drafts-folder "/TU/Drafts"
-          user-mail-address "sebastian.hahn@geo.tuwien.ac.at"
-          smtpmail-default-smtp-server "mail.intern.tuwien.ac.at"
-          smtpmail-smtp-server "mail.intern.tuwien.ac.at"
-          smtpmail-auth-credentials '(("mail.intern.tuwien.ac.at" 587 "shahn" nil))
-          smtpmail-smtp-service 587)
+          user-mail-address "sebastian.hahn@geo.tuwien.ac.at")
     ;; setup information for account switching
 
     (defvar my-mu4e-account-alist
@@ -255,29 +182,20 @@ later certificate change re-triggers the acceptance prompt."
          (mu4e-sent-messages-behavior sent)
          (mu4e-drafts-folder "/TU/Drafts")
          (user-mail-address "sebastian.hahn@geo.tuwien.ac.at")
-         (user-full-name  "Sebastian Hahn")
-         (smtpmail-smtp-user "shahn")
-         (smtpmail-smtp-server "mail.intern.tuwien.ac.at")
-         (smtpmail-auth-credentials '(("mail.intern.tuwien.ac.at" 587 "shahn" nil)))
-         (smtpmail-smtp-service 587))
-        ;; ("TU-Git"
-        ;;  (mu4e-sent-folder "/TU-Git/Sent Items")
-        ;;  (mu4e-sent-messages-behavior sent)
-        ;;  (mu4e-drafts-folder "/TU-Git/Drafts")
-        ;;  (user-mail-address "git@geo.tuwien.ac.at")
-        ;;  (user-full-name  "Sebastian Hahn")
-        ;;  (smtpmail-smtp-user "shahn")
-        ;;  (smtpmail-smtp-server "mail.intern.tuwien.ac.at")
-        ;;  (smtpmail-auth-credentials '(("mail.intern.tuwien.ac.at" 587 "shahn" nil)))
-        ;;  (smtpmail-smtp-service 587))
+         (user-full-name  "Sebastian Hahn"))
         ))
     (defun my-mu4e-set-account ()
-      "Set the account for composing a message."
+      "Set the account for composing a message.
+When replying to a message whose maildir does not identify an account
+(e.g. a refiled/trashed message in `/archive' or `/trash'), fall back to
+the default account instead of erroring out and blocking the reply."
       (let* ((account
               (if mu4e-compose-parent-message
-                  (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
-                    (string-match "/\\(.*?\\)/" maildir)
-                    (match-string 1 maildir))
+                  (or (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
+                        (when (and (stringp maildir)
+                                   (string-match "/\\(.*?\\)/" maildir))
+                          (match-string 1 maildir)))
+                      (caar my-mu4e-account-alist))
                 (completing-read (format "Compose with account: (%s) "
                                          (mapconcat #'(lambda (var) (car var))
                                                     my-mu4e-account-alist "/"))
@@ -290,8 +208,6 @@ later certificate change re-triggers the acceptance prompt."
                   account-vars)
           (error "No email account found"))))
     (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
-    ;; set signature based on account
-
     (setq message-signature-file "~/.signature"
           message-signature t)
 
@@ -330,7 +246,6 @@ later certificate change re-triggers the acceptance prompt."
           mu4e-headers-new-mark       '("N" . " ")  ; new
           mu4e-headers-unread-mark    '("U" . " ")  ; unread
           mu4e-headers-unseen-mark    '("u" . " ")  ; unseen
-          ;; mu4e-headers-seen-mark      '("S" . " ")  ; seen
           mu4e-headers-personal-mark  '("p" . " ")   ; personal
           mu4e-headers-list-mark      '("l" . " ")  ; list
           mu4e-headers-seen-mark      '("S" . "")  ; seen
@@ -347,15 +262,21 @@ later certificate change re-triggers the acceptance prompt."
       "View the body of the message in a web browser."
       (interactive)
       (let ((html (mu4e-msg-field (mu4e-message-at-point t) :body-html))
-            (tmpfile (format "%s/%d.html" temporary-file-directory (random))))
-        (unless html (error "No html part for this message"))
+            (tmpfile (make-temp-file "mu4e-" nil ".html")))
+        (unless html
+          (delete-file tmpfile)
+          (error "No html part for this message"))
         (with-temp-file tmpfile
           (insert
            "<html>"
            "<head><meta http-equiv=\"content-type\""
            "content=\"text/html;charset=UTF-8\">"
            html))
-        (browse-url (concat "file://" tmpfile))))
+        (browse-url (concat "file://" tmpfile))
+        ;; Remove the temp file once the browser has had a chance to load it.
+        (run-at-time 5 nil
+                     (lambda (f) (ignore-errors (delete-file f)))
+                     tmpfile)))
 
     (add-to-list 'mu4e-view-actions
                  '("View in browser" . mu4e-msgv-action-view-in-browser) t)
@@ -364,10 +285,9 @@ later certificate change re-triggers the acceptance prompt."
      mu4e-get-mail-command (concat "mbsync " (my-mu4e/get-sync-channels
                                               (dotfiles/machine-location))))
 
-    ;; update every 5 minutes
+    ;; update every 10 minutes
     (setq mu4e-update-interval (* 10 60))
     (setq mu4e-index-update-in-background t)
-    ;; (setq org-mu4e-link-query-in-headers-mode t)
 
     (setq mu4e-attachment-dir "~/Downloads")
 
@@ -380,31 +300,38 @@ later certificate change re-triggers the acceptance prompt."
     (add-hook 'mu4e-view-rendered-hook 'visual-line-mode)
 
     ;; send mail from address that received it
-    (add-hook 'mu4e-compose-pre-hook
-              (defun my-set-from-address ()
-                "Set the From address based on the To address of the original."
-                (let ((msg mu4e-compose-parent-message)) ;; msg is shorter...
-                  (if msg
-                      (setq user-mail-address
-                            (cond
-                             ((mu4e-message-contact-field-matches msg :to "sebastian.hahn@geo.tuwien.ac.at")
-                              "sebastian.hahn@geo.tuwien.ac.at")
-                             ((mu4e-message-contact-field-matches msg :to "sebastian.hahn@tuwien.ac.at")
-                              "sebastian.hahn@geo.tuwien.ac.at")
-                             ((mu4e-message-contact-field-matches msg :to "shahn@ipf.tuwien.ac.at")
-                              "sebastian.hahn@geo.tuwien.ac.at")
-                             ))))))
+    (defun my-set-from-address ()
+      "Set the From address based on the To address of the original.
+Leaves `user-mail-address' untouched when the parent message was not
+addressed to one of the known addresses, instead of clobbering it with
+nil (which would break sending)."
+      (let ((msg mu4e-compose-parent-message)) ;; msg is shorter...
+        (when msg
+          (let ((addr
+                 (cond
+                  ((mu4e-message-contact-field-matches msg :to "sebastian.hahn@geo.tuwien.ac.at")
+                   "sebastian.hahn@geo.tuwien.ac.at")
+                  ((mu4e-message-contact-field-matches msg :to "sebastian.hahn@tuwien.ac.at")
+                   "sebastian.hahn@geo.tuwien.ac.at")
+                  ((mu4e-message-contact-field-matches msg :to "shahn@ipf.tuwien.ac.at")
+                   "sebastian.hahn@geo.tuwien.ac.at"))))
+            (when addr
+              (setq user-mail-address addr))))))
+    ;; Run AFTER `my-mu4e-set-account' (appended), so the account variables are
+    ;; set first and the From-address selection can override `user-mail-address'.
+    (add-hook 'mu4e-compose-pre-hook #'my-set-from-address t)
 
-    ;; not possible because message body is not available in headers view
+    ;; NB: `:body-txt' is not populated for headers-view messages, so this column
+    ;; only has data for messages whose body is already loaded; guard nil/short.
     (add-to-list 'mu4e-header-info-custom
                  '(:abstract .
                              ( :name "first n characters of the message"  ;; long name, as seen in the message-view
                                :shortname "Message"           ;; short name, as seen in the headers view
-                               :help "Number of recipients for this message" ;; tooltip
+                               :help "First characters of the message body" ;; tooltip
                                :function
                                (lambda (msg)
-                                 (cl-subseq (mu4e-message-field msg :body-txt) 0 5)
-                                 ))))
+                                 (let ((body (or (mu4e-message-field msg :body-txt) "")))
+                                   (substring body 0 (min 5 (length body))))))))
 
     ;; set fields to show in headers view
     (setq mu4e-headers-fields '((:human-date . 12)
@@ -413,9 +340,6 @@ later certificate change re-triggers the acceptance prompt."
                                 (:subject)))
 
     (setq mu4e-headers-date-format "%Y-%m-%d")
-
-
-    ;; (setq mu4e-compose-format-flowed t)
 
     (setq message-citation-line-format "\n\nOn %a, %d %b %Y at %R, %f wrote:\n"
           message-citation-line-function 'message-insert-formatted-citation-line)
@@ -444,59 +368,19 @@ later certificate change re-triggers the acceptance prompt."
                    :action     (lambda (docid msg target)
                                  (mu4e-action-retag-message msg (concat "-" target)))))
 
-    ;; (add-to-list 'mu4e-marks
-    ;;              '(archive
-    ;;                :char       "A"
-    ;;                :prompt     "Archive"
-    ;;                :show-target (lambda (target) "archive")
-    ;;                :action      (lambda (docid msg target)
-    ;;                               ;; must come before proc-move since retag runs
-    ;;                               ;; 'sed' on the file
-    ;; (mu4e-action-retag-message msg "-\\Inbox")
-    ;; (mu4e~proc-move docid nil "+S-u-N"))))
-
-    (mu4e~headers-defun-mark-for gtag)
-    (mu4e~headers-defun-mark-for rtag)
-    ;; (mu4e~headers-defun-mark-for archive)
+    ;; `mu4e~headers-defun-mark-for' is a private mu4e macro; define the two
+    ;; commands directly via the public `mu4e-headers-mark-and-next' instead of
+    ;; depending on mu4e internals.
+    (defun mu4e-headers-mark-for-gtag ()
+      (interactive)
+      (mu4e-headers-mark-and-next 'gtag))
+    (defun mu4e-headers-mark-for-rtag ()
+      (interactive)
+      (mu4e-headers-mark-and-next 'rtag))
     (define-key mu4e-headers-mode-map (kbd "g") 'mu4e-headers-mark-for-gtag)
     (define-key mu4e-headers-mode-map (kbd "e") 'mu4e-headers-mark-for-rtag)
-    ;; (define-key mu4e-headers-mode-map (kbd "A") 'mu4e-headers-mark-for-archive)
-
-    ;; (defun org-mu4e-store-link ()
-    ;; "Store a link to a mu4e query or message."
-    ;; (cond
-    ;; ;; storing links to queries
-    ;; ((eq major-mode 'mu4e-headers-mode)
-    ;;     (let* ((query (mu4e-last-query))
-    ;;         desc link)
-    ;; (org-store-link-props :type "mu4e" :query query)
-    ;; (setq
-    ;;     desc (concat "mu4e:query:" query)
-    ;;     link desc)
-    ;; (org-add-link-props :link link :description desc)
-    ;; link))
-    ;;     ;; storing links to messages
-    ;; ((eq major-mode 'mu4e-view-mode)
-    ;;     (let* ((msg  (mu4e-message-at-point))
-    ;;     (msgid   (or (plist-get msg :message-id) "<none>"))
-    ;;     (from (car (car (mu4e-message-field msg :from))))
-    ;;     (to (car (car (mu4e-message-field msg :to))))
-    ;;     (subject (mu4e-message-field msg :subject))
-    ;;     link)
-    ;;     (setq link (concat "mu4e:msgid:" msgid))
-    ;;     (org-store-link-props :type "mu4e" :link link
-    ;;             :message-id msgid)
-    ;;     (setq link (concat "mu4e:msgid:" msgid))
-    ;;     (org-store-link-props
-    ;;     :type "mu4e" :from from :to to :subject subject
-    ;;             :message-id msgid)
-
-    ;;     (org-add-link-props :link link
-    ;;             :description (funcall org-mu4e-link-desc-func msg))
-    ;;     link))))
 
     (require 'org)
-    ;; (require 'org-mu4e)
     (require 'org-contacts)
 
     (setq mu4e-org-contacts-file "~/ownCloud/org/roam/areas/agenda/contacts.org")
@@ -541,50 +425,64 @@ it would otherwise pollute completion)."
                  (all-completions "" (org-contacts-complete-name ""))))))
 
     (defun my/mu4e-compose-complete-contact-field ()
-      "Complete addresses from `org-contacts' and mu4e's contacts."
+      "Complete addresses from `org-contacts' and mu4e's contacts.
+Uses the public `mu4e-complete-contact' for mu4e's completions (not mu4e
+internals), restricted to contact header fields via the public
+`mail-abbrev-in-expansion-header-p'."
+      (let ((mail-abbrev-mode-regexp
+             "^\\(To\\|B?Cc\\|Reply-To\\|From\\|Sender\\):")
+            (mail-header-separator mu4e--header-separator))
+        (when (and (mail-abbrev-in-expansion-header-p)
+                   (fboundp 'mu4e-complete-contact))
+          (when-let* ((res (mu4e-complete-contact)))
+            (let* ((start (nth 0 res))
+                   (end (nth 1 res))
+                   (prefix (buffer-substring-no-properties start (point)))
+                   (org (my/org-contacts-addresses))
+                   (org-names (mapcar #'downcase (mapcar #'my/mu4e--display-name org)))
+                   (extra (seq-remove
+                           (lambda (c)
+                             (member (downcase (my/mu4e--display-name c)) org-names))
+                           (all-completions prefix (nth 2 res)))))
+              (list start end (append org extra)))))))
 
-      (when-let* ((res (mu4e--compose-complete-contact-field)))
-        (let* ((start (nth 0 res))
-               (end (nth 1 res))
-               (prefix (buffer-substring-no-properties start (point)))
-               (org (my/org-contacts-addresses))
-               (org-names (mapcar #'downcase (mapcar #'my/mu4e--display-name org)))
-               (extra (seq-remove
-                       (lambda (c)
-                         (member (downcase (my/mu4e--display-name c)) org-names))
-                       (all-completions prefix (nth 2 res)))))
-          (list start end (append org extra)))))
-
-    ;; runs after `message-mode-hook', i.e. after org-contacts installed itself
+    ;; Run LAST on `mu4e-compose-mode-hook' (depth 100).  org-contacts installs
+    ;; `org-contacts-message-complete-function' on both `message-mode-hook' and
+    ;; its own `mu4e-compose-mode-hook' entry, and mu4e adds its own exclusive
+    ;; completion in the mode body.  Running after all of them lets us strip both
+    ;; and install the merged function; otherwise org-contacts' exclusive function
+    ;; wins and the merge is never consulted.  If the public `mu4e-complete-contact'
+    ;; is unavailable, keep org-contacts' own capf so address completion still
+    ;; works (the merged one needs that public API).
     (add-hook 'mu4e-compose-mode-hook
               (lambda ()
                 (setq-local completion-styles
                             (remove 'substring completion-styles))
                 (remove-hook 'completion-at-point-functions
                              #'mu4e--compose-complete-contact-field t)
-                (remove-hook 'completion-at-point-functions
-                             #'org-contacts-message-complete-function t)
-                (add-hook 'completion-at-point-functions
-                          #'my/mu4e-compose-complete-contact-field -10 t)))
-
-    ;; use helm for navigation
-    ;; (setq  mu4e-completing-read-function 'completing-read)
+                (if (fboundp 'mu4e-complete-contact)
+                    (progn
+                      (remove-hook 'completion-at-point-functions
+                                   #'org-contacts-message-complete-function t)
+                      (add-hook 'completion-at-point-functions
+                                #'my/mu4e-compose-complete-contact-field -10 t))
+                  (remove-hook 'completion-at-point-functions
+                               #'my/mu4e-compose-complete-contact-field t)))
+              t 100)
 
     ;; from http://www.djcbsoftware.nl/code/mu/mu4e/Attaching-files-with-dired.html
     (require 'gnus-dired)
-    ;; make the `gnus-dired-mail-buffers' function also work on
-    ;; message-mode derived modes, such as mu4e-compose-mode
-    (defun gnus-dired-mail-buffers ()
-      "Return a list of active message buffers."
-      (let (buffers)
-        (save-current-buffer
-          (dolist (buffer (buffer-list t))
-            (set-buffer buffer)
-            (when (and (derived-mode-p 'message-mode)
-                       (null message-sent-message-via))
-              (push (buffer-name buffer) buffers))))
-        (nreverse buffers)))
-
+    ;; gnus-dired's built-in `gnus-dired-mail-buffers' only special-cases
+    ;; `message-user-agent' and `gnus-user-agent'; for `mu4e-user-agent' it falls
+    ;; back to plain `mail-mode' buffers and would miss mu4e-compose buffers
+    ;; (which derive from message-mode).  Advise it instead of redefining it, so
+    ;; gnus-dired's own logic still applies to the other modes.
+    (with-eval-after-load 'gnus-dired
+      (advice-add 'gnus-dired-mail-buffers :around
+                  (lambda (orig)
+                    (if (eq gnus-dired-mail-mode 'mu4e-user-agent)
+                        (progn (require 'message) (message-buffers))
+                      (funcall orig)))))
 
     (setq gnus-dired-mail-mode 'mu4e-user-agent)
     (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
@@ -617,7 +515,7 @@ it would otherwise pollute completion)."
                   (interactive)
                   (mu4e-headers-mark-thread nil '(read)))
       (kbd "gu") 'mu4e-view-go-to-url
-      (kbd "RET") 'browse-url-at-point
+      (kbd "RET") 'my/mu4e-view-ret
       (kbd "x") 'mu4e-mark-execute-all
       (kbd "C-j") 'mu4e-headers-next
       (kbd "C-k") 'mu4e-headers-prev)
@@ -631,7 +529,12 @@ it would otherwise pollute completion)."
                       all))
              (name (completing-read "Group: " (mapcar #'car groups)))
              (entry (assoc name groups))
-             (emails (cdr (assoc-string org-contacts-email-property (caddr entry)))))
+             ;; org-contacts-db entries are (name email props); the email property
+             ;; list is the 3rd element.  Guarded against entry/layout changes so
+             ;; a missing group doesn't error.
+             (props (and entry (nth 2 entry)))
+             (emails (and props
+                           (cdr (assoc-string org-contacts-email-property props)))))
         (when emails (insert emails))))
 
     (spacemacs/set-leader-keys-for-major-mode 'mu4e-compose-mode

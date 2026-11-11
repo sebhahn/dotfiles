@@ -1,14 +1,4 @@
 ;;; -*- lexical-binding: t -*-
-;; (defun my-mu4e/get-sync-channels (location)
-;;   (let ((sync-channels '((home . "tu tu-git")
-;;                          (work . "tu tu-git"))))
-;;     (cdr (assoc location sync-channels))))
-
-;; (defun my-mu4e/refresh-work-only ()
-;;   (interactive)
-;;   (let ((mu4e-get-mail-command "mbsync tu tu-git"))
-;;     (mu4e-update-mail-and-index nil)))
-
 (defun my-mu4e/get-sync-channels (location)
   "Return the mbsync channels to sync at LOCATION.
 Both locations currently sync the same channels; LOCATION is still honored
@@ -76,3 +66,19 @@ Processes the From, Reply-To, To and Cc fields of the current buffer."
 ;; mu4e composes replies in a hidden draft buffer holding the decoded parent
 ;; message, so normalizing its headers pre-reply is safe/clean.
 (advice-add 'message-reply :before #'my-mu4e/fix-message-reply-from)
+
+;; ---------------------------------------------------------------------------
+;; In `mu4e-view-mode', RET was bound to `browse-url-at-point', which replaces
+;; the default `mu4e-scroll-up' and errors ("No URL at point") whenever the
+;; cursor is not on a link.  Keep RET purely as a link-follow key: if there is
+;; no URL under point, just say so instead of erroring (or scrolling).
+;; ---------------------------------------------------------------------------
+
+(defun my/mu4e-view-ret ()
+  "Open the URL at point.
+If there is no URL under the cursor, do nothing but report it via a
+message instead of erroring."
+  (interactive)
+  (if (thing-at-point 'url)
+      (browse-url-at-point)
+    (mu4e-message "No URL at point")))

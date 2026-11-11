@@ -48,7 +48,7 @@
   "Modes that are associated with mu4e's view/compose buffers.")
 
 (defvar mu4e-modes
-  '(append 'mu4e-list-modes 'mu4e-view-modes)
+  (append mu4e-list-modes mu4e-view-modes)
   "Modes that are associated with mu4e buffers.")
 
 (defvar mu4e-org-link-support t
@@ -56,9 +56,6 @@
 
 (defvar mu4e-org-compose-support t
   "If non-nil org-mu4e is configured.")
-
-;; (defvar mu4e-autorun-background-at-startup nil
-;;   "If non-nil, mu4e will automatically run in background at emacs startup.")
 
 (when mu4e-installation-path
   (add-to-list 'load-path mu4e-installation-path))
