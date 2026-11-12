@@ -151,7 +151,8 @@ This function should only modify configuration layer settings."
                                       pdf-tools
                                       ob-mermaid
                                       exec-path-from-shell
-                                      visual-fill-column)
+                                      visual-fill-column
+                                      circe)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
