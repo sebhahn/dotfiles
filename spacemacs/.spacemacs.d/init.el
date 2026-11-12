@@ -152,7 +152,8 @@ This function should only modify configuration layer settings."
                                       ob-mermaid
                                       exec-path-from-shell
                                       visual-fill-column
-                                      circe)
+                                      circe
+                                      ement)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
