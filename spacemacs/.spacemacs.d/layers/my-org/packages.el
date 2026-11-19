@@ -164,7 +164,12 @@
             '(("PRJ" . ?p)
               ("NOTE" . ?n)
               ("BIBNOTE" . ?b)
-              ("MEMO" . ?r)))
+              ("MEMO" . ?r)
+              ("REFILE" . ?f)
+              ("MEETING" . ?m)
+              ("PHONE" . ?P)
+              ("MAYBE" . ?M)
+              ("IDEA" . ?i)))
 
       (setq org-src-fontify-natively t)
       (setq org-return-follows-link t)
@@ -482,6 +487,12 @@
                       ((org-agenda-overriding-header "Stuff to refile")
                        (org-agenda-prefix-format "  %?-12t% s")
                        (org-tags-match-list-sublevels nil)))
+                (tags "+MEMO"
+                      ((org-agenda-overriding-header "Reminders")
+                       (org-agenda-prefix-format "  %(my/org-agenda-ia-timestamp-prefix)")
+                       (org-tags-match-list-sublevels t)
+                       (org-agenda-cmp-user-defined #'my/org-agenda-cmp-ia-timestamp)
+                       (org-agenda-sorting-strategy '(user-defined-up))))
                 (tags "PRJ/TODO"
                       ((org-agenda-overriding-header "Todo")
                        (org-agenda-todo-list-sublevels nil)
