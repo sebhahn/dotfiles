@@ -1075,8 +1075,8 @@ With prefix ARG, force it on."
     (my/writing-layout-toggle 1 100 arg))
 
   (spacemacs/set-leader-keys
-    "wcw" #'my/writing-layout
-    "wcW" #'my/writing-layout-wide)
+    "wcw" #'my/writing-layout-wide
+    "wcW" #'my/writing-layout)
 
   ;; `SPC s j' (consult-jump-in-buffer → consult-imenu) builds an imenu index
   ;; from an LSP buffer via `lsp--imenu-create-index'.  The categorized LSP index
