@@ -120,7 +120,6 @@ This function should only modify configuration layer settings."
       python-test-runner 'pytest)
      my-python
      search-engine
-     ;; semantic
      (shell
       :variables
       shell-default-shell 'vterm
@@ -147,8 +146,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(transient
-                                      pdf-tools
+   dotspacemacs-additional-packages '(pdf-tools
                                       ob-mermaid
                                       exec-path-from-shell
                                       visual-fill-column
@@ -689,11 +687,9 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
       (cdr (assoc (system-name) machines))))
 
   (setq browse-url-generic-program "~/bin/zen-browser"
-        org-odt-data-dir (format "/usr/share/emacs/%s/etc/org" emacs-version))
+        org-odt-data-dir (expand-file-name "org" data-directory))
   (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
   (setq exec-path-from-shell-arguments '("-l"))
-
-  (add-to-list 'load-path "~/.spacemacs.d" t)
 
   ;; make sure customize stuff is written into different file
   (setq custom-file "~/.spacemacs.d/custom.el")
