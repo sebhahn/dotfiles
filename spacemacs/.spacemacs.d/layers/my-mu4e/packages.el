@@ -174,40 +174,6 @@
     (setq mu4e-sent-folder "/TU/Sent Items"
           mu4e-drafts-folder "/TU/Drafts"
           user-mail-address "sebastian.hahn@geo.tuwien.ac.at")
-    ;; setup information for account switching
-
-    (defvar my-mu4e-account-alist
-      '(("TU"
-         (mu4e-sent-folder "/TU/Sent Items")
-         (mu4e-sent-messages-behavior sent)
-         (mu4e-drafts-folder "/TU/Drafts")
-         (user-mail-address "sebastian.hahn@geo.tuwien.ac.at")
-         (user-full-name  "Sebastian Hahn"))
-        ))
-    (defun my-mu4e-set-account ()
-      "Set the account for composing a message.
-When replying to a message whose maildir does not identify an account
-(e.g. a refiled/trashed message in `/archive' or `/trash'), fall back to
-the default account instead of erroring out and blocking the reply."
-      (let* ((account
-              (if mu4e-compose-parent-message
-                  (or (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
-                        (when (and (stringp maildir)
-                                   (string-match "/\\(.*?\\)/" maildir))
-                          (match-string 1 maildir)))
-                      (caar my-mu4e-account-alist))
-                (completing-read (format "Compose with account: (%s) "
-                                         (mapconcat #'(lambda (var) (car var))
-                                                    my-mu4e-account-alist "/"))
-                                 (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
-                                 nil t nil nil (caar my-mu4e-account-alist))))
-             (account-vars (cdr (assoc account my-mu4e-account-alist))))
-        (if account-vars
-            (mapc #'(lambda (var)
-                      (set (car var) (cadr var)))
-                  account-vars)
-          (error "No email account found"))))
-    (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
     (setq message-signature-file "~/.signature"
           message-signature t)
 
@@ -299,28 +265,6 @@ the default account instead of erroring out and blocking the reply."
                 (setq-local show-trailing-whitespace nil)))
     (add-hook 'mu4e-view-rendered-hook 'visual-line-mode)
 
-    ;; send mail from address that received it
-    (defun my-set-from-address ()
-      "Set the From address based on the To address of the original.
-Leaves `user-mail-address' untouched when the parent message was not
-addressed to one of the known addresses, instead of clobbering it with
-nil (which would break sending)."
-      (let ((msg mu4e-compose-parent-message)) ;; msg is shorter...
-        (when msg
-          (let ((addr
-                 (cond
-                  ((mu4e-message-contact-field-matches msg :to "sebastian.hahn@geo.tuwien.ac.at")
-                   "sebastian.hahn@geo.tuwien.ac.at")
-                  ((mu4e-message-contact-field-matches msg :to "sebastian.hahn@tuwien.ac.at")
-                   "sebastian.hahn@geo.tuwien.ac.at")
-                  ((mu4e-message-contact-field-matches msg :to "shahn@ipf.tuwien.ac.at")
-                   "sebastian.hahn@geo.tuwien.ac.at"))))
-            (when addr
-              (setq user-mail-address addr))))))
-    ;; Run AFTER `my-mu4e-set-account' (appended), so the account variables are
-    ;; set first and the From-address selection can override `user-mail-address'.
-    (add-hook 'mu4e-compose-pre-hook #'my-set-from-address t)
-
     ;; NB: `:body-txt' is not populated for headers-view messages, so this column
     ;; only has data for messages whose body is already loaded; guard nil/short.
     (add-to-list 'mu4e-header-info-custom
@@ -384,7 +328,6 @@ nil (which would break sending)."
     (require 'org-contacts)
 
     (setq mu4e-org-contacts-file "~/ownCloud/org/roam/areas/agenda/contacts.org")
-    (setq org-contacts-files (list mu4e-org-contacts-file))
     (add-to-list 'mu4e-headers-actions
                  '("org-contact-add" . mu4e-action-add-org-contact) t)
     (add-to-list 'mu4e-view-actions
