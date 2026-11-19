@@ -391,8 +391,9 @@ nil (which would break sending)."
                  '("org-contact-add" . mu4e-action-add-org-contact) t)
 
     ;; mu4e and org-contacts both install an *exclusive* capf, so whichever
-    ;; comes first wins outright and the other is never consulted.  Merge them
-    ;; into one table instead: org-contacts entries first, then mu4e's.
+    ;; comes first wins outright and the other is never consulted.  Complete from
+    ;; org-contacts only: it always carries a display name, so a bare-email
+    ;; insertion is impossible, and it is a single hand-maintained source.
     ;;
     ;; org-contacts' own table is a *function* that pre-filters on the string it
     ;; was handed and then returns that list as-is, ignoring
@@ -425,49 +426,37 @@ it would otherwise pollute completion)."
                  (all-completions "" (org-contacts-complete-name ""))))))
 
     (defun my/mu4e-compose-complete-contact-field ()
-      "Complete addresses from `org-contacts' and mu4e's contacts.
-Uses the public `mu4e-complete-contact' for mu4e's completions (not mu4e
-internals), restricted to contact header fields via the public
-`mail-abbrev-in-expansion-header-p'."
+      "Complete addresses from `org-contacts' only.
+Restricted to contact header fields via the public
+`mail-abbrev-in-expansion-header-p'.  Hands over a plain list so orderless can
+filter it (org-contacts' own collection function ignores
+`completion-regexp-list')."
       (let ((mail-abbrev-mode-regexp
              "^\\(To\\|B?Cc\\|Reply-To\\|From\\|Sender\\):")
             (mail-header-separator mu4e--header-separator))
-        (when (and (mail-abbrev-in-expansion-header-p)
-                   (fboundp 'mu4e-complete-contact))
-          (when-let* ((res (mu4e-complete-contact)))
-            (let* ((start (nth 0 res))
-                   (end (nth 1 res))
-                   (prefix (buffer-substring-no-properties start (point)))
-                   (org (my/org-contacts-addresses))
-                   (org-names (mapcar #'downcase (mapcar #'my/mu4e--display-name org)))
-                   (extra (seq-remove
-                           (lambda (c)
-                             (member (downcase (my/mu4e--display-name c)) org-names))
-                           (all-completions prefix (nth 2 res)))))
-              (list start end (append org extra)))))))
+        (when (mail-abbrev-in-expansion-header-p)
+          (let ((end (point)))
+            (save-excursion
+              (re-search-backward "\\(\\`\\|[\n:,]\\)[ \t]*")
+              (goto-char (match-end 0))
+              (list (point) end (my/org-contacts-addresses)))))))
 
     ;; Run LAST on `mu4e-compose-mode-hook' (depth 100).  org-contacts installs
     ;; `org-contacts-message-complete-function' on both `message-mode-hook' and
     ;; its own `mu4e-compose-mode-hook' entry, and mu4e adds its own exclusive
     ;; completion in the mode body.  Running after all of them lets us strip both
-    ;; and install the merged function; otherwise org-contacts' exclusive function
-    ;; wins and the merge is never consulted.  If the public `mu4e-complete-contact'
-    ;; is unavailable, keep org-contacts' own capf so address completion still
-    ;; works (the merged one needs that public API).
+    ;; and install the org-only function; otherwise org-contacts' exclusive
+    ;; function wins and our plain-list table is never consulted.
     (add-hook 'mu4e-compose-mode-hook
               (lambda ()
                 (setq-local completion-styles
                             (remove 'substring completion-styles))
                 (remove-hook 'completion-at-point-functions
                              #'mu4e--compose-complete-contact-field t)
-                (if (fboundp 'mu4e-complete-contact)
-                    (progn
-                      (remove-hook 'completion-at-point-functions
-                                   #'org-contacts-message-complete-function t)
-                      (add-hook 'completion-at-point-functions
-                                #'my/mu4e-compose-complete-contact-field -10 t))
-                  (remove-hook 'completion-at-point-functions
-                               #'my/mu4e-compose-complete-contact-field t)))
+                (remove-hook 'completion-at-point-functions
+                             #'org-contacts-message-complete-function t)
+                (add-hook 'completion-at-point-functions
+                          #'my/mu4e-compose-complete-contact-field -10 t))
               t 100)
 
     ;; from http://www.djcbsoftware.nl/code/mu/mu4e/Attaching-files-with-dired.html
