@@ -164,7 +164,7 @@
             '(("PRJ" . ?p)
               ("NOTE" . ?n)
               ("BIBNOTE" . ?b)
-              ("REMEMBER" . ?r)))
+              ("MEMO" . ?r)))
 
       (setq org-src-fontify-natively t)
       (setq org-return-follows-link t)
@@ -354,8 +354,8 @@
                "* TODO %?\n%U\n%a\n")
               ("n" "note" entry (file "~/ownCloud/org/roam/areas/agenda/refile.org")
                "* %? :NOTE:\n%U\n%a\n")
-              ("r" "remind" entry (file "~/ownCloud/org/roam/areas/agenda/refile.org")
-               "* %? :RMD:\n%U\n%a\n")
+              ("r" "memo" entry (file "~/ownCloud/org/roam/areas/agenda/refile.org")
+               "* %? :MEMO:\n%U\n%a\n")
               ("h" "hsaf journal" entry (file+olp+datetree "~/ownCloud/org/roam/areas/agenda/hsaf.org" "Diary")
                "* %?\n%U\n")
               ("j" "journal+clock in" entry (file+olp+datetree "~/ownCloud/org/roam/areas/agenda/diary.org")
@@ -409,7 +409,7 @@
             '(("N" "Notes" tags "NOTE"
                ((org-agenda-overriding-header "Notes")
                 (org-tags-match-list-sublevels t)))
-              ("r" "Reminders" tags "+REMEMBER"
+              ("r" "Reminders" tags "+MEMO"
                ((org-agenda-overriding-header "Reminders")
                 (org-agenda-prefix-format "  %(my/org-agenda-ia-timestamp-prefix)")
                 (org-tags-match-list-sublevels t)
