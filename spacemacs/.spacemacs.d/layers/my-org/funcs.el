@@ -76,6 +76,40 @@ Return the empty string when there is none."
     (cond ((string< ta tb) -1)
           ((string< tb ta) +1))))
 
+(defun my/org-agenda-block-header-p ()
+  "Non-nil if the line at point is the header of a tags block.
+These headers carry the `org-agenda-structure' face and, unlike
+agenda day headers, no `day' text property."
+  (and (not (get-text-property (point) 'day))
+       (let ((face (get-text-property (point) 'face)))
+         (if (listp face)
+             (memq 'org-agenda-structure face)
+           (eq 'org-agenda-structure face)))))
+
+(defun my/org-agenda-section-start-p ()
+  "Non-nil if the line at point starts a section: a date or a block header."
+  (or (get-text-property (point) 'day)
+      (my/org-agenda-block-header-p)))
+
+(defun my/org-agenda-remove-empty-block-headers ()
+  "Remove the headers of agenda blocks that contain no entries.
+Tags blocks in a custom agenda view keep their headers when the
+search matches nothing, cluttering the view.  Agenda day headers
+are left alone: they carry a `day' text property that block
+headers lack."
+  (let ((inhibit-read-only t))
+    (save-excursion
+      (goto-char (point-min))
+      (while (not (eobp))
+        (if (and (my/org-agenda-block-header-p)
+                 (save-excursion
+                   (forward-line 1)
+                   (or (eobp) (my/org-agenda-section-start-p))))
+            (let ((start (point)))
+              (forward-line 1)
+              (delete-region start (point)))
+          (forward-line 1))))))
+
 (defun my/org-clock-in-switch-to-inpr (state)
   "Switch a task from TODO or HOLD to INPR when clocking in.
 Clocking a held task is what lifts it off hold again.  WAIT and the

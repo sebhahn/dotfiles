@@ -399,6 +399,8 @@
                 (lambda () (hl-line-mode 1))
                 'append)
 
+      (add-hook 'org-agenda-finalize-hook #'my/org-agenda-remove-empty-block-headers)
+
       (setq org-archive-mark-done nil)
       (setq org-archive-location "~/ownCloud/org/roam/areas/agenda/archive/%s_archive::* Archived Tasks")
 
