@@ -912,7 +912,7 @@ is nil.  Grep-like buffers are left alone."
         doom-modeline-checker-simple-format nil)
 
   (setq doom-modeline-env-enable-python nil)
-  (setq mu4e-modeline-all-read '("R:" . "🌀 "))
+  (setq mu4e-modeline-all-read '("R:" . "\U000f01f0 "))
 
   ;; modeline shortcuts
   ;; swap the defaults: SPC t m t toggles the modeline, SPC t m T the clock
