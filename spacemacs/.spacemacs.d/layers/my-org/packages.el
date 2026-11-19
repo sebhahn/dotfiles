@@ -163,7 +163,6 @@
       (setq org-tag-alist
             '(("PRJ" . ?p)
               ("NOTE" . ?n)
-              ("BIBNOTE" . ?b)
               ("MEMO" . ?r)
               ("REFILE" . ?f)
               ("MEETING" . ?m)
@@ -195,7 +194,7 @@
       (setq org-agenda-span 'day)
       (setq org-agenda-files (list "~/ownCloud/org/roam/areas/agenda"))
       (setq org-agenda-persistent-filter t)
-      (setq org-agenda-diary-file "~/ownCloud/org/roam/diary.org")
+      (setq org-agenda-diary-file "~/ownCloud/org/roam/areas/agenda/diary.org")
       (setq org-agenda-dim-blocked-tasks nil)
       (setq org-agenda-compact-blocks t)
       (setq org-agenda-todo-ignore-with-date nil)
@@ -316,7 +315,6 @@
       (setq org-use-fast-todo-selection t)
       (setq org-treat-S-cursor-todo-selection-as-state-change nil)
       (setq org-tags-exclude-from-inheritance '("PRJ"))
-      (setq org-stuck-projects '("+PRJ/-DONE-CNCL" ("TODO" "INPR" "WAIT" "HOLD") ()))
 
       (require 'holidays)
       (setq holiday-austria-holidays
@@ -378,8 +376,6 @@
                    "~/ownCloud/org/roam/areas/agenda/"))
                 my/org-capture-journal-find-month)
                "** %U\n %?")
-              ("b" "bibliographic note" entry (file "~/ownCloud/org/roam/areas/agenda/refile.org")
-               "* %? :BIBNOTE:\n%U\n%a\n")
               ("c" "add org contact" entry (file "~/ownCloud/org/roam/areas/agenda/contacts.org")
                "* %(org-contacts-template-name)")
               ("m" "meeting" entry (file "~/ownCloud/org/roam/areas/agenda/refile.org")
@@ -458,6 +454,12 @@
                 (tags "REFILE"
                       ((org-agenda-overriding-header "Stuff to refile")
                        (org-tags-match-list-sublevels nil)))
+                (tags "+MEMO"
+                      ((org-agenda-overriding-header "Reminders")
+                       (org-agenda-prefix-format "  %(my/org-agenda-ia-timestamp-prefix)")
+                       (org-tags-match-list-sublevels t)
+                       (org-agenda-cmp-user-defined #'my/org-agenda-cmp-ia-timestamp)
+                       (org-agenda-sorting-strategy '(user-defined-up))))
                 (tags "-PRJ/TODO"
                       ((org-agenda-overriding-header "Todo")
                        (org-agenda-todo-list-sublevels nil)
@@ -520,6 +522,12 @@
                 (tags "REFILE"
                       ((org-agenda-overriding-header "Stuff to Refile")
                        (org-tags-match-list-sublevels nil)))
+                (tags "+MEMO"
+                      ((org-agenda-overriding-header "Reminders")
+                       (org-agenda-prefix-format "  %(my/org-agenda-ia-timestamp-prefix)")
+                       (org-tags-match-list-sublevels t)
+                       (org-agenda-cmp-user-defined #'my/org-agenda-cmp-ia-timestamp)
+                       (org-agenda-sorting-strategy '(user-defined-up))))
                 (todo "TODO"
                       ((org-agenda-overriding-header "Todo")
                        (org-agenda-todo-list-sublevels nil)
@@ -552,7 +560,7 @@
       (setq org-clock-report-include-clocking-task t)
       (setq org-time-stamp-rounding-minutes '(1 1))
       (setq org-agenda-clock-consistency-checks
-            '(:max-duration "1:00"
+            '(:max-duration "4:00"
                             :min-duration 0
                             :max-gap 0
                             :gap-ok-around ("1:00")))
