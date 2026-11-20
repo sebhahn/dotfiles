@@ -75,12 +75,11 @@
           ;; Note that this bug prevents lazy-loading.
           (when (version<= mu4e-mu-version "1.4.15")
             (require 'mu4e)))))
-  (if mu4e-org-compose-support
-      (progn
-        (spacemacs/set-leader-keys-for-major-mode 'mu4e-compose-mode
-          "o" 'org-mu4e-compose-org-mode)
-        (autoload 'org-mu4e-compose-org-mode "org-mu4e")
-        )))
+  ;; NB: the old `mu4e-org-compose-support' branch bound "o" in
+  ;; mu4e-compose-mode to `org-mu4e-compose-org-mode', which was removed from
+  ;; mu4e in 1.12; mu4e-org.el no longer provides any compose-org function, so
+  ;; the binding/autoload would error with "Cannot open load file: org-mu4e".
+  )
 
 (defun my-mu4e/post-init-window-purpose ()
   (let ((modes))
@@ -211,7 +210,6 @@
           mu4e-headers-draft-mark     '("D" . " ")  ; draft
           mu4e-headers-new-mark       '("N" . " ")  ; new
           mu4e-headers-unread-mark    '("U" . " ")  ; unread
-          mu4e-headers-unseen-mark    '("u" . " ")  ; unseen
           mu4e-headers-personal-mark  '("p" . " ")   ; personal
           mu4e-headers-list-mark      '("l" . " ")  ; list
           mu4e-headers-seen-mark      '("S" . "")  ; seen
@@ -384,7 +382,9 @@ filter it (org-contacts' own collection function ignores
               (goto-char (match-end 0))
               (list (point) end (my/org-contacts-addresses)))))))
 
-    ;; Run LAST on `mu4e-compose-mode-hook' (depth 100).  org-contacts installs
+    ;; Run LAST on `mu4e-compose-mode-hook' (add-hook's 4th arg is DEPTH, not
+    ;; APPEND, and a 5th non-nil arg would make it buffer-local, so depth 90
+    ;; alone gives "append, run last", globally).  org-contacts installs
     ;; `org-contacts-message-complete-function' on both `message-mode-hook' and
     ;; its own `mu4e-compose-mode-hook' entry, and mu4e adds its own exclusive
     ;; completion in the mode body.  Running after all of them lets us strip both
@@ -400,7 +400,7 @@ filter it (org-contacts' own collection function ignores
                              #'org-contacts-message-complete-function t)
                 (add-hook 'completion-at-point-functions
                           #'my/mu4e-compose-complete-contact-field -10 t))
-              t 100)
+              90)
 
     ;; from http://www.djcbsoftware.nl/code/mu/mu4e/Attaching-files-with-dired.html
     (require 'gnus-dired)

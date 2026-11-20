@@ -54,8 +54,5 @@
 (defvar mu4e-org-link-support t
   "If non-nil mu4e-org is configured.")
 
-(defvar mu4e-org-compose-support t
-  "If non-nil org-mu4e is configured.")
-
 (when mu4e-installation-path
   (add-to-list 'load-path mu4e-installation-path))
